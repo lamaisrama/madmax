@@ -19,8 +19,6 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <style>	
-	*{background-color : #F1F0F5;}
-	
 	.navBtn{
 		font-weight:bolder; font-size:13px; color: white; 
 		width: 6em; height:3em; border-radius: 30px; 
@@ -44,7 +42,7 @@
 					<li class="nav-item active"></li>
 				</ul>
 				<button type="button" class="btn navBtn">조직도</button>
-				<button type="button" class="btn navBtn" onclick="">전자결재</button>
+				<button type="button" class="btn navBtn" onclick="location.assign('${path}/appr/approval.do')">전자결재</button>
 				<button type="button" class="btn navBtn" onclick="">근태현황</button>
 				<button type="button" class="btn navBtn">일정</button>
 				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
