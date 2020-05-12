@@ -22,8 +22,6 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="${path }/resources/css/basicStyle.css">
-<link rel="stylesheet" href="${path }/resources/css/draftStyle.css">
 </head>
 <style>
 .header{
@@ -90,10 +88,10 @@ table.content tr{
 <body>
 	<div class="header">
 		<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-		<button type="button" class="btn btnPrimary">결재요청</button>
-		<button type="button" class="btn btnLight" style="width:7em">기결재첨부</button>
-		<button type="button" class="btn btnLight">임시저장</button>
-		<button type="button" class="btn btnLight" onclick="confirm('정말 나가시겠습니까? 작성하신 내용은 저장되지 않습니다')">취소</button>
+		<button type="button" class="btn btnPrimary" onclick="">결재요청</button>
+		<button type="button" class="btn btnLight" style="width:7em" onclick="">기결재첨부</button>
+		<button type="button" class="btn btnLight" onclick="">임시저장</button>
+		<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 	</div>
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
 	<div class="container-fluid">
@@ -176,6 +174,11 @@ table.content tr{
 			const name="S'toll | 결재선 ";
 			const option="width = 1000, height = 700, top=120 left=400 location=no";
 			window.open(url,name,option);
+		}
+		
+		function closePage(){
+			if(confirm('정말 닫겠습니까? 작성하신 내용은 저장되지 않습니다.')){window.close();};
+			
 		}
 	</script>
 </body>
