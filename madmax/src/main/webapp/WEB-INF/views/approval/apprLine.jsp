@@ -16,6 +16,7 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
+<script src="${pageContext.request.contextPath}/resources/js/apprline.js"></script>
 <style>
 div{ min-height:500px; }
 hr{ margin:2px 0 } 
@@ -33,7 +34,7 @@ ul.info li{color:slategray; font-weight:bolder;}
 			<h5 style="margin:7px 0"> &nbsp; <i class="far fa-calendar-alt"></i>&nbsp;결재선 지정</h5>
 		</div>
 		<div class="row">
-			<div class="col-sm-3" style="border:1px solid black; font-size:13px;">
+			<div class="col-sm-3 user-container" style="border:1px solid black; font-size:13px;">
                 <hr>
                 <span style="color:darkslategrey; font-size:14px; font-weight:bolder;">MADMAX COMPANY</span>
                 <ul class="dept">
@@ -65,64 +66,44 @@ ul.info li{color:slategray; font-weight:bolder;}
 				
 				<span style="font-weight:bolder; ">Type</span><br>
 				<hr>
-				<input type="radio" name="appr-method" value="approval" id="appr1">
+				<input type="radio" name="appr-method" value="approval" id="apprOpt">
 				<label for="appr1">결재</label>
 				<br>
-				<input type="radio" name="appr-	method" value="consent" id="appr2">
+				<input type="radio" name="appr-method" value="consent" id="consentOpt">
 				<label for="appr2">합의</label>
 				<hr>
-				<button type="button" class="btn btn-sm btn-light"> <i class="fas fa-arrow-right"></i> </button>
+				<button type="button" class="btn btn-sm btn-light" onclick="userAdd();"> <i class="fas fa-arrow-right"></i> </button>
 				<br>
-				<button type="button" class="btn btn-sm btn-light"> <i class="fas fa-arrow-left"></i> </button>
+				<button type="button" class="btn btn-sm btn-light" onclick="userRemove();"> <i class="fas fa-arrow-left"></i> </button>
 				<br>
-				<button type="button" class="btn btn-sm btn-light"> <i class="fas fa-undo"></i> </button>
+				<button type="button" class="btn btn-sm btn-light" onclick="userReset();"> <i class="fas fa-undo"></i> </button>
 				<br>
 			</div>
-			<div class="col-sm-8" style="border:1px solid black;">
+			<div class="col-sm-8" id="apprLine-container" style="border:1px solid black;">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table table-hover" style="text-align:center;">
-							<tr>
+						<table class="table table-hover" id="apprLine-table" style="text-align:center;">
+							<tr id="lineInfo">
 								<th>방법</th>
 								<th>결재자 정보</th>
 								<th></th>
 							</tr>
-							<tr>
+							<tr id="writerInfo">
 								<td>
 									<select disabled="disabled">
 										<option>결재</option>
 										<option>합의</option>
 									</select>
 								</td>
-								<td>UserName Department JobTitle</td>
+								<td><input type="text" value="userName" disabled></td>
 								<td>
-									<button tyle="button" class="btn btn-light btn-sm" disabled="disabled">▲</button>
-									<button tyle="button" class="btn btn-light btn-sm" disabled="disabled">▼</button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<select>
-										<option>결재</option>
-										<option>합의</option>
-									</select>
-								</td>
-								<td>UserName Department JobTitle</td>
-								<td>
-									<button tyle="button" class="btn btn-secondary btn-sm">▲</button>
-									<button tyle="button" class="btn btn-secondary btn-sm">▼</button>
+									<button type="button" class="btn btn-light btn-sm" disabled="disabled">▲</button>
+									<button type="button" class="btn btn-light btn-sm" disabled="disabled">▼</button>
 								</td>
 							</tr>
 							
 						</table>
 					</div>
-<!-- 					<div class="col-sm-3">
-						<strong>결재방법변경</strong><br>
-						<select>
-							<option>결재</option>
-							<option>합의</option>
-						</select>
-					</div> -->
 				</div>
 			</div>
 		</div> <!-- div row 끝 -->
@@ -141,9 +122,7 @@ ul.info li{color:slategray; font-weight:bolder;}
 	    });
 	    $(".un").on("click", function(e){
 	    	e.stopPropagation();
-	    	$(this).css("color","brown");
 	    })
-	</script>
 	</script>
 </body>
 </html>
