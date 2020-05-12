@@ -8,8 +8,6 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<%-- <link rel="stylesheet" href="${path }/resources/css/style.css"> --%>
-
 	<link href='${path }/resources/css/fullcalendar.css' rel='stylesheet' />
 	<link href='${path }/resources/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<script src='${path }/resources/js/jquery-1.10.2.js' type="text/javascript"></script>
@@ -83,18 +81,7 @@
 			allDaySlot: false,
 			selectHelper: true,
 			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-				}
+				var title = open('','_blank','width=500,height=500');
 				calendar.fullCalendar('unselect');
 			},
 			droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -120,72 +107,27 @@
 					$(this).remove();
 				}
 
-			},
-
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-3, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+4, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+1, 19, 0),
-					end: new Date(y, m, d+1, 22, 30),
-					allDay: false,
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'http://google.com/',
-					className: 'success'
-				}
-			],
+			}
 		});
 	});
 
 </script>
 <style>
 
-	body {
+/*
+	 body {
+		border: 1px solid red;
 		margin-top: 40px;
 		text-align: center;
 		font-size: 14px;
 		font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
 		background-color: #DDDDDD;
 		}
-
+*/
 	#wrap {
-		width: 1100px;
-		margin: 0 auto;
-		}
+		width: 100%;
+		margin: 20px auto;
+		} 
 
 	#external-events {
 		float: left;
@@ -223,18 +165,22 @@
 	#calendar {
 /* 		float: right; */
         margin: 0 auto;
-		width: 900px;
+		width: 100%;
 		background-color: #FFFFFF;
-		  border-radius: 6px;
+		border-radius: 6px;
         box-shadow: 0 1px 2px #C3C3C3;
 		}
 
 </style>
+<div class="col col-sm-10">	
 <div id='wrap'>
+	<h4>전체일정</h4>	
+	<hr>
+	<br>
 	<div id='calendar'></div>
 	<div style='clear:both'></div>
 </div>
-
+</div>
 
 <!-- <div class="col col-sm-7">
 	

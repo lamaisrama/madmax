@@ -14,25 +14,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
-<div class="col col-sm-7">
+<div class="col col-sm-7">	
+		<h4>근태현황</h4>	
+		<hr>
+	 	<br>
 	 	<!-- 검색 -->
         기간검색&nbsp;
         <input type="date" class="dateInput" />&nbsp;~&nbsp;<input type="date" class="dateInput" />
         <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
         검색
         </button>
-        <!-- 일일근태등록 -->
-        <div class="text-right">
-            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
-            &nbsp;&nbsp;출근&nbsp;&nbsp;
-            </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
-            &nbsp;&nbsp;퇴근&nbsp;&nbsp;
-            </button>
-        </div>
-        
+        <br><br>
+        <!-- 일일근태리스트 -->
         <table class="table text-center">
-            <thead class="thead-dark">
+            <thead style="background-color: #233C61; color:#F1F0F5;">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">근무일자</th>

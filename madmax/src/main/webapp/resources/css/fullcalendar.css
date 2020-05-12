@@ -633,7 +633,7 @@ table.fc-header{
     font-size: 15px;
     margin: 2px;
     min-width: 19px;
-    padding: 6px;
+    /* padding: 6px; */
     text-align: center;
 }
 .fc-sun, .fc-sat{
