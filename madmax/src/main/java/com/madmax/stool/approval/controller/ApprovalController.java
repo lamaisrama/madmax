@@ -1,5 +1,7 @@
 package com.madmax.stool.approval.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,11 @@ public class ApprovalController {
 	public String selectDraftForm(@RequestParam(required=false, defaultValue="1") int dNo) {
 		
 		return "approval/apprDraft";
+	}
+	
+	@RequestMapping("/appr/purchaseForm.do")
+	public String selectPurchaseForm() {
+		return "approval/apprDocForm/purchaseReq";
 	}
 	
 	@RequestMapping("/appr/line.do")
@@ -58,5 +65,12 @@ public class ApprovalController {
 		return "approval/myStorageBox";
 	}
 	
+	@RequestMapping("/appr/test.do")
+	public String test() {
+
+		return "";
+	}
+	
+
 }
 
