@@ -111,7 +111,7 @@
 	           <!--data-target이랑 class명을 no값으로해도될듯??-->
 	           <!--스크립트로 this.next hide하기-->
 	           <div  class="bWhite" id="showP"  >
-	               <b class="bWhite ml-3" style="color:#25558F ">'프로젝트명'(6)</b><img class="bWhite" src="${path }/resources/images/expand-arrow.png" style="width:17px;"/>
+	               <b class="bWhite ml-3" style="color:#25558F ">프로젝트명(6)</b><img class="bWhite" src="${path }/resources/images/expand-arrow.png" style="width:17px;"/>
 	           </div>
 	           <table id="project1"  style="width:100%;height:100%; display:none;" >
 	               <tr class="text-sm-center">
@@ -119,7 +119,7 @@
 	                   <td style="width:10%"><div style="background-color:blue; color:white">완료</div></td>
 	                   <td style="width:10%">-</td>
 	                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
-	                   <td style="width:40%"><a href="#" onclick="taskView();">업무 test</a></td>
+	                   <td style="width:40%"><a href="#" onclick="taskView();" style="color:black; text-decoration:none">업무 test</a></td>
 	                   <td style="width:10%">집집이</td>
 	                   <td style="width:20%">2020-05-12</td>
 	               </tr>
@@ -140,6 +140,7 @@
        <!-- 제목 클릭했을때 나오는 div -->
        <div id="showTask" style="display:none; border-left:1px solid grey; background-color:pink;  position:absolute ; top:11.5%; right:1%; width:60%; height:100%">
        	메인에 있는 view쏴줄곳<button type="button" class="close ml-2" >&times;</button>
+       	<div>이곳을 클릭하면 해당글로 이동할 수 있습니다.</div>
        </div>
     </div>	
 <div class="col col-sm-3">
