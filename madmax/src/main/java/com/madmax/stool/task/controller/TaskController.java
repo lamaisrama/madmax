@@ -29,6 +29,10 @@ public class TaskController {
 		return mv;
 	}
 	
-	
+	@RequestMapping("/task/backhome.do")
+	public String backHome() {
+		
+		return "index";
+	}
 	
 }
