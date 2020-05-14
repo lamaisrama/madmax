@@ -9,13 +9,14 @@ import com.madmax.stool.user.model.service.UserService;
 @Controller
 public class UserController {
 	
-	@Autowired
-	private UserService service;
+	/*
+	 * @Autowired private UserService service;
+	 */
 
-	@RequestMapping("/user/joinUser.do")
-	public String joinUser() {
-		
-		return "user/login/joinUser";
-	}
-	
+//	@RequestMapping("/user/joinUser.do")
+//	public String joinUser() {
+//		
+//		return "user/login/joinUser";
+//	}
+//	
 }

@@ -35,6 +35,7 @@
 				</div>
 			</li>
 			<hr>
+			<li><a href="${path }/project/selectedPproject.do">지울게요</a></li>
 			<li>회사 공개 프로젝트</li>
 			<li>전체 프로젝트</li>
 			<li>즐겨찾기</li>
