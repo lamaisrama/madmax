@@ -13,8 +13,8 @@ import com.madmax.stool.user.model.service.UserService;
 @SessionAttributes({"loginUser"})
 public class UserController {
 	
-	//@Autowired
-	//private UserService service;
+	@Autowired
+	private UserService service;
 	
 
 	@RequestMapping("/user/joinUser.do")
