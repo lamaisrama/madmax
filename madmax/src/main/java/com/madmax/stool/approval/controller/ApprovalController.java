@@ -1,10 +1,10 @@
 package com.madmax.stool.approval.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.madmax.stool.approval.model.vo.User;
 
 @Controller
 public class ApprovalController {
@@ -67,8 +67,12 @@ public class ApprovalController {
 	
 	@RequestMapping("/appr/test.do")
 	public String test() {
-
 		return "";
+	}
+	@RequestMapping("/appr/checkUserName")
+	public User checkUserName() {
+		
+		return new User();
 	}
 	
 

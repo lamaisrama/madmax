@@ -85,6 +85,11 @@ table.content tr{
 .basicContent input[type="text"]{
 	height:30%;
 }
+.here span{
+	border-radius:15px;
+	background-color:lightgreen;
+	font-size:10px;
+}
 </style>
 <body>
 	<div class="header">
@@ -138,10 +143,13 @@ table.content tr{
 				<th>참조자</th>
 				<td>
 					<div class="input-group my-1">
-					  <input type="text" class="form-control">
+					  <input type="text" id="referrerInput" class="form-control">
 					  <div class="input-group-append">
 					    <button class="btn" type="submit"><i class="fas fa-user-plus"></i></button>					    							
 					  </div>
+					</div>
+					<div class="here">
+						<span></span>
 					</div>
 				</td>
 				<th>기결재첨부</th>
@@ -155,28 +163,39 @@ table.content tr{
 					</div>
 				</td>
 			</tr>
-			<tr>
-			<td colspan="4">
-				<!-- TextEditor api  -->
-				<div class="container-fluid" style="min-height:500px;">
-					<div class="col-sm-12" style="border:1px solid lightgrey; margin:0 auto; min-height:500px;">
-						<br> <br>
-						<p> &nbsp;&nbsp;TextEditor API  출력</p>
-					</div>
-				</div>
-			</td>
-			</tr>
 		</table>
+	</div>
+	<div class="doc-container">
+		<!-- TextEditor api  -->
+		<div class="container-fluid" style="min-height:500px;">
+			<div class="col-sm-12" style="border:1px solid lightgrey; margin:0 auto; min-height:500px;">
+				<br> <br>
+				<p> &nbsp;&nbsp;TextEditor API  출력</p>
+			</div>
+		</div>
 	</div>
 	</form>
 	<script>
-	
+		$(function(){
+			$("#referrerInput").on("change",function(){
+				$.ajax({
+					url:"${path}/appr/checkUserName",
+					data:{userName:$("#reffererInput").val()},
+					success:(data)=>{
+						console.log(data);
+					}
+				});
+			});
+		});
+		
 		function openLine(){
 			const url ="${path}/appr/line.do";
 			const name="S'toll | 결재선 ";
 			const option="width = 1000, height = 700, top=120 left=400 location=no";
 			window.open(url,name,option);
 		}
+		
+		
 	</script>
 </body>
 </html>
