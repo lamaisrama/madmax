@@ -35,7 +35,9 @@
                return;
             }
 
-            if(document.getElementById('apprOpt').checked==""&&document.getElementById('agreeOpt').checked==""){
+            if(document.getElementById('apprOpt').checked==""
+            		&&document.getElementById('agreeOpt').checked==""
+    				&&document.getElementById('receiveOpt').checked==""){
                 alert('결재방법을 선택해주세요.');
                 return false;
             }
@@ -54,12 +56,31 @@
                 const opt=document.getElementsByName('appr-method');
                 let selectedOpt=""; let unselectedOpt="";
                 $.each(opt, function(i, item){
+                	                	
                     if(item.checked) selectedOpt=item.value;
                     else unselectedOpt=item.value;
                 });
+                
+            	if(selectedOpt=='receiving'){
+            		var receivingLine=document.getElementsByClassName('userReceivingInfo');
+            		if(receivingLine.length>0){
+            			alert('수신인은 한명만 지정할 수 있습니다.');
+            			return;
+            		}
+        			let tr = $("<tr>").addClass('userLineInfo').on('click', userRemove(this));
+        			let td = $("<td>")
+        			const apprOpt=$("<select>").addClass('apprType').attr('name','apprType').css('display','none')
+        						.append($('<option>').attr('value',selectedOpt));
+        			const lineInfo = $('<input>').addClass('userReceivingInfo').addClass('userInfo').attr('type','text')
+					.attr('name','userInfo').attr('value',selectUser).attr('disabled',true);
+        			let td1= $("<td>").html("부서명");
+        			let td2 = $("<td>").append(apprOpt).append(lineInfo);
+        			$("#receiving-table").append(tr.append(td1).append(td2));
+        			selectUser="";
+        			return;
+            	}
                 let selectedOptVal = selectedOpt=='approval'?'결재':'합의';
                 let unselectedOptVal = unselectedOpt=='approval'?'결재':'합의';
-                console.log(selectedOpt+unselectedOpt);
                 let tr=$("<tr>").addClass('userLineInfo').on('click', userRemove(this));
                 let td_select=$("<td>");                
                 let td_input=$("<td>");

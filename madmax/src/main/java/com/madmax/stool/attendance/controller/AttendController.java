@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class AttendanceController {
+public class AttendController {
 	
 //	@Autowired
-//	AttendanceService service;
+//	AttendService service;
 	
 	@RequestMapping("/attd/attendList.do")
 	public String attendList() {

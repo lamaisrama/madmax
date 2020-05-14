@@ -22,4 +22,6 @@ public class User {
 	private Date birthDay;
 	private String deptCode;
 	private String jobCode;
+	private String jobName;
+	
 }

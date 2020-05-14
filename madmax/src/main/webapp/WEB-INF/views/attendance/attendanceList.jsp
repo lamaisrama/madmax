@@ -72,6 +72,8 @@
                                     <input type="radio" name="options" id="option3"> 결근
                                     </label>
                                 </div>
+                            <br><br>    
+                            사유 : <input type="text"/>    
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

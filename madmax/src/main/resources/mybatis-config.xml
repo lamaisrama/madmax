@@ -4,5 +4,6 @@
 	<typeAliases>
 		<typeAlias type="com.madmax.stool.common.StringArrayType" alias="strArr"/>
 		<typeAlias type="com.madmax.stool.task.model.vo.Task" alias="task"/>
+		<typeAlias type="com.madmax.stool.user.model.vo.User" alias="user"/>
 	</typeAliases>
 </configuration>

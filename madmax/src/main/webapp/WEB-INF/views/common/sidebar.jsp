@@ -115,6 +115,15 @@
 	.accordin-elem .card-heading.active a:after {
 		color: #fff;
 	}
+	
+	.newProjectBtn {
+		width:100%;
+		font-size : 17px;
+		font-weight : 600;
+		color : #233C61; 
+		border: 3px solid #233C61; 
+		border-radius:50px;
+	}
 </style>
 
 <div class="col col-sm-2">
@@ -159,6 +168,7 @@
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <ul>
+                                        	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style="">+&nbsp;&nbsp;새 프로젝트</button></li>
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href=""><i class="icon far fa-calendar-alt""></i>전체 일정</a></li>
 											<li><a href=""><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
@@ -211,49 +221,9 @@
                         </div>
 	                </div>
 			</li>
-			    <!-- Elements Section End -->
-<!--			        
-			<li class="">
-				<div class="">
-				  <nav class="navbar" style="padding-left:0;" >
-				    <button class="navbar-toggler dropdown-toggle text-center" style="padding-left:0;" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-				      <span class=""><b>전자결재</b></span>
-				    </button>
-				  </nav>
-				  <div class="collapse" id="navbarToggleExternalContent">
-				    <div class="p-2">
-				      <h5 class="h6"><b>기안</b></h5>
-				      <span class="p-3">기안문 작성</span><br>
-				      <span class="p-3">결재 요청함</span><br>
-				      <span class="p-3">임시 문서함</span>
-				    </div>
-				  <hr>
-				  </div>
-				  <div class="collapse" id="navbarToggleExternalContent">
-				    <div class="p-2">
-				      <h5 class="h6"><b>결재</b></h5>
-				      <span class="p-3">결재 대기함</span><br>
-				      <span class="p-3">결재 진행함</span><br>
-				      <span class="p-3">완료 문서함</span>
-				    </div>
-				  	<hr>
-				  </div>
-				<div class="collapse" id="navbarToggleExternalContent">
-				    <div class="p-2">
-				      <h5 class="h6"><b>문서함</b></h5>
-				      <span class="p-3">내 문서함</span><br>
-				      <span class="p-3">부서 문서함</span><br>
-				      <span class="p-3">참조 문서함</span><br>
-				      <span class="p-3">개인 문서함</span>
-				    </div>
-				  <hr>
-				</div>
-				</div>
-			</li>
-  -->
-		
 		</ul>
 	</nav>
+	<!-- 
 	<div>
         <ul>
             <li class="menu">
@@ -297,7 +267,7 @@
 		    });
 		});
 	</script>
-
+ -->
 
 
 
