@@ -32,7 +32,7 @@
                 <h5 class="text-center">회원가입</h5>
 
                 <form>
-                    <img src="images/userImg.png" width="280px" height="280px">
+                    <img src="${pageContext.request.contextPath}/resources/images/userImg.png" width="280px" height="280px">
                     <h5 class="text-center">클릭하여 사진을 등록하세요</h5>
                     <h5 class="colum"><span class="material-icons">person</span>&nbsp;아이디</h5>
                       <div class="input-group mb-3">
