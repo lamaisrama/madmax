@@ -131,6 +131,7 @@
 				</div>
 			</li>
 			<hr>
+<<<<<<< HEAD
 			<li>
 				<!-- Elements Section Begin -->
 	            <div class="row">
@@ -251,6 +252,20 @@
 				</div>
 			</li>
   -->
+=======
+			<li>회사 공개 프로젝트</li>
+			<li>전체 프로젝트</li>
+			<li>즐겨찾기</li>
+			<hr>
+			<li><a href="${path }/task/selectTask.do">전체 업무</a></li>
+			<li>전체 일정</li>
+			<li>담아둔 글</li>
+			<li>나를 지정</li>	
+			<li>내 게시물</li>
+			<hr>
+			<li>숨긴 프로젝트</li>
+			<hr>	
+>>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 		</ul>
 	</nav>
 	<div>

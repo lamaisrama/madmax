@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.madmax.stool.approval.model.vo.User;
+
 @Controller
 public class ApprovalController {
 	
@@ -22,6 +24,11 @@ public class ApprovalController {
 	public String selectDraftForm(@RequestParam(required=false, defaultValue="1") int dNo) {
 		
 		return "approval/apprDraft";
+	}
+	
+	@RequestMapping("/appr/purchaseForm.do")
+	public String selectPurchaseForm() {
+		return "approval/apprDocForm/purchaseReq";
 	}
 	
 	@RequestMapping("/appr/line.do")
@@ -58,5 +65,16 @@ public class ApprovalController {
 		return "approval/myStorageBox";
 	}
 	
+	@RequestMapping("/appr/test.do")
+	public String test() {
+		return "";
+	}
+	@RequestMapping("/appr/checkUserName")
+	public User checkUserName() {
+		
+		return new User();
+	}
+	
+
 }
 
