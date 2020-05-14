@@ -23,7 +23,7 @@ public class TaskController {
 	public ModelAndView selectTask(ModelAndView mv) {
 		List<Task> list=service.selectTask();
 		mv.addObject("list",list);
-		mv.setViewName("/task/allTaskView");
+		mv.setViewName("task/allTaskView");
 		
 		
 		return mv;
