@@ -131,7 +131,6 @@
 				</div>
 			</li>
 			<hr>
-<<<<<<< HEAD
 			<li>
 				<!-- Elements Section Begin -->
 	            <div class="row">
@@ -160,7 +159,7 @@
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <ul>
-											<li><a href=""><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
+											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href=""><i class="icon far fa-calendar-alt""></i>전체 일정</a></li>
 											<li><a href=""><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href=""><i class="icon fas fa-at"></i>나를 지정</a></li>	
@@ -252,12 +251,11 @@
 				</div>
 			</li>
   -->
-=======
 			<li>회사 공개 프로젝트</li>
 			<li>전체 프로젝트</li>
 			<li>즐겨찾기</li>
 			<hr>
-			<li><a href="${path }/task/selectTask.do">전체 업무</a></li>
+			<li></li>
 			<li>전체 일정</li>
 			<li>담아둔 글</li>
 			<li>나를 지정</li>	
@@ -265,7 +263,6 @@
 			<hr>
 			<li>숨긴 프로젝트</li>
 			<hr>	
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 		</ul>
 	</nav>
 	<div>
