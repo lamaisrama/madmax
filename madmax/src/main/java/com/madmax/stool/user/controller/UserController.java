@@ -15,7 +15,7 @@ public class UserController {
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
 		
-		return "redirect:/views/user/joinUser";
+		return "user/login/joinUser";
 	}
 	
 }
