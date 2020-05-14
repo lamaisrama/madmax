@@ -71,7 +71,8 @@
 				<tr>
 					<td>2</td>
 					<td>문서결재</td>
-					<td>구매신청서</td>
+					<td><a href="javascript:void(0)" 
+					onclick="window.open('${path}/appr/purchaseForm.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">구매신청서</a></td>
 					<td><i class="fa fa-star-o"></i></td>
 				</tr>
 				<tr>

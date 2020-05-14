@@ -39,7 +39,7 @@
 			<li>전체 프로젝트</li>
 			<li>즐겨찾기</li>
 			<hr>
-			<li>전체 업무</li>
+			<li><a href="${path }/task/selectTask.do">전체 업무</a></li>
 			<li>전체 일정</li>
 			<li>담아둔 글</li>
 			<li>나를 지정</li>	

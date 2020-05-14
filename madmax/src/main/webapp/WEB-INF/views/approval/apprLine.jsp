@@ -67,10 +67,10 @@ ul.info li{color:slategray; font-weight:bolder;}
 				<span style="font-weight:bolder; ">Type</span><br>
 				<hr>
 				<input type="radio" name="appr-method" value="approval" id="apprOpt">
-				<label for="appr1">결재</label>
+				<label for="apprOpt">결재</label>
 				<br>
-				<input type="radio" name="appr-method" value="consent" id="consentOpt">
-				<label for="appr2">합의</label>
+				<input type="radio" name="appr-method" value="agree" id="agreeOpt">
+				<label for="agreeOpt">합의</label>
 				<hr>
 				<button type="button" class="btn btn-sm btn-light" onclick="userAdd();"> <i class="fas fa-arrow-right"></i> </button>
 				<br>
@@ -82,6 +82,7 @@ ul.info li{color:slategray; font-weight:bolder;}
 			<div class="col-sm-8" id="apprLine-container" style="border:1px solid black;">
 				<div class="row">
 					<div class="col-sm-12">
+					<form id="lineForm" action="${pageContext.request.contextPath }/appr/test.do" >
 						<table class="table table-hover" id="apprLine-table" style="text-align:center;">
 							<tr id="lineInfo">
 								<th>방법</th>
@@ -103,6 +104,7 @@ ul.info li{color:slategray; font-weight:bolder;}
 							</tr>
 							
 						</table>
+					</form>
 					</div>
 				</div>
 			</div>
@@ -111,18 +113,10 @@ ul.info li{color:slategray; font-weight:bolder;}
 			<div class="col" style="text-align:right;">
 				<br>
 				<button type="button" class="btn btn-light" style="margin:2px 4px">닫기</button>
-				<button type="button" class="btn btn-primary" style="margin:2px 4px;">적용</button>			
+				<button type="button" class="btn btn-primary" style="margin:2px 4px;" onclick="sendLine();">적용</button>			
 			</div>
 		</div> <!-- End of div row  -->
 	</div> <!-- End of div container -->
 
-    <script>
-	    $("li").on("click", function(){
-	        $(this).children().slideToggle(100);
-	    });
-	    $(".un").on("click", function(e){
-	    	e.stopPropagation();
-	    })
-	</script>
 </body>
 </html>

@@ -43,8 +43,8 @@
 				</ul>
 				<button type="button" class="btn navBtn">조직도</button>
 				<button type="button" class="btn navBtn" onclick="location.assign('${path}/appr/approval.do')">전자결재</button>
-				<button type="button" class="btn navBtn" onclick="">근태현황</button>
-				<button type="button" class="btn navBtn">일정</button>
+				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
+				<button type="button" class="btn navBtn" onclick="location.replace('${path}/calendar/calendar.do')">일정</button>
 				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;

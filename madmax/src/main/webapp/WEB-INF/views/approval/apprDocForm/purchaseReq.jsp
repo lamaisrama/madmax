@@ -22,7 +22,6 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
-<script src="${path }/resources/js/apprdraft.js"></script>
 </head>
 <style>
 .header{
@@ -85,11 +84,6 @@ table.content tr{
 .basicContent input[type="text"]{
 	height:30%;
 }
-.here span{
-	border-radius:15px;
-	background-color:lightgreen;
-	font-size:10px;
-}
 </style>
 <body>
 	<div class="header">
@@ -100,24 +94,23 @@ table.content tr{
 		<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 	</div>
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
-	<form action="#" type="post">
-	<div class="container-fluid line-container">
-		<table class="lineTbl"> 
-			<tr id="apprTbl-dept">
-				<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-				<th class="line writerInfo">department</th>
+	<div class="container-fluid">
+		<table class="lineTbl">
+			<tr>
+				<th class="line" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
+				<th class="line">department</th>
 			</tr>
-			<tr id="apprTbl-user">
-				<td height="60" class="writerInfo">userName <br> jobtitle</td>
+			<tr>
+				<td height="60">userName <br> jobtitle</td>
 			</tr>
 		</table>
-		<table class="lineTbl ">
-			<tr id="agreeTbl-dept">
-				<th class="line title" rowspan="2" style="padding:0 5px;">합<br><br>의</th>
-				<!-- <th class="line"></th> -->
+		<table class="lineTbl">
+			<tr>
+				<th class="line" rowspan="2" style="padding:0 5px;">합<br><br>의</th>
+				<th class="line"></th>
 			</tr>
-			<tr id="agreeTbl-user">
-				<!-- <td height="60"></td> -->
+			<tr>
+				<td height="60"></td>
 			</tr>
 		</table> 				
 	</div>
@@ -143,13 +136,10 @@ table.content tr{
 				<th>참조자</th>
 				<td>
 					<div class="input-group my-1">
-					  <input type="text" id="referrerInput" class="form-control">
+					  <input type="text" class="form-control">
 					  <div class="input-group-append">
 					    <button class="btn" type="submit"><i class="fas fa-user-plus"></i></button>					    							
 					  </div>
-					</div>
-					<div class="here">
-						<span></span>
 					</div>
 				</td>
 				<th>기결재첨부</th>
@@ -163,31 +153,35 @@ table.content tr{
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="4">
+					<div>
+						<textarea style="width:100%;">텍스트API?</textarea>	
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table class=""																																																													>
+			<tr>
+				<th>품목</th>
+				<th>규격</th>
+				<th>수량</th>
+				<th>단가</th>
+				<th>금액</th>
+				<th>추가</th>
+			</tr>
+			<tr>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><button>삭제</button></td>
+			</tr>
 		</table>
 	</div>
-	<div class="doc-container">
-		<!-- TextEditor api  -->
-		<div class="container-fluid" style="min-height:500px;">
-			<div class="col-sm-12" style="border:1px solid lightgrey; margin:0 auto; min-height:500px;">
-				<br> <br>
-				<p> &nbsp;&nbsp;TextEditor API  출력</p>
-			</div>
-		</div>
-	</div>
-	</form>
+	
 	<script>
-		$(function(){
-			$("#referrerInput").on("change",function(){
-				$.ajax({
-					url:"${path}/appr/checkUserName",
-					data:{userName:$("#reffererInput").val()},
-					success:(data)=>{
-						console.log(data);
-					}
-				});
-			});
-		});
-		
 		function openLine(){
 			const url ="${path}/appr/line.do";
 			const name="S'toll | 결재선 ";
@@ -195,7 +189,10 @@ table.content tr{
 			window.open(url,name,option);
 		}
 		
-		
+		function closePage(){
+			if(confirm('정말 닫겠습니까? 작성하신 내용은 저장되지 않습니다.')){window.close();};
+			
+		}
 	</script>
 </body>
 </html>

@@ -4,7 +4,17 @@
 
     let selectUser ="";
     let deleteUser="";
+	let userList = [];
+    
     $(function(){
+
+    	$("li").on("click", function(){
+            $(this).children().slideToggle(100);
+        });
+        $(".un").on("click", function(e){
+        	e.stopPropagation();
+        })
+    	
     	//$(document).on("click",".un",function(e){
             $('.info li').on('click',function(e){
             console.log($('user-container li'));
@@ -25,7 +35,7 @@
                return;
             }
 
-            if(document.getElementById('apprOpt').checked==""&&document.getElementById('consentOpt').checked==""){
+            if(document.getElementById('apprOpt').checked==""&&document.getElementById('agreeOpt').checked==""){
                 alert('결재방법을 선택해주세요.');
                 return false;
             }
@@ -47,15 +57,23 @@
                     if(item.checked) selectedOpt=item.value;
                     else unselectedOpt=item.value;
                 });
+                let selectedOptVal = selectedOpt=='approval'?'결재':'합의';
+                let unselectedOptVal = unselectedOpt=='approval'?'결재':'합의';
                 console.log(selectedOpt+unselectedOpt);
                 let tr=$("<tr>").addClass('userLineInfo').on('click', userRemove(this));
                 let td_select=$("<td>");                
                 let td_input=$("<td>");
                 let td_button=$("<td>");
-                const apprOpt=$("<select>").attr('name','apprType').append($('<option>').attr('value',selectedOpt).html(selectedOpt)).append($('<option>').attr('value',unselectedOpt).html(unselectedOpt));
-                const lineInfo=$('<input>').attr('type','text').attr('name','userInfo').attr('value',selectUser).attr('disabled',true);
-                const up_btn=$("<button>").attr('type','button').addClass('btn').addClass('btn-light').addClass('btn-sm').addClass('mr-1').on('click',lineUp).html('▲');
-                const down_btn=$("<button>").attr('type','button').addClass('btn').addClass('btn-light').addClass('btn-sm').addClass('mr-1').on('click',lineDown).html('▼');
+                const apprOpt=$("<select>").addClass('apprType').attr('name','apprType')
+                					.append($('<option>').attr('value',selectedOpt).html(selectedOptVal))
+                					.append($('<option>').attr('value',unselectedOpt).html(unselectedOptVal));
+                const lineInfo=$('<input>').addClass('userInfo').attr('type','text')
+                					.attr('name','userInfo').attr('value',selectUser).attr('disabled',true);
+
+                const up_btn=$("<button>").attr('type','button').addClass('btn').addClass('btn-light').addClass('btn-sm').addClass('mr-1').html('▲');
+                up_btn.on('click',this,lineUp);
+                const down_btn=$("<button>").attr('type','button').addClass('btn').addClass('btn-light').addClass('btn-sm').addClass('mr-1').html('▼');
+                down_btn.on('click',this,lineDown);
                 $(td_select).append(apprOpt);
                 $(td_input).append(lineInfo);
                 $(td_button).append(up_btn).append(down_btn);
@@ -67,6 +85,7 @@
             }
 
         }
+    
     function userRemove(){
     	$(deleteUser).remove();
     	deleteUser="";
@@ -77,9 +96,36 @@
     	$('tr').css("backgroundColor", "white");
     }
     
-    function lineUp(){
+    
+    function lineUp(e){
+    	const target = $(e.target).parent().parent();
+    	$(target).prev().before($(target));
+    }
+    
+    
+    function lineDown(e){
+    	const target = $(e.target).parent().parent(); 
+    	$(target).next().after($(target));
     	
     }
-    function lineDown(){
-    	
+    
+    function sendLine(){
+    	const userInfo = $(".userInfo"); 
+    	$.each(userInfo, function(i,item){
+    		const apprStep=i+1;
+    		const apprTypes = $(".apprType");
+    		const apprType=apprTypes[i].value;
+    		const username=item.value;
+    		userList.push(new apprLineInfo(apprStep, apprType, username));
+    	});
+    	var data = JSON.stringify(userList);
+    	opener.addApprLine(userList);
+    	userList=[];
+    	window.close();
+    }	
+    
+    function apprLineInfo(apprStep, apprType, userName){
+    	this.apprStep=apprStep;
+    	this.apprType=apprType;
+    	this.userName=userName;
     }
