@@ -14,7 +14,6 @@
  	background-color:white;
  }
 
-
 </style>
 	
         <div class=" col col-sm-2 ml-3" >

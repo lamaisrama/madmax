@@ -8,6 +8,7 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
+	<!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"> -->
 	<link href='${path }/resources/css/fullcalendar.css' rel='stylesheet' />
 	<link href='${path }/resources/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<script src='${path }/resources/js/jquery-1.10.2.js' type="text/javascript"></script>
@@ -76,12 +77,28 @@
             titleFormat: {
                 month: 'MMMM yyyy', // September 2009
                 week: "MMMM yyyy", // September 2009
-                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+                day: 'MMMM yyyy'  // Tuesday, Sep 8, 2009
             },
 			allDaySlot: false,
 			selectHelper: true,
 			select: function(start, end, allDay) {
 				var title = open('','_blank','width=500,height=500');
+				var js = '<script>';
+				js+='function viewScd(){';
+				js+='location.href="//.do?no="';
+				js+='}';
+				js+='</';
+				js+='script>';
+				var content = '<html><body>';
+				content+='<h1>Title</h1>';
+				content+='<p>subtitle</p>';
+				content+='<hr>';
+				content+='<h5>일자</h5>';
+				content+='<h5>장소</h5>';
+				content+='<button onclick="viewScd();">상세보러가기</button>';
+				content+=js+'</body>';
+				content+='</html>';
+				title.document.write(content);
 				calendar.fullCalendar('unselect');
 			},
 			droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -107,23 +124,59 @@
 					$(this).remove();
 				}
 
-			}
+			},
+
+			events: [
+				{
+					title: 'All Day Event',
+					start: new Date(y, m, 1)
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d-3, 16, 0),
+					allDay: false,
+					className: 'info'
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d+4, 16, 0),
+					allDay: false,
+					className: 'info'
+				},
+				{
+					title: 'Meeting',
+					start: new Date(y, m, d, 10, 30),
+					allDay: false,
+					className: 'important'
+				},
+				{
+					title: 'Lunch',
+					start: new Date(y, m, d, 12, 0),
+					end: new Date(y, m, d, 14, 0),
+					allDay: false,
+					className: 'important'
+				},
+				{
+					title: 'Birthday Party',
+					start: new Date(y, m, d+1, 19, 0),
+					end: new Date(y, m, d+1, 22, 30),
+					allDay: false,
+				},
+				{
+					title: 'Click for Google',
+					start: new Date(y, m, 28),
+					end: new Date(y, m, 29),
+					url: 'http://google.com/',
+					className: 'success'
+				}
+			],
 		});
 	});
 
 </script>
 <style>
-
-/*
-	 body {
-		border: 1px solid red;
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
-		background-color: #DDDDDD;
-		}
-*/
 	#wrap {
 		width: 100%;
 		margin: 20px auto;
@@ -142,7 +195,7 @@
 		padding-top: 1em;
 		}
 
-	.external-event { /* try to mimick the look of a real event */
+	.external-event {
 		margin: 10px 0;
 		padding: 2px 4px;
 		background: #3366CC;
@@ -174,7 +227,7 @@
 </style>
 <div class="col col-sm-10">	
 <div id='wrap'>
-	<h4>전체일정</h4>	
+	<h4><i class="far fa-calendar-alt"></i>&nbsp;전체일정</h4>	
 	<hr>
 	<br>
 	<div id='calendar'></div>

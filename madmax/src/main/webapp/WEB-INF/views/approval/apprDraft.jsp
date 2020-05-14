@@ -90,6 +90,12 @@ table.content tr{
 	background-color:lightgreen;
 	font-size:10px;
 }
+
+ul {list-style: none;}
+th{ background-color:lightgrey; }
+ul.info{display: none;}
+ul.dept li{color:darkslategrey; font-weight:bolder;}
+ul.info li{color:slategray; font-weight:bolder;}
 </style>
 <body>
 	<div class="header">
@@ -100,80 +106,70 @@ table.content tr{
 		<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 	</div>
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
-	<form action="#" type="post">
-	<div class="container-fluid line-container">
-		<table class="lineTbl"> 
-			<tr id="apprTbl-dept">
-				<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-				<th class="line writerInfo">department</th>
-			</tr>
-			<tr id="apprTbl-user">
-				<td height="60" class="writerInfo">userName <br> jobtitle</td>
-			</tr>
-		</table>
-		<table class="lineTbl ">
-			<tr id="agreeTbl-dept">
-				<th class="line title" rowspan="2" style="padding:0 5px;">합<br><br>의</th>
-				<!-- <th class="line"></th> -->
-			</tr>
-			<tr id="agreeTbl-user">
-				<!-- <td height="60"></td> -->
-			</tr>
-		</table> 				
-	</div>
-	<div class="content-container">
-		<table class="content">
-			<tr class="basicContent">
-				<th>문서번호</th>
-				<td>자동채번</td>
-				<th>기안일자</th>
-				<td>
-					<fmt:formatDate value="${today }" dateStyle="long" type="date"/> 
-				</td>
-			</tr>
-			<tr class="basicContent">
-				<th>기안자</th>
-				<td>
-					박나정 
-				</td>
-				<th>기안 부서</th>
-				<td>개발팀</td>
-			</tr>
-			<tr class="basicContent">
-				<th>참조자</th>
-				<td>
-					<div class="input-group my-1">
-					  <input type="text" id="referrerInput" class="form-control">
-					  <div class="input-group-append">
-					    <button class="btn" type="submit"><i class="fas fa-user-plus"></i></button>					    							
-					  </div>
-					</div>
-					<div class="here">
-						<span></span>
-					</div>
-				</td>
-				<th>기결재첨부</th>
-				<td>결재문서제목 <button type="button" class="btn btn-sm"><i class="fas fa-times"></i></button></td>
-			</tr>
-			<tr class="basicContent">
-				<th>기안 제목</th>
-				<td colspan="3">
-					<div class="form-group my-1 mr-3">
-						<input type="text" class="form-control">
-					</div>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div class="doc-container">
-		<!-- TextEditor api  -->
-		<div class="container-fluid" style="min-height:500px;">
-			<div class="col-sm-12" style="border:1px solid lightgrey; margin:0 auto; min-height:500px;">
-				<br> <br>
-				<p> &nbsp;&nbsp;TextEditor API  출력</p>
+	<form action="#" method="post">
+		<div class="container-fluid line-container">
+			<table class="lineTbl"> 
+				<tr id="apprTbl-dept">
+					<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
+					<th class="line writerInfo">department</th>
+				</tr>
+				<tr id="apprTbl-user">
+					<td height="60" class="writerInfo">userName <br> jobtitle</td>
+				</tr>
+			</table>
+			<table class="lineTbl ">
+				<tr id="agreeTbl-dept">
+					<th class="line title" rowspan="2" style="padding:0 5px;">합<br><br>의</th>
+					<!-- <th class="line"></th> -->
+				</tr>
+				<tr id="agreeTbl-user">
+					<!-- <td height="60"></td> -->
+				</tr>
+			</table> 				
+		</div>
+		<div class="content-container">
+			<table class="content">
+				<tr class="basicContent">
+					<th>문서번호</th>
+					<td>자동채번</td>
+					<th>기안일자</th>
+					<td>
+						<fmt:formatDate value="${today }" dateStyle="long" type="date"/> 
+					</td>
+				</tr>
+				<tr class="basicContent">
+					<th>기안자</th>
+					<td>
+						박나정 
+					</td>
+					<th>기안 부서</th>
+					<td>개발팀</td>
+				</tr>
+				<tr class="basicContent">
+					<th>수신처</th>
+					<td id="receivingInfo"></td>
+					<th>기결재첨부</th>
+					<td>결재문서제목 <button type="button" class="btn btn-sm"><i class="fas fa-times"></i></button></td>
+				</tr>
+				<tr class="basicContent">
+					<th>기안 제목</th>
+					<td colspan="3">
+						<div class="form-group my-1 mr-3">
+							<input type="text" class="form-control">
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="doc-container">
+			<!-- TextEditor api  -->
+			<div class="container-fluid" style="min-height:500px;">
+				<div class="col-sm-12" style="border:1px solid lightgrey; margin:0 auto; min-height:500px;">
+					<br> <br>
+					<p>&nbsp;&nbsp;TextEditor API  출력</p>
+				</div>
 			</div>
 		</div>
-	</div>
 	</form>
 	<script>
 		$(function(){
