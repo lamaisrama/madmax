@@ -29,10 +29,8 @@
         <div class="row-vh d-flex flex-row">
 
             <div class="item mx-auto align-self-center">
-
                
                 <form style="padding-top: 220px;">
-
 
 					  <h5 class="colum"><span class="material-icons">person</span>&nbsp;아이디</h5>
                       <div class="input-group mb-3">
@@ -45,7 +43,6 @@
                       </div>
                       <div class="row justify-content-end">
                       	<lable><input type="checkbox" value="자동로그인">자동로그인</lable>
-                      
                       </div>
                       
                       <div class="row justify-content-center p-1">
