@@ -10,7 +10,7 @@ import com.madmax.stool.user.model.vo.User;
 import com.madmax.stool.user.model.service.UserService;
 
 @Controller
-@SessionAttributes({"loginUser"})
+//@SessionAttributes({"loginUser"})
 public class UserController {
 	
 	@Autowired
@@ -32,7 +32,7 @@ public class UserController {
 		if(result==0) {
 			page = "common/msg";
 			model.addAttribute("msg", "회원가입실패! 다시 시도해주세요!");
-			model.addAttribute("loc", "/user/insertUser.do");
+			model.addAttribute("loc", "/user/joinUser.do");
 		}else {
 			page = "redirect:/";
 		}
