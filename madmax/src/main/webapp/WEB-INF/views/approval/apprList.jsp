@@ -78,19 +78,22 @@
 				<tr>
 					<td>3</td>
 					<td>인사</td>
-					<td>출장신청서</td>
+					<td><a href="javascript:void(0)" 
+					onclick="window.open('${path}/appr/businesTrip.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">출장신청서</a></td>
 					<td><i class="fa fa-star-o"></i></td>
 				</tr>
 				<tr>
 					<td>4</td>
 					<td>인사</td>
-					<td>출장정산신청서</td>
+					<td><a href="javascript:void(0)" 
+					onclick="window.open('${path}/appr/businesTripSettlement.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">출장정산신청서</a></td>
 					<td><i class="fa fa-star-o"></i></td>
 				</tr>
 				<tr>
 					<td>5</td>
 					<td>인사</td>
-					<td>휴가신청서</td>
+					<td><a href="javascript:void(0)" 
+					onclick="window.open('${path}/appr/dayOff.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">휴가신청서</a></td>
 					<td><i class="fa fa-star-o"></i></td>
 				</tr>
 			</table>

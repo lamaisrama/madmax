@@ -49,6 +49,8 @@
 
                 <form action="${path }/user/userEnrollEnd.do" name="userEnrollFrm" method="post" onsubmit="return validate();">
                     <img src="images/userImg.png" width="280px" height="280px">
+                <form>
+                    <img src="${pageContext.request.contextPath}/resources/images/userImg.png" width="280px" height="280px">
                     <h5 class="text-center">클릭하여 사진을 등록하세요</h5>
                     <h5 class="colum">
                     	<span class="material-icons">person</span>&nbsp;아이디

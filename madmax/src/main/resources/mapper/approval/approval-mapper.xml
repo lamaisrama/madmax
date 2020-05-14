@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approval">
+	<select id="selectDeptInfo" resultType="com.madmax.stool.approval.model.vo.DeptUsers">
+		SELECT * FROM DEPT
+	</select>
+	<select id="selectDeptUsers" parameterType="com.madmax.stool.approval.model.vo.DeptUsers"
+								 resultType="com.madmax.stool.approval.model.vo.User">
+		SELECT * FROM STOOLUSER WHERE DEPTCODE=#{deptCode}
+	</select>
+</mapper>
