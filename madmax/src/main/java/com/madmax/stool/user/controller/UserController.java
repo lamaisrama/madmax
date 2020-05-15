@@ -26,16 +26,14 @@ public class UserController {
 	@RequestMapping("/user/userEnrollEnd.do")
 	public String insertUser(User u, Model model) {
 		
-		int result = service.insertUser(u);
+		//int result = service.insertUser(u);
 		String page = "";
 		
-		if(result==0) {
-			page = "common/msg";
-			model.addAttribute("msg", "회원가입실패! 다시 시도해주세요!");
-			model.addAttribute("loc", "/user/insertUser.do");
-		}else {
-			page = "redirect:/";
-		}
+		/*
+		 * if(result==0) { page = "common/msg"; model.addAttribute("msg",
+		 * "회원가입실패! 다시 시도해주세요!"); model.addAttribute("loc", "/user/insertUser.do");
+		 * }else { page = "redirect:/"; }
+		 */
 		
 		return page;
 	}
