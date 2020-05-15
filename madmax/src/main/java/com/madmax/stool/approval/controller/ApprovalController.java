@@ -31,7 +31,7 @@ public class ApprovalController {
 	@RequestMapping("/appr/draftForm.do")
 	public String selectDraftForm(@RequestParam(required=false, defaultValue="1") int dNo) {
 		
-		return "approval/apprDraft";
+		return "approval/apprDocWrite";
 	}
 	
 	@RequestMapping("/appr/draftFormEnd")
