@@ -21,5 +21,8 @@ public class User {
 	private String sign;
 	private Date birthDay;
 	private String deptCode;
+	private String deptName;
 	private String jobCode;
+	private String jobName;
+	
 }

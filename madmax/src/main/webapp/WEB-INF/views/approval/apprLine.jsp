@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +20,13 @@
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/resources/js/apprline.js"></script>
 <style>
-div{ min-height:500px; }
+div{ min-height:200px; }
 hr{ margin:2px 0 } 
-ul {list-style: none;}
-th{ background-color:lightgrey; }
+ul {list-style: none; padding-left:10px;}
+th{ font-weight:bolder; font-size:14px; }
 ul.info{display: none;}
-ul.dept li{color:darkslategrey; font-weight:bolder;}
-ul.info li{color:slategray; font-weight:bolder;}
+ul.dept li{color:darkslategrey; font-weight:bolder; }
+ul.info li{color:slategray; font-weight:bolder; }
 </style>
 </head>
 <body>
@@ -38,27 +40,19 @@ ul.info li{color:slategray; font-weight:bolder;}
                 <hr>
                 <span style="color:darkslategrey; font-size:14px; font-weight:bolder;">MADMAX COMPANY</span>
                 <ul class="dept">
-                    <li>인사관리
-                        <ul class="info">
-                            <li class="un">박나정</li>
-                            <li class="un">최민형</li>
-                        </ul>
-                    </li>
-                    <li>기술개발
-                        <ul class="info">
-                            <li class="un">최가영</li>
-                            <li class="un">정세현</li>
-                        </ul>
-                    </li>
-                    <li>마케팅
-                        <ul class="info">
-                            <li>김미연</li>
-                            <li>이시은</li>
-                        </ul>
-                    </li>
-                    <li>회계관리</li>
-                    <li>경영지원</li>
-                    <li>총무</li>
+                	<c:forEach items="${list }" var="l">
+	                    <li>${l.deptName }
+	                     	<c:forEach items="${l.users}" var="u">
+		                        <ul class="info">
+		                        	<li class="un">
+		                        		${u.userName } ${u.jobName }
+		                        		<input type="hidden" name="userInfo"  
+		                        			value="${u.userName},${u.userId },${u.jobName},${u.deptName}" >
+		                        	</li>
+		                        </ul>
+	                        </c:forEach>
+	                    </li>
+                	</c:forEach>
                 </ul>
 			</div>
 			<div class="col-sm-1" style="padding: 10px auto; text-align:center; font-size:12px;">
@@ -71,6 +65,10 @@ ul.info li{color:slategray; font-weight:bolder;}
 				<br>
 				<input type="radio" name="appr-method" value="agree" id="agreeOpt">
 				<label for="agreeOpt">합의</label>
+				<br>
+				<br>
+				<input type="radio" name="appr-method" value="receiving" id="receiveOpt">
+				<label for="receiveOpt">수신</label>
 				<hr>
 				<button type="button" class="btn btn-sm btn-light" onclick="userAdd();"> <i class="fas fa-arrow-right"></i> </button>
 				<br>
@@ -82,7 +80,6 @@ ul.info li{color:slategray; font-weight:bolder;}
 			<div class="col-sm-8" id="apprLine-container" style="border:1px solid black;">
 				<div class="row">
 					<div class="col-sm-12">
-					<form id="lineForm" action="${pageContext.request.contextPath }/appr/test.do" >
 						<table class="table table-hover" id="apprLine-table" style="text-align:center;">
 							<tr id="lineInfo">
 								<th>방법</th>
@@ -102,9 +99,19 @@ ul.info li{color:slategray; font-weight:bolder;}
 									<button type="button" class="btn btn-light btn-sm" disabled="disabled">▼</button>
 								</td>
 							</tr>
-							
 						</table>
-					</form>
+					</div>
+				</div>
+
+				<br><br>
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-hover" id="receiving-table" style="text-align:center;">
+							<tr>
+								<th>수신처</th>
+								<th>수신인</th>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>

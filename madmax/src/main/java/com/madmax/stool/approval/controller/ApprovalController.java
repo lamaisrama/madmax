@@ -1,13 +1,21 @@
 package com.madmax.stool.approval.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.approval.model.service.ApprovalService;
+import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
 
 @Controller
 public class ApprovalController {
+	@Autowired 
+	ApprovalService service;
 	
 	
 	@RequestMapping("/appr/approval.do")
@@ -26,14 +34,33 @@ public class ApprovalController {
 		return "approval/apprDraft";
 	}
 	
+	@RequestMapping("/appr/draftFormEnd")
+	public String selectDraftFormEnd() {
+		
+		return "";
+	}
+	
 	@RequestMapping("/appr/purchaseForm.do")
 	public String selectPurchaseForm() {
 		return "approval/apprDocForm/purchaseReq";
 	}
 	
 	@RequestMapping("/appr/line.do")
-	public String approvalLine() {
-		return "approval/apprLine";
+	public ModelAndView approvalLine(ModelAndView mv) {
+		
+		List<DeptUsers> deptUsers = service.selectDeptInfo(); 
+		
+		
+		for(DeptUsers du : deptUsers) { 
+			List<User> users = service.selectDeptUsers(du);
+			du.setUsers(users);
+			System.out.println(du);
+		}
+		
+		
+		mv.addObject("list", deptUsers);
+		mv.setViewName("approval/apprLine");
+		return mv;
 	}
 	
 	@RequestMapping("/appr/apprTempBox.do")
