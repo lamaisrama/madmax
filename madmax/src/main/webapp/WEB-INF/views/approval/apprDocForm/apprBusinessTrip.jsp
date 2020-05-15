@@ -165,14 +165,26 @@ table.content tr{
 			</tr>
 		</table>
 	</div>
-	<table>
+		<p>🚅 출장신청</p>
+	<table class="table table-hover" id="doc-form-table">
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>출장 시작</td>
+			<td><input type="date"></td>
+			<td>출장 마감</td>
+			<td><input type="date"></td>
 		</tr>
+		<tr>
+			<td>출장 지역</td>
+			<td ><input type="text"></td>
+			<td>출장 목적</td>
+			<td colspan="3"><input type="text"></td>
+		</tr>
+	
 	</table>
+	<div class="row-vh d-flex flex-row justify-content-end"> 
+		<button type="button" class="btn btnPrimary" value="submit">제출</button>
+	</div>
+	<br>
 	</form>
 	<script>
 		$(function(){

@@ -169,8 +169,8 @@ table.content tr{
 
 		</table>
 		
-			<table class="table table-hover" id="doc-form-table">
 				<p>☑️휴가신청</p>
+			<table class="table table-hover" id="doc-form-table">
 				<tr>
 					<td>휴가신청일</td>
 					<td><input type="date"></td>
@@ -195,12 +195,8 @@ table.content tr{
 										</span>
 										</button>					    							
 									</div>
-									<script>
-										function test(){
-											$("#regDate").trigger("click");
-										}
-									</script>
-								 		 ~
+									
+								 		 ~&nbsp;&nbsp;
 							  <input type="date" class="form-control" style="width:160px;" id="regDate2"  onchange="date();">
 								  <div class="input-group-append">
 									    <button type="button" class="btn"><span class="material-icons">
@@ -219,9 +215,9 @@ table.content tr{
 				</tr>
 			</table>
 			<div class="row justify-content-end">
-								<button class="btn new" type="submit">신규</button>
-								<button class="btn delete" type="submit">삭제</button>
-								<button class="btn save" type="submit">저장</button>
+								<button class="btn btnPrimary" type="submit">신규</button>
+								<button class="btn btnPrimary" type="submit">삭제</button>
+								<button class="btn btnPrimary" type="submit">저장</button>
 			</div>
 		
 

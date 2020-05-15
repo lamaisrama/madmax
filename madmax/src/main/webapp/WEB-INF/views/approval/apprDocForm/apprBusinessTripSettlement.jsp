@@ -6,6 +6,9 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <c:set var="today" value="<%=new java.util.Date() %>" />
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,6 +126,7 @@ table.content tr{
 	</div>
 	<div class="content-container">
 		<table class="content">
+	
 			<tr class="basicContent">
 				<th>문서번호</th>
 				<td>자동채번</td>
@@ -165,16 +169,53 @@ table.content tr{
 			</tr>
 		</table>
 	</div>
-	<table>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
+		<p>📄 출장정산신청</p><button type="button" class="btn btnLight " name="btnAdd">추가</button>
+		<br>
+		<br>
+	<table class="table table-hover text-center" id="doc-form-table">
+		<tr name="tr">
+			<td>사용처</td>
+			<td>금액</td>
+			<td>사유</td>
 			<td></td>
 		</tr>
+		<tr name="tr">
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td style="width:146px;"></td>
+		</tr>
 	</table>
+	<div class="row justify-content-end">
+		<button class="btn btnPrimary" type="submit">제출</button>
+	</div>
+	<br>
 	</form>
 	<script>
+	 $(document).on("click","button[name=btnAdd]",function(){
+	        
+	        var tdAdd =     '<tr name="tr">'+
+	            			'<td><input type="text"></td>'+
+	            			'<td><input type="text"></td>'+
+	            			'<td><input type="text"></td>'+
+	            			'<td><button type="button" class="btn btnLight" name="btnDel">삭제</button></td>'+
+	           				 '</td>'+
+	            			'</tr>';
+	            
+	        var tr = $( "tr[name=tr]:last" ); //last를 사용하여 trStaff라는 명을 가진 마지막 태그 호출
+	        
+	        tr.after(tdAdd); //마지막 trStaff명 뒤에 붙인다.
+	        
+	    });
+	
+	    $(document).on("click","button[name=btnDel]",function(){
+	        
+	        var trDel = $(this).parent().parent();
+	        
+	        trDel.remove(); //tr 테그 삭제
+	        
+	    });
+	
 		$(function(){
 			$("#referrerInput").on("change",function(){
 				$.ajax({
