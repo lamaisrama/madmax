@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-
-
 
 <style>
 	ul{
@@ -131,12 +130,15 @@
 	<nav>
 		<ul class="menu">
 			<li>
-				<div class="user-container">
+				<div class="user-container text-center">
 					<button type="button" class="userBtn btn btn-light">
 						<i class="far fa-user" style="font-size:40px;"></i>
 						<span><i style="font-size:8px;">증명사진</i></span>
-					</button><br>
-					<span><strong>UserName</strong>님</span>				
+					</button>
+					<br><br>
+					<c:if test="${loginUser!=null}">
+						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
+					</c:if>				
 				</div>
 			</li>
 			<hr>
