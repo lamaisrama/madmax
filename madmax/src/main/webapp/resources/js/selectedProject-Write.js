@@ -146,10 +146,10 @@ function fn_addWorker(e){
         $("#workerListStr").val(selectName);
     }    
     $("#workerList").prepend("<div class='d-flex justify-content-between align-items-center m-1 selectedWorker pl-2 pr-2'>"
-                            +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/icon/profile_img.png'/></div>"
+                            +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/images/defaultProfile.png'/></div>"
                             +"<span>"+selectName+"</span>"
                             +"<button type='button' onclick='fn_deleteWorker(this);' class='p-0 ml-2'>"
-                            +"<img src='http://localhost:9090/stool/resources/icon/minus_icon.png'/></button></div>");
+                            +"<i class='fas fa-minus-circle stoolPink'></i></button></div>");
     $("#addWorkerModal").modal("hide");
 
     console.log($("#workerListStr").val());
@@ -172,6 +172,7 @@ function fn_deleteWorker(e){
 //업무 작성 관련 스트립트 끝 -------------------------------------<
 
 window.onload = function(){
+
     //작성 공통 스크립트 ---------------------------------------------->
     // 1) 태그+언급 툴팁
     $('[data-toggle="tooltip"]').tooltip({
@@ -251,24 +252,14 @@ window.onload = function(){
     scheduleTextEle.on('keyup', function() {
         adjustHeight_schedule();
     }); 
-    //일정 - 지도
-    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    var options = { //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
-    };
     
-    var map = new kakao.maps.Map(container, options);
-
-
     //글 작성 관련 스크립트 끝 ---------------------------------------<  
 
     //업무리포트 슬라이드아이콘
     let angle = 0;
     $('#reportBoxBtn').click(function() { 
         angle += 180;
-        $("#rb_slide_icon").attr("style","transform: rotate( "+angle+"deg );");
-        console.log(angle);
+        $("#rb_slide_icon").attr("style","transform: rotate( "+angle+"deg );width: 25px;");
     });
 
     $("#filesBtn").click(function(){
@@ -278,7 +269,80 @@ window.onload = function(){
         $("#imgFiles").click();
     });    
 
+    
+    
+
+  //일정 - 지도
+  ////////////////////
+  // 카카오 지도 API S 
+  /////////////////// 
+  var mapContainer; // 지도를 표시할 div
+  var mapOption;
+
+  //지도를 미리 생성
+  var map;
+  //주소-좌표 변환 객체를 생성
+  var geocoder;
+  //마커를 미리 생성
+  var marker;
+    
 }
+
+
+
+function sample5_execDaumPostcode() {
+	mapContainer = document.getElementById('map');
+	mapOption = {
+		      center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+		      level: 5 // 지도의 확대 레벨
+		  };
+	map = new daum.maps.Map(mapContainer, mapOption);
+	geocoder = new daum.maps.services.Geocoder();
+	marker = new daum.maps.Marker({
+		  position: new daum.maps.LatLng(37.537187, 127.005476),
+		  map: map
+		  });
+new daum.Postcode({
+    oncomplete: function(data) {
+        var addr = data.address; // 최종 주소 변수
+
+        // 주소 정보를 해당 필드에 넣는다.
+        document.getElementById("schedulePlace").value = addr;
+        // 주소로 상세 정보를 검색
+        geocoder.addressSearch(data.address, function(results, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === daum.maps.services.Status.OK) {
+
+                var result = results[0]; //첫번째 결과의 값을 활용
+
+                // 해당 주소에 대한 좌표를 받아서
+                var coords = new daum.maps.LatLng(result.y, result.x);
+                console.log(result.y, result.x);
+                // 지도를 보여준다.
+//                mapContainer.style.display = "block";
+                $("#mapBox").attr("style", "display:block; height:300px;");
+                map.relayout();
+                // 지도 중심을 변경한다.
+                map.setCenter(coords);
+                // 마커를 결과값으로 받은 위치로 옮긴다.
+                marker.setPosition(coords)
+            }
+        });
+    }
+}).open();
+}
+//$("#cBtn-schedule").click( function() { 
+////실행될 코드 
+//relayout();
+//map.setCenter(new daum.maps.LatLng(33.450701, 126.570667));
+//});
+
+//////////////////// 
+// 카카오 지도 API E 
+/////////////////// 
+
+
+
 
 //프로젝트 > 프로젝트 정보 ------------------------------------------>
 //1)즐겨찾기 기능
@@ -434,17 +498,36 @@ function fn_handleFilesSelect(){
         let iconStr = "";
 
         switch(ext){
-            case "jpg" || "png" || "jpeg" : iconStr = "ext_image_icon.png"; break;
-            case "jsp" || "java" || "css" || "html" : iconStr = "ext_code_icon.png"; break;
-            case "hwp" || "txt" || "ppt" || "dox" || "xls" : iconStr = "ext_document_icon.png"; break;
-            case "mp3" || "aac" || "wav" : iconStr = "ext_audio_icon.png"; break;
-            case "pdf" : iconStr = "ext_pdf_icon.png"; break;
-            case "mp4" || "avi" || "wmv" || "flv" || "mov" : iconStr = "ext_video_icon.png"; break;
-            case "zip" || "apk" || "rar" || "tar" : iconStr = "ext_zip_icon.png"; break;
-            default : iconStr = "ext_default_icon.png";
+            case "jpg" : iconStr = "fas fa-file-image text-success"; 
+            case "png" : iconStr = "fas fa-file-image text-success";
+            case "jpeg" : iconStr = "fas fa-file-image text-success"; break;
+            case "jsp": iconStr = "fas fa-file-code text-muted";
+            case "java" : iconStr = "fas fa-file-code text-muted";
+            case "css" : iconStr = "fas fa-file-code text-muted";
+            case "html" : iconStr = "fas fa-file-code text-muted"; break;
+            case "hwp" : iconStr = "fas fa-file-word text-primary";
+            case "txt" : iconStr = "fas fa-file-word text-primary";
+            case "ppt" : iconStr = "fas fa-file-word text-primary";
+            case "dox" : iconStr = "fas fa-file-word text-primary";
+            case "xls" : iconStr = "fas fa-file-word text-primary"; break;
+            case "mp3" : iconStr = "fas fa-file-audio text-info";
+            case "aac" : iconStr = "fas fa-file-audio text-info"; break;
+            case "wav" : iconStr = "fas fa-file-audio text-info"; break;
+            case "pdf" : iconStr = "fas fa-file-pdf text-danger"; break;
+            case "mp4" : iconStr = "fas fa-file-video text-info";
+            case "avi" : iconStr = "fas fa-file-video text-info";
+            case "flv" : iconStr = "fas fa-file-video text-info";
+            case "mov" : iconStr = "fas fa-file-video text-info";
+            case "avi" : iconStr = "fas fa-file-video text-info"; break;
+            case "zip" || "apk" || "rar" || "tar" : iconStr = "fas fa-file-archive text-primary";
+            case "apk" : iconStr = "fas fa-file-archive text-primary";
+            case "rar" : iconStr = "fas fa-file-archive text-primary";
+            case "tar" : iconStr = "fas fa-file-archive text-primary"; break;
+            default : iconStr = "fas fa-file text-info";
         }
 
-        let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'><img src='http://localhost:9090/stool/resources/icon/extIcon/"+iconStr+"' class='mr-2'/><span>"
+        let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'>"
+        					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'/><span>"
                             +files[i].name+"</span></div></div>";
         $("#fileBox").append(fileDiv_html);
     }
@@ -482,7 +565,7 @@ function fn_addTag(e){
         $(".addTagList").prepend("<p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>"
                                 +"<span style='color:#25558F;'>#</span>"
                                 +"<span class='tagText'>"+$(e).val()+"</span>"
-                                +"<img src='http://localhost:9090/stool/resources/icon/minus_icon.png' onclick='fn_deleteTag(this)'/></p>");
+                                +"<i class='fas fa-minus-circle stoolGrey ml-2' onclick='fn_deleteTag(this)'></i></p>");
         $(e).val("");
     }
 }
@@ -526,10 +609,10 @@ function fn_addMention(e){
         $("#mentionListStr").val(selectName);
     }
     $("#mentionListBox").prepend("<div class='d-flex justify-content-between align-items-center m-1 selectedWorker pl-2 pr-2'>"
-                            +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/icon/profile_img.png'/></div>"
+                            +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/images/defaultProfile.png'/></div>"
                             +"<span>"+selectName+"</span>"
                             +"<button type='button' onclick='fn_deleteMention(this);' class='p-0 ml-2'>"
-                            +"<img src='http://localhost:9090/stool/resources/icon/minus_icon.png'/></button></div>");
+                            +"<i class='fas fa-minus-circle stoolPink'></i></button></div>");
     $("#addMentionModal").modal("hide");
     
     console.log($("#mentionListStr").val());
