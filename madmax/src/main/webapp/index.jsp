@@ -20,13 +20,13 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-	<div class="col-sm-10 row" id="area">
+	<div class="col-sm-7 row" id="area">
 
                   <br>
                   
                   
                     <div class="row justify-content-around">
-                        <div class="colum col-sm-7" id="calendar" >
+                        <div class="colum col-sm-6" id="calendar" >
 
                         </div>
 
@@ -71,20 +71,20 @@
                         
                     </div>
                     
-                    <div class="container">
+                    <div class="container p-5">
                       <p>🔖 즐겨찾기 프로젝트</p>                    
                       
                       <div class="row-vh d-flex flex-row justify-content-around row-nw d-flex flex-wrap">
 
                           
 
-                            <div class="item p-3">Item1</div>
+                            <div class="item p-3"></div>
                 
-                            <div class="item p-3">Item2</div>
+                            <div class="item p-3"></div>
                 
-                            <div class="item p-3">Item3</div>
+                            <div class="item p-3"></div>
                 
-                            <div class="item p-3">Item4</div>
+                            <div class="item p-3"></div>
                 
                       </div>
                       
@@ -101,33 +101,29 @@
       height: 300px;
       
      }
-       ddiv{
-           border: black 1px solid;
-       }
-       .container-fluid{
-           height: 768px;
-           width: 1366px;
-       }
 
+		ddiv{
+			border:1px solid black;
+		}
        .item{
 
          height: 160px;
-         width: 130px;
+         width: 150px;
          
          border-radius: 30px;
-         
-        background-color:  rgba(5, 8, 24, 0.76);
+         border: #2C3E50;
+         background-color:  #2C3E50;
          color: black;
          cursor: pointer;
        }
        .item:hover{
 
         height: 160px;
-        width: 130px;
+        width: 150px;
 
         border-radius: 30px;
-        border: 3px solid rgba(46, 60, 134, 0.76);
-        background-color: rgba(29, 38, 82, 0.76);
+        border:  rgb(35, 60, 97);
+        background-color: rgb(35, 60, 97);
         color: white;
         }
 
