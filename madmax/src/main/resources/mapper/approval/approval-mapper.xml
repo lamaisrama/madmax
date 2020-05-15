@@ -6,6 +6,8 @@
 	</select>
 	<select id="selectDeptUsers" parameterType="com.madmax.stool.approval.model.vo.DeptUsers"
 								 resultType="com.madmax.stool.approval.model.vo.User">
-		SELECT * FROM STOOLUSER WHERE DEPTCODE=#{deptCode}
+		SELECT * FROM STOOLUSER LEFT JOIN DEPT USING(DEPTCODE)
+								LEFT JOIN JOBTABLE USING(JOBCODE) 
+								WHERE DEPTCODE=#{deptCode} ORDER BY jobcode
 	</select>
 </mapper>
