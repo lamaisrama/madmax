@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
-<jsp:include page="/WEB-INF/views/common/sidebar-appr.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <style>
 	.list-container{ margin-left:10px; font-size:12px; }
 	div.currList{ font-size:12px; background-color:#F1F0F5; height:50px; margin:10px auto;}

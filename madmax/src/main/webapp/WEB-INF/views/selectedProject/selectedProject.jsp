@@ -15,7 +15,8 @@
     <script src="${path}/resources/js/bootstrap-datepicker/bootstrap-datepicker.kr.min.js"></script>
 
     <!-- kakao map -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d1bdbfd0b440522feea5327aec9def1&libraries=services"></script>
+	<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d1bdbfd0b440522feea5327aec9def1&libraries=services,clusterer,drawing"></script>
 
     <!-- 스타일 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/selectedProject-Write.css"/>
@@ -33,7 +34,7 @@
                         </button>
 
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                           	프로젝트명이 들어가는 자리
+                           	시스템 유지운영 프로젝트
                         </h4>
                         
                         <div class="dropdown col-1" id="selectColorBox">
@@ -93,11 +94,11 @@
 
                 <!-- 업무리포트 -->
                 <div id="reportBox" class="w-100 bg-white border border-grey d-flex flex-column align-items-center mb-3">
-                        <button type="button" class="btn w-100 d-flex justify-content-between" data-toggle="collapse" data-target="#demo" id="reportBoxBtn">
-                            <p class="m-0">
+                        <button type="button" class="btn w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#demo" id="reportBoxBtn">
+                            <strong class="m-0">
                                 	업무리포트
-                            </p>
-                            <img src="${path}/resources/icon/slide_icon.png" alt="" id="rb_slide_icon">
+                            </strong>
+                            <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
                         </button>
                         <div id="demo" class="collapse p-2 w-100">
                             <div class="border w-100" style="height: 200px;">
@@ -171,16 +172,16 @@
                                     <strong class="mr-2">담당자</strong>
                                     <input type="text" id="workerListStr" name="workerListStr" style="display: none;"/>
                                     <div id="workerList" class="d-flex flex-wrap">            
-                                        <button type="button" id="addWorker" class="btn btn-info m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
+                                        <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
                                     </div>
                                 </div>
                                 <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartDate"/>
+                                    <input type="date"" id="taskStartDate" name="taskStartDate" class="stoolDateInput" />
                                 </div>   
                                 <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEndDate"/>
+                                    <input type="date"" id="taskEndDate" name="taskEndDate" class="stoolDateInput" />
                                 </div>  
                                 <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">우선순위</strong>
@@ -189,11 +190,11 @@
                                         <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
                                             	우선순위 선택
                                         </button>
-                                        <div class="dropdown-menu text-center">
-                                            <p class="dropdown-item m-0" id="lv1" onclick="fn_priority(this, 'lv4');">낮음</p>
-                                            <p class="dropdown-item m-0" id="lv2" onclick="fn_priority(this, 'lv3');">보통</p>
-                                            <p class="dropdown-item m-0" id="lv3" onclick="fn_priority(this, 'lv2');">높음</p>
-                                            <p class="dropdown-item m-0" id="lv4" onclick="fn_priority(this, 'lv1');">긴급</p>
+                                        <div class="dropdown-menu text-center" id="taskPriority-dropItem">
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv1" onclick="fn_priority(this, 'lv4');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv2" onclick="fn_priority(this, 'lv3');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv3" onclick="fn_priority(this, 'lv2');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv4" onclick="fn_priority(this, 'lv1');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
                                         </div>
                                     </div>                   
                                 </div>                                  
@@ -213,21 +214,26 @@
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="scheduleStartDate" name="scheduleStartDate"/>
+                                    <input type="date"" id="scheduleStartDate" name="scheduleStartDate" class="stoolDateInput" />
                                 </div>   
                                 <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="scheduleEndDate" name="scheduleEndDate"/>
+                                    <input type="date"" id="scheduleEndDate" name="scheduleEndDate" class="stoolDateInput" />
                                 </div>    
-                                <div id="schedulePlaceBox" class="col-12 d-flex align-items-center mb-3">
+                                <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
                                     <strong class="mr-2">장소</strong>
-                                    <input type="text" id="schedulePlace" name="schedulePlace" placeholder="장소를 입력하세요."/>
+                                    <div class="d-flex align-items-end">
+                                    	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
+                                    	<input type="text" id="schedulePlace" name="schedulePlace" style="width:280px;" class="stoolDateInput" placeholder=""/>
+                                    </div>
                                 </div>      
-                                <div id="schedulePlaceMapBox" class="col-12 d-flex justify-content-center align-items-center mb-3">
-                                    <div id="map" style="width: 90%; height:200px;" class="border"></div>
+                                <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
+									 <div id="mapBox" style="height:300px; display: none;" class="border w-100">
+									 	<div id="map" style="height:300px;" class="w-100"></div>
+									 </div>
                                 </div>                                                                                        
                                 <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
-                                    <img src="${path}/resources/icon/note_icon.png" alt="메모" style="width: 24px; height: 24px;" class="mr-2">
+                                    <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
                                     <textarea id="scheduleContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
                                 </div>
                             </div>
@@ -254,7 +260,7 @@
                                 <div class="w-100 d-flex flex-column">
                                     <strong class="mb-1">언급할 참여자 추가</strong>
                                     <div id="mentionListBox" class="w-100 d-flex flex-wrap align-items-center addMentionList">
-                                        <button type="button" id="mentionModalBtn" class="btn btn-info m-1 mt-0" onclick="fn_addMentionModal();">언급 추가</button>                       
+                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="fn_addMentionModal();">언급 추가</button>                       
                                     </div>
                                 </div>
                                 <hr class="w-100">
@@ -265,7 +271,7 @@
                                 <strong class="mb-2">업로드 파일</strong>
                                 <div class="col-12 d-flex flex-column mb-2">
                                     <p  id="imgFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
-                                        <img src="${path}/resources/icon/addImage_icon.png" style="width: 20px; height: 20px;">
+                                        <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
                                         	첨부이미지
                                     </p>
                                     <div class="w-100 d-flex justify-content-center">
@@ -276,7 +282,7 @@
                                 </div>
                                 <div class="col-12 d-flex flex-column d-none">
                                     <p id="filesPreviewTitle" class="d-none align-items-center m-0 pl-1">
-                                        <img src="${path}/resources/icon/addFile_icon.png" style="width: 20px; height: 20px;">
+                                        <i class="fas fa-file-upload stoolGrey" style="font-size: 20px;"></i>
                                        	 첨부파일
                                     </p>
                                     <div class="w-100 d-flex justify-content-center">
@@ -317,7 +323,7 @@
                                 </button>                                                                            
                             </div>      
                             <div class="col-4 w-100 d-flex align-items-center justify-content-end">                           
-                                <button type="submit" class="btn mr-2 ml-2 btn-info">
+                                <button type="submit" class="btn m-2 stoolDarkBlue">
                                     	올리기
                                 </button>    
                             </div>                                                              
@@ -419,7 +425,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
-                        <img src="${path}/resources/icon/search_icon.png" alt="서치아이콘" class="mr-3"/>
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
                         <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
@@ -427,11 +433,11 @@
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">정집집</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addWorker(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
                             </button>
                         </div>
@@ -439,22 +445,22 @@
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">정코코</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addWorker(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
                             </button>
                         </div>      
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">김월욜</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addWorker(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
                             </button>
                         </div>                                          
@@ -480,7 +486,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
-                        <img src="${path}/resources/icon/search_icon.png" alt="서치아이콘" class="mr-3"/>
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
                         <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
@@ -488,11 +494,11 @@
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">정집집</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addMention(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
                             </button>
                         </div>
@@ -500,22 +506,22 @@
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">정코코</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addMention(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
                             </button>
                         </div>      
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/icon/profile_img.png">
+                                    <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
                                 <p class="m-0">김월욜</p>
                             </div>
-                            <button type="button" class="btn btn-outline-info align-self-end" onclick="fn_addMention(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
                             </button>
                         </div>                                          

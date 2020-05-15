@@ -1,5 +1,7 @@
 package com.madmax.stool.user.model.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,20 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	SqlSessionTemplate session;
-	
+
+
 	@Override
-	public int insertUser(User u) {
-		return dao.insertUser(session, u);
+	public int insertUser(Map param) {
+		// TODO Auto-generated method stub
+		return dao.insertUser(session, param);
+	}
+
+
+
+	@Override
+	public User selectUser(String userId) {
+		
+		return dao.selectUser(session, userId);
 	}
 
 	
