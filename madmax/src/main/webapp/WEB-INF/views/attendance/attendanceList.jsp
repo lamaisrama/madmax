@@ -45,6 +45,7 @@
                 <td style="vertical-align: middle;">18:00</td>
                 <td style="vertical-align: middle;">출근</td>
                 <td>
+                
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
                         수정요청
                     </button>
@@ -65,17 +66,17 @@
                             	수정할 상태 : 
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" value="촐근" checked> 출근
+                                    <input type="radio" name="requestCategory" id="option1" value="출근" checked> 출근
                                     </label>
                                     <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2" value="휴가 "> 휴가
+                                    <input type="radio" name="requestCategory" id="option2" value="휴가 "> 휴가
                                     </label>
                                     <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3" value="결근"> 결근
+                                    <input type="radio" name="requestCategory" id="option3" value="결근"> 결근
                                     </label>
                                 </div>
                             <br><br>    
-                            사유 : <input type="text" id="reason"/>    
+                            사유 : <input type="text" id="requestReason" name="requestReason"/>    
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -132,9 +133,9 @@
 
 <script>
  	function allim(){
-		var otn = document.getElementsByName("options");
-		
-		 if($.trim($("#reason").val())==''){
+		var otn = document.getElementsByName("requestCategory");
+		var reason=$("#requestReason").val();
+		 if($.trim($("#requestReason").val())==''){
 		      alert("사유를 입력해주세요.");
 		      return false;
 		    }else{
@@ -143,26 +144,23 @@
 			            //만약 라디오 버튼이 체크가 되어있다면 true
 			            if(otn[i].checked==true){
 			               console.log(otn[i].value);
+			               console.log($("#requestReason").val())
+							alert("요청 완료됐습니다. 관리자 승인 후에 처리됩니다.");
+					
+							
+							$('#exampleModalCenter').modal("hide");
+							$("#modifyForm").attr("action","${path}/attd/modifyRequest.do");
+							$("#modifyForm").submit();	
 			                
 			            }
 			        }
 			        
 			        //event.preventDefault(); 
 
-			alert("요청 완료됐습니다. 관리자 승인 후에 처리됩니다.");
-	
-			
-				$('#exampleModalCenter').modal("hide");
-				$("#modifyForm").attr("action","${path}/modifyRequest");
-				$("#modifyForm").submit();	
 		    }
 	} 
 	
-	function alim(){
-		var otn = document.getElementsByName("options");
-		console.log(otn[i].value);
-		
-	}
+
 </script>
 
 
