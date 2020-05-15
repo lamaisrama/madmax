@@ -76,26 +76,28 @@
                       
                       <h5 class="colum">&nbsp;전화번호</h5>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="-제외 숫자만 입력" size="30" name="phone" id="phone" required>
+                        <input type="text" class="form-control" placeholder="-제외 숫자만 입력" size="30" name="phone" id="phone" maxlength="11" required>
                       </div>
                       
                       <h5 class="colum">&nbsp;생년월일</h5>
                       <div class="input-group mb-3">
-                        <input type="date" class="form-control" placeholder="클릭하여 날짜 선택" size="30" name="birthDay" id="birthDay" required>
+                        <input type="date" class="form-control" placeholder="클릭하여 날짜 선택" size="30" name="birthday" id="birthday" required>
                       </div>
                       
                       <h5 class="colum">&nbsp;부서</h5>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" list="dept" placeholder="클릭하여 부서 선택" size="30">
-                        <datalist id="dept">
-                            <option value="인사팀" ></option>    
-                            <option value="개발팀" ></option>    
-                            <option value="마케팅팀" ></option>    
-                            <option value="회계팀" ></option>    
-                            <option value="영업팀" ></option>    
-                            <option value="관리팀" ></option>    
-                        </datalist>
+                        <!-- <input type="text" class="form-control" list="dept" placeholder="클릭하여 부서 선택" size="30"> -->
+                        <select class="form-control text-dark" name="deptCode" required>
+							<option value="" disabled selected>부서선택</option>
+							<option value="인사팀" >인사팀</option>    
+                            <option value="개발팀" >개발팀</option>    
+                            <option value="마케팅팀" >마케팅팀</option>    
+                            <option value="회계팀" >회계팀</option>    
+                            <option value="영업팀" >영업팀</option>    
+                            <option value="관리팀" >관리팀</option>  
+						</select>
                       </div>
+                      
                       <div class="row justify-content-center p-1">
                         <button type="submit" class="btn joinBtn" style="">회원가입</button>&nbsp;&nbsp;&nbsp;
                     </div>

@@ -30,23 +30,23 @@
 
             <div class="item mx-auto align-self-center">
                
-                <form style="padding-top: 220px;">
+                <form action="${pageContext.request.contextPath }/user/userLogin.do" method="post" style="padding-top: 220px;">
 
 					  <h5 class="colum"><span class="material-icons">person</span>&nbsp;아이디</h5>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="아이디" size="30">
+                        <input type="text" class="form-control" name="userId" placeholder="아이디" size="30" required>
                       </div>
 
                       <h5 class="colum"><span class="material-icons">lock</span>&nbsp;비밀번호</h5>
                       <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="비밀번호" size="30">
+                        <input type="password" class="form-control" name="password" placeholder="비밀번호" size="30" required>
                       </div>
                       <div class="row justify-content-end">
                       	<lable><input type="checkbox" value="자동로그인">자동로그인</lable>
                       </div>
                       
                       <div class="row justify-content-center p-1">
-                      	<button type="button" class="btn btn-outline-secondary" style="margin-left: 10px; width:270px">로그인</button>&nbsp;&nbsp;&nbsp;
+                      	<button type="submit" class="btn btn-outline-secondary" style="margin-left: 10px; width:270px">로그인</button>&nbsp;&nbsp;&nbsp;
 					  </div>
 					  
 					  <div class="row justify-content-center p-1">
