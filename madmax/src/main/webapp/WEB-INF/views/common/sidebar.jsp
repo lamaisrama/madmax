@@ -136,7 +136,7 @@
 						<i class="far fa-user" style="font-size:40px;"></i>
 						<span><i style="font-size:8px;">증명사진</i></span>
 					</button><br>
-					<span><strong>UserName</strong>님</span>				
+					<span><strong><c:out value="${loginMember.userName }"/></strong>님</span>				
 				</div>
 			</li>
 			<hr>
