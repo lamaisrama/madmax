@@ -1,7 +1,9 @@
 package com.madmax.stool.user.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -36,7 +39,7 @@ public class UserController {
 	@RequestMapping("/user/userEnrollEnd.do")
 	public String insertUser(@RequestParam Map param, Model m) {
 		
-		logger.debug("유저:"+param);
+//		logger.debug("유저:"+param);
 		
 		int result = service.insertUser(param);
 		String page = "";
@@ -59,7 +62,10 @@ public class UserController {
 		
 		if(login!=null&&login.getPassword().equals(password)) {
 			m.addAttribute("msg", "로그인성공!");
-			m.addAttribute("loginMember", login);
+			m.addAttribute("loginUser", login);
+			
+//			logger.debug("user:"+login.getUserName());
+			
 		}else {
 			m.addAttribute("msg", "로그인실패!");
 		}
@@ -75,6 +81,32 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	
+//	@RequestMapping("/user/checkId")
+//	@ResponseBody
+//	public int checkId(@RequestParam("userId") String userId) {
+//		return ;
+//		User u = service.selectUser(userId);
+//		boolean flag = u!=null?false:true;
+//		if(flag==false) {
+//			res.getWriter().write("<span class='ml-2'>"+"<b>"+userId+"</b>"+"은/는 <span style='color:red;'>이미 사용중</span>인 아이디입니다.</span>");
+//		}else{
+//			res.getWriter().write("<span class='ml-2'>"+"<b>"+userId+"</b>"+"은/는 <span style='color:green;'>사용가능</span>한 아이디입니다.</span>");
+//		}
+//	}
+	@RequestMapping("/user/checkId")
+	public void checkId(String userId, HttpServletResponse res) {
+		
+		User u = service.selectUser(userId);
+		boolean flag = u!=null?false:true;
+		try {
+			res.setContentType("text/html;charset=utf-8");
+//			res.getWriter().print(flag?"가능":"불가능!");
+			res.getWriter().write(flag?"<span style='color:green;'>가능!</span>":"<span style='color:red;'>불가능!</span>");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 }
