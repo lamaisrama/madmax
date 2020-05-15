@@ -191,28 +191,28 @@
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-edit"></i><b>기안</b></h5>
-									      <span class="p-3"><a href="">기안문 작성</a></span><br>
-									      <span class="p-3"><a href="">결재 요청함</a></span><br>
-									      <span class="p-3"><a href="">임시 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/approval.do">기안문 작성</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprReqBox.do">결재 요청함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprTempBox.do">임시 문서함</a></span>
 									    </div>
                                     </div>
 								    <hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon fas fa-edit"></i><b>결재</b></h5>
-									      <span class="p-3"><a href="">결재 대기함</a></span><br>
-									      <span class="p-3"><a href="">결재 진행함</a></span><br>
-									      <span class="p-3"><a href="">완료 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/apprWaitBox.do">결재 대기함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprProgBox.do">결재 진행함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprDoneBox.do"">완료 문서함</a></span>
 									    </div>
                                     </div>
 								  	<hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
-									      <span class="p-3"><a href="">내 문서함</a></span><br>
-									      <span class="p-3"><a href="">부서 문서함</a></span><br>
-									      <span class="p-3"><a href="">참조 문서함</a></span><br>
-									      <span class="p-3"><a href="">개인 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/myDocBox">내 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/deptDocBox">부서 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/referedDocBox">참조 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/myStorageBox">개인 문서함</a></span>
 									    </div>
                                     </div>
 								    <hr>
