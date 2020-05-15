@@ -53,6 +53,9 @@
 				<button class="btn  my-2 my-sm-0"  type="button" data-toggle="modal" data-target="#">
 					<i class="far fa-comment-alt"></i>
 				</button>&nbsp;&nbsp;
+				<button class="btn  my-2 my-sm-0"  type="button" onclick="location.replace('${path}/user/logout.do');">
+					<i class="fas fa-running"></i><!-- <i class="fas fa-door-open"></i><i class="fas fa-sign-out-alt"></i><i class="fas fa-person-booth"></i> -->
+				</button>&nbsp;&nbsp;
 			</div>
 		</nav>
 		</header>
