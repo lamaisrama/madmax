@@ -49,15 +49,14 @@ public class ApprovalController {
 	public ModelAndView approvalLine(ModelAndView mv) {
 		
 		List<DeptUsers> deptUsers = service.selectDeptInfo(); 
-		System.out.println(deptUsers);
 		
 		
 		for(DeptUsers du : deptUsers) { 
 			List<User> users = service.selectDeptUsers(du);
 			du.setUsers(users);
-		
+			System.out.println(du);
 		}
-		System.out.println(deptUsers);
+		
 		
 		mv.addObject("list", deptUsers);
 		mv.setViewName("approval/apprLine");

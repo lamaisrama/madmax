@@ -1,8 +1,3 @@
-/**
- * 
- */
-		let selectedUser="";
-		
 
 		function addApprLine(apprLineList){
 			$("#apprTbl-dept").children().not($(".title")).not($(".writerInfo")).remove();
@@ -12,24 +7,24 @@
             $(".line-container").find("input").remove();
             $("#receivingInfo").html("");
 			$.each(apprLineList, function(i,item){
-				console.log(i);
-				console.log(item);
+				console.log(i, item);
 				if(item.apprType=='approval'){
-					$("#apprTbl-dept").append($("<th>").addClass('line').html(item.apprStep));
-					$("#apprTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+"jobtitle"));
+					$("#apprTbl-dept").append($("<th>").addClass('line').html(item.deptName));
+					$("#apprTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
+					var inputValue=$("<input>").attr("type","hidden").attr("name","apprLine").attr("value",""+item.userId+","+item.apprType);
+					$(".line-container").append(inputValue);
 					
-				}else if(item.apprType=="aggree"){
-					
-					$("#agreeTbl-dept").append($("<th>").addClass('line').html(item.apprStep));
-					$("#agreeTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+"jobtitle"));
+				}else if(item.apprType=="agree"){
+					$("#agreeTbl-dept").append($("<th>").addClass('line').html(item.deptName));
+					$("#agreeTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
+					var inputValue=$("<input>").attr("type","hidden").attr("name","apprLine").attr("value",""+item.userId+","+item.apprType);
 					
 				}else {
 					$("#receivingInfo")
-							.append($("<span>").addClass("badge").html(item.userName))
-							.append($("<input>").attr('type', 'hidden').attr('name','receivingInfo').attr('value',""+item.userName+","));
+							.append($("<span>").addClass("badge").addClass("badge-dark").html(item.userName));
+					var inputValue=$("<input>").attr("type","hidden").attr("name","receivingLine").attr("value",""+item.userId+","+item.apprType);
 				}	
 				
-				var inputValue=$("<input>").attr("type","hidden").attr("name","apprLine").attr("value",""+item.apprStep+","+item.apprType+","+item.userName);
 				$(".line-container").append(inputValue);
 			});
 			

@@ -25,8 +25,8 @@ hr{ margin:2px 0 }
 ul {list-style: none; padding-left:10px;}
 th{ font-weight:bolder; font-size:14px; }
 ul.info{display: none;}
-ul.dept li{color:darkslategrey; font-weight:bolder;}
-ul.info li{color:slategray; font-weight:bolder;}
+ul.dept li{color:darkslategrey; font-weight:bolder; }
+ul.info li{color:slategray; font-weight:bolder; }
 </style>
 </head>
 <body>
@@ -40,11 +40,15 @@ ul.info li{color:slategray; font-weight:bolder;}
                 <hr>
                 <span style="color:darkslategrey; font-size:14px; font-weight:bolder;">MADMAX COMPANY</span>
                 <ul class="dept">
-                	<c:forEach items="${list}" var="l">
+                	<c:forEach items="${list }" var="l">
 	                    <li>${l.deptName }
 	                     	<c:forEach items="${l.users}" var="u">
 		                        <ul class="info">
-		                        	<li><c:out value="${u.userName }"/></li>
+		                        	<li class="un">
+		                        		${u.userName } ${u.jobName }
+		                        		<input type="hidden" name="userInfo"  
+		                        			value="${u.userName},${u.userId },${u.jobName},${u.deptName}" >
+		                        	</li>
 		                        </ul>
 	                        </c:forEach>
 	                    </li>

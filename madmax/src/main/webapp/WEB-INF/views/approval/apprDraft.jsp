@@ -22,6 +22,7 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="${path }/resources/js/apprdraft.js"></script>
 </head>
 <style>

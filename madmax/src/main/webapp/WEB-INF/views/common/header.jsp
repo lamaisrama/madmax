@@ -33,7 +33,7 @@
 	<div class="header-container">
 		<header>
 			<nav class="navbar navbar-expand-lg">
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="${path }">
 					<img src="${path }/resources/images/logo.png" alt="logo" width="180px;"/>
 				</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,10 +43,7 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"></li>
 				</ul>
-				<button type="button" class="btn navBtn">조직도</button>
-				<button type="button" class="btn navBtn" onclick="location.assign('${path}/appr/approval.do')">전자결재</button>
 				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
-				<button type="button" class="btn navBtn" onclick="location.replace('${path}/calendar/calendar.do')">일정</button>
 				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;
