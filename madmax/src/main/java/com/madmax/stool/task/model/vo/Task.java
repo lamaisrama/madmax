@@ -13,8 +13,8 @@ public class Task {
 
 	private int boardNo;
 	private String taskTitle;
-	private String tastState;
-	private String taskproiority;//오타수정부탁 디폴트는 없음!
+	private String taskState;
+	private String taskProiority;//오타수정부탁 디폴트는 없음!
 	private Date taskStartDate;
 	private Date taskEndDate;
 	private String taskContent;
