@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="task">
+
+  <select id="selectProject" resultType="project">
+  		SELECT * FROM PROJECTTABLE P JOIN  PROJECTMEMBER PM USING(PROJECTNO) WHERE PM.USERID=#{id}
+  </select>
+  <select id="selectTaskEach" resultType="com.madmax.stool.task.model.vo.TaskPb">
+  		SELECT * FROM TASK JOIN PROJECTBOARD USING(BOARDNO) JOIN NOTIFICATIONTABLE USING (BOARDNO) WHERE PROJECTNO=#{no}
+  </select>
+  <select id="selectTaskFilter" resultType="com.madmax.stool.task.model.vo.TaskPb">
+  		SELECT * FROM TASK  JOIN PROJECTBOARD  USING(BOARDNO) JOIN NOTIFICATIONTABLE USING (BOARDNO) 
+  		<!-- 업무 유형을 골랐을때 -->
+  		<if test="task!=null and !task.equals('전체업무')">
+  			<if test="task.equals('요청한업무')">
+  				WHERE NOTTYPE='task' AND SENDERID=#{userId} 
+  			</if>
+  			<if test="task.equals('내업무')">
+  				WHERE NOTTYPE='task' AND SENDERID=#{userId} OR RECEIVEID=#{userId}
+  			</if>
+  		</if>
+  		
+  </select>
+</mapper>

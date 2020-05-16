@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskPb {
 
 	private int boardNo;
+	private int taskNo;
 	private String taskTitle;
 	private String taskState;
 	private String taskProiority;//오타수정부탁 디폴트는 없음!
@@ -20,5 +21,7 @@ public class Task {
 	private String taskContent;
 	private String taskId;
 	private int projectNo;
+	private String boardType;
+	private int pinpost;
 	
 }

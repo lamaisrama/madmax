@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import com.madmax.stool.project.model.vo.Project;
 import com.madmax.stool.task.model.dao.TaskDao;
 import com.madmax.stool.task.model.vo.ProTask;
-import com.madmax.stool.task.model.vo.Task;
+import com.madmax.stool.task.model.vo.TaskFilter;
+import com.madmax.stool.task.model.vo.TaskPb;
 import com.madmax.stool.task.model.vo.TaskJoinPnPm;
 
 @Service
@@ -31,9 +32,17 @@ public class TaskServiceImpl implements TaskService {
 
 
 	@Override
-	public List<Task> selectTaskEach(int no) {
+	public List<TaskPb> selectTaskEach(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectTaskEach(session,no);
+	}
+
+
+
+	@Override
+	public List<TaskPb> selectTaskFilter(TaskFilter tf) {
+		// TODO Auto-generated method stub
+		return dao.selectTaskFilter(session,tf);
 	}
 
 }
