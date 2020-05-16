@@ -25,15 +25,15 @@
 <link rel="stylesheet" href="${path }/resources/css/apprDoc.css">
 </head>
 <body>
+	<form action="#" method="post" onsubmit="return beforeSubmit();">
 	<div class="header">
 		<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-		<button type="button" class="btn btnPrimary" onclick="">결재요청</button>
+		<button type="submit" class="btn btnPrimary">결재요청</button>
 		<button type="button" class="btn btnLight" style="width:7em" onclick="">기결재첨부</button>
 		<button type="button" class="btn btnLight" onclick="">임시저장</button>
 		<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 	</div>
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
-	<form action="#" method="post">
 		<div class="container-fluid line-container">
 			<table class="lineTbl"> 
 				<tr id="apprTbl-dept">
@@ -87,22 +87,41 @@
 					</td>
 				</tr>
 			</table>
+			<!-- 문서양식 별 태그 넣는 곳 -->
 			<c:out value="${type.typeContent }" escapeXml="false"/>
-<!-- 			<table class="table table-hover" id="doc-form-table">
+			<!--<table class="table table-hover" id="doc-form-table">
 				<tr>
 					<td>
 						<div id="editor"></div>
 					</td>
 				</tr>
-			</table> -->
+			</table> -->		    
 		</div>
 	</form>
-	<script>
-		$(function(){
-			
-		});
 		
-		function openLine(){
+		
+	<script>
+	$(function(){
+		if(document.querySelector("#editor")){
+			const Editor = toastui.Editor;
+	        const editor = new Editor({
+					            el: document.querySelector('#editor'),
+					            height: '300px',
+					            initialEditType: 'wysiwyg',
+					            previewStyle: 'vertical',
+					            hideModeSwitch: 'true'
+	    					});	
+		}
+        
+	     /* console.log(document.querySelector('#editor'));
+	     editor.getHtml();
+	     editor.on('change',function(){
+	       console.log(editor.getHtml());
+		}); */
+		
+	})
+		
+			function openLine(){
 			const url ="${path}/appr/line.do";
 			const name="S'toll | 결재선 ";
 			const option="width = 1000, height = 700, top=120 left=400 location=no";
@@ -116,7 +135,22 @@
 			}
 		}
 		
-		
+	function beforeSubmit(){
+		console.log("결재요청");
+		if(document.querySelector("#doc-form-table")){
+			const content=document.querySelector("#doc-form-table").innerHTML;
+			const apprContent=$("<input>").attr("type","hidden").attr("id","docContent").attr("name","content").attr("value", content);
+			$(".content-container").append(apprContent);
+		}
+		if(document.querySelector("#editor")){
+			const apprText=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
+			$(".content-container").append(apprText);
+		}
+		const apprDocNo=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
+		$(".content-container").append(apprDocNo);
+		return false;
+	}
+	
 	</script>
 </body>
 </html>

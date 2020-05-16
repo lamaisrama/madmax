@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
-<jsp:include page="/WEB-INF/views/common/sidebar-appr.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
 <style>	
 	.list-container{

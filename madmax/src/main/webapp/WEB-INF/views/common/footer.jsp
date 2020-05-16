@@ -4,12 +4,22 @@
 
 	</div> <!-- header.jsp의 div.row 끝 -->
 	
-	<footer>
+	<!-- <footer>
 		<br>
 		<p style="font-weight:border; color:black; text-align:center;"> 
-			&lt;Copyright 2020. <strong>Team MAD-MAX</strong>. All right reserved. &gt; 
+			&lt;Copyright 2020. <strong>Team MAD-MAX</strong>. All right reserved. &gt;   
 		</p>
-	</footer>
+	</footer> -->
+	
+	<footer class="footer">
+        <div class="container-fluid">
+          <div class="copyright float-right">
+            &copy; 2020. <strong>Team MAD-MAX</strong>. All right reserved. 
+          </div>
+        </div>
+      </footer>
+	
+	
 	
 </div> <!--header.jsp의 div.container-fluid 끝 -->
 

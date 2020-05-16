@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-
-
 
 <style>
 	ul{
@@ -131,12 +130,15 @@
 	<nav>
 		<ul class="menu">
 			<li>
-				<div class="user-container">
+				<div class="user-container text-center">
 					<button type="button" class="userBtn btn btn-light">
 						<i class="far fa-user" style="font-size:40px;"></i>
 						<span><i style="font-size:8px;">증명사진</i></span>
-					</button><br>
-					<span><strong>UserName</strong>님</span>				
+					</button>
+					<br><br>
+					<c:if test="${loginUser!=null}">
+						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
+					</c:if>				
 				</div>
 			</li>
 			<hr>
@@ -192,28 +194,28 @@
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-edit"></i><b>기안</b></h5>
-									      <span class="p-3"><a href="">기안문 작성</a></span><br>
-									      <span class="p-3"><a href="">결재 요청함</a></span><br>
-									      <span class="p-3"><a href="">임시 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/approval.do">기안문 작성</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprReqBox.do">결재 요청함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprTempBox.do">임시 문서함</a></span>
 									    </div>
                                     </div>
 								    <hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon fas fa-edit"></i><b>결재</b></h5>
-									      <span class="p-3"><a href="">결재 대기함</a></span><br>
-									      <span class="p-3"><a href="">결재 진행함</a></span><br>
-									      <span class="p-3"><a href="">완료 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/apprWaitBox.do">결재 대기함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprProgBox.do">결재 진행함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/apprDoneBox.do"">완료 문서함</a></span>
 									    </div>
                                     </div>
 								  	<hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
-									      <span class="p-3"><a href="">내 문서함</a></span><br>
-									      <span class="p-3"><a href="">부서 문서함</a></span><br>
-									      <span class="p-3"><a href="">참조 문서함</a></span><br>
-									      <span class="p-3"><a href="">개인 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/myDocBox">내 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/deptDocBox">부서 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/referedDocBox">참조 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/myStorageBox">개인 문서함</a></span>
 									    </div>
                                     </div>
 								    <hr>

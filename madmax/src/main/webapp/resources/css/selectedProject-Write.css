@@ -1,7 +1,52 @@
 /*--------- 전체설정 ------*/
+#map img {
+
+	max-width: none;
+
+	height: auto;
+
+	border: 0
+
+}
+
 .stoolGrey{
 	color: #E8E8EB;
 }
+.stoolPink{
+	color: #EBDACE;
+}
+.stoolDarkBlue{
+	background-color: #25558F;
+	color: white;
+	font-weight: bold;
+}
+.stoolDarkBlue:hover{
+	background-color: #233C61;
+	color: white;
+	font-weight: bold;
+}
+
+.stoolDarkBlue-outline{
+	border: 2px solid #25558F;
+	color: #233C61;
+	font-weight: bold;
+}
+.stoolDarkBlue-outline:hover{
+	border: 2px solid #233C61;
+	background-color: #233C61;
+	color: white;
+}
+
+
+.stoolDateInput{
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-color: #E8E8EB;
+	width: 170px;
+}
+
+
 input:focus, textarea:focus { 
     outline: none;
 }
@@ -13,6 +58,12 @@ input[type="date"]::-webkit-outer-spin-button,
 input[type="date"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+	-webkit-appearance: none;
+}
 }
 /*------------------------*/
 #pjInfoBox button{
@@ -94,7 +145,8 @@ input[type="date"]::-webkit-inner-spin-button {
     font-size: 20px;
 }
 
-/* 업무담당자 추가 관련 css */
+
+/* 업무 관련 css */
 .addWorkerModal{
     width: 600px;
 }
@@ -127,6 +179,8 @@ input[type="date"]::-webkit-inner-spin-button {
 .selectedWorker{
     background-color: #F1F0F5;
     border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .selectedWorker .selectedWorker_imgDiv{
     width: 30px;
@@ -141,6 +195,11 @@ input[type="date"]::-webkit-inner-spin-button {
 .selectedWorker button{
     border: 0px;
     background: none;
+}
+
+/* 업무 우선순위  */
+#taskPriority-dropItem p{
+    cursor: pointer;
 }
 
 /* 첨부파일 미리보기 스타일 */
@@ -190,11 +249,12 @@ input[type="date"]::-webkit-inner-spin-button {
     border: none;
     text-align: center;
 }
-.addTagList p img{
+.addTagList p i{
     visibility: hidden;
     cursor: pointer;
+    font-size: 20px;
 }
-.addTagList p:hover img{
+.addTagList p:hover i{
     visibility: visible;
 }
 

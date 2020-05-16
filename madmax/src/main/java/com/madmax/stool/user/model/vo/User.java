@@ -18,7 +18,7 @@ public class User {
 	private String profile;
 	private String status;
 	private String sign;
-	private Date birthDay;
+	private Date birthday;
 	private String deptCode;
 	private String jobCode;
 

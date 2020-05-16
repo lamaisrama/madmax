@@ -3,7 +3,10 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.madmax.stool.common.StringArrayType" alias="strArr"/>
+		<typeAlias type="com.madmax.stool.task.model.vo.Task" alias="task"/>
 		<typeAlias type="com.madmax.stool.user.model.vo.User" alias="user"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.Project" alias="project"/>
+		<typeAlias type="com.madmax.stool.task.model.vo.TaskJoinPnPm" alias="taskJoinPnPm"/>
+		<typeAlias type="com.madmax.stool.attendance.model.vo.Attendance" alias="attend"/>
 	</typeAliases>
 </configuration>
