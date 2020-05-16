@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>S'tool | ${draftName }</title>
+<title>S'tool | ${type.typeTitle }</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -87,17 +87,20 @@
 					</td>
 				</tr>
 			</table>
-			<table class="table table-hover" id="doc-form-table">
+			<c:out value="${type.typeContent }" escapeXml="false"/>
+<!-- 			<table class="table table-hover" id="doc-form-table">
 				<tr>
 					<td>
 						<div id="editor"></div>
 					</td>
 				</tr>
-
-			</table>
+			</table> -->
 		</div>
 	</form>
 	<script>
+		$(function(){
+			
+		});
 		
 		function openLine(){
 			const url ="${path}/appr/line.do";

@@ -1,6 +1,7 @@
 package com.madmax.stool.approval.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.approval.model.service.ApprovalService;
+import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
+import com.madmax.stool.common.PagingFactory;
 
 @Controller
 public class ApprovalController {
@@ -19,8 +22,15 @@ public class ApprovalController {
 	
 	
 	@RequestMapping("/appr/approval.do")
-	public String approvalList() {
-		return "approval/apprList";
+	public ModelAndView approvalList(ModelAndView mv, 
+			@RequestParam(required = false, defaultValue="1") int cPage,
+			@RequestParam(required=false, defaultValue="10") int numPerPage) {
+		List<ApprDocType> list = service.selectApprDocList(cPage, numPerPage);
+		int totalData = service.selectApprDocListCount();
+		mv.addObject("list", list);
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/approval.do"));
+		mv.setViewName("approval/apprList");
+		return mv;
 	}
 	
 	@RequestMapping("/appr/apprReqBox.do")
@@ -29,9 +39,10 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("/appr/draftForm.do")
-	public String selectDraftForm(@RequestParam(required=false, defaultValue="1") int dNo) {
-		
-		return "approval/apprDocWrite";
+	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required=false, defaultValue="3") int dNo) {
+		mv.addObject("type", service.selectApprDocForm(dNo));
+		mv.setViewName("/approval/apprDocWrite");
+		return mv;
 	}
 	
 	@RequestMapping("/appr/draftFormEnd")

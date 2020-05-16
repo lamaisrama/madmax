@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>S'tool | ${draftName }</title>
+<title>S'tool | ${type.typeTitle }</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -88,7 +88,7 @@
 				</tr>
 			</table>
 			<!-- 문서양식 별 태그 넣는 곳 -->
-			<c:out value='${docType.typeContent }'/>
+			<c:out value="${type.typeContent }" escapeXml="false"/>
 			<!--<table class="table table-hover" id="doc-form-table">
 				<tr>
 					<td>
@@ -101,7 +101,27 @@
 		
 		
 	<script>
-		function openLine(){
+	$(function(){
+		if(document.querySelector("#editor")){
+			const Editor = toastui.Editor;
+	        const editor = new Editor({
+					            el: document.querySelector('#editor'),
+					            height: '300px',
+					            initialEditType: 'wysiwyg',
+					            previewStyle: 'vertical',
+					            hideModeSwitch: 'true'
+	    					});	
+		}
+        
+	     /* console.log(document.querySelector('#editor'));
+	     editor.getHtml();
+	     editor.on('change',function(){
+	       console.log(editor.getHtml());
+		}); */
+		
+	})
+		
+			function openLine(){
 			const url ="${path}/appr/line.do";
 			const name="S'toll | 결재선 ";
 			const option="width = 1000, height = 700, top=120 left=400 location=no";
@@ -115,34 +135,21 @@
 			}
 		}
 		
-        const Editor = toastui.Editor;
-        const editor = new Editor({
-				            el: document.querySelector('#editor'),
-				            height: '300px',
-				            initialEditType: 'wysiwyg',
-				            previewStyle: 'vertical',
-				            hideModeSwitch: 'true'
-    					});
-	     /* console.log(document.querySelector('#editor'));
-	     editor.getHtml();
-	     editor.on('change',function(){
-	       console.log(editor.getHtml());
-		}); */
-		
-		
-		function beforeSubmit(){
-			console.log("결재요청");
-			if(document.querySelector("#doc-form-table")){
-				const content=document.querySelector("#doc-form-table").innerHTML;
-				const inputContent=$("<input>").attr("type","hidden").attr("id","docContent").attr("name","content").attr("value", content);
-				$(".content-container").append(inputContent);
-			}
-			if(document.querySelector("#editor")){
-				const inputText=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
-				$(".content-container").append(inputText);
-			}
-			return false;
+	function beforeSubmit(){
+		console.log("결재요청");
+		if(document.querySelector("#doc-form-table")){
+			const content=document.querySelector("#doc-form-table").innerHTML;
+			const apprContent=$("<input>").attr("type","hidden").attr("id","docContent").attr("name","content").attr("value", content);
+			$(".content-container").append(apprContent);
 		}
+		if(document.querySelector("#editor")){
+			const apprText=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
+			$(".content-container").append(apprText);
+		}
+		const apprDocNo=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
+		$(".content-container").append(apprDocNo);
+		return false;
+	}
 	
 	</script>
 </body>
