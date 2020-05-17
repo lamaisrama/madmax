@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="user">
 
-	<insert id="insertUser" parameterType="user">
-		INSERT INTO USER VALUES (#{userId}, #{password}, #{userName}, DEFAULT, #{phone}, NULL, DEFAULT, NULL, #{birthday}, #{deptCode}, null)
+	<insert id="insertUser" parameterType="map">
+		INSERT INTO STOOLUSER VALUES (#{userId}, #{password}, #{userName}, DEFAULT, #{phone}, NULL, DEFAULT, NULL, #{birthday}, #{deptCode}, NULL)
 	</insert>
+
+	<select id="selectUser" parameterType="string" resultType="user">
+		SELECT * FROM STOOLUSER WHERE USERID=#{userId}
+	</select>
 
 </mapper>
