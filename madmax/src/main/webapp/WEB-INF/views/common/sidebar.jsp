@@ -170,7 +170,8 @@
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <ul>
-                                        	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style="">+&nbsp;&nbsp;새 프로젝트</button></li>
+                                        	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style=""  data-toggle="modal" data-target="#myModal">
+                                        	+&nbsp;&nbsp;새 프로젝트</button></li>
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href=""><i class="icon far fa-calendar-alt""></i>전체 일정</a></li>
 											<li><a href=""><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
@@ -270,9 +271,72 @@
 		});
 	</script>
  -->
+<!-- 새프로젝트 만들기 -->
+<div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-
-
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #F1F0F5">
+                    <h6 class="modal-title">프로젝트 만들기</h6>
+                    <button type="button" class="close" id="mainClose">&times;</button>
+                </div>
+                <!--Modal Body-->
+                <div class="modal-body d-block ml-3">
+                    <ul class="list-unstyled">
+                    	<form action="${path }/project/insertProject.do" method="post">
+                        <li class="mb-2">
+                            <input type="text" class="form-control" name="projectTitle" placeholder="프로젝트 제목을 입력하세요" 
+                            style="font-size: 25px; font-weight: bolder;">
+                        </li>
+                        <hr>
+                        <li>
+                            <p><b>옵션 설정</b></p>
+                        </li>
+                        <li class="d-flex mb-3">
+                            <div class="mr-3">
+                            <i class='fas fa-globe-asia' style='font-size:24px'></i>
+                            </div>
+                           		 프로젝트 전체공개 여부 &nbsp;
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"  name="projectType" id="projectType" checked>
+                                <label class="custom-control-label" for="projectType"></label>
+                            </div>
+                        </li>
+                      
+                       
+                    </ul>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary" >프로젝트 생성</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 </div>
+
+<script>
+/* $('#openProject').on( 'click', function() {
+    if($("#openProject").is(":checked")){
+    	$(".custom-control-label").text('공개');
+    }else{
+    	
+    }
+}); */
+$("#moreOption").click(()=>{
+    $("#myModal").hide();
+    $("#moreOptionModal").show();
+});
+$("#mainClose").click(()=>{
+$("#myModal").modal("hide");
+});
+$("#optionClose").click(()=>{
+$("#myModal").modal("hide");
+$("#moreOptionModal").modal("hide");
+});
+
+</script>
