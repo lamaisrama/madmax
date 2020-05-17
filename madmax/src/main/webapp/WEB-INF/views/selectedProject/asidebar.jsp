@@ -76,8 +76,8 @@
 							data-target="#member">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진">  
 								<span id="memberName"> 홍길동 </span>
 							</div>
 						</li>
@@ -95,8 +95,8 @@
 							data-target="#member">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진"> 
 								<span id="memberName"> 홍길동 </span>
 							</div>
 						</li>
@@ -107,8 +107,8 @@
 							data-target="#member">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진"> 
 								<span id="memberName"> 홍길동 </span>
 							</div>
 						</li>
@@ -119,8 +119,8 @@
 							data-target="#member">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진"> 
 								<span id="memberName"> 홍길동 </span>
 							</div>
 						</li>
@@ -170,8 +170,7 @@ img#cardProfileImg {
 
 
 <!-- 파일함 Modal -->
-<div class="modal fade" id="fileListModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="fileListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -189,24 +188,25 @@ img#cardProfileImg {
 						<div class="col-sm-12">
 							<!-- Actual search box -->
 							<div class="form-group has-search">
-								<span class="fa fa-search form-control-feedback"></span> <input
-									type="text" class="form-control" placeholder="파일명으로 검색이 가능합니다.">
+								<span class="fa fa-search form-control-feedback"></span> 
+								<input type="text" 
+								id="searchFileName" 
+								class="form-control" 
+								placeholder="파일명으로 검색이 가능합니다.">
 							</div>
 							<!--search 끝-->
 						</div>
 						<!--col-sm-12 끝-->
 					</div>
 					<!--row 끝-->
-
 					<div class="row">
 						<div class="col-sm-12"></div>
 					</div>
 					<p></p>
-
 					<!--파일 리스트 보여줌-->
 					<div class="row">
 						<div class="col-sm-12" style="height: 500px;">
-							<table class="table">
+							<table id="fileListTable" class="table">
 								<thead>
 									<tr>
 										<th>파일명</th>
@@ -217,7 +217,7 @@ img#cardProfileImg {
 								</thead>
 								<tbody>
 									<tr>
-										<td>파일이름.jpg</td>
+										<td class="fileName">파일이름.jpg</td>
 										<td>2020.05.01</td>
 										<!-- 파일 올린 날짜 -->
 										<td>홍길동</td>
@@ -225,7 +225,8 @@ img#cardProfileImg {
 										<td>
 											<button type="button" class="btn btn-sm btn-outline-dark">
 												<span class="material-icons" style="font-size: smaller;">
-													save_alt </span>
+													save_alt 
+												</span>
 											</button>
 										</td>
 										<!--버튼을 누르면 파일을 자동으로 다운받음 -->
@@ -264,7 +265,7 @@ img#cardProfileImg {
 				<!-- Actual search box -->
 				<div class="form-group has-search">
 					<span class="fa fa-search form-control-feedback"></span> 
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" id="searchMember" class="form-control" placeholder="Search">
 				</div>
 				<!--search-->
 				<div class="row">
@@ -275,8 +276,8 @@ img#cardProfileImg {
 								data-target="#member">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진"> 
 								<span>홍길동</span> 
 								<b>|</b> 
 								<span>관리자</span>
@@ -286,8 +287,8 @@ img#cardProfileImg {
 							<div class="pjJoinAllMemberList">
 								<img 
 								id="profileImg"
-								src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-								alt=""> 
+								src="${path}/resources/images/defaultProfile.png"
+								alt="프로필사진">  
 								<span>강수진 (나)</span>
 								<button 
 								class="btn" 
@@ -324,7 +325,7 @@ img#cardProfileImg {
 		<div class="modal-content" style="width: 400px; height: 672px;">
 			<div id="profileBox">
 				<img id="cardProfileImg"
-					src="https://img.hani.co.kr/imgdb/resize/2018/0313/00500561_20180313.JPG"
+					src="${path}/resources/images/defaultProfile.png"
 					alt="cardProfileImg"
 					style="object-fit: cover; height: 400px; width: 398px;">
 			</div>
