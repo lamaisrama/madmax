@@ -18,4 +18,8 @@ public interface TaskDao {
 
 	List<TaskPb> selectTaskFilter(SqlSessionTemplate session,TaskFilter tf);
 
+	TaskPb selectTaskView(SqlSessionTemplate session, int boardNo);
+
+	String selectTaskNoti(SqlSessionTemplate session, int boardNo);
+
 }

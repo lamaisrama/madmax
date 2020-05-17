@@ -18,4 +18,8 @@ public interface TaskService {
 
 	List<TaskPb> selectTaskFilter(TaskFilter tf);
 
+	TaskPb selectTaskView(int boardNo);
+
+	String selectTaskNoti(int boardNo);
+
 }

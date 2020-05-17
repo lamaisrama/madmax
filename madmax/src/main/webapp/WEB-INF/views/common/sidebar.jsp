@@ -286,11 +286,8 @@
                     <ul class="list-unstyled">
                     	<form action="${path }/project/insertProject.do" method="post">
                         <li class="mb-2">
-                            <input type="text" class="form-control" name="pTitle" placeholder="프로젝트 제목을 입력하세요" 
+                            <input type="text" class="form-control" name="projectTitle" placeholder="프로젝트 제목을 입력하세요" 
                             style="font-size: 25px; font-weight: bolder;">
-                        </li>
-                        <li>
-                            <input type="text" class="form-control" name="pText" placeholder="설명글을 입력할 수 있습니다.">
                         </li>
                         <hr>
                         <li>
@@ -300,20 +297,21 @@
                             <div class="mr-3">
                             <i class='fas fa-globe-asia' style='font-size:24px'></i>
                             </div>
-                            회사 공개 프로젝트 여부&nbsp;
+                           		 프로젝트 전체공개 여부 &nbsp;
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="openProject">
-                                <label class="custom-control-label" for="openProject"></label>
+                                <input type="checkbox" class="custom-control-input"  name="projectType" id="projectType" checked>
+                                <label class="custom-control-label" for="projectType"></label>
                             </div>
                         </li>
                       
-                        </form>
+                       
                     </ul>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary" >프로젝트 생성</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -322,6 +320,13 @@
 </div>
 
 <script>
+/* $('#openProject').on( 'click', function() {
+    if($("#openProject").is(":checked")){
+    	$(".custom-control-label").text('공개');
+    }else{
+    	
+    }
+}); */
 $("#moreOption").click(()=>{
     $("#myModal").hide();
     $("#moreOptionModal").show();

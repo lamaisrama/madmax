@@ -45,4 +45,20 @@ public class TaskServiceImpl implements TaskService {
 		return dao.selectTaskFilter(session,tf);
 	}
 
+
+
+	@Override
+	public TaskPb selectTaskView(int boardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTaskView(session,boardNo);
+	}
+
+
+
+	@Override
+	public String selectTaskNoti(int boardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTaskNoti(session,boardNo);
+	}
+
 }

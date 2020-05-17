@@ -75,6 +75,9 @@ public class TaskController {
 	  }
 	  @RequestMapping("/task/selectTaskFilter.do")
 	  public ModelAndView selectTaskFilter(TaskFilter tf) {
+		  logger.debug("프로젝트번호:"+tf.getProjectNo());
+		  logger.debug("프로젝트상태:"+tf.getStatus());
+		
 		  ModelAndView mv=new ModelAndView();
 		  String id="user1";
 		  List<Project> projects=service.selectProject(id);
@@ -82,12 +85,31 @@ public class TaskController {
 		  tf.setUserId(id);
 		  List<TaskPb> tasks=service.selectTaskFilter(tf);
 		 
-		
+		 
+		  
 		  
 		  mv.addObject("projects",projects);
 		  mv.addObject("tasks",tasks);
-		  mv.setViewName("task/allTaskView");
+		  mv.setViewName("jsonView");
 		  return mv;
 	  }
+	  
+	  //업무번호로 task 1row 가져오기
+	  @RequestMapping("/task/selectTaskView.do")
+	  public ModelAndView selectTaskView(int boardNo) {
+		  logger.debug("넘어온 글(총괄)번호:"+boardNo);
+		  
+		  ModelAndView mv=new ModelAndView();
+		  TaskPb tp=service.selectTaskView(boardNo);
+		  String notiMember=service.selectTaskNoti(boardNo);
+		  
+		  mv.addObject("task",tp);
+		  mv.addObject("notiMember",notiMember);
+		  mv.setViewName("jsonView");
+		  return mv;
+		  
+	  }
+	  
+	  
 	 
 }

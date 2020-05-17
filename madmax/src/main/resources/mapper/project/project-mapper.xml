@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="project">
+  <insert id="insertProject" >
+  	INSERT INTO PROJECTTABLE VALUES(SEQ_PROJECT.NEXTVAL,#{projectTitle},DEFAULT,#{projectType},#{userId})
+  		<selectKey order="AFTER" keyProperty="projectNo" resultType="_int">
+  			SELECT SEQ_PROJECT.CURRVAL FROM DUAL
+  		</selectKey>
+  </insert>
+  <insert id="insertProjectMember">
+  	INSERT INTO PROJECTMEMBER VALUES(SEQ_PJMEMBERNO.NEXTVAL,#{projectNo},#{userId})
+  </insert>
+</mapper>

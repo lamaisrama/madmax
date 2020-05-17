@@ -34,4 +34,16 @@ public class TaskDaoImpl implements TaskDao {
 		return session.selectList("task.selectTaskFilter",tf);
 	}
 
+	@Override
+	public TaskPb selectTaskView(SqlSessionTemplate session, int boardNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("task.selectTaskView",boardNo);
+	}
+
+	@Override
+	public String selectTaskNoti(SqlSessionTemplate session, int boardNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("task.selectTaskNoti", boardNo);
+	}
+
 }

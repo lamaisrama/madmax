@@ -1,5 +1,6 @@
 package com.madmax.stool.task.model.vo;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,5 @@ public class TaskFilter {
 	private String startDate;
 	private String endDate;
 	private String userId;
+	private String projectNo;
 }

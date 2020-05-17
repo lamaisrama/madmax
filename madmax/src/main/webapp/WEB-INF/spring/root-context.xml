@@ -11,13 +11,9 @@
 			
 	<bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-<<<<<<< HEAD
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" /> 
 	<!-- 	<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:8877:xe"/> -->
-=======
 		<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" /> -->
-		<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:8877:xe" />
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 		<property name="username" value="stool" />
 		<property name="password" value="stool" />
 	</bean>

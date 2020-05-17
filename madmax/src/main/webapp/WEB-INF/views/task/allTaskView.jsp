@@ -8,17 +8,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
-<style>
- .bWhite{
- 	background-color:white;
- }
- .taskCenter th,td{
- 	background-color:white;
- }
-
-</style>
 	
-        <div class=" col col-sm-2 ml-3" >
+<div class=" col col-sm-2 ml-3" >
         <!-- 전체업무 사이드바 -->
         <div class="mt-3 ">
             <label>업무구분</label>
@@ -66,9 +57,8 @@
                 <ul style="list-style: none;">
                     <li><label><input type="radio" value="전체" name="startDate" onclick="taskFilter()"/> 전체</label></li>
                     <li><label><input type="radio" value="오늘" name="startDate" onclick="taskFilter()"/> 오늘</li>
-                    <li><label><input type="radio" value="이번주" name="startDate" onclick="taskFilter()"/> 이번주</li>
-                    <li><label><input type="radio" value="이번달" name="startDate" onclick="taskFilter()"/> 이번달</li>
-                    <li><label><input type="radio" value="날짜미정" name="startDate" onclick="taskFilter()"/> 날짜미정</li>
+                    <li><label><input type="radio" value="일주일이내" name="startDate" onclick="taskFilter()"/> 일주일이내</li>
+                    <li><label><input type="radio" value="한달이내" name="startDate" onclick="taskFilter()"/> 한달이내</li>
                 </ul>
             </div>
         <hr/>
@@ -81,12 +71,10 @@
                     <li><label><input type="radio" value="전체" name="endDate" onclick="taskFilter()"/> 전체</label></li>
                     <li><label><input type="radio" value="지연" name="endDate" onclick="taskFilter()"/> 지연</label></li>
                     <li><label><input type="radio" value="오늘까지" name="endDate" onclick="taskFilter()"/> 오늘까지</label></li>
-                    <li><label><input type="radio" value="이번주까지" name="endDate" onclick="taskFilter()"/> 이번주까지</label></li>
-                    <li><label><input type="radio" value="이번달까지" name="endDate" onclick="taskFilter()"/> 이번달까지</label></li>
-                    <li><label><input type="radio" value="날짜미정" name="endDate" onclick="taskFilter()"/> 날짜미정</label></li>
+                    <li><label><input type="radio" value="일주일이내" name="endDate" onclick="taskFilter()"/> 일주일이내</label></li>
+                    <li><label><input type="radio" value="한달이내" name="endDate" onclick="taskFilter()"/> 한달이내</label></li>
                 </ul>
-            </div>
-        
+            </div>    
     </div>
     <!-- 전체업무 센터 -->
     <div class="taskCenter col col-sm-7"  >
@@ -95,11 +83,10 @@
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
         	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/task/backhome.do'">닫기&times;</button></span>
         </div>
-         <div class="container" >
-	           
+         <div class="container" >   
 				  <ul class="nav nav-tabs">
 				  	<c:forEach items="${projects}" var="p"  begin="0" end="4">
-				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="selectTask(${p['projectNo'] });">${p['projectTitle'] }</a></li>
+				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="taskFilter(${p['projectNo'] });">${p['projectTitle'] }</a></li>
 				    </c:forEach>
 				     <c:if test="${fn:length(projects)>4}">
 				    	<li class="nav-item"><a class="nav-link">+더보기</a></li>
@@ -119,105 +106,96 @@
 	           </table>
 	           <br/>
 	           <!-- 프로젝트별 업무내용 출력 -->
-  				<div class="tab-content">
-  				<c:if test="${tasks!=null }">
-  				 	<c:forEach items="${tasks }" var="t"> 
-				    <div id="${t['projectNo'] }" class="tab-pane container active">
-				     <table class="tasks" style="width:100%;height:100%;"  >
-	               		<tr class="text-sm-center">
-			                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
-								<c:choose>
-				                  <c:when test="${t.taskState eq '요청' }">
-				                   		<td id="taskState" style="width:10%"><div style="background-color:blue; color:white">${t['taskState']}</div></td>
-				                   </c:when>
-				             		<c:when test="${t.taskState eq '진행' }">
-				                   		<td id="taskState" style="width:10%"><div style="background-color:green; color:white">${t['taskState']}</div></td>
-				                   </c:when>
-				                   <c:when test="${t.taskState  eq '피드백' }">
-				                   		<td id="taskState" style="width:10%"><div style="background-color:orange; color:white">${t['taskState']}</div></td>
-				                   </c:when>
-				                     <c:when test="${t.taskState  eq '완료' }">
-				                   		<td id="taskState" style="width:10%"><div style="background-color:purple; color:white">${t['taskState']}</div></td>
-				                   </c:when>
-				                   <c:when test="${t.taskState eq '보류' }">
-				                   		<td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
-				                   </c:when>
-			            		</c:choose>
-			                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
-			                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
-			                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
-			                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
-			                   <td id="taskStartDate" style="width:20%">${t['taskStartDate'] }</td>
-	               		</tr>
-	               </table> 
-				      
-				      
-				    </div>
-				    </c:forEach>
-				</c:if>    
-				  
+  				<div id="tab-content">
+ 				<!-- 업무테이블 출력공간*****----------------------------------------------------------------------------- -->
 				</div>
 	          <!--요기까지 포문-->
 	       </div>
        </div>
-       <!-- 제목 클릭했을때 나오는 div -->
-       <div id="showTask" style="display:none; border-left:1px solid grey; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:100%">
-       	<button type="button" class="close ml-2" >&times;</button>
-       	<div id="writeCategory-task" class="row w-100 m-0">
-                            <div id="taskBox" class="w-100 p-3">
-                                <div id="taskTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                        placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
-                                </div>
-                                <div class="mt-1 mb-2 border border-purple rounded">이곳을 클릭하면 해당글로 이동할 수 있습니다&nbsp;&nbsp; &gt;</div>
-                                <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">진행상태</strong>
-                                    <div id="taskTabBtns" class="btn-group border border-grey rounded overflow-hidden">
-                                        <input type="hidden" id="progressState" name="progressState" value="request"/>
-                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, 'request');">요청</button>
-                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, 'progress');">진행</button>
-                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, 'feedback');">피드백</button>
-                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, 'end');">완료</button>
-                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, 'hold');">보류</button>
-                                    </div>
-                                </div>
-                                <div id="taskListBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">담당자</strong>
-                                    <input type="text" id="workerListStr" name="workerListStr" style="display: none;"/>
-                                    <div id="workerList" class="d-flex flex-wrap">            
-                                        <button type="button" id="addWorker" class="btn btn-info m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
-                                    </div>
-                                </div>
-                                <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartDate"/>
-                                </div>   
-                                <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEndDate"/>
-                                </div>  
-                                <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">우선순위</strong>
-                                    <input type="hidden" id="taskPriority" name="taskPriority"/>
-                                    <div class="dropdown">
-                                        <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
-                                            	우선순위 선택
-                                        </button>
-                                        <div class="dropdown-menu text-center">
-                                            <p class="dropdown-item m-0" id="lv1" onclick="fn_priority(this, 'lv4');">낮음</p>
-                                            <p class="dropdown-item m-0" id="lv2" onclick="fn_priority(this, 'lv3');">보통</p>
-                                            <p class="dropdown-item m-0" id="lv3" onclick="fn_priority(this, 'lv2');">높음</p>
-                                            <p class="dropdown-item m-0" id="lv4" onclick="fn_priority(this, 'lv1');">긴급</p>
-                                        </div>
-                                    </div>                   
-                                </div>                                  
-                                <div id="taskContentBox" class="col-12 d-flex justify-content-center">
-                                    <textarea name="taskContentArea" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
-                                </div>
-                            </div>
+       <!-- 제목 클릭했을때 나오는 div--------------------------------------------- -->
+       <div id="showTask" style="display:none; border:1px solid grey; border-style:rounded; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:100%">
+       		<button type="button" class="close ml-2" >&times;</button>
+     		 <!-- <div class="w-100 bg-white border overflow-hidden mb-3">-->
+        <div class="pjViewBox w-100 p-3">                              
+            <div class="viewBundle w-100 bg-white rounded p-3">
+
+                <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
+                <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
+                    <div class=" w-100 d-flex align-items-center">
+                        <div class="profileImgDiv">
+                            <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
                         </div>
-       </div>
-    </div>	
+                        <div class="d-flex flex-column ml-2">
+                            <strong id="taskUsername">정집집</strong>
+                            <p class="m-0" style="font-size: small;">
+                                2020-05-09
+                                <span>00:53</span>
+                            </p>
+                        </div>                        
+                    </div>
+                </div>  
+                <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
+
+                <!-- if문으로 분기처리 : bordType이 업무인경우 -->
+                <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
+                <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
+                    <h5 class="m-0 font-weight-bolder mb-4" id="taskTitleView"></h5> <!-- 업무제목 -->
+                    <div class="d-flex align-items-center">
+                        <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
+                        <div class="btn-group border border-grey rounded overflow-hidden">
+                            <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
+                            <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
+                            <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
+                            <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
+                            <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
+                        </div>
+                    </div>                        
+                    <hr class="w-100 mt-1 mb-2">
+                    <div class="d-flex align-items-center">
+                        <strong class="mr-2">담당자</strong>
+                        <!-- 담당자 프로필 for문 시작 -->
+                        <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
+                            <div class='selectedWorker_imgDiv mr-2'>
+                                <img src='img/profile_img.png'/>
+                            </div>
+                            <span id="notiMember">김OO</span>
+                        </div>                                    
+                        <!-- 담당자 프로필 for문 끝 -->
+                    </div>
+                    <hr class="w-100 mt-1 mb-2">
+                    <div class="d-flex align-items-center">
+                        <strong class="mr-2">시작일</strong>
+                        <p id="taskStartDateView" class="m-0">2020/05/10</p> <!-- 시작일 -->
+                    </div>   
+                    <hr class="w-100 mt-1 mb-2">
+                    <div class="d-flex align-items-center">
+                        <strong class="mr-2">마감일</strong>
+                        <p id="taskEndDateView" class="m-0">2020/05/12</p> <!-- 종료일 -->
+                    </div>  
+                    <hr class="w-100 mt-1 mb-2">
+                    <div class="d-flex align-items-center">
+                        <strong  class="mr-2">우선순위</strong>
+                        <strong id="taskProiorityView" class="text-danger">긴급</strong> <!-- 우선순위 -->
+                    </div>                         
+                    <hr class="w-100 mt-1 mb-2">
+                    <div id="taskContentView" class="w-100"> <!-- 업무 글 내용 -->
+                        여기에 내용을 넣습니다!<br>
+                        여기에 내용을 넣습니다!<br>
+                        여기에 내용을 넣습니다!<br>
+                        여기에 내용을 넣습니다!<br>
+                        여기에 내용을 넣습니다!<br>
+                    </div>
+                </div>       
+                <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
+
+
+
+            </div><!-- viewBundle 닫기 -->
+
+
+        </div><!-- viewBox 닫는 태그 -->
+        
+
 <div class="col col-sm-3">
 
 </div>
@@ -230,35 +208,142 @@ function selectTask(pNo){
 	location.href="${path}/task/selectTaskEach.do?no="+pNo;
 	
 }
+//url의 쿼리스트링 값 가져오는 함수
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+
 //사이드바 필터링 함수
-function taskFilter(){
+function taskFilter(pNo){
+	 // 전체 Url을 가져온다.
+    var str = location.href;
+    // QueryString의 값을 가져오기 위해서, ? 이후 첫번째 index값을 가져온다.
+    //var projectNo = getParameterByName("no");
+    var projectNo=pNo;
+
 	var task=$(":input:radio[name=task]:checked").val();
 	var status=$(":input:radio[name=status]:checked").val();
 	var priority=$(":input:radio[name=priority]:checked").val();
 	var startDate=$(":input:radio[name=startDate]:checked").val();
 	var endDate=$(":input:radio[name=endDate]:checked").val();
+	console.log(status);
 	if(task==undefined){
 		task=null;
 	}
 	if(status==undefined){
 		status=null;
 	}
-	if(priority==undefined){
+	if(priority==undefined || priority==" "){
 		priority=null;
 	}
-	if(startDate==undefined){
+	if(startDate==undefined|| startDate==" "){
 		startDate=null;
 	}
-	if(endDate==undefined){
+	if(endDate==undefined|| endDate==" "){
 		endDate=null;
 	}
-  location.href="${path}/task/selectTaskFilter.do?task="+task+"&status="+status+"&priority="+priority+"&startDate="+startDate+"&endDate="+endDate;
+	if(projectNo==undefined){
+		projectNo=null;
+	}
+	//ajax로 보낼객체들
+	var params={
+			projectNo:projectNo,
+			task:task,
+			status:status,
+			priority:priority,
+			startDate:startDate,
+			endDate:endDate
+	};
+	console.log(params);
+	//ajax로 값 보내기. 비동기 통신
+	$.ajax({
+		url:"${path}/task/selectTaskFilter.do",
+		type:"post",
+		dataType:"json",
+		data:params,
+		success:function(data){
+			$("#tab-content").empty();
+			var table="";
+			console.log(data.tasks);//배열로 들어옴
+			var tasks=data.tasks;
+			console.log(tasks.length);
+			if(tasks.length>0){
+				for(var i=0;i<tasks.length;i++){
+			
+						table+="<table style='width:100%;height:100%;' >";
+						table+="<tr class='text-sm-center'>";
+						table+="<td style='width:10%'>"+tasks[i].taskNo+"</td>";
+							if(tasks[i].taskState=="요청"){
+								table+="<td style='width:10%'><div style='background-color:blue; color:white'>"+tasks[i].taskState+"</div></td>";
+							}else if(tasks[i].taskState=="진행"){
+								table+="<td style='width:10%'><div style='background-color:green; color:white'>"+tasks[i].taskState+"</div></td>";
+							}else if(tasks[i].taskState=="피드백"){
+								table+="<td style='width:10%'><div style='background-color:orange; color:white'>"+tasks[i].taskState+"</div></td>";
+							}else if(tasks[i].taskState=="완료"){
+								table+="<td style='width:10%'><div style='background-color:purple; color:white'>"+tasks[i].taskState+"</div></td>";
+							}else if(tasks[i].taskState=="보류"){
+								table+="<td style='width:10%'><div style='background-color:grey; color:white'>"+tasks[i].taskState+"</div></td>";
+							}
+						table+="<td  style='width:10%'>"+tasks[i].taskProiority+"</td>";
+						table+="<td id='taskTitle' style='width:40%''><a href='#' onclick='taskView("+tasks[i].boardNo+");' style='color:black; text-decoration:none'>"+tasks[i].taskTitle+"</a></td>";
+						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
+						table+="<td style='width:20%'>"+tasks[i].taskStartDate+"</td>";
+						table+="</tr>";
+						table+="</td>";
+				}
+				
+			}else{
+				table+="<table style='width:100%;height:100%;' >";
+				table+="<tr>";
+				table+="<td  class='text-sm-center' colspan='6'>조회된 업무가 없습니다 </td>";
+				table+="</tr>";
+				table+="<table>";
+			}
+			
+			$("#tab-content").append(table);
+			
+			
+			
+		}
+		
+	});
+
+	
+	
+	
+ 
 			
 }
 
  //제목 클릭시 업무내용을 작은창으로 보여줌
- function taskView(){
-	 $("#showTask").show();
+ function taskView(boardNo){
+	 
+	 $.ajax({
+			url:"${path}/task/selectTaskView.do",
+			type:"post",
+			dataType:"json",
+			data:{boardNo:boardNo},
+			success:function(data){
+				var task=data.task;
+				console.log(task.taskTitle);
+				$("#taskTitleView").html(task.taskTitle);
+				$("#taskUsername").html(task.userName);
+				$("#notiMember").html(data.notiMember);
+				$("#taskStartDateView").html(task.taskStartDate);
+				$("#taskEndDateView").html(task.taskEndDate);
+				$("#taskProiorityView").html(task.taskProiority);
+				$("#taskContentView").html(task.taskContent);
+				$("#showTask").show();	
+				
+			}
+			
+			});
+	 
+	 
 	 
  }
  //close버튼 누르면 작은 창 닫힘

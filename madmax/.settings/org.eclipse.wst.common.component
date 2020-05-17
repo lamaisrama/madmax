@@ -11,9 +11,6 @@
       <property name="java-output-path" value="target/classes"/>
         <property name="context-root" value="stool"/>
    </wb-module>
-<<<<<<< HEAD
-</project-modules>
-=======
 </project-modules>
 
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
+
