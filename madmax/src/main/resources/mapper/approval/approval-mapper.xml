@@ -10,14 +10,28 @@
 								LEFT JOIN JOBTABLE USING(JOBCODE) 
 								WHERE DEPTCODE=#{deptCode} ORDER BY jobcode
 	</select>
+	
 	<select id="selectApprDocList" resultType="com.madmax.stool.approval.model.vo.ApprDocType">
 		SELECT * FROM APPRDOCTYPE 
 	</select>
+	
 	<select id="selectApprDocListCount" resultType="_int">
 		SELECT COUNT(*) FROM APPRDOCTYPE
 	</select>
+	
 	<select id="selectApprDocForm" parameterType="_int" 
 								resultType="com.madmax.stool.approval.model.vo.ApprDocType">
 		SELECT * FROM APPRDOCTYPE WHERE APPRDOCTYPENO=#{apprDocTypeNo}
 	</select>
+	
+	<insert id="insertApproval" parameterType="com.madmax.stool.approval.model.vo.Approval">
+		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1)
+		<selectKey order="AFTER" keyProperty="apprNo" resultType="_int">
+			SELECT SEQ_APPRNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertApprLine" parameterType="com.madmax.stool.approval.model.vo.ApprLine">
+		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser})
+	</insert>
 </mapper>

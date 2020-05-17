@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.approval.model.vo.ApprDocType;
+import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
 
@@ -33,12 +35,22 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return session.selectOne("approval.selectApprDocListCount");
 	}
 
+
 	@Override
 	public ApprDocType selectApprDocForm(SqlSessionTemplate session, int dNo) {
 		return session.selectOne("approval.selectApprDocForm", dNo);
 	}
 	
 	
+	@Override
+	public int insertApproval(SqlSessionTemplate session, Approval appr) {
+		return session.insert("approval.insertApproval", appr);
+	}
+
+	@Override
+	public int insertApprLine(SqlSessionTemplate session, ApprLine apprLine) {
+		return session.insert("approval.insertApprLine", apprLine);
+	}	
 
 	
 
