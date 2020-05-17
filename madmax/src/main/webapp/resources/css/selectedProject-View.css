@@ -1,0 +1,121 @@
+/*--------- 전체설정 ------*/
+.stoolGrey{
+	color: #E8E8EB;
+}
+.stoolDarkBlue-text{
+	color: #25558F;
+}
+.stoolDarkBlue-btn-outline{
+	border: 2px solid #25558F;
+	color: #25558F;
+    font-weight: bold;
+    border-radius: 40px;
+}
+.stoolDarkBlue-btn-outline:hover{
+	border: 2px solid #233C61;
+	background-color: #233C61;
+	color: white;
+}
+.stoolDarkBlue-btn-outline:hover i{
+	color: white;
+}
+input:focus, textarea:focus { 
+    outline: none;
+}
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+/*------------------------*/
+
+
+/* 상단고정글 ----------- */
+.btn-pinPost{
+    background: none;
+    border: 0px;
+}
+/* ---------------------- */
+
+
+/* 게시글 목록 공통 ------*/
+.pjViewBox .profileImgDiv{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.pjViewBox .profileImgDiv img{
+    max-width: 100%; 
+    height: auto;
+}
+.pjViewBox .dropdown-toggle::after{
+    display: none;
+}
+
+/* ---------------------- */
+
+
+/* 게시글 목록 업무 -------*/
+.selectedWorker{
+    background-color: #F1F0F5;
+    border-radius: 5px;
+}
+.selectedWorker .selectedWorker_imgDiv{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.selectedWorker .selectedWorker_imgDiv img{
+    max-width: 100%; 
+    height: auto;
+}
+/*------------------------*/
+
+
+/* 게시글 목록 일정 -------*/
+.pjViewBody-schedule{
+    background-color: #F1F0F5;
+    border: 1px solid #E8E8EB;
+}
+/*------------------------*/
+
+/* 첨부파일 미리보기 스타일 */
+.imgPreview{
+    border: 1px solid #dadada;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imgPreview img{
+    max-width: 100%; 
+    height: auto;
+}
+
+.fileDownPreview{
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.fileDownBox img{
+    max-width: 25px; 
+    height: 25px;
+}
+.fileDownBox span{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 24px;
+}
+/*------------------------*/
+
+/* 테이블 tr 간격 띄우기 */
+.borderSpacing {
+    border-collapse: separate;
+    border-spacing: 0 20px;
+}
+/*------------------------*/
