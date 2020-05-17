@@ -66,6 +66,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 		
 		return 1;
 	}
+
+	@Override
+	public List<Approval> selectApprReqList(String userId) {
+		return dao.selectApprReqList(session, userId);
+	}
+	
+	
 	
 	
 

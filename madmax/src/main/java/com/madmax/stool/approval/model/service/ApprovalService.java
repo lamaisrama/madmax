@@ -17,6 +17,7 @@ public interface ApprovalService {
 	int selectApprDocListCount();
 	ApprDocType selectApprDocForm(int dNo);
 	int insertApproval(Approval appr, List<ApprLine> lines);
+	List<Approval> selectApprReqList(String userId);
 	
 	
 }

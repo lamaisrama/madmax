@@ -21,4 +21,5 @@ public class Approval {
 	private int finalApprStep;
 	private int currApprStep;
 	private int apprStatus;
+	private String typeTitle;
 }

@@ -26,6 +26,7 @@
 		text-align:left;
 	}
 </style>
+
 <div class="col col-sm-9 list-container">
 	<br><br>
 	<h4 style="font-weight:bolder">&nbsp;<i class="fas fa-clipboard-list"></i> &nbsp;결재 요청함</h4>
@@ -58,16 +59,25 @@
 			<table class="table table-hover">
 				<tr style="background-color:#F1F0F5;">
 					<th>번호</th>
+					<th>문서양식</th>
 					<th>문서제목</th>
 					<th>기안일</th>
 					<th>상태</th>
 				</tr>
+			<c:forEach items="${list }" var ="l">
 				<tr>
-					<td>1</td>
-					<td><a href="#">Document_title</a></td>
-					<td>date</td>
-					<td>status</td>
+					<td>${l.apprNo}</td>
+					<td>${l.typeTitle }</td>
+					<td><a href="#">${l.apprTitle }</a></td>
+					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<td>
+						<c:if test="${l.apprStatus==1 }">결재대기</c:if>
+						<c:if test="${l.apprStatus==2 }">결재 중</c:if>
+						<c:if test="${l.apprStatus==3 }">결재 완료</c:if>
+						<c:if test="${l.apprStatus==4 }">반려</c:if>
+					</td>	
 				</tr>
+			</c:forEach>
 			</table>
 		</div>
 	</div>

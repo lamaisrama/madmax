@@ -50,6 +50,11 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int insertApprLine(SqlSessionTemplate session, ApprLine apprLine) {
 		return session.insert("approval.insertApprLine", apprLine);
+	}
+
+	@Override
+	public List<Approval> selectApprReqList(SqlSessionTemplate session, String userId) {
+		return session.selectList("approval.selectApprReqList", userId);
 	}	
 
 	

@@ -19,4 +19,5 @@ public interface ApprovalDao {
 	ApprDocType selectApprDocForm(SqlSessionTemplate session, int dNo);
 	int insertApproval(SqlSessionTemplate session, Approval appr);
 	int insertApprLine(SqlSessionTemplate session, ApprLine apprLine);
+	List<Approval> selectApprReqList(SqlSessionTemplate session, String userId);
 }

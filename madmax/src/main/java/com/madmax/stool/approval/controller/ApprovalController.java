@@ -2,10 +2,10 @@ package com.madmax.stool.approval.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +35,11 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/apprReqBox.do")
-	public String appovalRequestBox() {
+	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
+	public String approvalRequestBox(Model m) {
+		String userId="user0";
+		List<Approval> list = service.selectApprReqList(userId);
+		m.addAttribute("list", list);
 		return "approval/apprReqBox";
 	}
 
@@ -77,6 +81,7 @@ public class ApprovalController {
 
 		return "";
 	}
+	
 
 	@RequestMapping("/appr/purchaseForm.do")
 	public String selectPurchaseForm() {
@@ -105,6 +110,8 @@ public class ApprovalController {
 
 	@RequestMapping("/appr/apprWaitBox.do")
 	public String approvalWaitBox() {
+		String userId="user0";
+		//List<Approval> selectApprWaitList(userId);
 		return "approval/apprWaitBox";
 	}
 
@@ -131,17 +138,6 @@ public class ApprovalController {
 	@RequestMapping("/appr/myStorageBox")
 	public String myStorageBox() {
 		return "approval/myStorageBox";
-	}
-
-	@RequestMapping("/appr/test.do")
-	public String test() {
-		return "";
-	}
-
-	@RequestMapping("/appr/checkUserName")
-	public User checkUserName() {
-
-		return new User();
 	}
 
 }
