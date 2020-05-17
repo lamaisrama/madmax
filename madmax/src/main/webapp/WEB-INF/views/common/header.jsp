@@ -135,6 +135,7 @@
 		
 				
 				$('#checkState').modal("hide");
+				
 				$("#checkForm").attr("action","${path}/attd/stateRequest.do");
 				$("#checkForm").submit();	
 
