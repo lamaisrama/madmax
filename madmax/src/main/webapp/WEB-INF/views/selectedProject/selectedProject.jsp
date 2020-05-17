@@ -112,7 +112,7 @@
 
 
                 <!-- 게시물 작성 -->
-                <form action="" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
+                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
                     <!-- 1) 파일-->                
                     <input type="file" name="files" id="files" multiple style="display: none;"/>

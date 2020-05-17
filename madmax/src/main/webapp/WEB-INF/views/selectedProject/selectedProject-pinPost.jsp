@@ -146,7 +146,7 @@
                                             
                                             <div class="w-100 d-flex flex-column align-items-center">
                                                 <div class="d-flex mb-3" style="width: 90%;">
-                                                    <img src="img/marker_icon.png" alt="장소아이콘" style="width: 25px; height: 25px;"/>
+                                            		<i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
                                                     <p class="m-0">대한민국 서울특별시 강남구 테헤란로 126 B1 크리에이터클럽</p>  <!-- 일정주소 -->
                                                 </div>
                                                 <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
@@ -155,7 +155,7 @@
                                             <hr class="w-100">
         
                                             <div class="w-100 d-flex">
-                                                <img src="img/note_icon.png" alt="메모아이콘" style="width: 25px; height: 25px;"/>
+                                    			<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
                                                 <div class="ml-2">1시 반에 만나요!!</div> <!-- 글이 들어가는 곳 -->
                                             </div>
                                         </div>
@@ -220,13 +220,14 @@
                                                 <div class="col-12 d-flex flex-column mb-2">
                                                     <p  class="align-items-center m-0 pl-1">
                                                         <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
-                                                            첨부이미지
+														첨부이미지
                                                     </p>
                                                     <div class="w-100 d-flex justify-content-center">
                                                         <div class="w-100 row">
                                                             <div class='col-2 p-1' style='height: 150px;'>
                                                                 <div class='imgPreview h-100'>
-                                                                    <img src='img/earth_icon.png'/>
+		                                                        	<!-- 아무 이미지나 넣어논 것! -->
+		                                                            <img src='${path}/resources/images/defaultProfile.png'/> 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -235,7 +236,7 @@
                                                 <div class="col-12 d-flex flex-column">
                                                     <p class="align-items-center m-0 pl-1">
                                                         <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
-                                                        첨부파일
+														첨부파일
                                                     </p>                                        
                                                     <div class="w-100 d-flex justify-content-center">
                                                         <div class="fileDownBox w-100 row">
