@@ -26,7 +26,6 @@
     <script type="text/javascript" src="${path}/resources/js/selectedProject-Write.js"></script>
     <script type="text/javascript" src="${path}/resources/js/selectedProject-View.js"></script>
     
-    
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
                 <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: #25558F;">
@@ -40,6 +39,7 @@
                            	시스템 유지운영 프로젝트
                         </h4>
                         
+                        <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
                         <div class="dropdown col-1" id="selectColorBox">
                             <input type="hidden" id="pjInfoBoxColor" name="pjInfoBoxColor"/>
                             <button type="button" class="btn dropdown-toggle justify-content-center align-items-center" data-toggle="dropdown">
@@ -112,15 +112,19 @@
 
 
                 <!-- 게시물 작성 -->
-                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
+                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
-                    <!-- 1) 파일-->                
+				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
+				    <input type="hidden" name="selectedProjectNo" value="1"/>    
+                    <!-- 2) 언급 -->
+                    <input type="hidden" name="boardType" id="boardType"/>
+                    <!-- 3) 파일-->                
                     <input type="file" name="files" id="files" multiple style="display: none;"/>
-                    <!-- 2) 이미지파일 -->
+                    <!-- 4) 이미지파일 -->
                     <input type="file" name="imgFiles" id="imgFiles" multiple style="display: none;" accept="image/*"/>
-                    <!-- 3) 태그 -->
+                    <!-- 5) 태그 -->
                     <input type="hidden" name="tagListStr" id="tagListStr"/>
-                    <!-- 4) 언급 -->
+                    <!-- 6) 언급 -->
                     <input type="hidden" name="mentionListStr" id="mentionListStr"/>
                 <!-- from 공통 hidden input모음 끝 -->
 
@@ -326,7 +330,7 @@
                                 </button>                                                                            
                             </div>      
                             <div class="col-4 w-100 d-flex align-items-center justify-content-end">                           
-                                <button type="submit" class="btn m-2 stoolDarkBlue">
+                                <button type="submit" onclick="fn_writeSubmit();" class="btn m-2 stoolDarkBlue">
                                     	올리기
                                 </button>    
                             </div>                                                              
