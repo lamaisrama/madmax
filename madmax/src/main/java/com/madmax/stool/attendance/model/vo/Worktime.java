@@ -9,16 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Attendance {
+public class Worktime {
+
 	
-	private int requestNo;
-	private String requestReason;
-	private String requestCategory;
-	private Date requestDate;
-	private String requestResult;
-	private String userId;
+	private int managementNo;
 	private Date comeTime;
 	private Date goTime;
 	private String timeState;
+	private String userId;
+	private Date checkDate;
+	private Date today;
 	
 }

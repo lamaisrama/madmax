@@ -2,7 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="attend">
 	<insert id="insertRequest" parameterType="attend">
-		INSERT INTO MODIFYREQUEST VALUES(SEQ_REQUESTNO.NEXTVAL,#{requestReason},#{requestCategory},SYSDATE,null,'user01',1)
+		INSERT INTO MODIFYREQUEST VALUES(SEQ_REQUESTNO.NEXTVAL,#{requestReason},#{requestCategory},SYSDATE,NULL,'user01',1)
 	</insert>
-
+	
+	<insert id="insertState" parameterType="worktime">
+		INSERT INTO WORKTIMEMANAGEMENT VALUES(SEQ_MANAGEMENTNO.NEXTVAL,SYSTIMESTAMP,NULL,#{timeState},'user01',SYSDATE)
+	</insert>
+	
+	<update id="updateState" parameterType="worktime">
+		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='퇴근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</update>
+	
+	<select id="selectWorktimeList" parameterType="string" resultType="worktime">
+		SELECT TO_CHAR(COMETIME,'yyyy:mm:dd hh24:mi:ss') COMETIME,TO_CHAR(GOTIME,'yyyy:mm:dd hh24:mi:ss') GOTIME, TIMESTATE,CHECKDATE FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId}
+	</select>
 </mapper>
