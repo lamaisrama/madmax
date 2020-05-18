@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approval">
-	<select id="selectDeptInfo" resultType="com.madmax.stool.approval.model.vo.DeptUsers">
+	<select id="selectDeptInfo" resultType="deptUsers">
 		SELECT * FROM DEPT
 	</select>
-	<select id="selectDeptUsers" parameterType="com.madmax.stool.approval.model.vo.DeptUsers"
-								 resultType="com.madmax.stool.approval.model.vo.User">
+	<select id="selectDeptUsers" parameterType="deptUsers"
+								 resultType="apprUser">
 		SELECT * FROM STOOLUSER LEFT JOIN DEPT USING(DEPTCODE)
 								LEFT JOIN JOBTABLE USING(JOBCODE) 
 								WHERE DEPTCODE=#{deptCode} ORDER BY jobcode
 	</select>
-	<select id="selectApprDocList" resultType="com.madmax.stool.approval.model.vo.ApprDocType">
+	
+	<select id="selectApprDocList" resultType="apprDocType">
 		SELECT * FROM APPRDOCTYPE 
 	</select>
+	
 	<select id="selectApprDocListCount" resultType="_int">
 		SELECT COUNT(*) FROM APPRDOCTYPE
 	</select>
+	
 	<select id="selectApprDocForm" parameterType="_int" 
-								resultType="com.madmax.stool.approval.model.vo.ApprDocType">
+								resultType="apprDocType">
 		SELECT * FROM APPRDOCTYPE WHERE APPRDOCTYPENO=#{apprDocTypeNo}
 	</select>
+	
+	<insert id="insertApproval" parameterType="approval">
+		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1)
+		<selectKey order="AFTER" keyProperty="apprNo" resultType="_int">
+			SELECT SEQ_APPRNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertApprLine" parameterType="apprLine">
+		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser})
+	</insert>
+	
+	<select id="selectApprReqList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2)
+	</select>
+	
 </mapper>

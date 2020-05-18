@@ -20,9 +20,12 @@
 
     <!-- 스타일 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/selectedProject-Write.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/resources/css/selectedProject-View.css"/>    
 
     <!-- JS -->
     <script type="text/javascript" src="${path}/resources/js/selectedProject-Write.js"></script>
+    <script type="text/javascript" src="${path}/resources/js/selectedProject-View.js"></script>
+    
     
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
@@ -109,7 +112,7 @@
 
 
                 <!-- 게시물 작성 -->
-                <form action="" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
+                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
                     <!-- 1) 파일-->                
                     <input type="file" name="files" id="files" multiple style="display: none;"/>
@@ -121,7 +124,7 @@
                     <input type="hidden" name="mentionListStr" id="mentionListStr"/>
                 <!-- from 공통 hidden input모음 끝 -->
 
-                    <div id="pjWriteBox" class="w-100 bg-white border border-grey rounded">
+                    <div id="pjWriteBox" class="w-100 mb-3 bg-white border border-grey rounded">
                         <div id="writeCategoryBtns" class="row w-100 border-bottom border-light m-0">
                             <button type="button" id="cBtn-board" class="btn col-4 cBtnSelect" onclick="fn_writeCategory(this,'board');">
                                 	글 작성
@@ -328,13 +331,23 @@
                                 </button>    
                             </div>                                                              
                         </div>
+					</div>
                         
                 </form>
-
-                <!-- ☆★☆ 게시글List include -->
+                
+            <!-- ☆★☆ 게시글List include -->
+            <div class="mb-3"> <!-- 고정글 -->
+				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
             </div>
+            <div class="mb-3"> <!-- 게시글 리스트 -->
+				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
+            </div>
+
+            </div>
+
+                
             <div class="col-sm-3">
-<div class="col col-sm-3">
+			<div class="col col-sm-3">
 
 </div>
 

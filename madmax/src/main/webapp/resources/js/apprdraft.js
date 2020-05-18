@@ -11,18 +11,18 @@
 				if(item.apprType=='approval'){
 					$("#apprTbl-dept").append($("<th>").addClass('line').html(item.deptName));
 					$("#apprTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
-					var inputValue=$("<input>").attr("type","hidden").attr("name","apprLine").attr("value",""+item.userId+","+item.apprType);
+					var inputValue=$("<input>").attr("type","hidden").attr("id", "apprLine").attr("name","apprLine").attr("value",""+item.userId+"/"+item.apprType);
 					$(".line-container").append(inputValue);
 					
 				}else if(item.apprType=="agree"){
 					$("#agreeTbl-dept").append($("<th>").addClass('line').html(item.deptName));
 					$("#agreeTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
-					var inputValue=$("<input>").attr("type","hidden").attr("name","apprLine").attr("value",""+item.userId+","+item.apprType);
+					var inputValue=$("<input>").attr("type","hidden").attr("id", "apprLine").attr("name","apprLine").attr("value",""+item.userId+"/"+item.apprType);
 					
 				}else {
 					$("#receivingInfo")
 							.append($("<span>").addClass("badge").addClass("badge-dark").html(item.userName));
-					var inputValue=$("<input>").attr("type","hidden").attr("name","receivingLine").attr("value",""+item.userId+","+item.apprType);
+					var inputValue=$("<input>").attr("type","hidden").attr("name","receivingLine").attr("value",""+item.userId+"/"+item.apprType);
 				}	
 				
 				$(".line-container").append(inputValue);

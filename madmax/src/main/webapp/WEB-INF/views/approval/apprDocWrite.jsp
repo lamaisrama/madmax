@@ -21,11 +21,13 @@
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="${path }/resources/js/apprdraft.js"></script>
 <link rel="stylesheet" href="${path }/resources/css/apprDoc.css">
 </head>
 <body>
-	<form action="#" method="post" onsubmit="return beforeSubmit();">
+	<form action="${path }/appr/draftFormEnd" method="post" onsubmit="return beforeSubmit();">
+	<input type="hidden" name="apprDocTypeNo" value="${type.apprDocTypeNo }">
 	<div class="header">
 		<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
 		<button type="submit" class="btn btnPrimary">결재요청</button>
@@ -82,7 +84,7 @@
 					<th>기안 제목</th>
 					<td colspan="3">
 						<div class="form-group my-1 mr-3">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" name="apprTitle">
 						</div>
 					</td>
 				</tr>
@@ -97,19 +99,42 @@
 				</tr>
 			</table> -->		    
 		</div>
+		<div class="row-vh d-flex flex-row justify-content-end"> 
+			<button type="button" class="btn btnPrimary" value="submit">결재요청</button>
+		</div>
+		<br>
 	</form>
 		
 		
 	<script>
+	var Editor; var editor
 	$(function(){
 		if(document.querySelector("#editor")){
-			const Editor = toastui.Editor;
-	        const editor = new Editor({
+			 Editor = toastui.Editor;
+	         editor = new Editor({
 					            el: document.querySelector('#editor'),
 					            height: '300px',
 					            initialEditType: 'wysiwyg',
 					            previewStyle: 'vertical',
-					            hideModeSwitch: 'true'
+					            hideModeSwitch: 'true',
+					            toolbarItems: [
+					                'heading',
+					                'bold',
+					                'italic',
+					                'strike',
+					                'divider',
+					                'hr',
+					                'quote',
+					                'divider',
+					                'ul',
+					                'ol',
+					                'task',
+					                'indent',
+					                'outdent',
+					                'divider',
+					                'table',
+					                'divider',
+					              ]
 	    					});	
 		}
         
@@ -119,37 +144,43 @@
 	       console.log(editor.getHtml());
 		}); */
 		
-	})
-		
-			function openLine(){
-			const url ="${path}/appr/line.do";
-			const name="S'toll | 결재선 ";
-			const option="width = 1000, height = 700, top=120 left=400 location=no";
-			console.log($("#apprTbl-user").children());
-			if($("#apprTbl-user").children().length>1){
-				if(confirm('결재선과 수신처 정보가 모두 사라집니다. 다시 입력하시겠습니까?')){
-					window.open(url,name,option);	
-				}
-			}else{
-				window.open(url,name,option);
+	});
+	
+	function openLine(){
+		const url ="${path}/appr/line.do";
+		const name="S'toll | 결재선 ";
+		const option="width = 1000, height = 700, top=120 left=400 location=no";
+		console.log($("#apprTbl-user").children());
+		if($("#apprTbl-user").children().length>1){
+			if(confirm('결재선과 수신처 정보가 모두 사라집니다. 다시 입력하시겠습니까?')){
+				window.open(url,name,option);	
 			}
+		}else{
+			window.open(url,name,option);
+		}
+	}
+	
+	function beforeSubmit(){
+		if(document.querySelector("#apprLine")==null){
+			alert('최소 한 사람 이상의 결재선을 등록해주세요');
+			return false;
 		}
 		
-	function beforeSubmit(){
-		console.log("결재요청");
-		if(document.querySelector("#doc-form-table")){
+		if(document.querySelector("#doc-form-table")!=null){
 			const content=document.querySelector("#doc-form-table").innerHTML;
-			const apprContent=$("<input>").attr("type","hidden").attr("id","docContent").attr("name","content").attr("value", content);
+			const apprContent=$("<input>").attr("type","hidden").attr("id","apprContent").attr("name","apprContent").attr("value", content);
 			$(".content-container").append(apprContent);
 		}
-		if(document.querySelector("#editor")){
-			const apprText=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
+		if(document.querySelector("#editor")!=null){
+			const apprText=$("<input>").attr("type","hidden").attr("name","apprText").attr("value",editor.getHtml());
 			$(".content-container").append(apprText);
 		}
-		const apprDocNo=$("<input>").attr("type","hidden").attr("name","docText").attr("value",editor.getHtml());
-		$(".content-container").append(apprDocNo);
-		return false;
+		alert("결재 신청 완료");
+		window.close();
+		return true;
 	}
+		
+
 	
 	</script>
 </body>

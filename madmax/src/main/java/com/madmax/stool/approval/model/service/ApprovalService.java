@@ -3,6 +3,8 @@ package com.madmax.stool.approval.model.service;
 import java.util.List;
 
 import com.madmax.stool.approval.model.vo.ApprDocType;
+import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
 
@@ -14,6 +16,8 @@ public interface ApprovalService {
 	List<ApprDocType> selectApprDocList(int cPage, int numPerPage);
 	int selectApprDocListCount();
 	ApprDocType selectApprDocForm(int dNo);
+	int insertApproval(Approval appr, List<ApprLine> lines);
+	List<Approval> selectApprReqList(String userId);
 	
 	
 }
