@@ -449,41 +449,19 @@
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">최민형</p>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
                             </button>
                         </div>
-                        <!--지워-->
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">최가영</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
-                                	선택
-                            </button>
-                        </div>      
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">박나정</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
-                                	선택
-                            </button>
-                        </div>                                          
-                        <!--지워 끝-->
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
@@ -510,41 +488,19 @@
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">최민형</p>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
                             </button>
                         </div>
-                        <!--지워-->
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">정코코</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
-                                	선택
-                            </button>
-                        </div>      
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">김월욜</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
-                                	선택
-                            </button>
-                        </div>                                          
-                        <!--지워 끝-->
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="modal-footer border-0">

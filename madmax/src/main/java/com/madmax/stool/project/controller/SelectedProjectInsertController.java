@@ -30,8 +30,11 @@ public class SelectedProjectInsertController {
 	@RequestMapping("/selectedProject/selectedProject.do")
 	public ModelAndView selectedProject(ModelAndView mv) {
 		
-//		List<ProjectMember> projectMember = service.getProjectMemberList();
+//		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
+		List<ProjectMember> projectMember = service.selectProjectMemberList(1);
 		
+
+		mv.addObject("projectMember", projectMember);
 		mv.setViewName("selectedProject/selectedProject");
 		
 		return mv;

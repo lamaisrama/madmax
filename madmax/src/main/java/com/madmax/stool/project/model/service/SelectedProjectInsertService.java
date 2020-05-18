@@ -6,5 +6,7 @@ import com.madmax.stool.project.model.vo.ProjectMember;
 
 public interface SelectedProjectInsertService {
 
+	List<ProjectMember> selectProjectMemberList(int pjNo);
+
 
 }
