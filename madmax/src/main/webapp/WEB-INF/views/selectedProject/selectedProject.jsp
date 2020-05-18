@@ -114,10 +114,12 @@
                 <!-- 게시물 작성 -->
                 <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
+				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
+				    <input type="hidden" name="writer" value="user01"/>    
 				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
 				    <input type="hidden" name="selectedProjectNo" value="1"/>    
-                    <!-- 2) 언급 -->
-                    <input type="hidden" name="boardType" id="boardType"/>
+                    <!-- 2) 글 타입 -->
+                    <input type="hidden" name="boardType" id="boardType" value="writing"/>
                     <!-- 3) 파일-->                
                     <input type="file" name="files" id="files" multiple style="display: none;"/>
                     <!-- 4) 이미지파일 -->
@@ -452,7 +454,7 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">정집집</p>
+                                <p class="m-0">최민형</p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
@@ -464,7 +466,7 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">정코코</p>
+                                <p class="m-0">최가영</p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
@@ -475,7 +477,7 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">김월욜</p>
+                                <p class="m-0">박나정</p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
@@ -513,7 +515,7 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">정집집</p>
+                                <p class="m-0">최민형</p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
