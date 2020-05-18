@@ -42,8 +42,9 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-	@Autowired
-	private JavaMailSender mailSender;
+	/*
+	 * @Autowired private JavaMailSender mailSender;
+	 */
 	
 	
 	@RequestMapping("/user/joinUser.do")

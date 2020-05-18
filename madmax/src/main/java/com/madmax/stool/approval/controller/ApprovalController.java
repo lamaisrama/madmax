@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.approval.model.service.ApprovalService;
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
 import com.madmax.stool.approval.model.vo.Approval;
@@ -70,14 +72,16 @@ public class ApprovalController {
 		List<ApprLine> apprLines=new ArrayList();
 		for(int i=0;i<apprLine.length;i++){  
 			String[] lineInfo=apprLine[i].split("/"); 
-			ApprLine a = new ApprLine(0,lineInfo[1],i+1,lineInfo[0]); 
+			ApprLine a = new ApprLine();
+			a.setApprStep(i+1);
+			a.setApprUser(lineInfo[0]);
+			a.setApprType(lineInfo[1]);
 			apprLines.add(a); 
 		}
 
 		try{
 			int result =service.insertApproval(appr, apprLines);
 		}catch(RuntimeException e) { e.printStackTrace(); }
-		 
 
 		return "";
 	}
@@ -139,5 +143,29 @@ public class ApprovalController {
 	public String myStorageBox() {
 		return "approval/myStorageBox";
 	}
+	
+	@RequestMapping("/appr/openApprDoc")
+	public String openApproval(Model m, int apprNo) {
+		ApprDoc appr= service.selectApprDoc(apprNo);
+		m.addAttribute("appr", appr);
+		System.out.println(appr);
+		
+		
+		return "approval/openApprDoc";
+	}
 
+	@RequestMapping("/appr/updateTemporary")
+	@ResponseBody
+	public boolean updateTemporary(int apprNo) {
+		if(service.updateTemporary(apprNo)>0) return true;
+		else return false;
+		
+	}
+	
+	@RequestMapping("/appr/deleteDoc")
+	public boolean deleteDoc(int apprNo) {
+		if(service.deleteDoc(apprNo)>0) return true;
+		else return false;
+		
+	}
 }
