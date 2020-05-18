@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,44 +42,15 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
 		
 		return "user/login/joinUser";
 	}
-/*	
-	@RequestMapping("/user/userEnrollEnd.do")
-	public String insertUser(@RequestParam Map param, Model m) {
-		
-		
-//		User u = new User();
-//		
-		System.out.println("암호화 전 : " + param.get("password"));
-//		param.setPassword(encoder.encode(param.getPassword()));
-		String pw = (String)param.get("password");
-		pw = encoder.encode(pw);
-		param.put("password", pw);
-		System.out.println("암호화 후 : " + param.get("password"));
-		
-		
-//		logger.debug("유저:"+param);
-		
-		int result = service.insertUser(param);
-		//int result = service.insertUser(u);
-		String page = "";
-		
-		if(result==0) {
-			page = "common/msg";
-			m.addAttribute("msg", "회원가입실패! 다시 시도해주세요!");
-			m.addAttribute("loc", "/user/joinUser.do");
-		}else {
-			page = "redirect:/";
-		}
-		
-		return page;
-	}
-*/
 	
 	@RequestMapping("/user/userEnrollEnd.do")
 	public String insertUser(@RequestParam Map param, Model m, MultipartFile upFile, HttpSession session) {
@@ -110,13 +82,7 @@ public class UserController {
 				e.printStackTrace();
 			}
 			param.put("profile", rename);
-			
 		}
-		
-		
-//		String ori=upFile.getOriginalFilename();
-//		String rename=getRenamedFileName(ori);
-//		param.put("profile", rename);
 		
 		int result = service.insertUser(param);
 		String page = "";
@@ -127,9 +93,7 @@ public class UserController {
 			m.addAttribute("loc", "/user/joinUser.do");
 		}else {
 			page = "redirect:/";
-			
 		}
-		
 		return page;
 	}
 	
@@ -144,7 +108,6 @@ public class UserController {
 			m.addAttribute("loginUser", login);
 			
 //			logger.debug("user:"+login.getUserName());
-			
 		}else {
 			m.addAttribute("msg", "로그인실패!");
 		}
@@ -191,18 +154,7 @@ public class UserController {
 //	}
 	
 
-//	@RequestMapping("/user/checkId")
-//	@ResponseBody
-//	public int checkId(@RequestParam("userId") String userId) {
-//		return ;
-//		User u = service.selectUser(userId);
-//		boolean flag = u!=null?false:true;
-//		if(flag==false) {
-//			res.getWriter().write("<span class='ml-2'>"+"<b>"+userId+"</b>"+"은/는 <span style='color:red;'>이미 사용중</span>인 아이디입니다.</span>");
-//		}else{
-//			res.getWriter().write("<span class='ml-2'>"+"<b>"+userId+"</b>"+"은/는 <span style='color:green;'>사용가능</span>한 아이디입니다.</span>");
-//		}
-//	}
+
 	
 //	@RequestMapping("/user/findIdPw.do")
 //	public String findIdPw() {
