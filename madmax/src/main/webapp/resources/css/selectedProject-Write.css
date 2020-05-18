@@ -71,7 +71,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 40px;
     padding: 0px;
 }
-#pjInfoBox button > .fa, .far, .fas {
+#pjInfoBox button > .fas {
+    font-size: 25px;
+}
+#pjInfoBox button >  .fa  {
+    font-size: 25px;
+}
+#pjInfoBox button > .far {
     font-size: 25px;
 }
 #pjInfoBox .dropdown{
