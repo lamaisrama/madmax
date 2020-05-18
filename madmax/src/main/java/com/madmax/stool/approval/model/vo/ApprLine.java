@@ -13,5 +13,10 @@ public class ApprLine {
 	private String apprType;
 	private int apprStep;
 	private String apprUser;
-		
+	private String userName;
+	private String deptCode;
+	private String deptName;
+	private String jobCode;
+	private String jobName;
+	
 }

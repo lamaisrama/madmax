@@ -1,6 +1,7 @@
 package com.madmax.stool.project.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.ProjectService;
 import com.madmax.stool.project.model.vo.Project;
@@ -48,5 +50,17 @@ public class ProjectController {
 		return "common/msg";
 	}
 	
-	
+//	@RequestMapping("/project/projectList.do")
+//	public ModelAndView projectList(ModelAndView mv) {
+//		
+//		List<Map<String,String>> projectList=service.selectProjectList();
+//		mv.addObject("list",projectList);
+//		mv.setViewName("project/allProjectList");
+//		return mv;
+//	}
+//	
+	@RequestMapping("/project/projectList.do")
+	public String projectList() {
+		return "project/allProjectList";
+	}
 }

@@ -34,4 +34,8 @@
 			var flag=confirm('정말 닫겠습니까? 작성하신 내용은 저장되지 않습니다.');
 			if(flag) window.close();
 		}	
+
+		function date(){
+			
+		}
 		

@@ -1,5 +1,6 @@
 package com.madmax.stool.project.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,5 +22,9 @@ public class ProjectDaoImpl implements ProjectDao {
 		// TODO Auto-generated method stub
 		return session.insert("project.insertProjectMember", p);
 	}
+
+	
+	
+	
 
 }

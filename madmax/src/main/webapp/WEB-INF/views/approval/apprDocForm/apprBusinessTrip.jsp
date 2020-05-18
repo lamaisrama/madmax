@@ -159,7 +159,7 @@ table.content tr{
 				<th>기안 제목</th>
 				<td colspan="3">
 					<div class="form-group my-1 mr-3">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" value="">
 					</div>
 				</td>
 			</tr>
@@ -169,15 +169,15 @@ table.content tr{
 	<table class="table table-hover" id="doc-form-table">
 		<tr>
 			<td>출장 시작</td>
-			<td><input type="date"></td>
+			<td><input type="date" name="startDate" value=""></td>
 			<td>출장 마감</td>
-			<td><input type="date"></td>
+			<td><input type="date" name="endDate" value=""></td>
 		</tr>
 		<tr>
 			<td>출장 지역</td>
-			<td ><input type="text"></td>
+			<td ><input type="text" name="loc" value=""></td>
 			<td>출장 목적</td>
-			<td colspan="3"><input type="text"></td>
+			<td colspan="3"><input type="text" name="why" value=""></td>
 		</tr>
 	
 	</table>

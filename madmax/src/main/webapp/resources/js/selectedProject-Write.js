@@ -1,6 +1,11 @@
 /**
  * 
  */
+function captureReturnKey(e) { 
+    if(e.keyCode==13 && e.srcElement.type != 'textarea') 
+    return false; 
+}
+
 //카테고리버튼 선택
 function fn_writeCategory(e, id){
     
@@ -33,6 +38,7 @@ function fn_writeCategory(e, id){
         $("#cBtn-schedule").removeClass("cBtnSelect");
         $(e).addClass("cBtnSelect");
         board.show();
+        $("#boardType").val("writing");
     }
     if(id=="task"){
         board.hide();
@@ -44,6 +50,7 @@ function fn_writeCategory(e, id){
         $("#cBtn-schedule").removeClass("cBtnSelect");
         $(e).addClass("cBtnSelect");
         task.show();
+        $("#boardType").val("task");
     }
     if(id=="schedule"){
         board.hide();
@@ -55,6 +62,7 @@ function fn_writeCategory(e, id){
         $("#cBtn-schedule").removeClass("cBtnSelect");
         $(e).addClass("cBtnSelect");
         schedule.show();
+        $("#boardType").val("schedule");
     }       
 }
 

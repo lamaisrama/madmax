@@ -123,6 +123,20 @@
 		border: 3px solid #233C61; 
 		border-radius:50px;
 	}
+	
+	.imgbox{
+            display: flex;
+            justify-content: center;
+        }
+        
+    .img2{
+            /* width: 100px;
+            height: 100px;
+            border: 1px solid #233C61;
+            border-radius: 500px; */
+            /* background-size: cover; */
+        }    
+        
 </style>
 
 <div class="col col-sm-2">
@@ -131,10 +145,18 @@
 		<ul class="menu">
 			<li>
 				<div class="user-container text-center">
-					<button type="button" class="userBtn btn btn-light">
-						<i class="far fa-user" style="font-size:40px;"></i>
-						<span><i style="font-size:8px;">증명사진</i></span>
-					</button>
+
+					<div class="imgbox">
+		                <div class="img2">
+		                	<img src="${path }/resources/upload/profile/${loginUser.profile }" 
+		                		style="border: 3px solid #233C61; 
+					            border-radius: 500px; width:150px; height:150px; overflow:hidden;">
+            			</div> 
+			        </div>   
+
+					<%-- <button type="button" class="userBtn btn btn-light">
+						<img src="${path }/resources/upload/profile/${loginUser.profile }" style="width: 100px; height: auto;">
+					</button> --%>
 					<br><br>
 					<c:if test="${loginUser!=null}">
 						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
@@ -171,9 +193,12 @@
                                     <div class="card-content">
                                         <ul>
                                         	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style=""  data-toggle="modal" data-target="#myModal">
-                                        	+&nbsp;&nbsp;새 프로젝트</button></li>
+                                        	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
+											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
+											<li><a href="${path }/project/bookmarkProjectList.do"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
+                                        	<hr>
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
-											<li><a href=""><i class="icon far fa-calendar-alt""></i>전체 일정</a></li>
+											<li><a href=""><i class="icon far fa-calendar-alt"></i>전체 일정</a></li>
 											<li><a href=""><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href=""><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href=""><i class="icon far fa-smile"></i>내 게시물</a></li>
