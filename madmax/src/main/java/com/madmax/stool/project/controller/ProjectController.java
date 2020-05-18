@@ -50,7 +50,17 @@ public class ProjectController {
 		return "common/msg";
 	}
 	
-
-	
-	
+//	@RequestMapping("/project/projectList.do")
+//	public ModelAndView projectList(ModelAndView mv) {
+//		
+//		List<Map<String,String>> projectList=service.selectProjectList();
+//		mv.addObject("list",projectList);
+//		mv.setViewName("project/allProjectList");
+//		return mv;
+//	}
+//	
+	@RequestMapping("/project/projectList.do")
+	public String projectList() {
+		return "project/allProjectList";
+	}
 }
