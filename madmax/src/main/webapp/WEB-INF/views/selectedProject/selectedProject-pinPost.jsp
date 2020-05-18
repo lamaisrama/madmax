@@ -63,6 +63,7 @@
                                     <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
                                         <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
                                         <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
+                                        
                                             업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
                                             불금 힘냅시다! 화이팅 ㅎㅎ!
                                         </div>

@@ -41,6 +41,7 @@
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
 
                             <!-- if문으로 분기처리 : bordType이 글인경우 -->
+                            
                             <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
                             <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
                                 <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
@@ -74,7 +75,7 @@
                                         <div class='selectedWorker_imgDiv mr-2'>
                                             <img src="${path}/resources/images/defaultProfile.png">
                                         </div>
-                                        <span>김OO</span>
+                                        <span>{}</span>
                                     </div>                                    
                                     <!-- 담당자 프로필 for문 끝 -->
                                 </div>
@@ -136,7 +137,7 @@
                                     </div>
                                     <hr class="w-100">
 
-                                    <div class="w-100 d-flex">
+                                    <div class="w-100 d-flex">"src/main/webapp/WEB-INF/views/selectedProject/selectedProject-postView.jsp"
                                   		<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>
                                         <div class="ml-2">1시 반에 만나요!!</div> <!-- 글이 들어가는 곳 -->
                                     </div>

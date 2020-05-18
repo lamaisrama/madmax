@@ -142,10 +142,10 @@
                       
                       <h5 class="colum">&nbsp;이메일</h5>
                       <div class="input-group mb-3">
-                      <form action="/user/auth.do" method="post">
+                      <!-- <form action="/user/auth.do" method="post"> -->
                         <input type="text" class="form-control" placeholder="stool@madmax.com" size="30" name="email" id="email" required>
-                    	<button type="submit" class="checkEmailBtn" onclick="" value="">이메일인증</button>
-                      </form>		
+                    <!-- 	<button type="submit" class="checkEmailBtn" onclick="" value="">이메일인증</button>
+                      </form> -->		
                       </div>
 
                       <h5 class="colum">&nbsp;전화번호</h5>

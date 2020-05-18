@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SelectedProject">
+	<select id="selectProjectMemberList" resultType="projectMember" parameterType="_int">
+		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
+		FROM PROJECTMEMBER PM
+		JOIN stoolUser U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
+	</select>
+</mapper>

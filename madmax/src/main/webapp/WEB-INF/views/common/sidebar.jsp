@@ -193,9 +193,12 @@
                                     <div class="card-content">
                                         <ul>
                                         	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style=""  data-toggle="modal" data-target="#myModal">
-                                        	+&nbsp;&nbsp;새 프로젝트</button></li>
+                                        	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
+											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
+											<li><a href="${path }/project/bookmarkProjectList.do"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
+                                        	<hr>
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
-											<li><a href=""><i class="icon far fa-calendar-alt""></i>전체 일정</a></li>
+											<li><a href=""><i class="icon far fa-calendar-alt"></i>전체 일정</a></li>
 											<li><a href=""><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href=""><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href=""><i class="icon far fa-smile"></i>내 게시물</a></li>
