@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApprovalLine {
-	private int apprStep;
+public class ApprLine {
+
+	private int apprNo;
 	private String apprType;
-	private String userInfo;
+	private int apprStep;
+	private String apprUser;
 		
 }

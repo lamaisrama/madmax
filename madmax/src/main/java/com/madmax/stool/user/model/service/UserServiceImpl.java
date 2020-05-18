@@ -1,5 +1,6 @@
 package com.madmax.stool.user.model.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,14 +25,26 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return dao.insertUser(session, param);
 	}
-
-
-
+		
 	@Override
 	public User selectUser(String userId) {
 		
 		return dao.selectUser(session, userId);
 	}
+
+	@Override
+	public String selectId(HashMap hm) {
+
+		return dao.selectId(session, hm);
+	}
+
+//	@Override
+//	public String selectId(String userName, String phone) {
+//		
+//		return dao.selectId(session, userName, phone);
+//	}
+	
+	
 
 	
 	
