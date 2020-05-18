@@ -17,6 +17,16 @@ public interface AttendDao {
 	
 	List<Worktime> selectWorktimeList(SqlSessionTemplate session,String userId);
 	
-	Worktime selectCometime(SqlSessionTemplate session);
+	Worktime selectCometime(SqlSessionTemplate session,Worktime w);
+	
+	Worktime selectGotime(SqlSessionTemplate session,Worktime w);
+
+	Worktime selectWorktime(SqlSessionTemplate session, Worktime w);
+	
+	int insertEmpManage(SqlSessionTemplate session,int no);
+	
+	int insertLate(SqlSessionTemplate session,int no);
+	
+	int insertAbsence(SqlSessionTemplate session,int no);
 	
 }

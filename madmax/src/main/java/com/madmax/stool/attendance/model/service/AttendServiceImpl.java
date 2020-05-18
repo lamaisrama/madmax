@@ -1,5 +1,6 @@
 package com.madmax.stool.attendance.model.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,25 +46,48 @@ public class AttendServiceImpl implements AttendService {
 		return dao.selectWorktimeList(session, userId);
 	}
 
-	
+
 	
 	@Override
-	public int insertEmpManage() {
+	public int insertEmpManage(int no) {
 		// TODO Auto-generated method stub
-		//return dao.insertEmpManage(session);
-		return 0;
+		return dao.insertEmpManage(session,no);
 	}
-	
-	
 
 	//출근시간 가져오기
 	@Override
-	public Worktime selectCometime() {
+	public Worktime selectCometime(Worktime w) {
 		// TODO Auto-generated method stub
-		return dao.selectCometime(session);
+		return dao.selectCometime(session,w);
+	}
+
+
+
+	// 퇴근시간 가져오기
+	@Override
+	public Worktime selectGotime(Worktime w) {
+		// TODO Auto-generated method stub
+		return dao.selectGotime(session,w);
+	}
+
+	@Override
+	public Worktime selectWorktime(Worktime w) {
+		return dao.selectWorktime(session, w);
+	}
+
+	@Override
+	public int insertLate(int no) {
+		// TODO Auto-generated method stub
+		return dao.insertLate(session,no);
+	}
+
+	@Override
+	public int insertAbsence(int no) {
+		// TODO Auto-generated method stub
+		return dao.insertAbsence(session,no);
 	}
 	
 	
-
+	
 
 }

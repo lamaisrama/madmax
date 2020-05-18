@@ -14,6 +14,30 @@
 	</update>
 	
 	<select id="selectWorktimeList" parameterType="string" resultType="worktime">
-		SELECT TO_CHAR(COMETIME,'yyyy:mm:dd hh24:mi:ss') COMETIME,TO_CHAR(GOTIME,'yyyy:mm:dd hh24:mi:ss') GOTIME, TIMESTATE,CHECKDATE FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId}
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId}
 	</select>
+	
+	<select id="selectCometime" resultType="worktime">
+		SELECT TO_CHAR(COMETIME,'hh24:mi') FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</select>
+	
+	<select id="selectGotime">
+		SELECT TO_CHAR(GOTIME,'hh24:mi') FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</select>
+	
+	<select id="selectWorktime" parameterType="worktime" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</select>
+	
+	<insert id="insertEmpManage" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'출근',#{managementNo})
+	</insert>
+	
+	<insert id="insertLate" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'지각',#{managementNo})
+	</insert>
+	
+	<insert id="insertAbsence" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'결근',#{managementNo})
+	</insert>
 </mapper>
