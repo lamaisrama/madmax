@@ -3,11 +3,17 @@
 <mapper namespace="user">
 
 	<insert id="insertUser" parameterType="map">
-		INSERT INTO STOOLUSER VALUES (#{userId}, #{password}, #{userName}, DEFAULT, #{phone}, NULL, DEFAULT, NULL, #{birthday}, #{deptCode}, NULL)
+		INSERT INTO STOOLUSER VALUES (#{userId}, #{password}, #{userName}, DEFAULT, #{phone}, #{profile}, DEFAULT, NULL, #{birthday}, #{deptCode}, NULL, #{email})
 	</insert>
 
+	<!-- id중복확인 -->
 	<select id="selectUser" parameterType="string" resultType="user">
 		SELECT * FROM STOOLUSER WHERE USERID=#{userId}
 	</select>
+	
+	<!-- 아이디찾기 -->
+	<select id="selectId" parameterType="map" resultType="user">
+		SELECT USERID FROM STOOLUSER WHERE USERNAME=#{userName} AND PHONE=#{phone}
+	</select> 
 
 </mapper>
