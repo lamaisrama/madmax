@@ -70,42 +70,42 @@
 		<tbody id="allPjList">
 			<tr>
 				<td>마케팅팀</td>
-				<td id="pjName">마케팅용 영상 제작 협업</td>
+				<td class="pjName">마케팅용 영상 제작 협업</td>
 				<td>완료</td>
 				<td>2019.11.24</td>
 				<td>김경인, 김규열, 김서율 등 9명 참여중</td>
 			</tr>
 			<tr>
 				<td>총무팀</td>
-				<td id="pjName">임직원 총무 업무지원</td>
+				<td class="pjName">임직원 총무 업무지원</td>
 				<td>진행중</td>
 				<td>2019.05.13</td>
 				<td>강수진, 강주영, 고윤진 등 95명 참여중</td>
 			</tr>
 			<tr>
 				<td>디자인팀</td>
-				<td id="pjName">마케팅 켐페인 배너 디자인 프로젝트</td>
+				<td class="pjName">마케팅 켐페인 배너 디자인 프로젝트</td>
 				<td>완료</td>
 				<td>2019.03.02</td>
 				<td>강인규, 강철규, 강현준 등 50명 참여중</td>
 			</tr>
 			<tr>
 				<td>인사팀</td>
-				<td id="pjName">인사팀 업무지원</td>
+				<td class="pjName">인사팀 업무지원</td>
 				<td>진행중</td>
 				<td>2019.08.30</td>
 				<td>성연미, 손병욱, 신호석 등 50명 참여중</td>
 			</tr>
 			<tr>
 				<td>IT팀</td>
-				<td id="pjName">시스템 유지운영 프로젝트</td>
+				<td class="pjName">시스템 유지운영 프로젝트</td>
 				<td>진행중</td>
 				<td>2019.02.07</td>
 				<td>김연지, 남기웅, 박서희 등 40명 참여중</td>
 			</tr>
 			<tr>
 				<td>IT팀</td>
-				<td id="pjName">앱 2.0 업데이트 프로젝트</td>
+				<td class="pjName">앱 2.0 업데이트 프로젝트</td>
 				<td>진행중</td>
 				<td>2020.01.05</td>
 				<td>김우현, 김재형, 문재영 등 28명 참여중</td>

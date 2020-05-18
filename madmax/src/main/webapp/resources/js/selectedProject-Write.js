@@ -527,7 +527,7 @@ function fn_handleFilesSelect(){
         }
 
         let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'>"
-        					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'/><span>"
+        					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'></i><span>"
                             +files[i].name+"</span></div></div>";
         $("#fileBox").append(fileDiv_html);
     }

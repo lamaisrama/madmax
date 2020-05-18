@@ -71,10 +71,9 @@
             			return;
             		}
             		
-        			let tr = $("<tr>").addClass('userReceivingInfo').on('click', userRemove(this));
+        			let tr = $("<tr>").addClass('userReceivingInfo').addClass('userLineInfo').on('click', userRemove(this));
         			let td = $("<td>")	
         			
-        			//어짜피 RECEIVING이니까 SELECT 태그는 필요 없을 듯
         			const apprOpt=$("<select>").addClass('apprType').attr('name','apprType').css('display','none')
         						.append($('<option>').attr('value',selectedOpt));
         			
@@ -83,6 +82,9 @@
         			let td2=$("<td>").append($("<span>").html(selectUser[0])).append($("<span>").html(" "+selectUser[2])).append(receivelineInfo);
         			$("#receiving-table").append(tr.append(td1).append(td2)).append(apprOpt);
         			selectUser="";
+        			
+        			$('li').css("backgroundColor", "white");
+                    selectUser="";
         			
         			return;
             	}

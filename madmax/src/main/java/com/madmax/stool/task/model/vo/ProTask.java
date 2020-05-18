@@ -18,5 +18,5 @@ public class ProTask {
 	private String userId;
 	private String pjMemberNo;
 	private String pjMemberId;
-	private List<Task> tasks;
+	private List<TaskPb> tasks;
 }

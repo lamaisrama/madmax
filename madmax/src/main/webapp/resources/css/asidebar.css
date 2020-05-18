@@ -1,0 +1,70 @@
+/*이전화면 버튼*/
+#beforePage {
+	width: 285px; 
+	height: 60px;
+}
+
+/*파일함,업무,일정 버튼*/
+#threeBtn {
+	width: 95px; 
+	height: 70px;
+}
+
+/*프로젝트 모든 참여자 박스*/
+div.allMemberListBox {
+	border: 1px solid; 
+	width: 285px; 
+	height: auto; 
+	min-height: auto; 
+	max-height: auto; 
+	padding: 15px 12px; 
+	border-radius: 0.2rem;
+
+}
+
+/*전체보기 a태그*/
+span#allMember{
+	float: right;
+}
+
+/*모든 참여자 리스트 프로필이미지,이름 */
+div.memberListbox{
+	overflow-y: scroll; 
+	overflow-x: hidden; 
+	height: auto; 
+	min-height: auto; 
+	max-height: 590px;
+}
+
+div.member{
+	margin-bottom: 10px;
+}
+
+/*참여자 리스트 정렬*/
+ul.detailedList{
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+img#profileImg{
+	width: 35px; 
+	height: 35px;
+}
+
+span#mName{
+	padding-left: 10px;
+}
+
+
+/*참여자 목록에서 확인 시*/
+div.member:hover {
+	background-color: lightgray;
+}
+
+span#memberName{
+	padding-left:10px;
+}
+
+btn#exitBtn{
+	float: right;
+}
