@@ -12,5 +12,6 @@
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprLine" alias="apprLine"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.DeptUsers" alias="deptUsers"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.User" alias="apprUser"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.SelectSelectedProject" alias="selectSelectedProject"/>
 	</typeAliases>
 </configuration>

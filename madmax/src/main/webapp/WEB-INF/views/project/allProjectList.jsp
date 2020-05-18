@@ -70,7 +70,9 @@
 		<tbody id="allPjList">
 			<tr>
 				<td>마케팅팀</td>
-				<td class="pjName">마케팅용 영상 제작 협업</td>
+				<td class="pjName">
+					<a href=""${path/selectedProject/selectedProject.do?pjNo=1">project01</a> 
+				</td>
 				<td>완료</td>
 				<td>2019.11.24</td>
 				<td>김경인, 김규열, 김서율 등 9명 참여중</td>
