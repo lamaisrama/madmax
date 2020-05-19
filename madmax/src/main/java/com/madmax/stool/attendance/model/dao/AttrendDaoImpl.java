@@ -72,7 +72,12 @@ public class AttrendDaoImpl implements AttendDao {
 		return session.insert("attend.insertAbsence",no);
 	}
 
-	
-	
+	@Override
+	public int updateRequestState(SqlSessionTemplate session, Attendance a) {
+		// TODO Auto-generated method stub
+		return session.update("attend.updateRequestState", a);
+	}
+
+
 	
 }

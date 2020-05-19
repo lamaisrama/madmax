@@ -86,8 +86,13 @@ public class AttendServiceImpl implements AttendService {
 		// TODO Auto-generated method stub
 		return dao.insertAbsence(session,no);
 	}
-	
-	
+
+	@Override
+	public int updateRequestState(Attendance a) {
+		// TODO Auto-generated method stub
+		return dao.updateRequestState(session, a);
+	}
+
 	
 
 }

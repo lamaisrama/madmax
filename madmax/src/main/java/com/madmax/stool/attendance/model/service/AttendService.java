@@ -27,4 +27,6 @@ public interface AttendService {
 	int insertLate(int no);
 	
 	int insertAbsence(int no);
+	
+	int updateRequestState(Attendance a);
 }

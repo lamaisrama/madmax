@@ -53,8 +53,10 @@ public class UserController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
 	@Autowired
 	private Email email;
+	
 	
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
@@ -123,7 +125,7 @@ public class UserController {
 			m.addAttribute("msg", "로그인실패!");
 		}
 		m.addAttribute("loc", "/");
-		return "common/msg";
+		return "main";
 	}
 	
 	@RequestMapping("/user/logout.do")

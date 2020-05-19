@@ -29,4 +29,6 @@ public interface AttendDao {
 	
 	int insertAbsence(SqlSessionTemplate session,int no);
 	
+	int updateRequestState(SqlSessionTemplate session,Attendance a);
+	
 }
