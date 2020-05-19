@@ -12,6 +12,7 @@
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
+			<!-- <div id="map" style="width:500px;height:400px;"></div> -->
  			<div id="bookmarkTitle">
                <h4>담아둔 글 보기</h4>
             </div>
@@ -158,9 +159,9 @@
 	                                    <div class="w-100 d-flex flex-column align-items-center">
 	                                        <div class="d-flex mb-3" style="width: 90%;">
 	                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
-	                                            <p class="m-0">${l.schedulePlace }</p>  <!-- 일정주소 -->
+	                                            <p class="m-0 maddress">${l.schedulePlace }</p>  <!-- 일정주소 -->
 	                                        </div>
-	                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+	                                        <div class="border map"  style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">
@@ -297,6 +298,58 @@
 <div class="col col-sm-3">
 
 </div>
+
+<script>
+	//지도가 들어가는 곳이 여러곳!
+	var mapContainers = document.getElementsByClassName("map"); //지도를 담을 영역. 여러 군데니까 !
+	console.log(mapContainers);
+	
+	var mapOption = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.이건 지도를 생성하는데 반드시 필요!!(위도,경도)
+		level: 3 //지도의 레벨(확대, 축소 정도)
+	};
+	console.log(mapOption);
+	var map="";
+	for(var i=0;i<mapContainers.length;i++){
+		map = new kakao.maps.Map(mapContainers[i], mapOption); //지도 생성 및 객체 리턴
+	}
+	console.log("map:"+map);
+
+	//보낼 주소를 가져옴
+	var addresses=$(".maddress").length;//배열의 길이
+	var addArr=new Array(addresses);//배열 생성
+	//배열에 값넣기
+	for(var i=0;i<addresses;i++){
+		addArr[i]=$(".maddress").eq(i).html();
+		console.log(addArr[i]);
+
+		//주소, 좌표간 변환 서비스 객체를 생성.
+		var geocoder = new kakao.maps.services.Geocoder();
+		geocoder.addressSearch(addArr[i],function(result,status){
+			 if (status === kakao.maps.services.Status.OK) {
+					//정상적으로 검색완료!
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					console.log(coords);
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords
+			        });
+			     /*    // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+			        });
+			        infowindow.open(map, marker); */
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        console.log(map);
+			       
+			        map.setCenter(coords);
+		 }
+		})
+	}
+
+	
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
