@@ -191,21 +191,6 @@ public class UserController {
 	}
 	
 	
-	// pw 찾기
-//	@RequestMapping("/user/findingPw.do")
-//	public ModelAndView findingPw(@RequestParam Map param, Model m) {
-//		
-//		String id = (String)param.get("userId");
-//		String email = (String)param.get("email");
-//		
-//		User u = service.findPw();
-//		
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("user", u);
-//		mv.setViewName("jsonView");
-//		
-//		return mv;
-//	}
 	
 	
 	
@@ -266,54 +251,6 @@ public class UserController {
 	
 	
 	
-	//	@RequestMapping("/user/findingPw.do")
-//	public ModelAndView userpassword2(@RequestParam("userId") String userId,
-//			@RequestParam("email") String email, ModelAndView mv) throws Exception {
-//
-//		Map<String, Object> map = new HashMap<String, Object>();
-//
-//		map.put("userId", userId);
-//		map.put("email", email); // <- 비밀번호를 찾고자 하는 사람의 정보를 DB에서 찾아오고,
-//
-//		System.out.println("a : " + map);
-//		System.out.println("id : " + userId);
-//		System.out.println("email : " + email);
-//
-//		User u = service.findPw(map);
-//
-//		if (u != null) { // 유저정보를 찾았다면
-//
-//			String newPwd = FindUtil.getNewPwd();
-//
-//			Map<String, String> map2 = new HashMap<>();
-//
-//			map2.put("userId", userId);
-//			map2.put("newPwd", newPwd); // DB에서 찾아온 정보를 map2로 담아서
-//
-//			System.out.println("b ; " + map2);
-//
-////			service.changePwd(map2);
-//
-//			String subject = "[madmax] 임시 비밀번호 발급안내";
-//
-//			String msg = "";
-//			msg += "<br> <br> <div align='center' style='border:1px solid black;'>";
-//			msg += "<h3 style='color: blue';><strong>" + userId + "<br>";
-//			msg += "님</strong>의 임시 비밀번호 입니다. 로그인 후 비밀번호를 변경하세요.</h3>";
-//			msg += "<p> 임시 비밀번호 : <strong>" + newPwd + "<br> <br> </strong></p></div> ";
-//
-//			MailUtil.sendMail(email, subject, msg); // mailutil을 사용해 임시 비밀번호를 메일로 보냄.
-//
-////			mv.setViewName("userpassword2");
-//			return mv;
-//		} else {
-//			int check = 0;
-//			mv.addObject("checkSep", check);
-//			mv.setViewName("userpasswordfind");
-//			return mv;
-//		}
-//
-//	}
 
 
 	
