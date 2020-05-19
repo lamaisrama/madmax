@@ -26,6 +26,7 @@ public class BookmarkController {
 		//세션에서 로그인한 아이디값 가져오기
 		String id="user1";
 		List<BookmarkAll> list=service.selectBkList(id);
+		logger.debug("북마크 테이블값:"+list.size());
 		
 		mv.addObject("List",list);
 		mv.setViewName("project/bookmarkList");

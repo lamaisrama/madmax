@@ -15,11 +15,14 @@
  			<div id="bookmarkTitle">
                <h4>담아둔 글 보기</h4>
             </div>
-               <div class="w-100 bg-white border border-grey rounded overflow-hidden mb-3">
-               
+            <c:forEach items="${List }" var="l">
+               <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
+                <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
+            	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
+           		 </div>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
-						<c:forEach items="${List }" var="l">
+						<%-- <c:forEach items="${List }" var="l"> --%>
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
@@ -29,18 +32,28 @@
                                     <div class="d-flex flex-column ml-2">
                                         <c:choose>
 	                                        <c:when test="${l.boardType eq 'W' }">
-	                                        <strong>${l.w }</strong>
+	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
-	                                         <c:when test="${l.boardType eq 'W' }">
-	                                        <strong>정집집</strong>
+	                                         <c:when test="${l.boardType eq 'T' }">
+	                                        <strong>${l.taskName }</strong>
 	                                        </c:when>
-	                                         <c:when test="${l.boardType eq 'W' }">
-	                                        <strong>정집집</strong>
+	                                         <c:when test="${l.boardType eq 'S' }">
+	                                        <strong>${l.SName }</strong>
 	                                        </c:when>
                                         </c:choose>
                                         <p class="m-0" style="font-size: small;">
-                                            2020-05-09
-                                            <span>00:53</span>
+                                             <c:choose>
+		                                        <c:when test="${l.boardType eq 'W' }">
+		                                        <strong>${l.writingTime }</strong>
+		                                        </c:when>
+		                                         <c:when test="${l.boardType eq 'T' }">
+		                                        <strong>${l.taskTime }</strong>
+		                                        </c:when>
+		                                         <c:when test="${l.boardType eq 'S' }">
+		                                        <strong>${l.scheduleTime }</strong>
+		                                        </c:when>
+                                        	</c:choose>
+                                      
                                         </p>
                                     </div>                        
                                 </div>
@@ -50,10 +63,9 @@
 	                            <!-- if문으로 분기처리 : bordType이 글인경우 -->
 	                            <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
 	                            <div class="pjViewBody w-100  flex-column pl-3 pr-3">
-	                                <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
+	                                <h5 class="m-0 font-weight-bolder mb-4">${l.writingTitle }</h5> <!-- 글 제목 -->
 	                                <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
-					                                    업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
-					                                    불금 힘냅시다! 화이팅 ㅎㅎ!
+					                  ${l.writingContent }
 	                                </div>
 	                            </div> 
                             </c:if>
@@ -64,16 +76,26 @@
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                             <c:if test="${l.boardType eq 'T' }"> 
 	                            <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
-	                                <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
+	                                <h5 class="m-0 font-weight-bolder mb-4">${l.taskTitle }</h5> <!-- 업무제목 -->
 	                                <div class="d-flex align-items-center">
 	                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
-	                                    <div class="btn-group border border-grey rounded overflow-hidden">
-	                                        <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
-	                                        <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
-	                                        <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
-	                                        <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
-	                                        <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
-	                                    </div>
+	                                    	<c:choose>
+								                  <c:when test="${l.taskState eq '요청' }">
+								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+								                   </c:when>
+								             		<c:when test="${l.taskState eq '진행' }">
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+								                   </c:when>
+								                     <c:when test="${l.taskState  eq '피드백' }">
+								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+								                   </c:when>
+								                     <c:when test="${l.taskState  eq '완료' }">
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+								                   </c:when>
+								                     <c:when test="${l.taskState eq '보류' }">
+								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+								                   </c:when>
+							            	</c:choose>
 	                                </div>                        
 	                                <hr class="w-100 mt-1 mb-2">
 	                                <div class="d-flex align-items-center">
@@ -83,32 +105,28 @@
 	                                        <div class='selectedWorker_imgDiv mr-2'>
 	                                            <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px">
 	                                        </div>
-	                                        <span>김OO</span>
+	                                        <span>${l.tmName }</span>
 	                                    </div>                                    
 	                                    <!-- 담당자 프로필 for문 끝 -->
 	                                </div>
 	                                <hr class="w-100 mt-1 mb-2">
 	                                <div class="d-flex align-items-center">
 	                                    <strong class="mr-2">시작일</strong>
-	                                    <p class="m-0">2020/05/10</p> <!-- 시작일 -->
+	                                    <p class="m-0">${l.taskStartDate }</p> <!-- 시작일 -->
 	                                </div>   
 	                                <hr class="w-100 mt-1 mb-2">
 	                                <div class="d-flex align-items-center">
 	                                    <strong class="mr-2">마감일</strong>
-	                                    <p class="m-0">2020/05/12</p> <!-- 종료일 -->
+	                                    <p class="m-0">${l.taskEndDate }</p> <!-- 종료일 -->
 	                                </div>  
 	                                <hr class="w-100 mt-1 mb-2">
 	                                <div class="d-flex align-items-center">
 	                                    <strong class="mr-2">우선순위</strong>
-	                                    <strong class="text-danger">긴급</strong> <!-- 우선순위 -->
+	                                    <strong class="text-danger">${l.taskProiority }</strong> <!-- 우선순위 -->
 	                                </div>                         
 	                                <hr class="w-100 mt-1 mb-2">
 	                                <div class="w-100"> <!-- 업무 글 내용 -->
-						                                    여기에 내용을 넣습니다!<br>
-						                                    여기에 내용을 넣습니다!<br>
-						                                    여기에 내용을 넣습니다!<br>
-						                                    여기에 내용을 넣습니다!<br>
-						                                    여기에 내용을 넣습니다!<br>
+						                            ${l.taskContent }
 	                                </div>
 	                            </div>  
                             </c:if>     
@@ -130,9 +148,9 @@
 	                                            </p>
 	                                        </div>
 	                                        <div class="col-10 d-flex flex-column">
-	                                            <strong class="">카페 작업실에서 만나욥</strong> <!-- 일정제목 -->
+	                                            <strong class="">${l.scheduleTitle }</strong> <!-- 일정제목 -->
 	                                            <hr class="w-100">
-	                                            <strong class="">2020년 5월 12일(월)</strong> <!-- 일정 실행일 -->
+	                                            <strong class="">${l.scheduleTime }</strong> <!-- 일정 실행일 -->
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">
@@ -140,7 +158,7 @@
 	                                    <div class="w-100 d-flex flex-column align-items-center">
 	                                        <div class="d-flex mb-3" style="width: 90%;">
 	                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
-	                                            <p class="m-0">대한민국 서울특별시 강남구 테헤란로 126 B1 크리에이터클럽</p>  <!-- 일정주소 -->
+	                                            <p class="m-0">${l.schedulePlace }</p>  <!-- 일정주소 -->
 	                                        </div>
 	                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
 	                                        </div>
@@ -149,7 +167,7 @@
 	
 	                                    <div class="w-100 d-flex">
 	                                  		<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>
-	                                        <div class="ml-2">1시 반에 만나요!!</div> <!-- 글이 들어가는 곳 -->
+	                                        <div class="ml-2">${l.scheduleMemo }</div> <!-- 글이 들어가는 곳 -->
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -254,7 +272,7 @@
 
                             </div>
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
-    					</c:forEach>
+    					
 
                         </div><!-- viewBundle 닫기 -->
 
@@ -271,7 +289,7 @@
                     <!--★☆★ 댓글지움 ------------------------------------------------------------------------------------------------------------------------->
                    
                 </div>
-
+				</c:forEach>
 
 
 	
