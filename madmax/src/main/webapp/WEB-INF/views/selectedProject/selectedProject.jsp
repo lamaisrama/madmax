@@ -224,17 +224,18 @@
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="scheduleStartDate" name="scheduleStartDate" class="stoolDateInput" />
+                                    <input type="date" id="scheduleStartDate" name="scheduleStartdate" class="stoolDateInput" />
                                 </div>   
                                 <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="scheduleEndDate" name="scheduleEndDate" class="stoolDateInput" />
+                                    <input type="date"" id="scheduleEndDate" name="scheduleEnddate" class="stoolDateInput" />
                                 </div>    
                                 <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
                                     <strong class="mr-2">장소</strong>
                                     <div class="d-flex align-items-end">
                                     	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
-                                    	<input type="text" id="schedulePlace" name="schedulePlace" style="width:280px;" class="stoolDateInput" placeholder=""/>
+                                    	<div id="schedulePlaceText" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
+                                    	<input type="hidden" id="schedulePlace" name="schedulePlace"/>
                                     </div>
                                 </div>      
                                 <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
@@ -244,7 +245,7 @@
                                 </div>                                                                                        
                                 <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
                                     <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
-                                    <textarea id="scheduleContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
+                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
                                 </div>
                             </div>
                         </div>

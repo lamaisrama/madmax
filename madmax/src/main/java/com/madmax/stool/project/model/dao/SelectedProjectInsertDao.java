@@ -8,6 +8,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -35,5 +36,7 @@ public interface SelectedProjectInsertDao {
 	int insertTaskManagerTB(SqlSessionTemplate session, InsertTaskManager itm);
 
 	int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a);
+
+	int insertScheduleTB(SqlSessionTemplate session, InsertSchedule schedule);
 
 }

@@ -6,6 +6,10 @@ function captureReturnKey(e) {
     return false; 
 }
 
+function fn_writeSubmit(){
+	return location.replace("http://localhost:9090/stool/selectedProject/selectedProject.do?pjNo=1");
+}
+
 //카테고리버튼 선택
 function fn_writeCategory(e, id){
     
@@ -316,7 +320,7 @@ new daum.Postcode({
         var addr = data.address; // 최종 주소 변수
 
         // 주소 정보를 해당 필드에 넣는다.
-        document.getElementById("schedulePlace").value = addr;
+        $("#schedulePlaceText").text(addr);
         // 주소로 상세 정보를 검색
         geocoder.addressSearch(data.address, function(results, status) {
             // 정상적으로 검색이 완료됐으면
@@ -327,6 +331,7 @@ new daum.Postcode({
                 // 해당 주소에 대한 좌표를 받아서
                 var coords = new daum.maps.LatLng(result.y, result.x);
                 console.log(result.y, result.x);
+                $("#schedulePlace").val(result.y + "," + result.x);
                 // 지도를 보여준다.
 //                mapContainer.style.display = "block";
                 $("#mapBox").attr("style", "display:block; height:300px;");

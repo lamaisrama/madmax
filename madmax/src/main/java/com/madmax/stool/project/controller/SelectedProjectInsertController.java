@@ -24,6 +24,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -133,7 +134,7 @@ public class SelectedProjectInsertController {
 		//2. 해시태그and언급 있을 경우 처리 후 저장
 		//2-1) 해시태그
 		List<InsertHashTag> hashTagList = new ArrayList<InsertHashTag>();
-		if(!(tag.trim().equals("") || tag == null)) {
+		if(!tag.trim().equals("") && tag != null) {
 			String[] tagArr = tag.split(",");
 			for(String t : tagArr) {
 				InsertHashTag hashTag = new InsertHashTag();
@@ -144,7 +145,7 @@ public class SelectedProjectInsertController {
 		//2-2) 언급
 		List<InsertNotification> notList = new ArrayList<InsertNotification>();
 		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);	
-		if(!(not.trim().equals("") || not == null)) {
+		if(!not.trim().equals("") && not != null) {
 			String[]  notArr = not.split(",");
 			for(String n : notArr) {	
 				for(ProjectMember m : projectMember) {
@@ -153,7 +154,7 @@ public class SelectedProjectInsertController {
 				InsertNotification notification = new InsertNotification();
 				notification.setReceiveId(n);
 				notification.setSenderId(writer);
-				notification.setNotType("writing");
+				notification.setNotType(boardType);
 				notList.add(notification);
 			}
 		}
@@ -165,13 +166,23 @@ public class SelectedProjectInsertController {
 		pb.setProjectNo(pjNo);
 		
         if(boardType.equals("writing")) {
+        	/* 1) 글 */
         	pb.setBoardType("W");
         	InsertWriting writing = new InsertWriting();
         	writing.setWritingTitle(map.get("writingTitle"));
         	writing.setWritingContent(map.get("writingContent"));
         	writing.setWritingId(writer);
         	
-        	result = service.insertWriting(writing, pb, hashTagList, notList, files);
+    		try {
+            	result = service.insertWriting(writing, pb, hashTagList, notList, files);
+    		}catch(RuntimeException e){
+    			for(Attachment a : files) {
+    				File delF=new File(path+"/"+a.getRenamedFilename());
+    				if(delF.exists()) {
+    					delF.delete();
+    				}
+    			}
+    		}
         	
         } else if(boardType.equals("task")) {
         	/* 2) 업무  */
@@ -197,27 +208,60 @@ public class SelectedProjectInsertController {
         	
         	String tmNames = map.get("taskManagerName");
     		List<InsertTaskManager> tmList = new ArrayList<InsertTaskManager>();
-    		if(!(tmNames.trim().equals("") || tmNames == null)) {
+    		if(!tmNames.trim().equals("") && tmNames != null) {
     			String[] tmNameArr = tmNames.split(",");
-    			for(String tm : tmNameArr) {
+    			for(String name : tmNameArr) {
     				InsertTaskManager itm = new InsertTaskManager();
-    				itm.setTaskManagerName(tm);
+    				itm.setTaskManagerName(name);
     				tmList.add(itm);
     			}
     		}
         	
-        	result = service.insertTask(task, pb, hashTagList, notList, tmList, files);
+    		try {
+            	result = service.insertTask(task, pb, hashTagList, notList, tmList, files);
+    		}catch(RuntimeException e){
+    			for(Attachment a : files) {
+    				File delF=new File(path+"/"+a.getRenamedFilename());
+    				if(delF.exists()) {
+    					delF.delete();
+    				}
+    			}
+    		}
         	
         } else if(map.get("boardType").equals("schedule")) {
-        	System.out.println("$$$$$$$schedule$$$$$$$$$$");
+        	/* 3) 일정  */
+        	pb.setBoardType("S");
+        	InsertSchedule schedule = new InsertSchedule();
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	
+        	schedule.setScheduleTitle(map.get("scheduleTitle"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				startDate = dateFormat.parse(map.get("scheduleStartdate"));
+				endDate = dateFormat.parse(map.get("scheduleEnddate"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}        	
+			schedule.setScheduleStartdate(new java.sql.Date(startDate.getTime()));
+			schedule.setScheduleEnddate(new java.sql.Date(endDate.getTime()));
+        	schedule.setSchedulePlace(map.get("schedulePlace"));
+        	schedule.setScheduleMemo(map.get("scheduleMemo"));
+        	schedule.setScheduleId(writer);
+        	
+    		try {
+            	result = service.insertSchedule(schedule, pb, hashTagList, notList);
+    		}catch(RuntimeException e){
+    			e.printStackTrace();
+    		}
         }
-		
+			
 
-//        mv.addObject("pjNo", pjNo);
-//		mv.addObject("projectMember", projectMember);
-//		mv.setViewName("selectedProject/selectedProject");
+		mv.addObject("pjNo", pjNo);
+		mv.addObject("projectMember", projectMember);
+		mv.setViewName("selectedProject/selectedProject");
 		
-		return selectedProject(mv, pjNo);
+		return mv;
 	}
 	
 }

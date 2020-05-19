@@ -9,6 +9,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -25,7 +26,7 @@ public class SelectedProjectInsertDaoImpl implements SelectedProjectInsertDao {
 
 	@Override
 	public int insertProjectBoardTB(SqlSessionTemplate session, InsertProjectBoard pb) {
-		return session.insert("SelectedProjectInsert.insertProjectBoardTbWriting", pb);
+		return session.insert("SelectedProjectInsert.insertProjectBoardTB", pb);
 	}
 
 	@Override
@@ -67,6 +68,11 @@ public class SelectedProjectInsertDaoImpl implements SelectedProjectInsertDao {
 	@Override
 	public int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
 		return session.insert("SelectedProjectInsert.insertTaskAttachmentTB", a);	
+	}
+
+	@Override
+	public int insertScheduleTB(SqlSessionTemplate session, InsertSchedule schedule) {
+		return session.insert("SelectedProjectInsert.insertScheduleTB", schedule);
 	}
 
 }
