@@ -74,12 +74,5 @@
     <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
 
 
-<<<<<<< HEAD
-	  
-	
-	
-	
-=======
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
-	
+
 </beans>

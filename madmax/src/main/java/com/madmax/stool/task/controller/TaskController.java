@@ -51,7 +51,7 @@ public class TaskController {
 	@RequestMapping("/task/backhome.do")
 	public String backHome() {
 		
-		return "redirect://";
+		return "main";
 	}
 	
 	
