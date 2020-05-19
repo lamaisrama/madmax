@@ -38,4 +38,11 @@ public class BookmarkAll {
 	private String scheduleMemo;
 	private String scheduleId;
 	private String scheduleTime;
+	//각각의 이름
+	private String taskName;//업무글 작성자 이름
+	private String tmName;//업무담당자 이름
+	private String bmName;//북마크한사람(로그인 유저이름)
+	private String wName;//글 작성자 이름
+	private String sName;//일정 작성자 이름
+	
 }

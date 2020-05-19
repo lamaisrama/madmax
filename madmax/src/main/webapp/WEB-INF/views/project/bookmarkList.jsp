@@ -47,15 +47,15 @@
                             </div>  
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
 							<c:if test="${l.boardType eq 'W' }"> 
-                            <!-- if문으로 분기처리 : bordType이 글인경우 -->
-                            <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
-                            <div class="pjViewBody w-100  flex-column pl-3 pr-3">
-                                <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
-                                <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
-				                                    업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
-				                                    불금 힘냅시다! 화이팅 ㅎㅎ!
-                                </div>
-                            </div> 
+	                            <!-- if문으로 분기처리 : bordType이 글인경우 -->
+	                            <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
+	                            <div class="pjViewBody w-100  flex-column pl-3 pr-3">
+	                                <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
+	                                <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
+					                                    업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
+					                                    불금 힘냅시다! 화이팅 ㅎㅎ!
+	                                </div>
+	                            </div> 
                             </c:if>
                             <!-- 1) 글 끝  ------------------------------------------------------------------------------------------------------------------------>
 
@@ -63,54 +63,54 @@
                             <!-- if문으로 분기처리 : bordType이 업무인경우 -->
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                             <c:if test="${l.boardType eq 'T' }"> 
-                            <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
-                                <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
-                                <div class="d-flex align-items-center">
-                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
-                                    <div class="btn-group border border-grey rounded overflow-hidden">
-                                        <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
-                                        <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
-                                        <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
-                                        <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
-                                        <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
-                                    </div>
-                                </div>                        
-                                <hr class="w-100 mt-1 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <strong class="mr-2">담당자</strong>
-                                    <!-- 담당자 프로필 for문 시작 -->
-                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
-                                        <div class='selectedWorker_imgDiv mr-2'>
-                                            <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px">
-                                        </div>
-                                        <span>김OO</span>
-                                    </div>                                    
-                                    <!-- 담당자 프로필 for문 끝 -->
-                                </div>
-                                <hr class="w-100 mt-1 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <strong class="mr-2">시작일</strong>
-                                    <p class="m-0">2020/05/10</p> <!-- 시작일 -->
-                                </div>   
-                                <hr class="w-100 mt-1 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <strong class="mr-2">마감일</strong>
-                                    <p class="m-0">2020/05/12</p> <!-- 종료일 -->
-                                </div>  
-                                <hr class="w-100 mt-1 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <strong class="mr-2">우선순위</strong>
-                                    <strong class="text-danger">긴급</strong> <!-- 우선순위 -->
-                                </div>                         
-                                <hr class="w-100 mt-1 mb-2">
-                                <div class="w-100"> <!-- 업무 글 내용 -->
-					                                    여기에 내용을 넣습니다!<br>
-					                                    여기에 내용을 넣습니다!<br>
-					                                    여기에 내용을 넣습니다!<br>
-					                                    여기에 내용을 넣습니다!<br>
-					                                    여기에 내용을 넣습니다!<br>
-                                </div>
-                            </div>  
+	                            <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
+	                                <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
+	                                <div class="d-flex align-items-center">
+	                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
+	                                    <div class="btn-group border border-grey rounded overflow-hidden">
+	                                        <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
+	                                        <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
+	                                        <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
+	                                        <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
+	                                        <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
+	                                    </div>
+	                                </div>                        
+	                                <hr class="w-100 mt-1 mb-2">
+	                                <div class="d-flex align-items-center">
+	                                    <strong class="mr-2">담당자</strong>
+	                                    <!-- 담당자 프로필 for문 시작 -->
+	                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
+	                                        <div class='selectedWorker_imgDiv mr-2'>
+	                                            <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px">
+	                                        </div>
+	                                        <span>김OO</span>
+	                                    </div>                                    
+	                                    <!-- 담당자 프로필 for문 끝 -->
+	                                </div>
+	                                <hr class="w-100 mt-1 mb-2">
+	                                <div class="d-flex align-items-center">
+	                                    <strong class="mr-2">시작일</strong>
+	                                    <p class="m-0">2020/05/10</p> <!-- 시작일 -->
+	                                </div>   
+	                                <hr class="w-100 mt-1 mb-2">
+	                                <div class="d-flex align-items-center">
+	                                    <strong class="mr-2">마감일</strong>
+	                                    <p class="m-0">2020/05/12</p> <!-- 종료일 -->
+	                                </div>  
+	                                <hr class="w-100 mt-1 mb-2">
+	                                <div class="d-flex align-items-center">
+	                                    <strong class="mr-2">우선순위</strong>
+	                                    <strong class="text-danger">긴급</strong> <!-- 우선순위 -->
+	                                </div>                         
+	                                <hr class="w-100 mt-1 mb-2">
+	                                <div class="w-100"> <!-- 업무 글 내용 -->
+						                                    여기에 내용을 넣습니다!<br>
+						                                    여기에 내용을 넣습니다!<br>
+						                                    여기에 내용을 넣습니다!<br>
+						                                    여기에 내용을 넣습니다!<br>
+						                                    여기에 내용을 넣습니다!<br>
+	                                </div>
+	                            </div>  
                             </c:if>     
                             <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
 
@@ -118,41 +118,41 @@
                             <!-- if문으로 분기처리 : bordType이 일정인경우 -->
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>
                             <c:if test="${l.boardType eq 'S' }"> 
-                            <div class="pjViewBody w-100  flex-column pl-3 pr-3">
-                                <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
-                                    <div class="w-100 row d-flex">
-                                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                                            <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
-                                                5월
-                                            </p>
-                                            <p class="m-0 font-weight-bolder" style="font-size: 40px;"> <!-- 일정 실행일 : 일만 표기 -->
-                                            	11  
-                                            </p>
-                                        </div>
-                                        <div class="col-10 d-flex flex-column">
-                                            <strong class="">카페 작업실에서 만나욥</strong> <!-- 일정제목 -->
-                                            <hr class="w-100">
-                                            <strong class="">2020년 5월 12일(월)</strong> <!-- 일정 실행일 -->
-                                        </div>
-                                    </div>
-                                    <hr class="w-100">
-                                    
-                                    <div class="w-100 d-flex flex-column align-items-center">
-                                        <div class="d-flex mb-3" style="width: 90%;">
-                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
-                                            <p class="m-0">대한민국 서울특별시 강남구 테헤란로 126 B1 크리에이터클럽</p>  <!-- 일정주소 -->
-                                        </div>
-                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
-                                        </div>
-                                    </div>
-                                    <hr class="w-100">
-
-                                    <div class="w-100 d-flex">
-                                  		<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>
-                                        <div class="ml-2">1시 반에 만나요!!</div> <!-- 글이 들어가는 곳 -->
-                                    </div>
-                                </div>
-                            </div>
+	                            <div class="pjViewBody w-100  flex-column pl-3 pr-3">
+	                                <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
+	                                    <div class="w-100 row d-flex">
+	                                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+	                                            <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
+	                                                5월
+	                                            </p>
+	                                            <p class="m-0 font-weight-bolder" style="font-size: 40px;"> <!-- 일정 실행일 : 일만 표기 -->
+	                                            	11  
+	                                            </p>
+	                                        </div>
+	                                        <div class="col-10 d-flex flex-column">
+	                                            <strong class="">카페 작업실에서 만나욥</strong> <!-- 일정제목 -->
+	                                            <hr class="w-100">
+	                                            <strong class="">2020년 5월 12일(월)</strong> <!-- 일정 실행일 -->
+	                                        </div>
+	                                    </div>
+	                                    <hr class="w-100">
+	                                    
+	                                    <div class="w-100 d-flex flex-column align-items-center">
+	                                        <div class="d-flex mb-3" style="width: 90%;">
+	                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
+	                                            <p class="m-0">대한민국 서울특별시 강남구 테헤란로 126 B1 크리에이터클럽</p>  <!-- 일정주소 -->
+	                                        </div>
+	                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+	                                        </div>
+	                                    </div>
+	                                    <hr class="w-100">
+	
+	                                    <div class="w-100 d-flex">
+	                                  		<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>
+	                                        <div class="ml-2">1시 반에 만나요!!</div> <!-- 글이 들어가는 곳 -->
+	                                    </div>
+	                                </div>
+	                            </div>
                             </c:if>
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
 
