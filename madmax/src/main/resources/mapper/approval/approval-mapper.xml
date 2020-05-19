@@ -32,11 +32,12 @@
 	</insert>
 
 	<insert id="insertApprLine" parameterType="apprLine">
-		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, null, null, null)
+		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, 0, null, null)
 	</insert>
 	
 	<select id="selectApproval" parameterType="_int" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
-		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+		SELECT * FROM APPROVAL 
+			JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) 
     		JOIN DEPT USING(DEPTCODE)	
     		JOIN JOBTABLE USING(JOBCODE)

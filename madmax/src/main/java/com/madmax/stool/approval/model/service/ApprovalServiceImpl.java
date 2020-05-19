@@ -76,10 +76,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ApprDoc selectApprDoc(int apprNo) {
 		//1. Approval doc 가져오기
 		ApprDoc appr = dao.selectApproval(session, apprNo);
+		System.out.println(appr);
 		//2. ApprLine 가져오기
 		List<ApprLine> lines = dao.selectApprLine(session, apprNo);
 		appr.setApprLine(lines);
-		//appr.setApprHistory(history);
 		return appr;
 	}
 

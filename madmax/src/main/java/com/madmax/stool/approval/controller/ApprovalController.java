@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,10 +46,10 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/draftFormEnd")
-	public String selectDraftFormEnd(String[] apprLine, Approval appr) {
+	public String selectDraftFormEnd(HttpServletRequest req,String[] apprLine, Approval appr) {
 		// 결재문서 정보 treat
-		System.out.println(appr);
-		appr.setUserId("user0");
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		appr.setUserId(userId);
 		appr.setFinalApprStep(apprLine.length);
 		if (appr.getApprContent() != null) {
 			appr.getApprContent().replace("\'", "\''").replace("\"", "\\\"");
@@ -100,24 +99,24 @@ public class ApprovalController {
 
 	@RequestMapping("/appr/apprReqBox.do")
 	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
-	public String approvalRequestBox(Model m) {
-		String userId="user0";
+	public String approvalRequestBox(HttpServletRequest req, Model m) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<Approval> list = service.selectApprReqList(userId);
 		m.addAttribute("list", list);
 		return "approval/apprReqBox";
 	}
 	
 	@RequestMapping("/appr/apprTempBox.do")
-	public String approvalTempBox(Model m) {
-		String userId="user0";
+	public String approvalTempBox(HttpServletRequest req, Model m) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<Approval> list = service.selectApprTempList(userId);
 		m.addAttribute("list", list);
 		return "approval/apprTempBox";
 	}
 
 	@RequestMapping("/appr/apprWaitBox.do")
-	public String approvalWaitBox(Model m) {
-		String userId="user0";
+	public String approvalWaitBox(HttpServletRequest req, Model m) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<Approval> list  = service.selectApprWaitList(userId);
 		m.addAttribute("list", list);
 		return "approval/apprWaitBox";
@@ -158,9 +157,8 @@ public class ApprovalController {
 
 	@RequestMapping("/appr/openApprDoDoc")
 	public String openDoApproval(HttpServletRequest req, Model m, int apprNo) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		Approval approval = new Approval();
-		//String userId=(User)(req.getSession().getAttribute("loginUser")).getUserId();
-		String userId="user0";
 		approval.setUserId(userId);
 		approval.setApprNo(apprNo);
 		ApprDoc appr= service.selectDoApproval(approval);
