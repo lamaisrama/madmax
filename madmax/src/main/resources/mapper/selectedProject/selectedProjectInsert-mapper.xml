@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="SelectedProjectInsert">
 	<insert id="insertProjectBoardTbWriting" parameterType="projectBoard">
-		INSERT INTO PROJECTBOARD VALUES(seq_boardNo.NEXTVAL, #{projectNo},'W','N')
+		INSERT INTO PROJECTBOARD VALUES(seq_boardNo.NEXTVAL, #{projectNo},#{boardType},'N')
 		<selectKey order="AFTER" keyProperty="boardNo" resultType="_int">
 			SELECT seq_boardNo.CURRVAL FROM DUAL
 		</selectKey>
@@ -29,5 +29,22 @@
 
 	<insert id="insertProjectFileTB" parameterType="projectFile">
 		INSERT INTO projectFile VALUES(seq_pjFileNo.NEXTVAL, #{pjFileOriname},#{pjFileRenamedname},#{projectNo})
+	</insert>
+	
+	<!-- 2) 업무  -->
+	<insert id="insertTaskTB" parameterType="task">
+		INSERT INTO TASK VALUES(seq_taskNo.NEXTVAL, #{taskTitle}, #{taskState}, #{taskProiority}, #{taskStartdate}, #{taskEnddate}
+								, #{taskContent}, #{taskId}, #{boardNo}, DEFAULT)
+		<selectKey order="AFTER" keyProperty="taskNo" resultType="_int">
+			SELECT seq_taskNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertTaskAttachmentTB" parameterType="attachment">
+		INSERT INTO TASKATTACHMENT VALUES(#{no},#{originalFilename},#{renamedFilename})
+	</insert>
+	
+	<insert id="insertTaskManagerTB" parameterType="insertTaskManager">
+		INSERT INTO TASKMANAGER VALUES(#{taskManagerName},#{taskNo})
 	</insert>
 </mapper>

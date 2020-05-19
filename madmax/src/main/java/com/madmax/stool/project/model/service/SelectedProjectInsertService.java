@@ -6,6 +6,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
@@ -15,6 +17,9 @@ public interface SelectedProjectInsertService {
 
 	int insertWriting(InsertWriting writing, InsertProjectBoard pb, List<InsertHashTag> hashTagList, List<InsertNotification> notList,
 					List<Attachment> files);
+
+	int insertTask(InsertTask task, InsertProjectBoard pb, List<InsertHashTag> hashTagList,
+			List<InsertNotification> notList, List<InsertTaskManager> tmList, List<Attachment> files);
 
 
 }

@@ -19,5 +19,7 @@
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertNotification" alias="notification"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.Attachment" alias="attachment"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.ProjectFile" alias="projectFile"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTask" alias="task"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTaskManager" alias="insertTaskManager"/>
 	</typeAliases>
 </configuration>

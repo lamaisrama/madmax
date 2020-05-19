@@ -2,8 +2,10 @@ package com.madmax.stool.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
@@ -169,18 +173,51 @@ public class SelectedProjectInsertController {
         	
         	result = service.insertWriting(writing, pb, hashTagList, notList, files);
         	
-        } else if(map.get("boardType").equals("task")) {
-        	System.out.println("$$$$$$$task$$$$$$$$$$");
+        } else if(boardType.equals("task")) {
+        	/* 2) 업무  */
+        	pb.setBoardType("T");
+        	InsertTask task = new InsertTask();
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	
+        	task.setTaskTitle(map.get("taskTitle"));
+        	task.setTaskState(map.get("taskState"));
+        	task.setTaskProiority(map.get("taskProiority"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				startDate = dateFormat.parse(map.get("taskStartdate"));
+				endDate = dateFormat.parse(map.get("taskEnddate"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}        	
+        	task.setTaskStartdate(new java.sql.Date(startDate.getTime()));
+        	task.setTaskEnddate(new java.sql.Date(endDate.getTime()));
+        	task.setTaskContent(map.get("taskContent"));
+        	task.setTaskId(writer);
+        	
+        	String tmNames = map.get("taskManagerName");
+    		List<InsertTaskManager> tmList = new ArrayList<InsertTaskManager>();
+    		if(!(tmNames.trim().equals("") || tmNames == null)) {
+    			String[] tmNameArr = tmNames.split(",");
+    			for(String tm : tmNameArr) {
+    				InsertTaskManager itm = new InsertTaskManager();
+    				itm.setTaskManagerName(tm);
+    				tmList.add(itm);
+    			}
+    		}
+        	
+        	result = service.insertTask(task, pb, hashTagList, notList, tmList, files);
+        	
         } else if(map.get("boardType").equals("schedule")) {
         	System.out.println("$$$$$$$schedule$$$$$$$$$$");
         }
 		
 
-        mv.addObject("pjNo", pjNo);
-		mv.addObject("projectMember", projectMember);
-		mv.setViewName("selectedProject/selectedProject");
+//        mv.addObject("pjNo", pjNo);
+//		mv.addObject("projectMember", projectMember);
+//		mv.setViewName("selectedProject/selectedProject");
 		
-		return mv;
+		return selectedProject(mv, pjNo);
 	}
 	
 }

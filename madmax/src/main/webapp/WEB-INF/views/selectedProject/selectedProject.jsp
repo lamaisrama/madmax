@@ -169,46 +169,47 @@
                                 <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">진행상태</strong>
                                     <div id="taskTabBtns" class="btn-group border border-grey rounded overflow-hidden">
-                                        <input type="hidden" id="progressState" name="progressState" value="request"/>
-                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, 'request');">요청</button>
-                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, 'progress');">진행</button>
-                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, 'feedback');">피드백</button>
-                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, 'end');">완료</button>
-                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, 'hold');">보류</button>
+                                        <input type="hidden" id="progressState" name="taskState" value="요청"/>
+                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, '요청');">요청</button>
+                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">진행</button>
+                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">피드백</button>
+                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">완료</button>
+                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">보류</button>
                                     </div>
                                 </div>
                                 <div id="taskListBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">담당자</strong>
-                                    <input type="text" id="workerListStr" name="workerListStr" style="display: none;"/>
+                                    <input type="text" id="workerListStr" name="taskManagerName" style="display: none;"/>
                                     <div id="workerList" class="d-flex flex-wrap">            
                                         <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
                                     </div>
                                 </div>
                                 <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartDate" class="stoolDateInput" />
+                                    <input type="date"" id="taskStartDate" name="taskStartdate" class="stoolDateInput" />
                                 </div>   
                                 <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEndDate" class="stoolDateInput" />
+                                    <input type="date"" id="taskEndDate" name="taskEnddate" class="stoolDateInput" />
                                 </div>  
                                 <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">우선순위</strong>
-                                    <input type="hidden" id="taskPriority" name="taskPriority"/>
+                                    <input type="hidden" id="taskPriority" name="taskProiority" value="없음"/>
                                     <div class="dropdown">
                                         <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
                                             	우선순위 선택
                                         </button>
                                         <div class="dropdown-menu text-center" id="taskPriority-dropItem">
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv1" onclick="fn_priority(this, 'lv4');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv2" onclick="fn_priority(this, 'lv3');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv3" onclick="fn_priority(this, 'lv2');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv4" onclick="fn_priority(this, 'lv1');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="없음" onclick="fn_priority(this, '없음');"><i class="fas fa-times stoolGrey mr-3" style="font-size:17px;"></i>없음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="낮음" onclick="fn_priority(this, '낮음');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="보통" onclick="fn_priority(this, '보통');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="높음" onclick="fn_priority(this, '높음');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="긴급" onclick="fn_priority(this, '긴급');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
                                         </div>
                                     </div>                   
                                 </div>                                  
                                 <div id="taskContentBox" class="col-12 d-flex justify-content-center">
-                                    <textarea name="taskContentArea" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
+                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
                                 </div>
                             </div>
                         </div>

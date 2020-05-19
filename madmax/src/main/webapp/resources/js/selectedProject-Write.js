@@ -70,7 +70,7 @@ function fn_writeCategory(e, id){
 //업무 작성 관련 스크립트 ---------------------------------------->
 //진행상태 버튼
 function fn_progressState(e, id){
-    if(id=="request"){
+    if(id=="요청"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -80,7 +80,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-primary");
     }
-    if(id=="progress"){
+    if(id=="진행"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -90,7 +90,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-success");
     }
-    if(id=="feedback"){
+    if(id=="피드백"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -100,7 +100,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-danger");
     }
-    if(id=="end"){
+    if(id=="완료"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -110,7 +110,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-info");
     }
-    if(id=="hold"){
+    if(id=="보류"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -125,10 +125,11 @@ function fn_progressState(e, id){
 
 //우선순위 input에 담기
 function fn_priority(e, id){
-    let val = $(e).text();
-    $("#priority").val(id);
-    $("#prioritySelectBtn").text(val);
-    console.log($("#priority").val());
+    let val = $(e).html();
+    $("#taskPriority").val(id);
+    $("#prioritySelectBtn").html(val);
+    console.log(val);
+    console.log($("#taskPriority").val());
 }
 
 //담당자 추가

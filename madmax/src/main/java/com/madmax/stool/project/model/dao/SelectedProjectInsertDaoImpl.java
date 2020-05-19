@@ -9,6 +9,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectFile;
 import com.madmax.stool.project.model.vo.ProjectMember;
@@ -50,6 +52,21 @@ public class SelectedProjectInsertDaoImpl implements SelectedProjectInsertDao {
 	@Override
 	public int insertProjectFileTB(SqlSessionTemplate session, ProjectFile pf) {
 		return session.insert("SelectedProjectInsert.insertProjectFileTB", pf);	
+	}
+
+	@Override
+	public int insertTaskTB(SqlSessionTemplate session, InsertTask task) {
+		return session.insert("SelectedProjectInsert.insertTaskTB", task);
+	}
+
+	@Override
+	public int insertTaskManagerTB(SqlSessionTemplate session, InsertTaskManager itm) {
+		return session.insert("SelectedProjectInsert.insertTaskManagerTB", itm);	
+	}
+
+	@Override
+	public int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.insert("SelectedProjectInsert.insertTaskAttachmentTB", a);	
 	}
 
 }
