@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="pjInsert">
+<mapper namespace="SelectedProjectInsert">
+	<insert id="insertProjectBoardTbWriting" parameterType="projectBoard">
+		INSERT INTO PROJECTBOARD VALUES(seq_boardNo.NEXTVAL, #{projectNo},'W','N')
+		<selectKey order="AFTER" keyProperty="boardNo" resultType="_int">
+			SELECT seq_boardNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertWritingTB" parameterType="writing">
+		INSERT INTO WRITING VALUES(seq_writingNo.NEXTVAL, #{writingTitle}, #{writingContent}, #{writingId}, #{boardNo}, DEFAULT)
+		<selectKey order="AFTER" keyProperty="writingNo" resultType="_int">
+			SELECT seq_writingNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertHashTagTB" parameterType="hashTag">
+		INSERT INTO HASHTAG VALUES(seq_hashtagNo.NEXTVAL, #{hashtagText}, #{boardNo})
+	</insert>
+	
+	<insert id="InsertNotificationTB" parameterType="notification">
+		INSERT INTO NOTIFICATIONTABLE VALUES(seq_notNo.NEXTVAL, #{receiveId}, #{senderId}, #{notType}, DEFAULT, DEFAULT, #{boardNo})
+	</insert>
 
+	<insert id="insertWritingAttachmentTB" parameterType="attachment">
+		INSERT INTO WRITINGATTACHMENT VALUES(#{no},#{originalFilename},#{renamedFilename})
+	</insert>
+
+	<insert id="insertProjectFileTB" parameterType="projectFile">
+		INSERT INTO projectFile VALUES(seq_pjFileNo.NEXTVAL, #{pjFileOriname},#{pjFileRenamedname},#{projectNo})
+	</insert>
 </mapper>

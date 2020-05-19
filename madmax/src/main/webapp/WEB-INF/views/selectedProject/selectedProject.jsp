@@ -115,9 +115,9 @@
                 <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
 				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
-				    <input type="hidden" name="writer" value="user01"/>    
+				    <input type="hidden" name="writer" value="user05"/>    
 				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
-				    <input type="hidden" name="selectedProjectNo" value="1"/>    
+				    <input type="hidden" name="selectedProjectNo" value="${pjNo}"/>    
                     <!-- 2) 글 타입 -->
                     <input type="hidden" name="boardType" id="boardType" value="writing"/>
                     <!-- 3) 파일-->                
@@ -148,12 +148,12 @@
                             <div id="writeCategory-board" class="row w-100 m-0">
                                 <div id="boardContainer" class="w-100 p-3">
                                     <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
-                                        <input name="boardTitle" id="boardTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                             placeholder="제목 입력 (선택)" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
                                     </div>
                                     <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
                                         <div id="boardContentAreaDiv" class="w-100">
-                                            <textarea id="boardContentArea" name="boardContentArea" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
+                                            <textarea id="boardContentArea" name="writingContent" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
                                         </div>
                                     </div>                                                                 
                                 </div>
@@ -455,7 +455,8 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                                <p class="m-0"><c:out value="${pm.userName}"/></p>
+                                <span class="d-none"><c:out value="${pm.userId}"/></span>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
