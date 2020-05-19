@@ -60,15 +60,16 @@
 			<table class="table table-hover">
 				<tr style="background-color:#F1F0F5;">
 					<th>번호</th>
+					<th>문서양식</th>
 					<th>문서제목</th>
 					<th>기안자</th>
 					<th>기안부서</th>
 					<th>기안일</th>
-					<th>배정일</th>
 				</tr>
 				<c:forEach items="${list }" var="l">
 				<tr>
 					<td>${l.apprNo }</td>
+					<td>${l.typeTitle }</td>
 					<td><a href="javascript:void(0)" 
 							onclick="window.open('${path}/appr/openApprDoDoc?apprNo=${l.apprNo }',
 							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
@@ -76,8 +77,7 @@
 						</a></td>
 					<td>${l.userName }</td>
 					<td>${l.deptName }</td>
-					<td>${l.writeDate }</td>
-					<td>20-05-06</td>
+					<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td> 
 				</tr>
 				</c:forEach>
 			</table>

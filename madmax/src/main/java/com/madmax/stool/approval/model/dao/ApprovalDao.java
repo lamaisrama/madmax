@@ -29,5 +29,6 @@ public interface ApprovalDao {
 	int deleteDoc(SqlSessionTemplate session, int apprNo);
 	List<Approval> selectApprTempList(SqlSessionTemplate session, String userId);
 	List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId);
+	String selectReceiverName(SqlSessionTemplate session, String userId);
 
 }

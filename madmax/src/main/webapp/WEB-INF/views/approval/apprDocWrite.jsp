@@ -43,7 +43,7 @@
 					<th class="line writerInfo">department</th>
 				</tr>
 				<tr id="apprTbl-user">
-					<td height="60" class="writerInfo">userName <br> jobtitle</td>
+					<td height="60" class="writerInfo">${loginUser.userName }</td>
 				</tr>
 			</table>
 			<table class="lineTbl ">

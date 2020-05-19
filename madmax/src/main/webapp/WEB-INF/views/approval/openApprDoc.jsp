@@ -32,14 +32,14 @@
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">재기안</button>
 			<button type="button" class="btn btnPrimary" onclick="deleteDraft('${appr.apprNo }');">삭제</button>
 		</c:if>
-		<button type="button" class="btn btnLight" onclick="closePage();">닫기</button>
+		<button type="button" class="btn btnLight" onclick="self.close();">닫기</button>
 	</div>
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
 		<div class="container-fluid line-container">
 			<table class="lineTbl"> 
 				<tr id="apprTbl-dept">
 					<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-					<th class="line writerInfo">department</th>
+					<th class="line writerInfo">${appr.deptName }</th>
 					<c:forEach items="${appr.apprLine}" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
 							<th class="line writerInfo">${l.deptName }</th>
@@ -47,7 +47,7 @@
 					</c:forEach>
 				</tr>
 				<tr id="apprTbl-user">
-					<td height="60" class="writerInfo">userName <br> jobtitle</td>
+					<td height="60" class="writerInfo">${appr.userName } <br> ${appr.jobName }</td>
 					<c:forEach items="${appr.apprLine }" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
 							<td height="60" class="writerInfo">${l.userName } <br> ${l.jobName }</td>
@@ -93,7 +93,7 @@
 				</tr>
 				<tr class="basicContent">
 					<th>수신처</th>
-					<td id="receivingInfo"><i><b style="color:red">이 부분 처리 해야됨</b></i></td>
+					<td id="receivingInfo"><span class="badge-dark">${appr.receiverName }</span></td>
 					<th>기결재첨부</th>
 					<td>><i><b style="color:red">이 부분 처리 해야됨</b></i></td>
 				</tr>
@@ -105,7 +105,7 @@
 						</div>
 					</td>
 				</tr>
-				<c:if test='${appr.apprText!=null && appr.apprText!="" }'>
+				<c:if test='${appr.apprText != null}'>
 				<tr class="basicContent">
 					<th>기안 내용</th>
 					<th colspan="3"></th>

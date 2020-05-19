@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Attachment {
-	private int no;
-	private String originalFilename;
-	private String renamedFilename;
+@NoArgsConstructor
+public class InsertProjectBoard {
+	private int boardNo;
+	private int projectNo;
+	private String boardType;
+	private String pinPost;
 }
