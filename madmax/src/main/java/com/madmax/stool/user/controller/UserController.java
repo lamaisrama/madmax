@@ -5,19 +5,23 @@ import static com.madmax.stool.common.RenameFactory.getRenamedFileName;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,8 +29,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.madmax.stool.user.email.Email;
+import com.madmax.stool.user.email.FindUtil;
+import com.madmax.stool.user.email.MailUtil;
 import com.madmax.stool.user.model.service.UserService;
 import com.madmax.stool.user.model.vo.User;
+import static com.madmax.stool.user.email.FindUtil.getNewPwd;;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -42,9 +51,12 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-//	@Autowired
-//	private JavaMailSender mailSender;
-	
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
+	private Email email;
+
+
 	
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
@@ -85,6 +97,7 @@ public class UserController {
 		}
 		
 		int result = service.insertUser(param);
+		
 		String page = "";
 		
 		if(result==0) {
@@ -154,62 +167,136 @@ public class UserController {
 //	}
 	
 
-
 	
-//	@RequestMapping("/user/findIdPw.do")
-//	public String findIdPw() {
-//		return "user/login/findIdPw";
-//	}
-//	
-//	@RequestMapping("/user/findId.do")
-////	@ResponseBody
-////	public String findId(@RequestParam("userName") String userName, @RequestParam("phone") String phone) {
-//	public String findId(HttpServletRequest req, HttpServletResponse res, Model m) {	
-////		String result = service.selectId(userName, phone);
-////		return result;
-//		String name = req.getParameter("userName");
-//		String phone = req.getParameter("phone");
-//		HashMap hm = new HashMap();
-//		hm.put("userName", name);
-//		hm.put("phone", phone);
+	
+	
+	@RequestMapping("/user/findIdPw")
+	public String findIdPw() {
+		return "user/login/findIdPw";
+	}
+	
+	// id찾기
+	@RequestMapping("/user/findingId")
+	public ModelAndView findingId(@RequestParam Map param, Model m) {
+		
+		String name = (String) param.get("userName");
+		String phone = (String) param.get("phone");
+		
+		User u = service.selectId(param);
+		//("msg","찾으시는 아이디는"u.getName
+	
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("User",u);
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	
+	// pw 찾기
+//	@RequestMapping("/user/findingPw.do")
+//	public ModelAndView findingPw(@RequestParam Map param, Model m) {
 //		
-//		String result = service.selectId(hm);
+//		String id = (String)param.get("userId");
+//		String email = (String)param.get("email");
 //		
-//		return result;
+//		User u = service.findPw();
+//		
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("user", u);
+//		mv.setViewName("jsonView");
+//		
+//		return mv;
 //	}
-//	
-//	
-//	
-////	@RequestMapping("/user/findPw.do")
-//	@RequestMapping(value = "/user/findPw.do")
+	
+	
+	
+	@RequestMapping("/user/findingPw.do")
+	public ModelAndView sendEmailAction (@RequestParam Map<String, Object> paramMap, ModelMap model, ModelAndView mv) throws Exception {
+
+		String USERID = (String) paramMap.get("userId");
+		String EMAIL = (String) paramMap.get("email");
+		
+		User u = service.findPw(paramMap);
+		
+		// 임시비번 랜덤값을 돌려 -> 랜덤값을 가지고 db에 가서 변경
+		String password = getNewPwd();
+		
+		String newPwd = encoder.encode(password);
+		
+		int result =0;
+		if(u!=null) {
+			Map<String, String> map = new HashMap();
+			map.put("userId", u.getUserId());
+			map.put("password", newPwd);
+			
+			result = service.changePw(map);
+		}
+		
+		// 임시 비번을 db에 저장할 메소드 
+		
+		if(result>0) {
+			email.setContent("임시 비밀번호는 "+password+" 입니다."); // 이메일로 보낼 메시지
+			email.setReceiver(EMAIL); // 받는이의 이메일 주소
+			email.setSubject(USERID+"님 비밀번호 찾기 메일입니다."); // 이메일로 보낼 제목
+			
+			try {
+				MimeMessage msg = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper 
+				= new MimeMessageHelper(msg, true, "UTF-8");
+				
+				messageHelper.setSubject(email.getSubject());
+				messageHelper.setText(email.getContent());
+				messageHelper.setTo(email.getReceiver());
+				messageHelper.setFrom("madmax@gmail.com"); // 보내는 이의 주소(root-context.xml 에서 선언했지만 적어줬음)
+				msg.setRecipients(MimeMessage.RecipientType.TO , InternetAddress.parse(email.getReceiver()));
+				mailSender.send(msg);
+				
+			}catch(MessagingException e) {
+				System.out.println("MessagingException");
+				e.printStackTrace();
+			}
+			mv.addObject("msg", "작성한 이메일로 임시비번이 전송되었습니다.");
+			mv.setViewName("jsonView");
+			return mv;
+		}else {
+			mv.addObject("msg", "일치하는 정보가 없습니다.");
+			mv.setViewName("jsonView");
+			return mv;
+		}
+	}
+	
+	
+	
+	//	@RequestMapping("/user/findingPw.do")
 //	public ModelAndView userpassword2(@RequestParam("userId") String userId,
-//			@RequestParam("userName") String userName, @RequestParam("phone") String phone,
-//			ModelAndView mv) throws Exception {
+//			@RequestParam("email") String email, ModelAndView mv) throws Exception {
 //
 //		Map<String, Object> map = new HashMap<String, Object>();
 //
 //		map.put("userId", userId);
-//		map.put("userName", userName);
-//		map.put("phone", phone); // <- 비밀번호를 찾고자 하는 사람의 정보를 DB에서 찾아오고,
+//		map.put("email", email); // <- 비밀번호를 찾고자 하는 사람의 정보를 DB에서 찾아오고,
 //
 //		System.out.println("a : " + map);
+//		System.out.println("id : " + userId);
+//		System.out.println("email : " + email);
 //
-//		User user = service.userpasswordfind(map);
+//		User u = service.findPw(map);
 //
-//		if (user != null) { // 유저정보를 찾았다면
+//		if (u != null) { // 유저정보를 찾았다면
 //
 //			String newPwd = FindUtil.getNewPwd();
 //
 //			Map<String, String> map2 = new HashMap<>();
 //
-//			map2.put("userId",userId);
+//			map2.put("userId", userId);
 //			map2.put("newPwd", newPwd); // DB에서 찾아온 정보를 map2로 담아서
 //
 //			System.out.println("b ; " + map2);
 //
-//			service.changePwd(map2);
+////			service.changePwd(map2);
 //
-//			String subject = "=임시 비밀번호 발급안내=";
+//			String subject = "[madmax] 임시 비밀번호 발급안내";
 //
 //			String msg = "";
 //			msg += "<br> <br> <div align='center' style='border:1px solid black;'>";
@@ -217,12 +304,10 @@ public class UserController {
 //			msg += "님</strong>의 임시 비밀번호 입니다. 로그인 후 비밀번호를 변경하세요.</h3>";
 //			msg += "<p> 임시 비밀번호 : <strong>" + newPwd + "<br> <br> </strong></p></div> ";
 //
-//			MailUtil.sendMail(phone, subject, msg); // mailutil을 사용해 임시 비밀번호를 메일로 보냅니다.
+//			MailUtil.sendMail(email, subject, msg); // mailutil을 사용해 임시 비밀번호를 메일로 보냄.
 //
-//			mv.setViewName("userpassword2");
-//			
+////			mv.setViewName("userpassword2");
 //			return mv;
-//			
 //		} else {
 //			int check = 0;
 //			mv.addObject("checkSep", check);
@@ -231,6 +316,11 @@ public class UserController {
 //		}
 //
 //	}
+
+
+	
+	
+
 	
 	
 }

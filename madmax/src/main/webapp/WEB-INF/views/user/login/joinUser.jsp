@@ -163,12 +163,12 @@
                         <!-- <input type="text" class="form-control" list="dept" placeholder="클릭하여 부서 선택" size="30"> -->
                         <select class="form-control text-dark" name="deptCode" required>
 							<option value="" disabled selected>부서선택</option>
-							<option value="인사팀" >인사팀</option>    
-                            <option value="개발팀" >개발팀</option>    
-                            <option value="마케팅팀" >마케팅팀</option>    
-                            <option value="회계팀" >회계팀</option>    
-                            <option value="영업팀" >영업팀</option>    
-                            <option value="관리팀" >관리팀</option>  
+							<option value="HR" >인사팀</option>    
+                            <option value="RND" >개발팀</option>    
+                            <option value="MT" >마케팅팀</option>    
+                            <option value="AD" >회계팀</option>    
+                            <option value="ST" >영업팀</option>    
+                            <option value="MS" >관리팀</option>  
 						</select>
                       </div>
                       
