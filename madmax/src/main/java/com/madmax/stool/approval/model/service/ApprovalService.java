@@ -20,8 +20,12 @@ public interface ApprovalService {
 	int insertApproval(Approval appr, List<ApprLine> lines);
 	List<Approval> selectApprReqList(String userId);
 	ApprDoc selectApprDoc(int apprNo);
+	ApprDoc selectDoApproval(Approval approval);
 	int updateTemporary(int apprNo);
 	int deleteDoc(int apprNo);
+	List<Approval> selectApprTempList(String userId);
+	List<Approval> selectApprWaitList(String userId);
+
 	
 	
 }

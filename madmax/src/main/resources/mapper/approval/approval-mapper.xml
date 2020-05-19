@@ -25,35 +25,38 @@
 	</select>
 	
 	<insert id="insertApproval" parameterType="approval">
-		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1)
+		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1, #{receiver})
 		<selectKey order="AFTER" keyProperty="apprNo" resultType="_int">
 			SELECT SEQ_APPRNO.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 
 	<insert id="insertApprLine" parameterType="apprLine">
-		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser})
+		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, null, null, null)
 	</insert>
-	
-	<select id="selectApprReqList" parameterType="string" resultType="approval">
-		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2) ORDER BY WRITEDATE DESC	 
-	</select>
 	
 	<select id="selectApproval" parameterType="_int" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
 		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) 
     		JOIN DEPT USING(DEPTCODE)	
     		JOIN JOBTABLE USING(JOBCODE)
-		 WHERE APPRNO=#{apprNo}
+		 WHERE APPRNO=#{apprNo} 
 	</select>
 	
-	<select id="selectApprLine" parameterType="_int" resultType="ApprLine">
+	<select id="selectDoApproval" parameterType="approval" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) 
+    		JOIN DEPT USING(DEPTCODE)	
+    		JOIN JOBTABLE USING(JOBCODE)
+    		JOIN APPRLINE USING(APPRNO)
+		 WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRNO=#{apprNo} AND APPRUSER=#{userId}
+	</select>
+	
+	<select id="selectApprLine" parameterType="_int" resultType="apprLine">
 		SELECT * FROM APPRLINE 
-			JOIN STOOLUSER ON(APPRUSER=USERID)
-			JOIN DEPT USING(DEPTCODE)
-    		JOIN JOBTABLE USING(JOBCODE)		WHERE APPRNO=#{apprNo} 
+			JOIN STOOLUSER ON(APPRUSER=USERID) JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE) WHERE APPRNO=#{apprNo}
 	</select>
-	
+
 	<update id="updateTemporary" parameterType="_int">
 		UPDATE APPROVAL SET APPRSTATUS=0 WHERE APPRNO=#{apprNo}	
 	</update>
@@ -61,4 +64,16 @@
 	<delete id="deleteDoc" parameterType="_int">
 		DELETE FROM APPROVAL WHERE APPRNO=#{apprNo}
 	</delete>
+	
+	<select id="selectApprReqList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2) ORDER BY WRITEDATE DESC	 
+	</select>
+	
+	<select id="selectApprTempList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS=0 ORDER BY WRITEDATE DESC
+	</select>
+	
+	<select id="selectApprWaitList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId}
+	</select>
 </mapper>

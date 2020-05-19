@@ -22,7 +22,7 @@
 				}else {
 					$("#receivingInfo")
 							.append($("<span>").addClass("badge").addClass("badge-dark").html(item.userName));
-					var inputValue=$("<input>").attr("type","hidden").attr("name","receivingLine").attr("value",""+item.userId+"/"+item.apprType);
+					var inputValue=$("<input>").attr("type","hidden").attr("name","receiver").attr("value", item.userId);
 				}	
 				
 				$(".line-container").append(inputValue);

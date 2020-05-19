@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="Stool" />
+	<jsp:param name="title" value="Stool|결재 진행함" />
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 

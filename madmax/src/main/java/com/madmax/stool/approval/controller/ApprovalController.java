@@ -3,7 +3,10 @@ package com.madmax.stool.approval.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +39,6 @@ public class ApprovalController {
 		return mv;
 	}
 
-	@RequestMapping("/appr/apprReqBox.do")
-	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
-	public String approvalRequestBox(Model m) {
-		String userId="user0";
-		List<Approval> list = service.selectApprReqList(userId);
-		m.addAttribute("list", list);
-		return "approval/apprReqBox";
-	}
-
 	@RequestMapping("/appr/draftForm.do")
 	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required = false, defaultValue = "3") int dNo) {
 		mv.addObject("type", service.selectApprDocForm(dNo));
@@ -53,18 +47,19 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/draftFormEnd")
-	public String selectDraftFormEnd(String[] apprLine, String receivingLine, Approval appr) {
+	public String selectDraftFormEnd(String[] apprLine, Approval appr) {
 		// 결재문서 정보 treat
+		System.out.println(appr);
 		appr.setUserId("user0");
 		appr.setFinalApprStep(apprLine.length);
 		if (appr.getApprContent() != null) {
 			appr.getApprContent().replace("\'", "\''").replace("\"", "\\\"");
-		} else {
+		} else { //ApprContent 없을 때
 			appr.setApprContent("");
 		}
 		if (appr.getApprText() != null) {
 			appr.getApprText().replace("\'", "\''").replace("\"", "\\\"");
-		} else {
+		} else { //ApprText 없을 때
 			appr.setApprText("");
 		}
 
@@ -78,6 +73,8 @@ public class ApprovalController {
 			a.setApprType(lineInfo[1]);
 			apprLines.add(a); 
 		}
+		//receiver 유무 확인
+		if(appr.getReceiver()==null) appr.setReceiver("");
 
 		try{
 			int result =service.insertApproval(appr, apprLines);
@@ -86,12 +83,6 @@ public class ApprovalController {
 		return "";
 	}
 	
-
-	@RequestMapping("/appr/purchaseForm.do")
-	public String selectPurchaseForm() {
-		return "approval/apprDocForm/purchaseReq";
-	}
-
 	@RequestMapping("/appr/line.do")
 	public ModelAndView approvalLine(ModelAndView mv) {
 
@@ -107,15 +98,28 @@ public class ApprovalController {
 		return mv;
 	}
 
+	@RequestMapping("/appr/apprReqBox.do")
+	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
+	public String approvalRequestBox(Model m) {
+		String userId="user0";
+		List<Approval> list = service.selectApprReqList(userId);
+		m.addAttribute("list", list);
+		return "approval/apprReqBox";
+	}
+	
 	@RequestMapping("/appr/apprTempBox.do")
-	public String approvalTempBox() {
+	public String approvalTempBox(Model m) {
+		String userId="user0";
+		List<Approval> list = service.selectApprTempList(userId);
+		m.addAttribute("list", list);
 		return "approval/apprTempBox";
 	}
 
 	@RequestMapping("/appr/apprWaitBox.do")
-	public String approvalWaitBox() {
+	public String approvalWaitBox(Model m) {
 		String userId="user0";
-		//List<Approval> selectApprWaitList(userId);
+		List<Approval> list  = service.selectApprWaitList(userId);
+		m.addAttribute("list", list);
 		return "approval/apprWaitBox";
 	}
 
@@ -148,12 +152,23 @@ public class ApprovalController {
 	public String openApproval(Model m, int apprNo) {
 		ApprDoc appr= service.selectApprDoc(apprNo);
 		m.addAttribute("appr", appr);
-		System.out.println(appr);
-		
-		
+		System.out.println(appr);	
 		return "approval/openApprDoc";
 	}
 
+	@RequestMapping("/appr/openApprDoDoc")
+	public String openDoApproval(HttpServletRequest req, Model m, int apprNo) {
+		Approval approval = new Approval();
+		//String userId=(User)(req.getSession().getAttribute("loginUser")).getUserId();
+		String userId="user0";
+		approval.setUserId(userId);
+		approval.setApprNo(apprNo);
+		ApprDoc appr= service.selectDoApproval(approval);
+		m.addAttribute("appr", appr);
+		System.out.println(appr);	
+		return "approval/openDoApprDoc";
+	}
+	
 	@RequestMapping("/appr/updateTemporary")
 	@ResponseBody
 	public boolean updateTemporary(int apprNo) {
@@ -163,6 +178,7 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("/appr/deleteDoc")
+	@ResponseBody
 	public boolean deleteDoc(int apprNo) {
 		if(service.deleteDoc(apprNo)>0) return true;
 		else return false;

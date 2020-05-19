@@ -15,17 +15,20 @@ public class Approval {
 	private String apprTitle;
 	private String apprContent;
 	private String apprText;
-	private Date updateDate;
 	private Date writeDate;
+	private int apprDocTypeNo;
 	private String userId;
+	private int finalApprStep;
+	private int currApprStep;
+	private int apprStatus;
+	private String receiver;
+	
 	private String userName;
 	private String jobCode;
 	private String jobName;
 	private String deptCode;
 	private String deptName;
-	private int apprDocTypeNo;
-	private int finalApprStep;
-	private int currApprStep;
-	private int apprStatus;
+	
+
 	private String typeTitle;
 }

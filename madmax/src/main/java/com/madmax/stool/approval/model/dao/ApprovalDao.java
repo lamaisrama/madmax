@@ -22,7 +22,12 @@ public interface ApprovalDao {
 	int insertApprLine(SqlSessionTemplate session, ApprLine apprLine);
 	List<Approval> selectApprReqList(SqlSessionTemplate session, String userId);
 	ApprDoc selectApproval(SqlSessionTemplate session, int apprNo);
+	ApprDoc selectDoApproval(SqlSessionTemplate session, Approval approval);
+
 	List<ApprLine> selectApprLine(SqlSessionTemplate session, int apprNo);
 	int updateTemporary(SqlSessionTemplate session, int apprNo);
 	int deleteDoc(SqlSessionTemplate session, int apprNo);
+	List<Approval> selectApprTempList(SqlSessionTemplate session, String userId);
+	List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId);
+
 }

@@ -63,11 +63,18 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return session.selectOne("approval.selectApproval", apprNo);
 	}
 
+	
+	@Override
+	public ApprDoc selectDoApproval(SqlSessionTemplate session, Approval approval) {
+		return session.selectOne("approval.selectDoApproval", approval);
+	}
+
 	@Override
 	public List<ApprLine> selectApprLine(SqlSessionTemplate session, int apprNo) {
 		return session.selectList("approval.selectApprLine", apprNo);
 	}
-
+	
+	
 	@Override
 	public int updateTemporary(SqlSessionTemplate session, int apprNo) {
 		return session.update("approval.updateTemporary", apprNo);
@@ -76,6 +83,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int deleteDoc(SqlSessionTemplate session, int apprNo) {
 		return session.delete("approval.deleteDoc", apprNo);
+	}
+
+	@Override
+	public List<Approval> selectApprTempList(SqlSessionTemplate session, String userId) {
+		return session.selectList("approval.selectApprTempList", userId);
+	}
+
+	@Override
+	public List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId) {
+		return session.selectList("approval.selectApprWaitList", userId);
 	}	
 
 	

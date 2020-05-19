@@ -25,15 +25,46 @@
 	<form action="${path }/appr/draftFormEnd" method="post" onsubmit="return beforeSubmit();">
 	<input type="hidden" name="apprDocTypeNo" value="${appr.typeTitle }">
 	<div class="header">
-		<c:if test="${appr.apprStatus==1 }">
-			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">회수</button>
-		</c:if>
-		<c:if test="${appr.apprStatus==0 }">
-			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">재기안</button>
-			<button type="button" class="btn btnPrimary" onclick="deleteDraft('${appr.apprNo }');">삭제</button>
-		</c:if>
+		<button type="button" class="btn btnPrimary"  data-toggle="modal" data-target="#apprModal">결재</button>
 		<button type="button" class="btn btnLight" onclick="closePage();">닫기</button>
 	</div>
+	<!-- The Modal -->
+	<div class="modal" id="apprModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">결재/합의하기</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	      <span style="font-weight:bolder; color:red; margin-bottom:20px;">결재 의견 </span><br>
+	      <c:if test="${appr.apprType=='approval' }">
+      		<input type="radio" name="apprResult" value="approval" id="apprApproval">
+      		<label for="apprApproval" >결재 &nbsp;&nbsp;</label>
+	      </c:if>
+	      <c:if test="${appr.apprType =='agree' }">
+	      	<input type="radio" name="apprResult" value="agree" id="apprAgree">
+	      	<label for="apprAgree">합의&nbsp;&nbsp;</label>
+	      </c:if>
+	        <input type="radio" name="apprResult" value="reject" id="apprReject">
+	        <label for="apprReject">반려</label>
+	        <br>
+	         <input class="form-control" type="text" name="apprMessage" placeholder="결재 의견을 남겨주세요">
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" style="width:120px;" onclick="doAppr();">결재</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
+	
 	<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
 		<div class="container-fluid line-container">
 			<table class="lineTbl"> 
@@ -43,14 +74,19 @@
 					<c:forEach items="${appr.apprLine}" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
 							<th class="line writerInfo">${l.deptName }</th>
-						</c:if>		
+						</c:if>	
 					</c:forEach>
 				</tr>
 				<tr id="apprTbl-user">
 					<td height="60" class="writerInfo">userName <br> jobtitle</td>
 					<c:forEach items="${appr.apprLine }" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
-							<td height="60" class="writerInfo">${l.userName } <br> ${l.jobName }</td>
+							<td height="60" class="writerInfo">${l.userName } ${l.jobName }
+								<c:if test="${l.apprTime!=null and l.apprTime!=''}">
+									<img src="${path }/resources/upload/sign/${l.apprUser}.PNG" width="50" alt="sign"/> <br>
+									<span style="font-size:8px;"><fmt:formatDate value="${l.apprTime }" pattern="yyyy-MM-dd"/></span>
+								</c:if>
+							</td>
 						</c:if>
 					</c:forEach>
 				</tr>
@@ -67,7 +103,13 @@
 				<tr id="agreeTbl-user">
 					<c:forEach items="${appr.apprLine}" var="l">
 						<c:if test="${l.apprType.equals('agree') }">
-							<td height="60" class="writerInfo">${l.userName } <br> ${l.jobName }</td>
+							<td height="60" class="writerInfo">${l.userName } ${l.jobName }						
+								<c:if test="${l.apprTime!=null and l.apprTime!=''}">
+									<img src="${path }/resources/upload/sign/${l.apprUser}.PNG" width="50" alt="sign"/> <br>
+									<span style="font-size:8px;"><fmt:formatDate value="${l.apprTime }" pattern="yyyy-MM-dd"/></span>
+								</c:if>
+							</td>
+							
 						</c:if>
 					</c:forEach>
 				</tr>
@@ -127,39 +169,16 @@
 		<br>
 	</form>
 	<script>
-		$(function(){
-			$("input").attr("readOnly","true");
-		})
-		
-				function moveToTempBox(apprNo){
+		function doAppr(){
 			$.ajax({
-				url:"${pageContext.request.contextPath}/appr/updateTemporary",
-				data:{"apprNo":apprNo},
-				type:"get",
+				url:"${path}/appr/doAppr",
+				data:{},
+				type:"POST",
 				success:(data)=>{
-					alert('해당 문서가 임시 저장함에 저장되었습니다.');
+					alert('결재 정보가 저장되었습니다.');
 					self.close();
 				}
-			})
-		}
-		
-		function deleteDraft(apprNo){
-			if(confirm("정말로 삭제하시겠습니까? 문서는 복구되지 않습니다.")){
-				$.ajax({
-					url:"${pageContext.request.contextPath}/appr/deleteDoc",
-					data:{"apprNo":apprNo},
-					type:"get",
-					success:(data)=>{
-						console.log(data);
-						if(data){							
-							alert('삭제되었습니다.');
-						}else{
-							alert('삭제 실패');
-						}
-						self.close();
-					}
-				})
-			}
+			});
 		}
 		
 	</script>

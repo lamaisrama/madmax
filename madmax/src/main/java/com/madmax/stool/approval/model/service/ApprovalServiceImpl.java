@@ -77,8 +77,19 @@ public class ApprovalServiceImpl implements ApprovalService{
 		//1. Approval doc 가져오기
 		ApprDoc appr = dao.selectApproval(session, apprNo);
 		//2. ApprLine 가져오기
-		List<ApprLine> list = dao.selectApprLine(session, apprNo);
-		appr.setApprLine(list);
+		List<ApprLine> lines = dao.selectApprLine(session, apprNo);
+		appr.setApprLine(lines);
+		//appr.setApprHistory(history);
+		return appr;
+	}
+
+	@Override
+	public ApprDoc selectDoApproval(Approval approval) {
+		//select apprDoc 
+		ApprDoc appr = dao.selectDoApproval(session, approval);
+		//select apprLine
+		List<ApprLine> lines = dao.selectApprLine(session, approval.getApprNo());
+		appr.setApprLine(lines);
 		return appr;
 	}
 
@@ -91,7 +102,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int deleteDoc(int apprNo) {
 		return dao.deleteDoc(session, apprNo);
 	}
-	
+
+	@Override
+	public List<Approval> selectApprTempList(String userId) {
+		return dao.selectApprTempList(session, userId);
+	}
+
+	@Override
+	public List<Approval> selectApprWaitList(String userId) {
+		return dao.selectApprWaitList(session, userId);
+	}
 	
 	
 

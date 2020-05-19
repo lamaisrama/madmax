@@ -28,5 +28,6 @@ public class ApprDoc {
 	private int currApprStep;
 	private int apprStatus;
 	private String typeTitle;
+	private String apprType;
 	private List<ApprLine> apprLine;
 }
