@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="admin">
+
+	<select id="selectAttendList" resultType="adminAttend">
+	SELECT * FROM  modifyRequest LEFT JOIN EMPLOYEEMANAGEMENT USING(MANAGEMENTNO)  JOIN STOOLUSER USING(USERID)
+	</select>
+	<update id="updateModifyRequest" parameterType="adminAttend">
+		UPDATE MODIFYREQUEST SET REQUESTRESULT=#{requestCategory} WHERE REQUESTNO=#{requestNo}
+	</update>
+	<update id="updateEmployeeManagement" parameterType="adminAttend">
+		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestCategory} WHERE WORKSTATENO=#{workStateNo}
+	</update>
+</mapper>

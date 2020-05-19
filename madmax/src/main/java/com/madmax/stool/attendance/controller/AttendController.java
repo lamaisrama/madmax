@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.madmax.stool.attendance.model.service.AttendService;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
+import com.madmax.stool.user.model.vo.User;
 
 @Controller
 public class AttendController {
@@ -24,14 +27,17 @@ public class AttendController {
 	AttendService service;
 	
 	@RequestMapping("/attd/attendList.do")
-	public String attendList(Model m) {
-		
-		String userId="user01";
+	public String attendList(HttpServletRequest req,Model m) {
 		
 		
-		List<Worktime> list=service.selectWorktimeList(userId);
 		
-		System.out.println(list);
+		User u = (User)req.getSession().getAttribute("loginUser");
+		
+		//System.out.println(u);
+		
+		List<Worktime> list=service.selectWorktimeList(u.getUserId());
+		
+		//System.out.println(list);
 		
 		
 		m.addAttribute("list",list);
@@ -40,12 +46,21 @@ public class AttendController {
 		
 	}
 	
+	
+	// 관리자한테 수정요청하기
 	@RequestMapping("/attd/modifyRequest.do")
-	public ModelAndView insertRequest(ModelAndView mv,Attendance a) {
+	public ModelAndView insertRequest(HttpServletRequest req,ModelAndView mv,Attendance a,@RequestParam int managementNo) {
 		//System.out.println(a);
-		//int result=service.insertRequest(a);
 		
-		int result=service.updateRequestState(a);
+		User u = (User)req.getSession().getAttribute("loginUser");
+		a.setUserId(u.getUserId());
+		//a.setManagementNo(managementNo);
+		//System.out.println("관리자 수정"+a);
+		
+		int result=service.insertRequest(a);
+		
+		
+		//int result=service.updateRequestState(a);
 				
 		mv.setViewName("redirect:/attd/attendList.do");
 		
@@ -53,7 +68,7 @@ public class AttendController {
 	}
 	
 	@RequestMapping("/attd/stateRequest.do")
-	public ModelAndView insertState(ModelAndView mv,Worktime w,@RequestParam String timeState) {
+	public ModelAndView insertState(HttpServletRequest req,ModelAndView mv,Worktime w,@RequestParam String timeState) {
 		
 		//String timeState=req.getParameter("timeState");
 		//System.out.println(timeState);
@@ -67,9 +82,12 @@ public class AttendController {
 		Date today=new Date(cal.getTimeInMillis());
 		//System.out.println(today);
 		
+		User u = (User)req.getSession().getAttribute("loginUser");
+		System.out.println(u);
+		
 		//today.
 		w.setToday(today);
-		w.setUserId("user01");
+		w.setUserId(u.getUserId());
 		
 		if(timeState.equals("출근")) {
 			

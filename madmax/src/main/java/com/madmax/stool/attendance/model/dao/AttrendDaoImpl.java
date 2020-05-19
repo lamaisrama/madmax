@@ -11,6 +11,7 @@ import com.madmax.stool.attendance.model.vo.Worktime;
 @Repository
 public class AttrendDaoImpl implements AttendDao {
 
+	// 관리자 수정요청
 	@Override
 	public int insertRequest(SqlSessionTemplate session, Attendance a) {
 		// TODO Auto-generated method stub
