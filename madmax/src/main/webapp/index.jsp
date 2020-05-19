@@ -56,9 +56,6 @@
                       <p class="text-center">
                       	<a class="p2" href="${pageContext.request.contextPath }/user/findIdPw">아이디/비밀번호 찾기</a>
                    	  </p>
-                   	  
-                      	<a class="p2" href="${path }/user/findIdPw.do">아이디/비밀번호 찾기</a>
-                   	  </p>
                 </form>
 
                 

@@ -125,7 +125,7 @@ public class UserController {
 			m.addAttribute("msg", "로그인실패!");
 		}
 		m.addAttribute("loc", "/");
-		return "common/msg";
+		return "main";
 	}
 	
 	@RequestMapping("/user/logout.do")
