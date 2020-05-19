@@ -225,7 +225,7 @@
 		}
 
 </style>
-<div class="col col-sm-10">	
+<div class="col col-sm-7">	
 <div id='wrap'>
 	<h4><i class="far fa-calendar-alt"></i>&nbsp;전체일정</h4>	
 	<hr>
@@ -235,12 +235,10 @@
 </div>
 </div>
 
-<!-- <div class="col col-sm-7">
-	
-</div>	
+
 <div class="col col-sm-3">
 
-</div> -->
+</div> 
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -11,144 +11,160 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   <!--  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+   	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>    
 </head>
 <body>
+	<style>
+		body{ 
+			background-color:#233C61;
+		}
+	</style>
+	<!-- 
+	<h1>까먹은 ID를 찾아봅시다</h1>
+	
+		이름 <input type="text" name="userName" id="name"><br>
+		핸드폰 번호 <input type="text" name="phone" id="phone"><br>
+	
+	<button id="findId">아이디 찾기</button>
+	<br>
+	<br>
+	<span id="printId"></span>
+	 -->
+	
+	
+	
 	<div class="full">
-		<div class="container  text-center">
+		<div class="container col-5">
 			<div class="area_inputs wow fadeIn">
-				<div class="sub_title font-weight-bold text-dark">
+				<div class="sub_title font-weight-bold text-white text-center mt-4">
 					<h3>아이디/비밀번호 찾기</h3>
-					<!-- <p>인증된 이메일만 정보 찾기가 가능합니다 :)</p> -->
+					<!-- <p>인증된 이메일만 정보 찾기가 가능합니다</p> --> 
 				</div>
-				<div style="margin-bottom: 10px;"
-					class="custom-control custom-radio custom-control-inline">
+				<div class="custom-control custom-radio custom-control-inline">
 					<input type="radio" class="custom-control-input" id="search_1" name="search_total" onclick="search_check(1)" checked="checked">
-					<label class="custom-control-label font-weight-bold text-dark"	for="search_1">아이디 찾기</label>
+					<label class="custom-control-label font-weight-bold text-white"	for="search_1">아이디 찾기</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline">
 					<input type="radio" class="custom-control-input" id="search_2" name="search_total" onclick="search_check(2)"> 
-					<label class="custom-control-label font-weight-bold text-dark" for="search_2">비밀번호 찾기</label>
+					<label class="custom-control-label font-weight-bold text-white" for="search_2">비밀번호 찾기</label>
 				</div>
+				<br><br>
+				
+				<!--id 찾기 start -->
+				
 				<div id="searchI">
 					<div class="form-group">
-						<label class="font-weight-bold text-dark" for="inputName_1">이름</label>
+						<label class="font-weight-bold text-white" for="name">이름</label>
 						<div>
-							<input type="text" class="form-control" id="inputName_1" name="userName" placeholder="ex) 갓민수">
+							<input type="text" class="form-control" name="userName" id="name" placeholder="ex) 유승호" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="font-weight-bold text-dark" for="inputPhone_1">휴대폰번호</label>
+						<label class="font-weight-bold text-white" for="phone">휴대폰번호</label>
 						<div>
-							<input type="text" class="form-control" id="inputPhone_1" name="phone" placeholder="ex) 01077779999">
+							<input type="text" class="form-control" id="phone" name="phone" placeholder="ex) 01012345678" required>
 						</div>
 					</div>
+					
+					<!-- 아이디 출력 -->
+					<div id="printId" class="text-white text-center"></div>
+					<br>
+					
 					<div class="form-group">
-                        <button id="searchBtn" type="button" data-toggle="modal" data-target="#exampleModal" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">아이디 찾기</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="background_modal" class="background_modal">
-                                        <div class="modal_contents">
-                                            <h4>
-                                                <b>당신의 아이디는</b><span class="close">&times;</span>
-                                            </h4><br>
-                                                <h2 id="id_value"></h2>
-                                            <br>
-                                            <button type="button" id="pwSearch_btn" class="btn peach-gradient btn-rounded waves-effect">
-                                            <i class="fa fa-envelope"></i>비밀번호 찾기</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
+						<button id="findId" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
 					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
 					</div>
 				</div>
+				<!--id 찾기 end -->
+				
+				<!-- pw 찾기 start -->
+				
 				<div id="searchP" style="display: none;">
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputId">아이디</label>
-						<div>
-							<input type="text" class="form-control" id="inputId" name="inputId_2" placeholder="ex) godmisu">
+					<!-- <form action="/user/findPwFrm.do" method="post"> -->
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="userId">아이디</label>
+							<div>
+								<input type="text" class="form-control" id="userId" name="userId" placeholder="ex) madmax" required>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputEmail_2">이메일</label>
-						<div>
-							<input type="email" class="form-control" id="inputEmail_2"	name="inputEmail_2" placeholder="ex) E-mail@gmail.com">
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="email">이메일</label>
+							<div>
+								<input type="email" class="form-control" id=email	name="email" placeholder="ex) madmax@gmail.com" required>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<button id="searchBtn2" type="button" class="btn btn-primary btn-block">확인</button>
-					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
+						<div class="form-group">
+							<button id="findPw" type="button" class="btn btn-primary btn-block">확인</button>
+							<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
+						</div>
+					<!-- </form> -->
 				</div>
-				</div>
+				<!-- pw 찾기 end -->
 			</div>
 		</div>
-    </div>
-    <script>
-        
-        function search_check(num) {
-            if (num == '1') {
-                document.getElementById("searchP").style.display = "none";
-                document.getElementById("searchI").style.display = "";	
-            } else {
-                document.getElementById("searchI").style.display = "none";
-                document.getElementById("searchP").style.display = "";
-            }
-        }
-
-        $(document).ready(function() {
-		/////////모///달///기///능///////////
-		// 1. 모달창 히든 불러오기
-		$('#searchBtn').click(function() {
-			$('#background_modal').show();
-		});
-		// 2. 모달창 닫기 버튼
-		$('.close').on('click', function() {
-			$('#background_modal').hide();
-		});
-		// 3. 모달창 위도우 클릭 시 닫기
-		$(window).on('click', function() {
-			if (event.target == $('#background_modal').get(0)) {
-	            $('#background_modal').hide();
-	         }
-		});
-	});
-
-    // 아이디 & 스토어 값 저장하기 위한 변수
-	var idV = "";
-	// 아이디 값 받고 출력하는 ajax
-	var idSearch_click = function(){
-		$.ajax({
-			type:"POST",
-			url:"${pageContext.request.contextPath}/user/userSearch?inputName_1="
-					+$('#inputName_1').val()+"&inputPhone_1="+$('#inputPhone_1').val(),
-			success:function(data){
-				if(data == 0){
-					$('#id_value').text("회원 정보를 확인해주세요!");	
-				} else {
-					$('#id_value').text(data);
-					// 아이디값 별도로 저장
-					idV = data;
-				}
+	</div>
+	
+	  
+	<script>
+		// 체크 버튼에 따라 아이디/비밀번호 기능이 달라짐
+		function search_check(num) {
+			if (num == '1') {
+				document.getElementById("searchP").style.display = "none";
+				document.getElementById("searchI").style.display = "";	
+			} else {
+				document.getElementById("searchI").style.display = "none";
+				document.getElementById("searchP").style.display = "";
 			}
+		}
+	
+		// 아이디찾기
+		$(document).one('click','#findId',function(){
+			var name = $('#name').val();
+		 	var phone = $('#phone').val();
+		
+		 	var postData = {'userName' : name , 'phone' : phone};
+		
+			$.ajax({
+		        url:'${path}/user/findingId',
+		        type:'POST',
+		        data: postData,
+		        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		        dataType : "json",
+		
+		        success:function(data){
+		       		console.log(data.User.userId);
+	       	 		$("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
+		        },
+		        error: function (XMLHttpRequest, textStatus, errorThrown){
+		        	alert('정보를 다시 입력해주시길 바랍니다.' );
+		        }
+		        
+		    });
 		});
-	}
-    </script>
+	
+		// pw 찾기
+		$(function(){
+			$("#findPw").click(function(){
+				$.ajax({
+					url : "${path}/user/findingPw.do",
+					type : "POST",
+					data : {
+						userId : $("#userId").val(),
+						email : $("#email").val()
+					},
+					success : function(data) {
+						console.log(data);
+						alert(data.msg);
+					},
+				})
+			});
+		})
+	</script>
+	
+	
+    
 </body>
 </html>

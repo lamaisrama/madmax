@@ -1,6 +1,8 @@
 package com.madmax.stool.user.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,18 +28,28 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public String selectId(SqlSessionTemplate session, HashMap hm) {
-
-		return session.selectOne("user.selectId", hm);
+	public User selectId(SqlSessionTemplate session, Map param) {
+		
+		return session.selectOne("user.selectId", param);
 	}
 
 
+	@Override
+	public User findPw(SqlSessionTemplate session, Map<String, Object> map) {
+	
+		return session.selectOne("user.findPw", map);
+	}
 
-//	@Override
-//	public String selectId(SqlSessionTemplate session, String userName, String phone) {
-//		
-//		return session.selectOne("user.selectId", userName, phone);
-//	}
+
+	@Override
+	public int changePw(SqlSessionTemplate session, Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return session.update("user.changePw", map);
+	}
+
+
+	
+	
 
 	
 	

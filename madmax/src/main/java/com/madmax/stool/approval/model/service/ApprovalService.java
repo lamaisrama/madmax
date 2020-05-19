@@ -2,6 +2,7 @@ package com.madmax.stool.approval.model.service;
 
 import java.util.List;
 
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
 import com.madmax.stool.approval.model.vo.Approval;
@@ -18,6 +19,13 @@ public interface ApprovalService {
 	ApprDocType selectApprDocForm(int dNo);
 	int insertApproval(Approval appr, List<ApprLine> lines);
 	List<Approval> selectApprReqList(String userId);
+	ApprDoc selectApprDoc(int apprNo);
+	ApprDoc selectDoApproval(Approval approval);
+	int updateTemporary(int apprNo);
+	int deleteDoc(int apprNo);
+	List<Approval> selectApprTempList(String userId);
+	List<Approval> selectApprWaitList(String userId);
+
 	
 	
 }

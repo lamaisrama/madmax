@@ -86,7 +86,7 @@
          <div class="container" >   
 				  <ul class="nav nav-tabs">
 				  	<c:forEach items="${projects}" var="p"  begin="0" end="4">
-				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="taskFilter(${p['projectNo'] });">${p['projectTitle'] }</a></li>
+				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="selectTask(${p['projectNo'] });">${p['projectTitle'] }</a></li>
 				    </c:forEach>
 				     <c:if test="${fn:length(projects)>4}">
 				    	<li class="nav-item"><a class="nav-link">+더보기</a></li>
@@ -108,6 +108,42 @@
 	           <!-- 프로젝트별 업무내용 출력 -->
   				<div id="tab-content">
  				<!-- 업무테이블 출력공간*****----------------------------------------------------------------------------- -->
+ 				 <c:if test="${tasks!=null}">
+ 	           <c:forEach items="${tasks }" var="t">
+ 	           
+	           <table class="tasks" style="width:100%;height:100%; "  >
+	               <tr class="text-sm-center">
+	                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
+						<c:choose>
+	                  <c:when test="${t.taskState eq '요청' }">
+	                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+	                   </c:when>
+	             		<c:when test="${t.taskState eq '진행' }">
+	                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+	                   </c:when>
+	                     <c:when test="${t.taskState  eq '피드백' }">
+	                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+	                   </c:when>
+	                     <c:when test="${t.taskState  eq '완료' }">
+	                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+	                   </c:when>
+	                     <c:when test="${t.taskState eq '보류' }">
+	                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+	                   </c:when>
+	            		</c:choose>
+	                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
+	                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
+	                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
+	                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
+	                   <td id="taskStartDate" style="width:20%">${t['taskStartDate'] }</td>
+	               </tr>
+	               </table>
+	               
+	           <br/>
+	           </c:forEach> 
+	           </c:if>
+ 				
+ 				
 				</div>
 	          <!--요기까지 포문-->
 	       </div>
@@ -142,12 +178,12 @@
                     <h5 class="m-0 font-weight-bolder mb-4" id="taskTitleView"></h5> <!-- 업무제목 -->
                     <div class="d-flex align-items-center">
                         <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
-                        <div class="btn-group border border-grey rounded overflow-hidden">
-                            <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
-                            <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
-                            <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
-                            <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
-                            <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
+                        <div id="taskStateView" class="btn-group border border-grey rounded overflow-hidden">
+                            <button type="button" class="btn border-right btn-primary btnRequest" >요청</button>
+                            <button type="button" class="btn border-right btnProgress" >진행</button>
+                            <button type="button" class="btn border-right btnFeedback" >피드백</button>
+                            <button type="button" class="btn border-right btnEnd" >완료</button>
+                            <button type="button" class="btn btnHold" ">보류</button>
                         </div>
                     </div>                        
                     <hr class="w-100 mt-1 mb-2">
@@ -158,7 +194,7 @@
                             <div class='selectedWorker_imgDiv mr-2'>
                                 <img src='img/profile_img.png'/>
                             </div>
-                            <span id="notiMember">김OO</span>
+                            <span id="notiMember"></span>
                         </div>                                    
                         <!-- 담당자 프로필 for문 끝 -->
                     </div>
@@ -179,11 +215,7 @@
                     </div>                         
                     <hr class="w-100 mt-1 mb-2">
                     <div id="taskContentView" class="w-100"> <!-- 업무 글 내용 -->
-                        여기에 내용을 넣습니다!<br>
-                        여기에 내용을 넣습니다!<br>
-                        여기에 내용을 넣습니다!<br>
-                        여기에 내용을 넣습니다!<br>
-                        여기에 내용을 넣습니다!<br>
+              
                     </div>
                 </div>       
                 <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
@@ -203,7 +235,7 @@
 <script>
 function selectTask(pNo){
 	
-	$("#pNo").show();
+	//$("#pNo").show();
 	
 	location.href="${path}/task/selectTaskEach.do?no="+pNo;
 	
@@ -218,12 +250,12 @@ function getParameterByName(name) {
 
 
 //사이드바 필터링 함수
-function taskFilter(pNo){
+function taskFilter(){
 	 // 전체 Url을 가져온다.
     var str = location.href;
     // QueryString의 값을 가져오기 위해서, ? 이후 첫번째 index값을 가져온다.
-    //var projectNo = getParameterByName("no");
-    var projectNo=pNo;
+    var projectNo = getParameterByName("no");
+    //var projectNo=pNo;
 
 	var task=$(":input:radio[name=task]:checked").val();
 	var status=$(":input:radio[name=status]:checked").val();
@@ -278,13 +310,13 @@ function taskFilter(pNo){
 						table+="<tr class='text-sm-center'>";
 						table+="<td style='width:10%'>"+tasks[i].taskNo+"</td>";
 							if(tasks[i].taskState=="요청"){
-								table+="<td style='width:10%'><div style='background-color:blue; color:white'>"+tasks[i].taskState+"</div></td>";
+								table+="<td style='width:10%'><div style='background-color:#0275d8; color:white'>"+tasks[i].taskState+"</div></td>";
 							}else if(tasks[i].taskState=="진행"){
-								table+="<td style='width:10%'><div style='background-color:green; color:white'>"+tasks[i].taskState+"</div></td>";
+								table+="<td style='width:10%'><div style='background-color:#5cb85c; color:white'>"+tasks[i].taskState+"</div></td>";
 							}else if(tasks[i].taskState=="피드백"){
-								table+="<td style='width:10%'><div style='background-color:orange; color:white'>"+tasks[i].taskState+"</div></td>";
+								table+="<td style='width:10%'><div style='background-color:#d9534f; color:white'>"+tasks[i].taskState+"</div></td>";
 							}else if(tasks[i].taskState=="완료"){
-								table+="<td style='width:10%'><div style='background-color:purple; color:white'>"+tasks[i].taskState+"</div></td>";
+								table+="<td style='width:10%'><div style='background-color:#5bc0de; color:white'>"+tasks[i].taskState+"</div></td>";
 							}else if(tasks[i].taskState=="보류"){
 								table+="<td style='width:10%'><div style='background-color:grey; color:white'>"+tasks[i].taskState+"</div></td>";
 							}
@@ -330,15 +362,22 @@ function taskFilter(pNo){
 			success:function(data){
 				var task=data.task;
 				console.log(task.taskTitle);
-				$("#taskTitleView").html(task.taskTitle);
-				$("#taskUsername").html(task.userName);
-				$("#notiMember").html(data.notiMember);
-				$("#taskStartDateView").html(task.taskStartDate);
-				$("#taskEndDateView").html(task.taskEndDate);
-				$("#taskProiorityView").html(task.taskProiority);
-				$("#taskContentView").html(task.taskContent);
-				$("#showTask").show();	
-				
+				$("#taskTitleView").html(task.taskTitle);//업무제목
+				$("#taskUsername").html(task.userName);//업무작성자
+				$("#notiMember").html(data.notiMember);//담당자
+				$("#taskStartDateView").html(task.taskStartDate);//업무시작일
+				$("#taskEndDateView").html(task.taskEndDate);//업무마감일
+				$("#taskProiorityView").html(task.taskProiority);//업무 우선순위
+				$("#taskContentView").html(task.taskContent);//업무내용
+				$("#showTask").show();
+				console.log(task.taskState);
+				switch(task.taskState){
+				case "요청":$("#taskStateView").html("<button type='button' class='btn border-right btn-primary' >요청</button>");break;
+				case "진행":$("#taskStateView").html("<button type='button' class='btn border-right btn-success' >진행</button>");break;
+				case "피드백":$("#taskStateView").html("<button type='button' class='btn border-right btn-danger' >피드백</button>");break;
+				case "완료":$("#taskStateView").html("<button type='button' class='btn border-right btn-info' >완료</button>");break;
+				case "보류":$("#taskStateView").html("<button type='button' class='btn border-right btn-secondary' >보류</button>");break;
+				}
 			}
 			
 			});

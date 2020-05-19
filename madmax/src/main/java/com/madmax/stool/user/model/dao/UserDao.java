@@ -1,5 +1,6 @@
 package com.madmax.stool.user.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,13 @@ public interface UserDao {
 	User selectUser(SqlSessionTemplate session, String userId);
 
 	// id찾기
-//	String selectId(SqlSessionTemplate session, String userName, String phone);
-	String selectId(SqlSessionTemplate session, HashMap hm);
+	User selectId(SqlSessionTemplate session, Map param);
+
+	// pw찾기
+	User findPw(SqlSessionTemplate session, Map<String, Object> map);
+
+
+	int changePw(SqlSessionTemplate session, Map<String, String> map);
 
 
 
