@@ -21,5 +21,6 @@ public class Worktime {
 	private String userId;
 	private Date checkDate;
 	private Date today;
+	private String employeeState;
 	
 }

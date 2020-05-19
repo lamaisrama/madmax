@@ -37,14 +37,17 @@ public class AttendController {
 		m.addAttribute("list",list);
 		
 		return "attendance/attendanceList";
+		
 	}
 	
 	@RequestMapping("/attd/modifyRequest.do")
 	public ModelAndView insertRequest(ModelAndView mv,Attendance a) {
 		//System.out.println(a);
-		int result=service.insertRequest(a);
+		//int result=service.insertRequest(a);
 		
-		mv.setViewName("attendance/attendanceList");
+		int result=service.updateRequestState(a);
+				
+		mv.setViewName("redirect:/attd/attendList.do");
 		
 		return mv;
 	}
