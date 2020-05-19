@@ -35,31 +35,31 @@
   			AND TASKPROIORITY=#{priority}
   		</if>
 		<!-- 시작일을 골랐을때 -->
-			<if test="taskStartDate.equals('오늘')">
+			<if test="startDate.equals('오늘')">
 			 AND TO_CHAR(TASKSTARTDATE,'yyyy/mm/dd') =TO_CHAR(SYSDATE,'yyyy/mm/dd')
 			</if>
 			<!-- 이번주 일때 -->
-			<if test="taskStartDate.equals('일주일이내')">
+			<if test="startDate.equals('일주일이내')">
 			 <![CDATA[AND TO_CHAR(TASKSTARTDATE,'yyyy/mm/dd') IN (SELECT TRUNC(SYSDATE, 'DAY') + LEVEL - 1 FROM DUAL CONNECT BY LEVEL <=7)]]>
 			 </if>
 			 <!-- 한달일때 -->
-			 <if test="taskStartDate.equals('한달이내')">
+			 <if test="startDate.equals('한달이내')">
 			 AND TO_CHAR(TASKSTARTDATE,'yyyy/mm/dd') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-1),'yyyy/mm/dd') AND TO_CHAR(ADD_MONTHS(SYSDATE,+1),'yyyy/mm/dd')
 			 </if>
 		 <!-- 시작일 끝 -->
 		 <!-- 마감일 골랐을때(전체,지연,오늘,일주일이내,한달이내  -->
 		 	<!-- 지연일때 -->
-		 <if test="taskEndDate.equals('지연')">
+		 <if test="endDate.equals('지연')">
 		 	<![CDATA[AND TO_CHAR(TASKENDDATE,'yyyy/mm/dd') < TO_CHAR(SYSDATE,'yyyy/mm/dd')]]>
 		 </if>
 		 <!-- 오늘일때 -->
-		 <if test="taskEndDate.equals('오늘까지')">
+		 <if test="endDate.equals('오늘까지')">
 		 	<![CDATA[AND TO_CHAR(TASKENDDATE,'yyyy/mm/dd') = TO_CHAR(SYSDATE,'yyyy/mm/dd')]]>
 		 </if>
-		 <if test="tastEndDate.equals('일주일이내')">
+		 <if test="endDate.equals('일주일이내')">
 		 	<![CDATA[AND TO_CHAR(TASKENDDATE,'yyyy/mm/dd') IN (SELECT TRUNC(SYSDATE, 'DAY') + LEVEL - 1 FROM DUAL CONNECT BY LEVEL <=7)]]>
 		 </if>
-		 <if test="tastEndDate.equals('한달이내')">
+		 <if test="endDate.equals('한달이내')">
 		 	<![CDATA[AND TO_CHAR(TASKENDDATE,'yyyy/mm/dd') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-1),'yyyy/mm/dd') AND TO_CHAR(ADD_MONTHS(SYSDATE,+1),'yyyy/mm/dd')]]>
 		 </if>
 		</where>

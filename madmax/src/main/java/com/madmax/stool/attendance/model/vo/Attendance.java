@@ -17,5 +17,8 @@ public class Attendance {
 	private Date requestDate;
 	private String requestResult;
 	private String userId;
-
+	private Date comeTime;
+	private Date goTime;
+	private String timeState;
+	
 }

@@ -22,7 +22,7 @@
 				}else {
 					$("#receivingInfo")
 							.append($("<span>").addClass("badge").addClass("badge-dark").html(item.userName));
-					var inputValue=$("<input>").attr("type","hidden").attr("name","receivingLine").attr("value",""+item.userId+"/"+item.apprType);
+					var inputValue=$("<input>").attr("type","hidden").attr("name","receiver").attr("value", item.userId);
 				}	
 				
 				$(".line-container").append(inputValue);
@@ -34,4 +34,8 @@
 			var flag=confirm('정말 닫겠습니까? 작성하신 내용은 저장되지 않습니다.');
 			if(flag) window.close();
 		}	
+
+		function date(){
+			
+		}
 		

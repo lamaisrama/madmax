@@ -30,7 +30,7 @@
 
                         </div>
 
-                        <div class="colum col-sm-2" style="margin-top: 50px;">
+                        <div class="colum col-sm-3" style="margin-top: 50px;">
                           <span>✔️ 진행중인 업무</span>
 <!--                           <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
                             더보기
@@ -89,8 +89,6 @@
                       </div>
                       
                     </div>
-
-
 
                 </div>
 

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="Stool" />
+	<jsp:param name="title" value="Stool|임시 문서함" />
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
@@ -58,16 +58,23 @@
 			<table class="table table-hover">
 				<tr style="background-color:#F1F0F5;">
 					<th>번호</th>
+					<th>문서양식</th>
 					<th>문서제목</th>
 					<th>기안일</th>
-					<th>상태</th>
 				</tr>
+				<c:forEach items="${list }" var ="l">
 				<tr>
-					<td>1</td>
-					<td><a href="#">Document_title</a></td>
-					<td>date</td>
+					<td>${l.apprNo}</td>
+					<td>${l.typeTitle }</td>
+					<td><a href="javascript:void(0)" 
+							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+							${l.apprTitle }
+						</a></td>
+					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<th>회수or임시</th>
 				</tr>
+				</c:forEach>
 			</table>
 		</div>
 	</div>

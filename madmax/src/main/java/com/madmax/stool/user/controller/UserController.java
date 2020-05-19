@@ -55,8 +55,6 @@ public class UserController {
 	private JavaMailSender mailSender;
 	@Autowired
 	private Email email;
-
-
 	
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
