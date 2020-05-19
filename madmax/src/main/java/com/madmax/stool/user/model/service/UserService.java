@@ -28,14 +28,6 @@ public interface UserService {
 
 	
 	
-	
-	// id찾기
-//	String selectId(HashMap hm);
-//	ArrayList<String> findId(User u);
-
-	// pw찾기
-//	String getPw(Map<String, Object> paramMap);
-
 
 
 }

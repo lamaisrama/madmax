@@ -74,7 +74,6 @@
     <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
 
 
-	   </bean> 
 	
 	
 	
