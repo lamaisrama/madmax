@@ -76,6 +76,12 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	
 	
 	@Override
+	public String selectReceiverName(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectReceiverName", userId);
+		
+	}
+
+	@Override
 	public int updateTemporary(SqlSessionTemplate session, int apprNo) {
 		return session.update("approval.updateTemporary", apprNo);
 	}

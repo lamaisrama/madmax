@@ -35,7 +35,7 @@
 		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, 0, null, null)
 	</insert>
 	
-	<select id="selectApproval" parameterType="_int" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
+	<select id="selectApproval" parameterType="_int" resultType="apprDoc">
 		SELECT * FROM APPROVAL 
 			JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) 
@@ -44,7 +44,7 @@
 		 WHERE APPRNO=#{apprNo} 
 	</select>
 	
-	<select id="selectDoApproval" parameterType="approval" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
+	<select id="selectDoApproval" parameterType="approval" resultType="apprDoc">
 		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) 
     		JOIN DEPT USING(DEPTCODE)	
@@ -56,6 +56,10 @@
 	<select id="selectApprLine" parameterType="_int" resultType="apprLine">
 		SELECT * FROM APPRLINE 
 			JOIN STOOLUSER ON(APPRUSER=USERID) JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE) WHERE APPRNO=#{apprNo}
+	</select>
+	
+	<select id="selectReceiverName" parameterType="string" resultType="string">
+		SELECT USERNAME AS RECEIVERNAME FROM STOOLUSER WHERE USERID=#{userId}
 	</select>
 
 	<update id="updateTemporary" parameterType="_int">
@@ -75,6 +79,8 @@
 	</select>
 	
 	<select id="selectApprWaitList" parameterType="string" resultType="approval">
-		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId}
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) JOIN DEPT USING(DEPTCODE) 
+			JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId}
 	</select>
 </mapper>
