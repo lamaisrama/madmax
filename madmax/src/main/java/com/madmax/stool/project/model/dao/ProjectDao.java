@@ -1,5 +1,6 @@
 package com.madmax.stool.project.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,5 +12,6 @@ public interface ProjectDao {
 	int insertProject(SqlSessionTemplate session, Project p);
 
 	int insertProjectMember(SqlSessionTemplate session, Project p);
-
+	
+	
 }

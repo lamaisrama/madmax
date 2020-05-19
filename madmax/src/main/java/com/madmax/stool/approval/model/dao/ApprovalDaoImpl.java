@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
 import com.madmax.stool.approval.model.vo.Approval;
@@ -55,8 +56,29 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public List<Approval> selectApprReqList(SqlSessionTemplate session, String userId) {
 		return session.selectList("approval.selectApprReqList", userId);
+	}
+
+	@Override
+	public ApprDoc selectApproval(SqlSessionTemplate session, int apprNo) {
+		return session.selectOne("approval.selectApproval", apprNo);
+	}
+
+	@Override
+	public List<ApprLine> selectApprLine(SqlSessionTemplate session, int apprNo) {
+		return session.selectList("approval.selectApprLine", apprNo);
+	}
+
+	@Override
+	public int updateTemporary(SqlSessionTemplate session, int apprNo) {
+		return session.update("approval.updateTemporary", apprNo);
+	}
+
+	@Override
+	public int deleteDoc(SqlSessionTemplate session, int apprNo) {
+		return session.delete("approval.deleteDoc", apprNo);
 	}	
 
+	
 	
 
 	

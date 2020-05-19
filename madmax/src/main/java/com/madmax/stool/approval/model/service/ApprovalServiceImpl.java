@@ -5,9 +5,9 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.madmax.stool.approval.model.dao.ApprovalDao;
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
 import com.madmax.stool.approval.model.vo.Approval;
@@ -71,7 +71,26 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<Approval> selectApprReqList(String userId) {
 		return dao.selectApprReqList(session, userId);
 	}
-	
+
+	@Override
+	public ApprDoc selectApprDoc(int apprNo) {
+		//1. Approval doc 가져오기
+		ApprDoc appr = dao.selectApproval(session, apprNo);
+		//2. ApprLine 가져오기
+		List<ApprLine> list = dao.selectApprLine(session, apprNo);
+		appr.setApprLine(list);
+		return appr;
+	}
+
+	@Override
+	public int updateTemporary(int apprNo) {
+		return dao.updateTemporary(session, apprNo);
+	}
+
+	@Override
+	public int deleteDoc(int apprNo) {
+		return dao.deleteDoc(session, apprNo);
+	}
 	
 	
 	

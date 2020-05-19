@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
 import com.madmax.stool.approval.model.vo.Approval;
@@ -20,4 +21,8 @@ public interface ApprovalDao {
 	int insertApproval(SqlSessionTemplate session, Approval appr);
 	int insertApprLine(SqlSessionTemplate session, ApprLine apprLine);
 	List<Approval> selectApprReqList(SqlSessionTemplate session, String userId);
+	ApprDoc selectApproval(SqlSessionTemplate session, int apprNo);
+	List<ApprLine> selectApprLine(SqlSessionTemplate session, int apprNo);
+	int updateTemporary(SqlSessionTemplate session, int apprNo);
+	int deleteDoc(SqlSessionTemplate session, int apprNo);
 }

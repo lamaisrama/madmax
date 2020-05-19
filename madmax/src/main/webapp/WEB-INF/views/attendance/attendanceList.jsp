@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
@@ -36,14 +38,16 @@
             </tr>
             </thead>
             <tbody>
-            <%-- <c:forEach items="${ }" var=""> --%>
+			
+			<c:if test="${not empty list}">
+            <c:forEach items="${list}" var="wt" varStatus="vs">
             <tr>
-                <th scope="row" style="vertical-align: middle;">1</th>
+                <th scope="row" style="vertical-align: middle;">${vs.index+1}</th>
                 <!-- <th scope="row">5</th> -->
-                <td style="vertical-align: middle;">2020-05-13</td>
-                <td style="vertical-align: middle;">09:00</td>
-                <td style="vertical-align: middle;">18:00</td>
-                <td style="vertical-align: middle;">출근</td>
+                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['checkDate']}" type="both" pattern="yyyy-MM-dd" /></td>
+                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['comeTime']}" type="both" pattern="HH:mm" /></td>
+                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['goTime']}" type="both" pattern="HH:mm"/></td>
+                <td style="vertical-align: middle;">${wt['timeState']}</td>
                 <td>
                 
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -89,7 +93,8 @@
                     </div>
                 </td>
             </tr>
-            <%-- </c:forEach> --%>
+            </c:forEach>
+            </c:if>
             <!-- <tr class="">
                 <th scope="row">4</th>
                 <td>2020-05-12</td>

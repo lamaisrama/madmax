@@ -1,6 +1,8 @@
 package com.madmax.stool.attendance.model.vo;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,16 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Attendance {
+public class Worktime {
+
 	
-	private int requestNo;
-	private String requestReason;
-	private String requestCategory;
-	private Date requestDate;
-	private String requestResult;
-	private String userId;
+	private int managementNo;
 	private Date comeTime;
 	private Date goTime;
 	private String timeState;
+	private String userId;
+	private Date checkDate;
+	private Date today;
 	
 }

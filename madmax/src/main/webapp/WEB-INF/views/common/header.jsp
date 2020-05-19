@@ -27,6 +27,28 @@
 		background-color: #25558F; margin-right:1em;
 	}
 	.navBtn:hover{ background-color: #233C61; color: white; font-weight:bolder; }	
+	
+	
+	.checkBtn{
+	 	width:90px;
+		font-size : 17px;
+		font-weight : 600;
+		color : #233C61; 
+		border: 3px solid #233C61; 
+		border-radius:50px;
+		margin-right:12px;
+	}
+	.changeBtn{
+		width:90px;
+		font-size : 17px;
+		font-weight : 600;
+		background-color:#233C61;
+		border: 3px solid #233C61; 
+		border-radius:50px;
+		color:white;
+		margin-right:12px;
+	
+	}
 </style>
 </head>
 <body>
@@ -43,6 +65,48 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"></li>
 				</ul>
+				<button type="button" class="btn checkBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
+				
+				<!-- 모달창 -->
+				
+				 <div class="modal fade" id="checkState">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				      
+					      <form id="checkForm">
+					        <div class="modal-header">
+					        <!-- Modal Header -->
+					          <h4 class="modal-title">⏱️ 출/퇴근</h4>
+					          <button type="button" class="close" data-dismiss="modal">×</button>
+					        </div>
+				        
+					        <!-- Modal body -->
+					        <div class="modal-body">
+					        	<div class="row justify-content-center">
+					        	 
+						        		<label class="btn btn-secondary">
+								          <input type="radio" class="btn checkBtn changeBtn" name="timeState" id="come" value="출근" >출근
+								        </label>
+								        <label class="btn btn-secondary">
+								          <input type="radio" class="btn checkBtn changeBtn" name="timeState" id="go" value="퇴근">퇴근
+								        </label>
+						            
+						        </div>
+							</div>
+				        	<!-- Modal footer -->
+					        <div class="modal-footer">
+					            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" onclick="stateRequest();">요청완료</button>
+					        </div>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				
+				
+				
+				
+				
 				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
 				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
 					<i class="far fa-bell"></i>
@@ -60,5 +124,41 @@
 		</header>
 	</div>	
 	<div class="container-fluid">
-		<div class="row">		
+		<div class="row">	
+		
+		
+		<script>
+		
+		 	function stateRequest(){
+				
+				alert("요청 완료됐습니다.");
+		
+				
+				$('#checkState').modal("hide");
+				
+				$("#checkForm").attr("action","${path}/attd/stateRequest.do");
+				$("#checkForm").submit();	
+
+			} 
+		 	
+		 	
+	        $(function(){
+	        	
+                $(".checkBtn").click(function(){
+                    
+                    // 클래스 제거 
+                    $('.checkBtn').removeClass("changeBtn");
+                    $(".checkBtn").addClass("checkBtn");
+                    $(this).removeClass("checkBtn");
+                    //클래스 추가
+                    $(this).addClass("changeBtn");
+                    
+                })
+            })
+		
+		
+		</script>	
+		
+		
+		
 		

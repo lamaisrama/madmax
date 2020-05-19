@@ -36,7 +36,29 @@
 	</insert>
 	
 	<select id="selectApprReqList" parameterType="string" resultType="approval">
-		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2)
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2) ORDER BY WRITEDATE DESC	 
 	</select>
 	
+	<select id="selectApproval" parameterType="_int" resultType="com.madmax.stool.approval.model.vo.ApprDoc">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) 
+    		JOIN DEPT USING(DEPTCODE)	
+    		JOIN JOBTABLE USING(JOBCODE)
+		 WHERE APPRNO=#{apprNo}
+	</select>
+	
+	<select id="selectApprLine" parameterType="_int" resultType="ApprLine">
+		SELECT * FROM APPRLINE 
+			JOIN STOOLUSER ON(APPRUSER=USERID)
+			JOIN DEPT USING(DEPTCODE)
+    		JOIN JOBTABLE USING(JOBCODE)		WHERE APPRNO=#{apprNo} 
+	</select>
+	
+	<update id="updateTemporary" parameterType="_int">
+		UPDATE APPROVAL SET APPRSTATUS=0 WHERE APPRNO=#{apprNo}	
+	</update>
+	
+	<delete id="deleteDoc" parameterType="_int">
+		DELETE FROM APPROVAL WHERE APPRNO=#{apprNo}
+	</delete>
 </mapper>

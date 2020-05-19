@@ -26,7 +26,6 @@
     <script type="text/javascript" src="${path}/resources/js/selectedProject-Write.js"></script>
     <script type="text/javascript" src="${path}/resources/js/selectedProject-View.js"></script>
     
-    
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
                 <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: #25558F;">
@@ -40,6 +39,7 @@
                            	시스템 유지운영 프로젝트
                         </h4>
                         
+                        <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
                         <div class="dropdown col-1" id="selectColorBox">
                             <input type="hidden" id="pjInfoBoxColor" name="pjInfoBoxColor"/>
                             <button type="button" class="btn dropdown-toggle justify-content-center align-items-center" data-toggle="dropdown">
@@ -112,15 +112,21 @@
 
 
                 <!-- 게시물 작성 -->
-                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onsubmit="return false" id="pjMainForm">
+                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
-                    <!-- 1) 파일-->                
+				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
+				    <input type="hidden" name="writer" value="user01"/>    
+				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
+				    <input type="hidden" name="selectedProjectNo" value="1"/>    
+                    <!-- 2) 글 타입 -->
+                    <input type="hidden" name="boardType" id="boardType" value="writing"/>
+                    <!-- 3) 파일-->                
                     <input type="file" name="files" id="files" multiple style="display: none;"/>
-                    <!-- 2) 이미지파일 -->
+                    <!-- 4) 이미지파일 -->
                     <input type="file" name="imgFiles" id="imgFiles" multiple style="display: none;" accept="image/*"/>
-                    <!-- 3) 태그 -->
+                    <!-- 5) 태그 -->
                     <input type="hidden" name="tagListStr" id="tagListStr"/>
-                    <!-- 4) 언급 -->
+                    <!-- 6) 언급 -->
                     <input type="hidden" name="mentionListStr" id="mentionListStr"/>
                 <!-- from 공통 hidden input모음 끝 -->
 
@@ -326,7 +332,7 @@
                                 </button>                                                                            
                             </div>      
                             <div class="col-4 w-100 d-flex align-items-center justify-content-end">                           
-                                <button type="submit" class="btn m-2 stoolDarkBlue">
+                                <button type="submit" onclick="fn_writeSubmit();" class="btn m-2 stoolDarkBlue">
                                     	올리기
                                 </button>    
                             </div>                                                              
@@ -443,41 +449,19 @@
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">정집집</p>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택
                             </button>
                         </div>
-                        <!--지워-->
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">정코코</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
-                                	선택
-                            </button>
-                        </div>      
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">김월욜</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
-                                	선택
-                            </button>
-                        </div>                                          
-                        <!--지워 끝-->
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
@@ -504,41 +488,19 @@
                     </div>
                     <div class="d-flex flex-column pl-2 pr-2 w-100">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0">정집집</p>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
                                 	선택
                             </button>
                         </div>
-                        <!--지워-->
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">정코코</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
-                                	선택
-                            </button>
-                        </div>      
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
-                                </div>
-                                <p class="m-0">김월욜</p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
-                                	선택
-                            </button>
-                        </div>                                          
-                        <!--지워 끝-->
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="modal-footer border-0">

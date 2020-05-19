@@ -68,7 +68,11 @@
 				<tr>
 					<td>${l.apprNo}</td>
 					<td>${l.typeTitle }</td>
-					<td><a href="#">${l.apprTitle }</a></td>
+					<td><a href="javascript:void(0)" 
+							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+							${l.apprTitle }
+						</a></td>
 					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td>
 						<c:if test="${l.apprStatus==1 }">결재대기</c:if>

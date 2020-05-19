@@ -208,14 +208,30 @@
 		
 		<!-- 웹소켓 받아오기 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-websocket</artifactId>
-	    <version>${org.springframework-version}</version>
-	</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 		
-		
+		<!-- Java Mail API -->
+		  <dependency>
+		     <groupId>javax.mail</groupId>
+		     <artifactId>mail</artifactId>
+		     <version>1.4.3</version>
+		  </dependency>
 	
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support  -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+	
+
+
+
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

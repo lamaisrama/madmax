@@ -160,6 +160,11 @@
 		}
 	}
 	
+	$("input").on("change",function(){
+		console.log("here");
+		$(this).attr("value",$(this).val());
+	})
+	
 	function beforeSubmit(){
 		if(document.querySelector("#apprLine")==null){
 			alert('최소 한 사람 이상의 결재선을 등록해주세요');
@@ -175,10 +180,10 @@
 			const apprText=$("<input>").attr("type","hidden").attr("name","apprText").attr("value",editor.getHtml());
 			$(".content-container").append(apprText);
 		}
-		alert("결재 신청 완료");
 		window.close();
 		return true;
 	}
+	
 		
 
 	

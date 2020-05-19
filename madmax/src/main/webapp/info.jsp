@@ -53,7 +53,9 @@
                       	<button type="button" class="btn btn-outline-secondary" style="width:270px" onclick="location.replace('${pageContext.request.contextPath}/user/joinUser.do');">회원가입</button>
                       </div>
                       
-                      <a class="p2"><p class="text-center">아이디/비밀번호 찾기</p></a>
+                      <p class="text-center">
+                      	<a class="p2" href="${path }/user/findIdPw.do">아이디/비밀번호 찾기</a>
+                   	  </p>
                 </form>
 
                 
