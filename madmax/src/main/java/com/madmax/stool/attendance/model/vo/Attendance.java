@@ -20,5 +20,5 @@ public class Attendance {
 	private Date comeTime;
 	private Date goTime;
 	private String timeState;
-	
+	private String managementNo;
 }

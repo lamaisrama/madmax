@@ -10,11 +10,11 @@
 	</insert>
 	
 	<update id="updateState" parameterType="worktime">
-		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='퇴근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='출근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
 	</update>
 	
 	<select id="selectWorktimeList" parameterType="string" resultType="worktime">
-		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId}
+		SELECT * FROM WORKTIMEMANAGEMENT LEFT JOIN EMPLOYEEMANAGEMENT USING(MANAGEMENTNO) WHERE USERID=#{userId} ORDER BY CHECKDATE DESC
 	</select>
 	
 	<select id="selectCometime" resultType="worktime">
@@ -40,4 +40,8 @@
 	<insert id="insertAbsence" parameterType="_int">
 		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'결근',#{managementNo})
 	</insert>
+	
+	<update id="updateRequestState" parameterType="attend">
+		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestReason} WHERE MANAGEMENTNO=#{managementNo}
+	</update>
 </mapper>
