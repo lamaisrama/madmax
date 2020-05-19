@@ -12,7 +12,6 @@
 	<bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe" />
-		<!-- <property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:8877:xe" /> -->
 		<property name="username" value="stool" />
 		<property name="password" value="stool" />
 	</bean>
@@ -56,11 +55,11 @@
 	
 	
 	  <!-- 메일인증 -->
-<!-- 	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+ 	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	      <property name="host" value="smtp.gmail.com" />
 	      <property name="port" value="587" />
-	      <property name="username" value="madmax@gmail.com" />
-	      <property name="password" value="rclass9988" />
+	      <property name="username" value="iamchoi0924@gmail.com" />
+	      <property name="password" value="Lesailes9" />
 	      <property name="javaMailProperties">
 	         <props>
 	               <prop key="mail.transport.protocol">smtp</prop>
@@ -69,8 +68,12 @@
 	               <prop key="mail.debug">true</prop>
 	         </props>
 	      </property>
-	   </bean> -->
-	
+	   </bean>
+
+	<bean id="email" class="com.madmax.stool.user.email.Email"></bean>
+    <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
+
+
 	
 	
 	
