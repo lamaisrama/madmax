@@ -5,10 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Attachment {
-	private int no;
-	private String originalFilename;
-	private String renamedFilename;
+@NoArgsConstructor
+public class InsertTaskManager {
+	private String taskManagerName; 
+	private int taskNo;
 }

@@ -2,8 +2,10 @@ package com.madmax.stool.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectInsertService;
 import com.madmax.stool.project.model.vo.Attachment;
+import com.madmax.stool.project.model.vo.InsertHashTag;
+import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
+import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Controller
@@ -32,6 +41,7 @@ public class SelectedProjectInsertController {
 		
 		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);		
 
+		mv.addObject("pjNo", pjNo);
 		mv.addObject("projectMember", projectMember);
 		mv.setViewName("selectedProject/selectedProject");
 		
@@ -39,30 +49,44 @@ public class SelectedProjectInsertController {
 	}
 	
 	@RequestMapping("/selectedProject/insertSelectedProject.do")
-	public ModelAndView insertSelectedProject(@RequestParam Map<String, String> map, ModelAndView mv, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+	public ModelAndView insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+
+		
+        // 방법 01 : entrySet()
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println("[key]:" + entry.getKey() + ", [value]:" + entry.getValue());
+        }
+        //위쪽은 시도 후 지울거임
+		
+		//JSP에서 받아온 기본값들
+		String writer = map.get("writer"); //작성자
+		String boardType = map.get("boardType"); //글 타입
+		int pjNo = Integer.parseInt(map.get("selectedProjectNo")); //선택된 프로젝트 번호
+		String tag = map.get("tagListStr"); //태그
+		String not = map.get("mentionListStr"); //언급
+		
 		//1. 파일 받아와서 저장
-        List<MultipartFile> fileList = mtfRequest.getFiles("files");
-        List<MultipartFile> imgFileList = mtfRequest.getFiles("imgFiles");        
-        for(MultipartFile mf : fileList) {
+        List<MultipartFile> upFileList = mtfRequest.getFiles("files");
+        List<MultipartFile> upImgFileList = mtfRequest.getFiles("imgFiles");        
+        for(MultipartFile mf : upFileList) {
         	System.out.println("파일명 : "+mf.getOriginalFilename());
         }
-        for(MultipartFile mf : imgFileList) {
+        for(MultipartFile mf : upImgFileList) {
         	System.out.println("이미지파일명 : "+mf.getOriginalFilename());
         }
 
 		//파일 저장경로 가져오기
-		String pjNo = map.get("selectedProjectNo");
 		String path = session.getServletContext().getRealPath("/resources/upload/selectedProject"+pjNo);
+		System.out.println("주소 : "+path); // << 지울거임
 		
 		/* 파일을 저장할 객체 생성! */
-		List<Attachment> files=new ArrayList();
-		List<Attachment> imgFiles=new ArrayList();
+		List<Attachment> files=new ArrayList<Attachment>();
 		
 		File f = new File(path); //폴더
 		if(!f.exists()) f.mkdirs(); //폴더가 없으면 만든다
 		//파일 저장 로직 구현
 		//⑴FileAttachment - 파일리네임 구성하기
-		for(MultipartFile mf : fileList) {
+		for(MultipartFile mf : upFileList) {
 			if(!mf.isEmpty()) { //파일이 있을때만 실행
 				String ori = mf.getOriginalFilename();
 				String ext = ori.substring(ori.lastIndexOf("."));
@@ -84,7 +108,7 @@ public class SelectedProjectInsertController {
 			}
 		}
 		//⑵ImgFileAttachment - 파일리네임 구성하기
-		for(MultipartFile mf : imgFileList) {
+		for(MultipartFile mf : upImgFileList) {
 			if(!mf.isEmpty()) { //파일이 있을때만 실행
 				String ori = mf.getOriginalFilename();
 				String ext = ori.substring(ori.lastIndexOf("."));
@@ -102,30 +126,139 @@ public class SelectedProjectInsertController {
 				Attachment ifa = new Attachment();
 				ifa.setOriginalFilename(ori);
 				ifa.setRenamedFilename(rename);
-				imgFiles.add(ifa);
+				files.add(ifa);
 			}
 		}
-        
-        //2. 글 타입에 따라 각자 테이블에 insert하기
+
+		
+		//2. 해시태그and언급 있을 경우 처리 후 저장
+		//2-1) 해시태그
+		List<InsertHashTag> hashTagList = new ArrayList<InsertHashTag>();
+		if(!tag.trim().equals("") && tag != null) {
+			String[] tagArr = tag.split(",");
+			for(String t : tagArr) {
+				InsertHashTag hashTag = new InsertHashTag();
+				hashTag.setHashtagText(t);
+				hashTagList.add(hashTag);
+			}
+		}
+		//2-2) 언급
+		List<InsertNotification> notList = new ArrayList<InsertNotification>();
+		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);	
+		if(!not.trim().equals("") && not != null) {
+			String[]  notArr = not.split(",");
+			for(String n : notArr) {	
+				for(ProjectMember m : projectMember) {
+					if(n.equals(m.getUserName())) n = m.getUserId();
+				}
+				InsertNotification notification = new InsertNotification();
+				notification.setReceiveId(n);
+				notification.setSenderId(writer);
+				notification.setNotType(boardType);
+				notList.add(notification);
+			}
+		}
+
+        //3. 글 타입에 따라 각자 테이블에 insert하기
         //※ 이때 파일이 있으면 타입별 파일테이블에도 같이 insert
-        if(map.get("boardType").equals("writing")) {
-        	//1) 글 작성
+		int result=0;
+		InsertProjectBoard pb = new InsertProjectBoard();
+		pb.setProjectNo(pjNo);
+		
+        if(boardType.equals("writing")) {
+        	/* 1) 글 */
+        	pb.setBoardType("W");
+        	InsertWriting writing = new InsertWriting();
+        	writing.setWritingTitle(map.get("writingTitle"));
+        	writing.setWritingContent(map.get("writingContent"));
+        	writing.setWritingId(writer);
         	
-        } else if(map.get("boardType").equals("task")) {
-        	System.out.println("$$$$$$$task$$$$$$$$$$");
+    		try {
+            	result = service.insertWriting(writing, pb, hashTagList, notList, files);
+    		}catch(RuntimeException e){
+    			for(Attachment a : files) {
+    				File delF=new File(path+"/"+a.getRenamedFilename());
+    				if(delF.exists()) {
+    					delF.delete();
+    				}
+    			}
+    		}
+        	
+        } else if(boardType.equals("task")) {
+        	/* 2) 업무  */
+        	pb.setBoardType("T");
+        	InsertTask task = new InsertTask();
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	
+        	task.setTaskTitle(map.get("taskTitle"));
+        	task.setTaskState(map.get("taskState"));
+        	task.setTaskProiority(map.get("taskProiority"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				startDate = dateFormat.parse(map.get("taskStartdate"));
+				endDate = dateFormat.parse(map.get("taskEnddate"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}        	
+        	task.setTaskStartdate(new java.sql.Date(startDate.getTime()));
+        	task.setTaskEnddate(new java.sql.Date(endDate.getTime()));
+        	task.setTaskContent(map.get("taskContent"));
+        	task.setTaskId(writer);
+        	
+        	String tmNames = map.get("taskManagerName");
+    		List<InsertTaskManager> tmList = new ArrayList<InsertTaskManager>();
+    		if(!tmNames.trim().equals("") && tmNames != null) {
+    			String[] tmNameArr = tmNames.split(",");
+    			for(String name : tmNameArr) {
+    				InsertTaskManager itm = new InsertTaskManager();
+    				itm.setTaskManagerName(name);
+    				tmList.add(itm);
+    			}
+    		}
+        	
+    		try {
+            	result = service.insertTask(task, pb, hashTagList, notList, tmList, files);
+    		}catch(RuntimeException e){
+    			for(Attachment a : files) {
+    				File delF=new File(path+"/"+a.getRenamedFilename());
+    				if(delF.exists()) {
+    					delF.delete();
+    				}
+    			}
+    		}
+        	
         } else if(map.get("boardType").equals("schedule")) {
-        	System.out.println("$$$$$$$schedule$$$$$$$$$$");
+        	/* 3) 일정  */
+        	pb.setBoardType("S");
+        	InsertSchedule schedule = new InsertSchedule();
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	
+        	schedule.setScheduleTitle(map.get("scheduleTitle"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				startDate = dateFormat.parse(map.get("scheduleStartdate"));
+				endDate = dateFormat.parse(map.get("scheduleEnddate"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}        	
+			schedule.setScheduleStartdate(new java.sql.Date(startDate.getTime()));
+			schedule.setScheduleEnddate(new java.sql.Date(endDate.getTime()));
+        	schedule.setSchedulePlace(map.get("schedulePlace"));
+        	schedule.setScheduleMemo(map.get("scheduleMemo"));
+        	schedule.setScheduleId(writer);
+        	
+    		try {
+            	result = service.insertSchedule(schedule, pb, hashTagList, notList);
+    		}catch(RuntimeException e){
+    			e.printStackTrace();
+    		}
         }
-		
-		
-		System.out.println("주소 : "+path);
-				
-        // 방법 01 : entrySet()
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            System.out.println("[key]:" + entry.getKey() + ", [value]:" + entry.getValue());
-        }
-//        System.out.println(upFile[0].getOriginalFilename());
-        
+			
+
+		mv.addObject("pjNo", pjNo);
+		mv.addObject("projectMember", projectMember);
 		mv.setViewName("selectedProject/selectedProject");
 		
 		return mv;
