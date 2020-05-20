@@ -37,21 +37,22 @@
 	
 	
 	<div class="full">
-		<div class="container col-5">
+		<div class="container col-4">
 			<div class="area_inputs wow fadeIn">
-				<div class="sub_title font-weight-bold text-white text-center mt-4">
+				<div class="sub_title font-weight-bold text-white text-center mt-4 mb-4">
 					<h3>아이디/비밀번호 찾기</h3>
-					<!-- <p>인증된 이메일만 정보 찾기가 가능합니다</p> --> 
 				</div>
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_1" name="search_total" onclick="search_check(1)" checked="checked">
-					<label class="custom-control-label font-weight-bold text-white"	for="search_1">아이디 찾기</label>
+				<div class="text-center">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" class="custom-control-input" id="search_1" name="search_total" onclick="search_check(1)" checked="checked">
+						<label class="custom-control-label font-weight-bold text-white"	for="search_1">아이디 찾기</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" class="custom-control-input" id="search_2" name="search_total" onclick="search_check(2)"> 
+						<label class="custom-control-label font-weight-bold text-white" for="search_2">비밀번호 찾기</label>
+					</div>
 				</div>
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_2" name="search_total" onclick="search_check(2)"> 
-					<label class="custom-control-label font-weight-bold text-white" for="search_2">비밀번호 찾기</label>
-				</div>
-				<br><br>
+				<br>
 				
 				<!--id 찾기 start -->
 				
@@ -75,7 +76,7 @@
 					
 					<div class="form-group">
 						<button id="findId" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
-					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
+					<a class="btn btn-danger btn-block"	href="${path}">취소</a>
 					</div>
 				</div>
 				<!--id 찾기 end -->
@@ -83,7 +84,6 @@
 				<!-- pw 찾기 start -->
 				
 				<div id="searchP" style="display: none;">
-					<!-- <form action="/user/findPwFrm.do" method="post"> -->
 						<div class="form-group">
 							<label class="font-weight-bold text-white" for="userId">아이디</label>
 							<div>
@@ -100,7 +100,6 @@
 							<button id="findPw" type="button" class="btn btn-primary btn-block">확인</button>
 							<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
 						</div>
-					<!-- </form> -->
 				</div>
 				<!-- pw 찾기 end -->
 			</div>
@@ -109,7 +108,6 @@
 	
 	  
 	<script>
-		// 체크 버튼에 따라 아이디/비밀번호 기능이 달라짐
 		function search_check(num) {
 			if (num == '1') {
 				document.getElementById("searchP").style.display = "none";
@@ -135,7 +133,7 @@
 		        dataType : "json",
 		
 		        success:function(data){
-		       		console.log(data.User.userId);
+		       		/* console.log(data.User.userId); */
 	       	 		$("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown){
@@ -156,7 +154,7 @@
 						email : $("#email").val()
 					},
 					success : function(data) {
-						console.log(data);
+						/* console.log(data); */
 						alert(data.msg);
 					},
 				})
