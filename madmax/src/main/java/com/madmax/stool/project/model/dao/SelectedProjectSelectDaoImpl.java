@@ -33,5 +33,78 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectScheduleList",pjNo);
 	}
 
+	@Override
+	public Map<String, Object> selectPinPostCount(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("selectedProjectSelect.selectPinPostCount");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectHashTag(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectHashTag");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectNotification(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectNotification");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectTaskManager(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectTaskManager");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectprojectMember(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectProjectMember");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectWritingAttachment(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectWritingAttachment");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectTaskAttachment(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectTaskAttachment");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectWritingComment(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectWritingComment");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectTaskComment(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectTaskComment");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectScheduleComment(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectScheduleComment");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+
 	
 }

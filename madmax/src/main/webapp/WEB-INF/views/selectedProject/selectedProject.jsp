@@ -74,7 +74,9 @@
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item d-flex flex-column">
                                     <strong>프로젝트 번호</strong>
-                                    <p class="p-0 m-0">12345</p>
+                                    <p class="p-0 m-0">
+                                    	<c:out value="${PROJECTNO }"/>
+                                    </p>
                                 </div>
                             </div>
                         </div>

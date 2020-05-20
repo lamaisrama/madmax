@@ -71,7 +71,7 @@
 			<tr>
 				<td>마케팅팀</td>
 				<td class="pjName">
-					<a href="${path}/selectedProject/selectedProject.do?pjNo=1">project01</a> 
+					<a href="${path}/selectedProject/selectedProjectView.do?pjNo=1">project01</a> 
 				</td>
 				<td>완료</td>
 				<td>2019.11.24</td>
