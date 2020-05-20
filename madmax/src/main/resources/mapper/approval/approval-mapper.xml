@@ -83,4 +83,17 @@
 			JOIN STOOLUSER USING(USERID) JOIN DEPT USING(DEPTCODE) 
 			JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId}
 	</select>
+	
+	<update id="updateAppr" parameterType="apprLine">
+		UPDATE APPRLINE SET APPRRESULT=#{apprResult}, APPRTIME=SYSDATE, APPRMESSAGE=#{apprMessage} WHERE APPRNO=#{apprNo} AND APPRUSER=#{apprUser}
+	</update>
+	<update id="updateApprovalStatusEnd" parameterType="apprLine">
+		UPDATE APPROVAL SET CURRAPPRSTEP=#{apprStep}, 
+			APPRSTATUS= <if test="apprResult==1">3</if>	
+			<if test="apprResult==0">4</if>
+			WHERE APPRNO=${apprNo}
+	</update>
+	<update id="updateApprovalStatusIng" parameterType="apprLine">
+		UPDATE APPROVAL SET CURRAPPRSTEP = #{apprStep}, APPRSTATUS=2 WHERE APPRNO=#{apprNo}
+	</update>
 </mapper>

@@ -25,6 +25,7 @@ public interface ApprovalService {
 	int deleteDoc(int apprNo);
 	List<Approval> selectApprTempList(String userId);
 	List<Approval> selectApprWaitList(String userId);
+	int updateAppr(ApprLine line);
 
 	
 	
