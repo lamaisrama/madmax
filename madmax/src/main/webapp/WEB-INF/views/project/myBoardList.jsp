@@ -161,6 +161,7 @@
 	                                            <p class="m-0">${l.schedulePlace }</p>  <!-- 일정주소 -->
 	                                        </div>
 	                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+	                                        
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">

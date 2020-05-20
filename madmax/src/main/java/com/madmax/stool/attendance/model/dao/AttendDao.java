@@ -9,6 +9,8 @@ import com.madmax.stool.attendance.model.vo.Worktime;
 
 public interface AttendDao {
 	
+	
+	// 관리자 수정요청
 	int insertRequest(SqlSessionTemplate session,Attendance a);
 
 	int insertState(SqlSessionTemplate session,Worktime w); 

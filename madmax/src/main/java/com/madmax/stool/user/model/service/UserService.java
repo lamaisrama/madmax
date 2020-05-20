@@ -23,8 +23,9 @@ public interface UserService {
 
 	// pw찾기
 	User findPw(Map<String, Object> map);
-
 	int changePw(Map<String, String> map);
+
+	int updatePw(User u);
 
 	
 	
