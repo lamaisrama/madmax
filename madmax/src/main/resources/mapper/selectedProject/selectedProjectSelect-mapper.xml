@@ -11,8 +11,8 @@
 
 	<select id="selectWritingList" parameterType="map" resultType="map">
 		SELECT * FROM WRITING W
-		JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
-		JOIN WRITINGCOMMENT WC USING (WRITINGNO)
+		<!-- JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
+		JOIN WRITINGCOMMENT WC USING (WRITINGNO) -->
 	</select>
 	
 	<select id="selectTaskList" parameterType="map" resultType="map">
