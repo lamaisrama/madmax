@@ -2,6 +2,7 @@ package com.madmax.stool.approval.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -180,6 +181,23 @@ public class ApprovalController {
 	public boolean deleteDoc(int apprNo) {
 		if(service.deleteDoc(apprNo)>0) return true;
 		else return false;
+	}//이거요
+	
+	@RequestMapping("/appr/executeApproval")
+	@ResponseBody 
+	public boolean executeAppr(@RequestParam Map<String, String> map) {
+		ApprLine line = new ApprLine();
+		line.setApprNo(Integer.parseInt(map.get("apprNo")));
+		line.setApprStep(Integer.parseInt(map.get("apprStep")));
+		line.setApprUser(map.get("apprUser"));
+		line.setApprType(map.get("apprType"));
+		line.setApprResult(Integer.parseInt(map.get("apprResult")));
+		line.setApprMessage(map.get("apprMessage"));
+		//to do
+		//apprLine 업데이트
+		//approval 업데이트
+			//currStatus+1
+		return true; 
 		
 	}
 }

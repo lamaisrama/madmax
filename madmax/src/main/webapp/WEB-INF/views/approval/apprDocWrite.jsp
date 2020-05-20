@@ -160,9 +160,8 @@
 		}
 	}
 	
-	$("input").on("change",function(){
-		console.log("here");
-		$(this).attr("value",$(this).val());
+	$(document).on("change", "input", function(){			
+			$(this).attr("value",$(this).val());
 	})
 	
 	function beforeSubmit(){

@@ -145,24 +145,29 @@
 	        <h4 class="modal-title">결재/합의하기</h4>
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	      </div>
-	
 	      <!-- Modal body -->
-	      <div class="modal-body">
-	      <span style="font-weight:bolder; color:red; margin-bottom:20px;">결재 의견 </span><br>
-	      <c:if test="${appr.apprType=='approval' }">
-      		<input type="radio" name="apprResult" value="approval" id="apprApproval">
-      		<label for="apprApproval" >결재 &nbsp;&nbsp;</label>
-	      </c:if>
-	      <c:if test="${appr.apprType =='agree' }">
-	      	<input type="radio" name="apprResult" value="agree" id="apprAgree">
-	      	<label for="apprAgree">합의&nbsp;&nbsp;</label>
-	      </c:if>
-	        <input type="radio" name="apprResult" value="reject" id="apprReject">
-	        <label for="apprReject">반려</label>
-	        <br>
-	         <input class="form-control" type="text" name="apprMessage" placeholder="결재 의견을 남겨주세요">
-	      </div>
-	
+	      <form id="apprDo">
+		      <input type="hidden" name="apprNo" value="${appr.apprNo }">
+		      <input type="hidden" name="apprStep" value="${appr.currApprStep+1 }">
+		      <input type="hidden" name="apprUser" value="${loginUser.userId }">
+		      <input type="hidden" name="apprType" value="${appr.apprType }">
+		      
+		      <div class="modal-body">
+			      <span style="font-weight:bolder; color:red; margin-bottom:20px;">결재 의견 </span><br>
+			      <c:if test="${appr.apprType=='approval' }">
+		      		<input type="radio" name="apprResult" value="1" id="apprApproval">
+		      		<label for="apprApproval" >결재 &nbsp;&nbsp;</label>
+			      </c:if>
+			      <c:if test="${appr.apprType =='agree' }">
+			      	<input type="radio" name="apprResult" value="1" id="apprAgree">
+			      	<label for="apprAgree">합의&nbsp;&nbsp;</label>
+			      </c:if>
+			        <input type="radio" name="apprResult" value="2" id="apprReject">
+			        <label for="apprReject">반려</label>
+			        <br>
+			         <input class="form-control" type="text" name="apprMessage" placeholder="결재 의견을 남겨주세요">
+		      </div>
+		  </form>
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
@@ -176,16 +181,16 @@
 	<script>
 		function doAppr(){
 			$.ajax({
-				url:"${path}/appr/doAppr",
-				data:{},
-				type:"POST",
-				success:(data)=>{
+				url:'${path}/appr/executeApproval',
+				type:"post",
+				data:$("#apprDo").serialize(),
+		        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+				success:(data) => {
+					console.log(data);
 					alert('결재 정보가 저장되었습니다.');
-					self.close();
 				}
-			});
+			}); 
 		}
-		
 	</script>
 </body>
 </html>
