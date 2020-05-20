@@ -3,8 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-
+				
+				
                 <div class="w-100 bg-white border border-grey rounded overflow-hidden mb-3">
+                <c:forEach items="${projectBoardList}" var="pb">
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
@@ -41,19 +43,24 @@
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
 
                             <!-- if문으로 분기처리 : bordType이 글인경우 -->
-                            
+                            <c:if test="${projectBoardList.BOARDTYPE.equals('W')}">
+                            <c:forEach items="${writingList }" var="w">
                             <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
                             <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
-                                <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
+                                <h5 class="m-0 font-weight-bolder mb-4">
+                                <c:out value="${w.WRITINGTITLE}"/>
+                                </h5> <!-- 글 제목 -->
                                 <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
-				                                    업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
-				                                    불금 힘냅시다! 화이팅 ㅎㅎ!
+				                <c:out value="${w.WRITINGCONTENT}"/>                    
                                 </div>
                             </div> 
                             <!-- 1) 글 끝  ------------------------------------------------------------------------------------------------------------------------>
-
+							</c:forEach>
+							</c:if>
 
                             <!-- if문으로 분기처리 : bordType이 업무인경우 -->
+                            <c:if test="${projectBoardList.BOARDTYPE.equals('T')}">
+                            <%-- <c:forEach items="${writingList }" var="w"> --%>
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                             <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
                                 <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
@@ -104,9 +111,10 @@
                                 </div>
                             </div>       
                             <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
-
+							</c:if>
 
                             <!-- if문으로 분기처리 : bordType이 일정인경우 -->
+                            <c:if test="${projectBoardList.BOARDTYPE.equals('S')}">
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>
                             <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
                                 <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
@@ -144,7 +152,7 @@
                                 </div>
                             </div>
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
-
+							</c:if>
 
                             <!--★ 하단공통  ----------------------------------------------------------------------------------------------------------------------->       
                             <div class="w-100 mt-4">      
@@ -340,8 +348,9 @@
                         </div>   
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
-                
+                	</c:forEach>
                 </div>
+                
                 
             
                 
