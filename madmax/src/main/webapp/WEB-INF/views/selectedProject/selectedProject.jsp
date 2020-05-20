@@ -16,7 +16,7 @@
 
     <!-- kakao map -->
 	<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d1bdbfd0b440522feea5327aec9def1&libraries=services,clusterer,drawing"></script>
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d1bdbfd0b440522feea5327aec9def1&libraries=services,clusterer,drawing"></script> -->
 
     <!-- 스타일 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/selectedProject-Write.css"/>
@@ -36,8 +36,7 @@
                         </button>
 
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                           	시스템 유지운영 프로젝트
-                        
+                           	<c:out value="${loginUser.userId}"/>
                         </h4>
                         
                         <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
@@ -48,7 +47,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-wrap" id="colorBox">                                    
-                                    <div id="selectColor-lightGray" onclick="fn_selectColor(this)" style="background-color: rgb(200, 200, 200);" class="m-1"></div>
+                                    <div id="selectColor-lightGray" onclick="fn_selectColor(this)" style="background-color: #c8c8c8;" class="m-1"></div>
                                     <div id="selectColor-gray" onclick="fn_selectColor(this)" style="background-color: rgb(80, 80, 80);" class="m-1"></div>
                                     <div id="selectColor-yellow" onclick="fn_selectColor(this)" style="background-color: rgb(255, 227, 70);" class="m-1"></div>
                                     <div id="selectColor-orange" onclick="fn_selectColor(this)" style="background-color: rgb(255, 147, 24);" class="m-1"></div>
@@ -346,7 +345,7 @@
                 
             <!-- ☆★☆ 게시글List include -->
             <div class="mb-3"> <!-- 고정글 -->
-				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
+				<%-- <jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" /> --%>
             </div>
             <div class="mb-3"> <!-- 게시글 리스트 -->
 				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />

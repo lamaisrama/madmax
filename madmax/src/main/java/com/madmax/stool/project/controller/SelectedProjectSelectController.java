@@ -29,7 +29,7 @@ public class SelectedProjectSelectController {
 		
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
-		List<Map<String,Object>> TaskList=service.selectTaskList(pjNo);
+		List<Map<String,Object>> taskList=service.selectTaskList(pjNo);
 		List<Map<String,Object>> scheduleList=service.selectScheduleList(pjNo);
 //		Map<String,Object> pinpostCount=service.selectPinPostCount();
 		
@@ -38,6 +38,7 @@ public class SelectedProjectSelectController {
 		mv.addObject("projectBoardList",projectBoardList);
 		mv.addObject("writingList",writingList);
 		mv.addObject("scheduleList",scheduleList);
+		mv.addObject("taskList",taskList);
 //		mv.addObject("pinpostCount",pinpostCount);
 		mv.setViewName("selectedProject/selectedProject");
 		return mv;
