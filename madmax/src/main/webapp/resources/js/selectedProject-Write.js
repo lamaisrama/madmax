@@ -6,6 +6,10 @@ function captureReturnKey(e) {
     return false; 
 }
 
+function fn_writeSubmit(){
+	return location.replace("http://localhost:9090/stool/selectedProject/selectedProject.do?pjNo=1");
+}
+
 //카테고리버튼 선택
 function fn_writeCategory(e, id){
     
@@ -70,7 +74,7 @@ function fn_writeCategory(e, id){
 //업무 작성 관련 스크립트 ---------------------------------------->
 //진행상태 버튼
 function fn_progressState(e, id){
-    if(id=="request"){
+    if(id=="요청"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -80,7 +84,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-primary");
     }
-    if(id=="progress"){
+    if(id=="진행"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -90,7 +94,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-success");
     }
-    if(id=="feedback"){
+    if(id=="피드백"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -100,7 +104,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-danger");
     }
-    if(id=="end"){
+    if(id=="완료"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -110,7 +114,7 @@ function fn_progressState(e, id){
         $("#progressState").val(id);
         $(e).addClass("btn-info");
     }
-    if(id=="hold"){
+    if(id=="보류"){
         $("#request").removeClass("btn-primary");
         $("#progress").removeClass("btn-success");
         $("#feedback").removeClass("btn-danger");
@@ -125,10 +129,11 @@ function fn_progressState(e, id){
 
 //우선순위 input에 담기
 function fn_priority(e, id){
-    let val = $(e).text();
-    $("#priority").val(id);
-    $("#prioritySelectBtn").text(val);
-    console.log($("#priority").val());
+    let val = $(e).html();
+    $("#taskPriority").val(id);
+    $("#prioritySelectBtn").html(val);
+    console.log(val);
+    console.log($("#taskPriority").val());
 }
 
 //담당자 추가
@@ -315,7 +320,7 @@ new daum.Postcode({
         var addr = data.address; // 최종 주소 변수
 
         // 주소 정보를 해당 필드에 넣는다.
-        document.getElementById("schedulePlace").value = addr;
+        $("#schedulePlaceText").text(addr);
         // 주소로 상세 정보를 검색
         geocoder.addressSearch(data.address, function(results, status) {
             // 정상적으로 검색이 완료됐으면
@@ -326,6 +331,7 @@ new daum.Postcode({
                 // 해당 주소에 대한 좌표를 받아서
                 var coords = new daum.maps.LatLng(result.y, result.x);
                 console.log(result.y, result.x);
+                $("#schedulePlace").val(result.y + "," + result.x);
                 // 지도를 보여준다.
 //                mapContainer.style.display = "block";
                 $("#mapBox").attr("style", "display:block; height:300px;");

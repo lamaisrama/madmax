@@ -20,6 +20,9 @@
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <!-- google icon-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- 카카오지도 api&services 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services,clusterer,drawing"></script>
 <style>	
 	.navBtn{
 		font-weight:bolder; font-size:13px; color: white; 
@@ -55,7 +58,7 @@
 	<div class="header-container">
 		<header>
 			<nav class="navbar navbar-expand-lg">
-				<a class="navbar-brand" href="${path }">
+				<a class="navbar-brand" href="${path }/">
 					<img src="${path }/resources/images/logo.png" alt="logo" width="180px;"/>
 				</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

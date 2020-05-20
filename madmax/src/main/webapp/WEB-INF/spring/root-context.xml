@@ -11,7 +11,7 @@
 			
 	<bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe" />
+		<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe" /> 
 		<property name="username" value="stool" />
 		<property name="password" value="stool" />
 	</bean>
@@ -69,10 +69,19 @@
 	         </props>
 	      </property>
 	   </bean>
+<<<<<<< HEAD
 	
 		<bean id="email" class="com.madmax.stool.user.email.Email"></bean>
 	    <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
 	
 	
 	
+=======
+
+	<bean id="email" class="com.madmax.stool.user.email.Email"></bean>
+    <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
+
+
+
+>>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 </beans>

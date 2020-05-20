@@ -115,9 +115,9 @@
                 <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
 				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
-				    <input type="hidden" name="writer" value="user01"/>    
+				    <input type="hidden" name="writer" value="user05"/>    
 				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
-				    <input type="hidden" name="selectedProjectNo" value="1"/>    
+				    <input type="hidden" name="selectedProjectNo" value="${pjNo}"/>    
                     <!-- 2) 글 타입 -->
                     <input type="hidden" name="boardType" id="boardType" value="writing"/>
                     <!-- 3) 파일-->                
@@ -148,12 +148,12 @@
                             <div id="writeCategory-board" class="row w-100 m-0">
                                 <div id="boardContainer" class="w-100 p-3">
                                     <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
-                                        <input name="boardTitle" id="boardTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                             placeholder="제목 입력 (선택)" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
                                     </div>
                                     <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
                                         <div id="boardContentAreaDiv" class="w-100">
-                                            <textarea id="boardContentArea" name="boardContentArea" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
+                                            <textarea id="boardContentArea" name="writingContent" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
                                         </div>
                                     </div>                                                                 
                                 </div>
@@ -169,46 +169,47 @@
                                 <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">진행상태</strong>
                                     <div id="taskTabBtns" class="btn-group border border-grey rounded overflow-hidden">
-                                        <input type="hidden" id="progressState" name="progressState" value="request"/>
-                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, 'request');">요청</button>
-                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, 'progress');">진행</button>
-                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, 'feedback');">피드백</button>
-                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, 'end');">완료</button>
-                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, 'hold');">보류</button>
+                                        <input type="hidden" id="progressState" name="taskState" value="요청"/>
+                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, '요청');">요청</button>
+                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">진행</button>
+                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">피드백</button>
+                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">완료</button>
+                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">보류</button>
                                     </div>
                                 </div>
                                 <div id="taskListBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">담당자</strong>
-                                    <input type="text" id="workerListStr" name="workerListStr" style="display: none;"/>
+                                    <input type="text" id="workerListStr" name="taskManagerName" style="display: none;"/>
                                     <div id="workerList" class="d-flex flex-wrap">            
                                         <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
                                     </div>
                                 </div>
                                 <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartDate" class="stoolDateInput" />
+                                    <input type="date"" id="taskStartDate" name="taskStartdate" class="stoolDateInput" />
                                 </div>   
                                 <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEndDate" class="stoolDateInput" />
+                                    <input type="date"" id="taskEndDate" name="taskEnddate" class="stoolDateInput" />
                                 </div>  
                                 <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">우선순위</strong>
-                                    <input type="hidden" id="taskPriority" name="taskPriority"/>
+                                    <input type="hidden" id="taskPriority" name="taskProiority" value="없음"/>
                                     <div class="dropdown">
                                         <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
                                             	우선순위 선택
                                         </button>
                                         <div class="dropdown-menu text-center" id="taskPriority-dropItem">
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv1" onclick="fn_priority(this, 'lv4');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv2" onclick="fn_priority(this, 'lv3');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv3" onclick="fn_priority(this, 'lv2');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="lv4" onclick="fn_priority(this, 'lv1');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="없음" onclick="fn_priority(this, '없음');"><i class="fas fa-times stoolGrey mr-3" style="font-size:17px;"></i>없음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="낮음" onclick="fn_priority(this, '낮음');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="보통" onclick="fn_priority(this, '보통');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="높음" onclick="fn_priority(this, '높음');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="긴급" onclick="fn_priority(this, '긴급');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
                                         </div>
                                     </div>                   
                                 </div>                                  
                                 <div id="taskContentBox" class="col-12 d-flex justify-content-center">
-                                    <textarea name="taskContentArea" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
+                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -223,17 +224,18 @@
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="scheduleStartDate" name="scheduleStartDate" class="stoolDateInput" />
+                                    <input type="date" id="scheduleStartDate" name="scheduleStartdate" class="stoolDateInput" />
                                 </div>   
                                 <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="scheduleEndDate" name="scheduleEndDate" class="stoolDateInput" />
+                                    <input type="date"" id="scheduleEndDate" name="scheduleEnddate" class="stoolDateInput" />
                                 </div>    
                                 <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
                                     <strong class="mr-2">장소</strong>
                                     <div class="d-flex align-items-end">
                                     	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
-                                    	<input type="text" id="schedulePlace" name="schedulePlace" style="width:280px;" class="stoolDateInput" placeholder=""/>
+                                    	<div id="schedulePlaceText" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
+                                    	<input type="hidden" id="schedulePlace" name="schedulePlace"/>
                                     </div>
                                 </div>      
                                 <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
@@ -243,7 +245,7 @@
                                 </div>                                                                                        
                                 <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
                                     <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
-                                    <textarea id="scheduleContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
+                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -455,7 +457,8 @@
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                                <p class="m-0"><c:out value="${pm.userName}"/></p>
+                                <span class="d-none"><c:out value="${pm.userId}"/></span>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
                                 	선택

@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Attachment {
-	private int no;
-	private String originalFilename;
-	private String renamedFilename;
+public class InsertHashTag {
+	
+	private int hashtagNo;
+	private String hashtagText;
+	private int boardNo;
+	
 }

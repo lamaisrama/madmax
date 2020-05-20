@@ -11,8 +11,19 @@
 		<typeAlias type="com.madmax.stool.approval.model.vo.Approval" alias="approval"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprDocType" alias="apprDocType"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprLine" alias="apprLine"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.ApprDoc" alias="apprDoc" />
 		<typeAlias type="com.madmax.stool.approval.model.vo.DeptUsers" alias="deptUsers"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.User" alias="apprUser"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.ProjectMember" alias="projectMember"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.AdminAttendManagement" alias="adminAttend"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertWriting" alias="writing"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertProjectBoard" alias="projectBoard"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertHashTag" alias="hashTag"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertNotification" alias="notification"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.Attachment" alias="attachment"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.ProjectFile" alias="projectFile"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTask" alias="task"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTaskManager" alias="insertTaskManager"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertSchedule" alias="schedule"/>
 	</typeAliases>
 </configuration>

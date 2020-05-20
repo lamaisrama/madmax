@@ -79,7 +79,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		//2. ApprLine 가져오기
 		List<ApprLine> lines = dao.selectApprLine(session, apprNo);
 		appr.setApprLine(lines);
-		//appr.setApprHistory(history);
+		//3. 수신인 이름 가져오기
+		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
 		return appr;
 	}
 
@@ -90,6 +91,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		//select apprLine
 		List<ApprLine> lines = dao.selectApprLine(session, approval.getApprNo());
 		appr.setApprLine(lines);
+		//3. 수신인 이름 가져오기
+		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
 		return appr;
 	}
 

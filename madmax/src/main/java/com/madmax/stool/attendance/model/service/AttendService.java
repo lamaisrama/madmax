@@ -8,6 +8,7 @@ import com.madmax.stool.attendance.model.vo.Worktime;
 
 public interface AttendService {
 
+	// 관리자 수정 요청
 	int insertRequest(Attendance a);
 	
 	int insertState(Worktime w);
