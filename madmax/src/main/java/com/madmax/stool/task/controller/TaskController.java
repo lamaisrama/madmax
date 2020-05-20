@@ -107,7 +107,7 @@ public class TaskController {
 		  String notiMember=service.selectTaskNoti(boardNo);
 		  
 		  mv.addObject("task",tp);
-		  mv.addObject("notiMember",notiMember);
+		  mv.addObject("notiMember",notiMember);//이건 업무 담당자임..
 		  mv.setViewName("jsonView");
 		  return mv;
 		  
