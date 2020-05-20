@@ -93,7 +93,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 				}else if(n.getNotType().equals("task")){
 					map.put("userId", id);
 					map.put("boardNo", n.getBoardNo());
-					notiList=dao.selectNotiTask(map);
+					notiList=dao.selectNotiTask(session,map);
 					
 					if(notiList.size()>0) {
 						list.addAll(notiList);
@@ -101,7 +101,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 				}else if(n.getNotType().equals("schedule")) {
 					map.put("userId", id);
 					map.put("boardNo", n.getBoardNo());
-					notiList=dao.selectNotiSchedule(map);
+					notiList=dao.selectNotiSchedule(session,map);
 					if(notiList.size()>0) {
 						list.addAll(notiList);
 					}

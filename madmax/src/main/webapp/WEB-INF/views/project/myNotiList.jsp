@@ -12,8 +12,8 @@
 <!-- 나를지정한글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
- 			<div id="bookmarkTitle">
-               <h4>담아둔 글 보기</h4>
+ 			<div id="myNotiTitle">
+               <h4>나를 지정한 글 보기 </h4>
             </div>
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">

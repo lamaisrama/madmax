@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.project.model.vo.Bookmark;
 import com.madmax.stool.project.model.vo.BookmarkAll;
+import com.madmax.stool.project.model.vo.Notification;
 
 @Repository
 public class BookmarkDaoImpl implements BookmarkDao {
@@ -34,6 +35,30 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	public List<BookmarkAll> selectBoardSchedule(SqlSessionTemplate session,Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectList("bookmark.selectBkS",map);
+	}
+
+	@Override
+	public List<Notification> selectNotiList(SqlSessionTemplate session, String id) {
+		// TODO Auto-generated method stub
+		return session.selectList("noti.selectNotiList",id);
+	}
+
+	@Override
+	public List<BookmarkAll> selectNotiWriting(SqlSessionTemplate session, Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("noti.selectNotiW",map);
+	}
+
+	@Override
+	public List<BookmarkAll> selectNotiTask(SqlSessionTemplate session,Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("noti.selectNotiT",map);
+	}
+
+	@Override
+	public List<BookmarkAll> selectNotiSchedule(SqlSessionTemplate session,Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("noti.selectNotiS",map);
 	}
 
 }

@@ -23,7 +23,7 @@ public class BookmarkController {
 	@Autowired
 	private BookmarkService service;
 
-	
+	//내가 담아둔글 리스트 가져오기
 	@RequestMapping("/project/bookmarkList.do")
 	public ModelAndView selectBkList(HttpServletRequest req) {
 		ModelAndView mv=new ModelAndView();	
@@ -41,6 +41,7 @@ public class BookmarkController {
 		return mv;
 	}
 	
+	//내가 언급된 글 리스트 가져오기
 	@RequestMapping("/project/myNoti.do")
 	public ModelAndView selectNotiList(HttpServletRequest req) {
 		ModelAndView mv=new ModelAndView();
@@ -50,6 +51,13 @@ public class BookmarkController {
 		mv.addObject("List",notilist);
 		mv.setViewName("project/myNotiList");
 		
+		
+		return mv;
+	}
+	//내가 쓴 게시물 가져오기
+	@RequestMapping("/project/myBoard.do")
+	public ModelAndView selectBoardList(HttpServletRequest req) {
+		ModelAndView mv=new ModelAndView();
 		
 		return mv;
 	}

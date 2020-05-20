@@ -24,9 +24,9 @@ public interface BookmarkDao {
 
 	List<BookmarkAll> selectNotiWriting(SqlSessionTemplate session, Map<String, Object> map);
 
-	List<BookmarkAll> selectNotiTask(Map<String, Object> map);
+	List<BookmarkAll> selectNotiTask(SqlSessionTemplate session,Map<String, Object> map);
 
-	List<BookmarkAll>  selectNotiSchedule(Map<String, Object> map);
+	List<BookmarkAll>  selectNotiSchedule(SqlSessionTemplate session,Map<String, Object> map);
 
 	
 
