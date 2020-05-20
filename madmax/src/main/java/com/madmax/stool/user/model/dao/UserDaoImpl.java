@@ -40,11 +40,17 @@ public class UserDaoImpl implements UserDao {
 		return session.selectOne("user.findPw", map);
 	}
 
-
 	@Override
 	public int changePw(SqlSessionTemplate session, Map<String, String> map) {
-		// TODO Auto-generated method stub
+
 		return session.update("user.changePw", map);
+	}
+
+
+	@Override
+	public int updatePw(SqlSessionTemplate session, User u) {
+		
+		return session.update("user.updatePw", u);
 	}
 
 

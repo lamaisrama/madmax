@@ -21,8 +21,13 @@
 		SELECT * FROM STOOLUSER WHERE USERID=#{userId} AND EMAIL=#{email}
 	</select>
 	
-	<!-- pw변경 -->
+	<!-- 임시 pw로 변경 -->
 	<update id="changePw" parameterType="map">
+		UPDATE STOOLUSER SET PASSWORD=#{password} where USERID=#{userId}	
+	</update>
+	
+	<!-- pw수정 -->
+	<update id="updatePw" parameterType="String">
 		UPDATE STOOLUSER SET PASSWORD=#{password} where USERID=#{userId}	
 	</update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.madmax.stool.user.controller;
 
 import static com.madmax.stool.common.RenameFactory.getRenamedFileName;
+import static com.madmax.stool.user.email.FindUtil.getNewPwd;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -31,11 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.user.email.Email;
-import com.madmax.stool.user.email.FindUtil;
-import com.madmax.stool.user.email.MailUtil;
+import com.madmax.stool.user.model.exception.UserException;
 import com.madmax.stool.user.model.service.UserService;
-import com.madmax.stool.user.model.vo.User;
-import static com.madmax.stool.user.email.FindUtil.getNewPwd;;
+import com.madmax.stool.user.model.vo.User;;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -114,18 +112,19 @@ public class UserController {
 	public String login(String userId, String password, Model m, HttpSession session) {
 		
 		User login = service.selectUser(userId);
+//		logger.debug(login.toString());
 		
+		String page = "";
 		if(login!=null&&encoder.matches(password, login.getPassword())) {	
-			
-			m.addAttribute("msg", "로그인성공!");
+			page = "main";
 			m.addAttribute("loginUser", login);
-			
-//			logger.debug("user:"+login.getUserName());
+			//logger.debug("user:"+login.getUserName());
 		}else {
+			page = "common/msg";
 			m.addAttribute("msg", "로그인실패!");
+			m.addAttribute("loc", "/");
 		}
-		m.addAttribute("loc", "/");
-		return "main";
+		return page;
 	}
 	
 	@RequestMapping("/user/logout.do")
@@ -166,10 +165,6 @@ public class UserController {
 //		}
 //	}
 	
-
-	
-	
-	
 	@RequestMapping("/user/findIdPw")
 	public String findIdPw() {
 		return "user/login/findIdPw";
@@ -191,9 +186,6 @@ public class UserController {
 		
 		return mv;
 	}
-	
-	
-	
 	
 	
 	@RequestMapping("/user/findingPw.do")
@@ -222,18 +214,17 @@ public class UserController {
 		
 		if(result>0) {
 			email.setContent("임시 비밀번호는 "+password+" 입니다."); // 이메일로 보낼 메시지
-			email.setReceiver(EMAIL); // 받는이의 이메일 주소
-			email.setSubject(USERID+"님 비밀번호 찾기 메일입니다."); // 이메일로 보낼 제목
+			email.setReceiver(EMAIL); 
+			email.setSubject(USERID+"님 비밀번호 찾기 메일입니다.");
 			
 			try {
 				MimeMessage msg = mailSender.createMimeMessage();
-				MimeMessageHelper messageHelper 
-				= new MimeMessageHelper(msg, true, "UTF-8");
+				MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
 				
 				messageHelper.setSubject(email.getSubject());
 				messageHelper.setText(email.getContent());
 				messageHelper.setTo(email.getReceiver());
-				messageHelper.setFrom("madmax@gmail.com"); // 보내는 이의 주소(root-context.xml 에서 선언했지만 적어줬음)
+				messageHelper.setFrom("corporationmadmax@gmail.com");
 				msg.setRecipients(MimeMessage.RecipientType.TO , InternetAddress.parse(email.getReceiver()));
 				mailSender.send(msg);
 				
@@ -251,8 +242,23 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/user/updatePw")
+	public String updatePwView() {
+		return "user/updatePw";
+	}
 	
-	
+	@RequestMapping("/user/updatePw.do")
+	public String updatePw(@ModelAttribute User u) {
+		
+		int result = service.updatePw(u);
+		
+		if(result>0) {
+			return "redirect:/";
+		}else {
+			throw new UserException("비밀번호변경실패!");
+		}
+		
+	}
 
 
 	
