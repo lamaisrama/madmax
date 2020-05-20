@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approval2">
+	<select id="selectApprProgList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) JOIN DEPT USING(DEPTCODE) 
+			JOIN APPRLINE USING(APPRNO) WHERE APPRSTEP=2 AND APPRUSER=#{userId}
+	</select>
+	<select id="selectApprDoneList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) JOIN DEPT USING(DEPTCODE) 
+			JOIN APPRLINE USING(APPRNO) WHERE (APPRSTEP=3 OR APPRSTEP=4) AND APPRUSER=#{userId}
+	</select>
+</mapper>
