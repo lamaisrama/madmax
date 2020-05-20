@@ -15,6 +15,7 @@
 		<typeAlias type="com.madmax.stool.approval.model.vo.DeptUsers" alias="deptUsers"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.User" alias="apprUser"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.ProjectMember" alias="projectMember"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.AdminAttendManagement" alias="adminAttend"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertWriting" alias="writing"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertProjectBoard" alias="projectBoard"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertHashTag" alias="hashTag"/>

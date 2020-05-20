@@ -20,6 +20,8 @@ public class AttendServiceImpl implements AttendService {
 	@Autowired
 	private SqlSessionTemplate session;
 
+	
+	// 관리자 수정 요청
 	@Override
 	public int insertRequest(Attendance a) {
 		// TODO Auto-generated method stub
