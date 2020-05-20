@@ -69,10 +69,10 @@
 	         </props>
 	      </property>
 	   </bean>
-
-	<bean id="email" class="com.madmax.stool.user.email.Email"></bean>
-    <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
-
-
+	
+		<bean id="email" class="com.madmax.stool.user.email.Email"></bean>
+	    <bean id="emailSender" class="com.madmax.stool.user.email.EmailSender"></bean>
+	
+	
 	
 </beans>

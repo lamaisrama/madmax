@@ -83,7 +83,6 @@
                     </h5>
                       <div class="mb-3" id="userId-container">       
                         <input type="text" class="form-control" placeholder="아이디를 4글자 이상 입력하세요"  name="userId" id="userId_" required>
-                        <!-- <button type="button" class="checkIdBtn" onclick="fn_checkId();" value="">중복확인</button> -->
                         <span class="guide ok">이 아이디는 사용이 가능합니다.</span>
 						<span class="guide error">이 아이디는 사용할 수 없습니다.</span>
                       </div>
@@ -122,15 +121,13 @@
 							var status = "height=200px, width=300px";
 							open(url, "_blank", status); 
  						} 
-                		*/                        
+*/                        
 					</script>
 
                       <h5 class="colum"><span class="material-icons">lock</span>&nbsp;비밀번호</h5>
                       <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="영문자나 숫자(4~12자) 입력" size="30" name="password" id="password_" required>
                       </div>
-                      
-                      <!-- <h5 class="colum">&nbsp;비밀번호확인</h5> -->
                       <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="비밀번호 확인" size="30" id="password2" required>
                       </div>
@@ -142,10 +139,7 @@
                       
                       <h5 class="colum">&nbsp;이메일</h5>
                       <div class="input-group mb-3">
-                      <!-- <form action="/user/auth.do" method="post"> -->
                         <input type="text" class="form-control" placeholder="stool@madmax.com" size="30" name="email" id="email" required>
-                    <!-- 	<button type="submit" class="checkEmailBtn" onclick="" value="">이메일인증</button>
-                      </form> -->		
                       </div>
 
                       <h5 class="colum">&nbsp;전화번호</h5>
