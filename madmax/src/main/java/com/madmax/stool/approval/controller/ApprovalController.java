@@ -123,15 +123,15 @@ public class ApprovalController {
 		return "approval/apprWaitBox";
 	}
 
-	@RequestMapping("/appr/apprProgBox.do")
-	public String approvalProgBox() {
-		return "approval/apprProgBox";
-	}
+	/*
+	 * @RequestMapping("/appr/apprProgBox.do") public String approvalProgBox() {
+	 * return "approval/apprProgBox"; }
+	 */
 
-	@RequestMapping("/appr/apprDoneBox.do")
-	public String approvalDoneBox() {
-		return "approval/apprDoneBox";
-	}
+	/*
+	 * @RequestMapping("/appr/apprDoneBox.do") public String approvalDoneBox() {
+	 * return "approval/apprDoneBox"; }
+	 */
 
 	@RequestMapping("/appr/myDocBox")
 	public String myDocBox() {
