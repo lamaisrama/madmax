@@ -1,6 +1,7 @@
 package com.madmax.stool.project.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,21 +19,21 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	}
 
 	@Override
-	public List<BookmarkAll> selectBoardWriting(SqlSessionTemplate session, String id) {
+	public List<BookmarkAll> selectBoardWriting(SqlSessionTemplate session,Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return session.selectList("bookmark.selectBkW",id);
+		return session.selectList("bookmark.selectBkW",map);
 	}
 
 	@Override
-	public List<BookmarkAll> selectBoardTask(SqlSessionTemplate session, String id) {
+	public List<BookmarkAll> selectBoardTask(SqlSessionTemplate session, Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return session.selectList("bookmark.selectBkT",id);
+		return session.selectList("bookmark.selectBkT",map);
 	}
 
 	@Override
-	public List<BookmarkAll> selectBoardSchedule(SqlSessionTemplate session,String id) {
+	public List<BookmarkAll> selectBoardSchedule(SqlSessionTemplate session,Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return session.selectList("bookmark.selectBkS",id);
+		return session.selectList("bookmark.selectBkS",map);
 	}
 
 }

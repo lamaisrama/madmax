@@ -1,9 +1,12 @@
 package com.madmax.stool.project.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,37 +21,53 @@ public class BookmarkServiceImpl implements BookmarkService {
 	private BookmarkDao dao;
 	@Autowired
 	private SqlSessionTemplate session;
-	
+	@Autowired
+	private Logger logger;
 	
 	@Override
 	public List<BookmarkAll> selectBkList(String id) {
 		// TODO Auto-generated method stub
 		List<Bookmark> bk=dao.selectBkList(session,id);
-		
+		logger.debug("북마크 갯수:"+bk.size());
 		List<BookmarkAll> list=new ArrayList<BookmarkAll>();//전체 리스트
 		List<BookmarkAll> bkList=new ArrayList<BookmarkAll>();//for문안에서 사용할거
+		
+		Map<String,Object> map=new HashMap();
 		for(Bookmark b:bk) {
 			//글일때
 			if(b.getBoardType().equals("W")) {
-				bkList=dao.selectBoardWriting(session,id);
+				map.put("userId", id);
+				map.put("boardNo", b.getBoardNo());
+				
+				bkList=dao.selectBoardWriting(session,map);
+				logger.debug("글 갯수:"+bkList.size());
 				if(bkList.size()>0) {
 					list.addAll(bkList);
+					
 				}
 				//list 로 넘기면?
 				}else if(b.getBoardType().equals("T")) {
-					bkList=dao.selectBoardTask(session,id);
+					map.put("userId", id);
+					map.put("boardNo", b.getBoardNo());
+					bkList=dao.selectBoardTask(session,map);
+					logger.debug("업무갯수:"+bkList.size());
 					if(bkList.size()>0) {
 						list.addAll(bkList);
+						
 					}
 				
 				}else if(b.getBoardType().equals("S")) {
-					bkList=dao.selectBoardSchedule(session,id);
+					map.put("userId", id);
+					map.put("boardNo", b.getBoardNo());
+					bkList=dao.selectBoardSchedule(session,map);
+					logger.debug("일정갯수:"+bkList.size());
 					if(bkList.size()>0) {
 						list.addAll(bkList);
+						
 					}
 				}
 		}
-		
+		logger.debug("총 갯수 serviceimpl:"+list.size());
 		return list;
 		
 		
