@@ -6,6 +6,7 @@
 <!-- 상단 고정글 -->
                 <div class="w-100 d-flex flex-column border p-3 mb-3 mt-3">
                 	<!-- 반복문 시작 -->
+                	
                     <div class="d-flex align-items-center mb-3">
                         <i class="fas fa-thumbtack stoolDarkBlue-text selectPinIcon" style="font-size: 25px;"></i>
                         <p class="m-0 ml-2 mr-1">상단고정글</p>
@@ -15,11 +16,14 @@
                     <!-- 상단고정글 -->
                     <div class="w-100 d-flex flex-column align-items-center">
                         <!-- 고정글 1 제목 -->
+                        <c:if test="">
                         <button type="button" class="btn btn-pinPost w-100 d-flex align-items-center" data-toggle="collapse" data-target="#pinPost-1" id="reportBoxBtn">
+						<!-- 분기처리.. 만약 글 타입이 W이면 일반,S이면 일정,T이면 업무 -->
+						    
                             <strong>[업무]</strong>
-                            <p class="m-0 ml-2">화면구현하기</p>
+                            <p class="m-0 ml-2">화면구현하기</p><!-- 글의 제목, 일정의 제목, 업무의 제목 셋중하나..ㅠㅠ -->
                         </button>      
-                                      
+                        </c:if> 
                         <!-- 게시물 타입 [업무] -->
                         <div id="pinPost-1" class="collapse p-2 w-100">      
 
@@ -59,19 +63,24 @@
                                     <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
         
                                     <!-- if문으로 분기처리 : bordType이 글인경우 -->
+                                    <c:if test="${projectBoardList.boardType.equals('W')}">
                                     <!-- 1) 글 시작  ----------------------------------------------------------------------------------------------------------------------->
                                     <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
-                                        <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내</h5> <!-- 글 제목 -->
-                                        <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
+                                        <h5 class="m-0 font-weight-bolder mb-4">[공지] 진행상태관련 안내
+                                       
+                                        </h5> <!-- 글 제목 -->
+                                        <div class="w-100 pjView-content">
+                                        <%-- <c:out value="${ }"></c:out>  --%><!-- 게시글 내용 -->
                                         
                                             업무 진행상태 잊지말고 실시간 업데이트 부탁드려요.<br>
                                             불금 힘냅시다! 화이팅 ㅎㅎ!
                                         </div>
                                     </div> 
                                     <!-- 1) 글 끝  ------------------------------------------------------------------------------------------------------------------------>
-        
+        							</c:if>
         
                                     <!-- if문으로 분기처리 : bordType이 업무인경우 -->
+                                    <c:if test="${projectBoardList.boardType.equals('T')}">
                                     <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                                     <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
                                         <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
@@ -122,9 +131,10 @@
                                         </div>
                                     </div>       
                                     <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
-        
+        							</c:if>
         
                                     <!-- if문으로 분기처리 : bordType이 일정인경우 -->
+                                    <c:if test="${projectBoardList.boardType.equals('S')}">
                                     <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>
                                     <div class="pjViewBody w-100 d-none flex-column pl-3 pr-3">
                                         <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
@@ -162,7 +172,7 @@
                                         </div>
                                     </div>
                                     <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
-        
+        							</c:if>
         
                                     <!--★ 하단공통  ----------------------------------------------------------------------------------------------------------------------->       
                                     <div class="w-100 mt-4">      
@@ -216,6 +226,7 @@
                                             </div>  <!-- 언급 입력 끝 -->    
         
                                             <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
+                                            <%-- <c:if test=${boardType="W"}> --%>
                                             <div id="uploadFilesPreview" class="col-12 mb-2">
                                                 <strong class="mb-2">업로드 파일</strong>
                                                 <div class="col-12 d-flex flex-column mb-2">
@@ -254,8 +265,9 @@
         
                                                         </div>
                                                     </div>
-                                                </div>                                
+                                                </div>                     <!--  -->           
                                             </div>  <!-- 공통) 파일 미리보기 끝 -->
+                                            <%-- </c:if> --%>
                                         </div>
         
                                     </div>

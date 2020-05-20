@@ -36,7 +36,12 @@
                         </button>
 
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+<<<<<<< HEAD
                            	<c:out value="${loginUser.userId}"/>
+=======
+                           	시스템 유지운영 프로젝트
+                        
+>>>>>>> refs/heads/dev
                         </h4>
                         
                         <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
