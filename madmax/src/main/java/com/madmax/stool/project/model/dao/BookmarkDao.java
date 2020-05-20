@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.madmax.stool.project.model.vo.Bookmark;
 import com.madmax.stool.project.model.vo.BookmarkAll;
+import com.madmax.stool.project.model.vo.Notification;
 
 public interface BookmarkDao {
 
@@ -18,6 +19,14 @@ public interface BookmarkDao {
 	List<BookmarkAll> selectBoardTask(SqlSessionTemplate session, Map<String, Object> map);
 
 	List<BookmarkAll> selectBoardSchedule(SqlSessionTemplate session, Map<String, Object> map);
+
+	List<Notification> selectNotiList(SqlSessionTemplate session, String id);
+
+	List<BookmarkAll> selectNotiWriting(SqlSessionTemplate session, Map<String, Object> map);
+
+	List<BookmarkAll> selectNotiTask(Map<String, Object> map);
+
+	List<BookmarkAll>  selectNotiSchedule(Map<String, Object> map);
 
 	
 

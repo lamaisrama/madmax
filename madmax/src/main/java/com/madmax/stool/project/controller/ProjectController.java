@@ -27,10 +27,10 @@ public class ProjectController {
 	public String insertProject(Project p,Model m) {
 		
 	
-		if(p.getProjectType().equals("on")) {
-			p.setProjectType("Y");
-		}else {
+		if(p.getProjectType()==null) {
 			p.setProjectType("N");
+		}else {
+			p.setProjectType("Y");
 		}
 	
 		//세션에서 받아와 넣을것!

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.madmax.stool.project.model.dao.BookmarkDao;
 import com.madmax.stool.project.model.vo.Bookmark;
 import com.madmax.stool.project.model.vo.BookmarkAll;
+import com.madmax.stool.project.model.vo.Notification;
 
 @Service
 public class BookmarkServiceImpl implements BookmarkService {
@@ -71,6 +72,46 @@ public class BookmarkServiceImpl implements BookmarkService {
 		return list;
 		
 		
+	}
+
+	@Override
+	public List<BookmarkAll> selectNotiList(String id) {
+		// TODO Auto-generated method stub
+		List<BookmarkAll> list=new ArrayList<BookmarkAll>();//전체 리스트
+		List<BookmarkAll> notiList=new ArrayList<BookmarkAll>();//for문안에서 사용할거
+		Map<String,Object> map=new HashMap<String,Object>();
+		//우선 
+		List<Notification> noList=dao.selectNotiList(session,id);
+		for(Notification n:noList) {
+				if(n.getNotType().equals("writing")) {
+					map.put("userId", id);
+					map.put("boardNo", n.getBoardNo());
+					notiList=dao.selectNotiWriting(session,map);
+					if(notiList.size()>0) {
+						list.addAll(notiList);
+					}
+				}else if(n.getNotType().equals("task")){
+					map.put("userId", id);
+					map.put("boardNo", n.getBoardNo());
+					notiList=dao.selectNotiTask(map);
+					
+					if(notiList.size()>0) {
+						list.addAll(notiList);
+					}
+				}else if(n.getNotType().equals("schedule")) {
+					map.put("userId", id);
+					map.put("boardNo", n.getBoardNo());
+					notiList=dao.selectNotiSchedule(map);
+					if(notiList.size()>0) {
+						list.addAll(notiList);
+					}
+				}
+			
+		
+			}
+		
+		
+		return list;
 	}
 
 }

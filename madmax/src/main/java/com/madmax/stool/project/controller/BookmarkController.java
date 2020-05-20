@@ -2,6 +2,8 @@ package com.madmax.stool.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,6 @@ import com.madmax.stool.project.model.vo.BookmarkAll;
 
 
 @Controller
-@SessionAttributes({"loginUser"})
 public class BookmarkController {
 	
 	@Autowired
@@ -24,11 +25,11 @@ public class BookmarkController {
 
 	
 	@RequestMapping("/project/bookmarkList.do")
-	public ModelAndView selectBkList() {
+	public ModelAndView selectBkList(HttpServletRequest req) {
 		ModelAndView mv=new ModelAndView();	
 		//세션에서 로그인한 아이디값 가져오기
 		
-		String id="user1";
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<BookmarkAll> list=service.selectBkList(id);
 		logger.debug("북마크 테이블값:"+list.size());
 		
@@ -39,4 +40,18 @@ public class BookmarkController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("/project/myNoti.do")
+	public ModelAndView selectNotiList(HttpServletRequest req) {
+		ModelAndView mv=new ModelAndView();
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<BookmarkAll> notilist=service.selectNotiList(id);
+		
+		mv.addObject("List",notilist);
+		mv.setViewName("project/myNotiList");
+		
+		
+		return mv;
+	}
+	
 }
