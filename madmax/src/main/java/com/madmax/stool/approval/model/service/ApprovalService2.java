@@ -8,4 +8,6 @@ public interface ApprovalService2 {
 
 	List<Approval> selectApprProgList(String userId);
 	
+	List<Approval> selectApprDoneList(String userId);
+	
 }

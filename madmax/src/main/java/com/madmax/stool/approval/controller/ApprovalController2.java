@@ -38,15 +38,29 @@ public class ApprovalController2 {
 	}
 
 	
-	  @RequestMapping("/appr/apprProgBox.do") public String
-	  approvalProgBox(HttpServletRequest req,Model m) {
+	  @RequestMapping("/appr/apprProgBox.do") 
+	  public String approvalProgBox(HttpServletRequest req,Model m) {
 	  
-	  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-	  //System.out.println("userId확인 "+userId);
-	  List<Approval> list=service.selectApprProgList(userId);
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  //System.out.println("userId확인 "+userId);
+		  List<Approval> list=service.selectApprProgList(userId);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return "approval/apprProgBox";
 	  
-	  m.addAttribute("list",list);
+	  }
 	  
-	  return "approval/apprProgBox"; }
+	  @RequestMapping("/appr/apprDoneBox.do")
+	  public String apprDoneBox(HttpServletRequest req,Model m) {
+		  	
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		  List<Approval> list=service.selectApprDoneList(userId);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return "approval/apprDoneBox";
+	  }
 	 
 }

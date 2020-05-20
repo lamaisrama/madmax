@@ -23,6 +23,12 @@ public class ApprovalServiceImpl2 implements ApprovalService2 {
 		// TODO Auto-generated method stub
 		return dao.selectApprProgList(session,userId);
 	}
+
+	@Override
+	public List<Approval> selectApprDoneList(String userId) {
+		// TODO Auto-generated method stub
+		return dao.selectApprDoneList(session,userId);
+	}
 	
 	
 	

@@ -15,7 +15,12 @@ public class ApprovalDaoImpl2 implements ApprovalDao2 {
 		// TODO Auto-generated method stub
 		return session.selectList("approval2.selectApprProgList",userId);
 	}
-	
+
+	@Override
+	public List<Approval> selectApprDoneList(SqlSessionTemplate session, String userId) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectApprDoneList",userId);
+	}
 	
 
 }

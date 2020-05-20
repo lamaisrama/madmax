@@ -10,4 +10,5 @@ public interface ApprovalDao2 {
 	
 	List<Approval> selectApprProgList(SqlSessionTemplate session,String userId);
 
+	List<Approval> selectApprDoneList(SqlSessionTemplate session,String userId);
 }

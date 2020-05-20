@@ -73,9 +73,9 @@
 							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
 							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
 							${l.apprTitle }</a></td>
-						<td>writerName</td>
-						<td>writerDept</td>
-						<td>20-05-01</td>
+						<td>${l.userName}</td>
+						<td>${l.deptName }</td>
+						<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td>
 						<td>20-05-06</td>
 					</tr>
 				</c:forEach>

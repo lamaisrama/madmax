@@ -128,10 +128,10 @@ public class ApprovalController {
 	 * return "approval/apprProgBox"; }
 	 */
 
-	@RequestMapping("/appr/apprDoneBox.do")
-	public String approvalDoneBox() {
-		return "approval/apprDoneBox";
-	}
+	/*
+	 * @RequestMapping("/appr/apprDoneBox.do") public String approvalDoneBox() {
+	 * return "approval/apprDoneBox"; }
+	 */
 
 	@RequestMapping("/appr/myDocBox")
 	public String myDocBox() {
