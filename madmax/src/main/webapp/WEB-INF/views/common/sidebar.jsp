@@ -145,21 +145,17 @@
 		<ul class="menu">
 			<li>
 				<div class="user-container text-center">
-
 					<div class="imgbox">
 		                <div class="img2">
 		                	<img src="${path }/resources/upload/profile/${loginUser.profile }" 
 		                		style="border: 3px solid #233C61; 
-					            border-radius: 500px; width:150px; height:150px; overflow:hidden;">
+					            border-radius: 500px; width:130px; height:130px; overflow:hidden;">
             			</div> 
 			        </div>   
-
-					<%-- <button type="button" class="userBtn btn btn-light">
-						<img src="${path }/resources/upload/profile/${loginUser.profile }" style="width: 100px; height: auto;">
-					</button> --%>
-					<br><br>
+					<br>
 					<c:if test="${loginUser!=null}">
 						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
+						<a href="${path}/user/updatePw">비밀번호 변경하기</a>
 					</c:if>				
 				</div>
 			</li>
@@ -178,7 +174,7 @@
                                 <div id="collapseOne" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <ul>
-                                        	<li><a href="${pageContext.request.contextPath}/attd/attendList.do"><i class="icon far fa-address-card"></i>근태조회</a></li>
+                                        	<li><a href="${path}/attd/attendList.do"><i class="icon far fa-address-card"></i>근태조회</a></li>
                                         </ul>
                                     </div>
                                 </div>

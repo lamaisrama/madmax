@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="selectedProjectSelect">
+
+	<select id="selectProjectBoard" parameterType="map" resultType="map">
+		 <![CDATA[
+			 SELECT * FROM (SELECT * FROM PROJECTBOARD PB JOIN PROJECTTABLE PT USING(PROJECTNO) ORDER BY BOARDNO DESC) 
+			 WHERE ROWNUM <=5
+		 ]]>
+	</select>
+
+	<select id="selectWritingList" parameterType="map" resultType="map">
+		SELECT * FROM WRITING W
+		JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
+		JOIN WRITINGCOMMENT WC USING (WRITINGNO)
+	</select>
+	
+	<select id="selectTaskList" parameterType="map" resultType="map">
+		SELECT * FROM PROJECTTABLE PJ 
+        JOIN PROJECTBOARD PB USING(PROJECTNO)
+        JOIN TASK T USING(BOARDNO)
+	</select>
+	
+	<select id="selectScheduleList" parameterType="map" resultType="map">
+		SELECT * FROM PROJECTTABLE PJ 
+        JOIN PROJECTBOARD PB USING(PROJECTNO)
+        JOIN SCHEDULE S USING(BOARDNO)
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectPinPostCount" resultType="map">
+		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y'; <!--상단 고정글 갯수 -->
+	</select>
+	
+	
+	<!-- <select id="selectProjectNo" resultType="map">
+		SELECT * FROM PROJECTTABLE PJ
+		JOIN PROJECTBOARD PB USING(PROJECTNO) WHERE BOARDNO=#{no}
+	</select>
+	
+	<select id="selectPjRecentList" resultType="map">
+  	<![CDATA[
+  	SELECT BOARDNO FROM (SELECT BOARDNO FROM PROJECTTABLE PT JOIN PROJECTBOARD PB USING(PROJECTNO) ORDER BY BOARDNO DESC) 
+  	WHERE ROWNUM <=5
+  	]]>
+	</select> -->
+	
+</mapper>

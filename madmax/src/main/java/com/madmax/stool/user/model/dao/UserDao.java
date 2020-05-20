@@ -19,9 +19,9 @@ public interface UserDao {
 
 	// pw찾기
 	User findPw(SqlSessionTemplate session, Map<String, Object> map);
-
-
 	int changePw(SqlSessionTemplate session, Map<String, String> map);
+
+	int updatePw(SqlSessionTemplate session, User u);
 
 
 
