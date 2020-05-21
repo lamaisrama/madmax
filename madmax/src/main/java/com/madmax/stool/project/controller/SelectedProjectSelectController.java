@@ -21,7 +21,7 @@ public class SelectedProjectSelectController {
 	@Autowired
 	private SelectedProjectSelectService service;
 	
-	@RequestMapping("/selectedProject/selectedProjectView.do")
+	@RequestMapping("/selectedProject/selectedProject.do")
 	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo) {
 		
 	
@@ -30,6 +30,9 @@ public class SelectedProjectSelectController {
 		//글
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> writingComment=service.selectWritingComment();
+		logger.info("왤까 : "+writingComment.size());
+//		System.out.println("_______++++++++++++++++++____________________");
+//		System.out.println(writingComment.size());
 		List<Map<String,Object>> writingAttachment=service.selectWritingAttachment();
 		
 		//업무
@@ -41,7 +44,6 @@ public class SelectedProjectSelectController {
 		//일정
 		List<Map<String,Object>> scheduleList=service.selectScheduleList(pjNo);
 		List<Map<String,Object>> scheduleComment=service.selectScheduleComment();
-//		List<Map<String,Object>> scheduleManager=service.selectScheduleManager();
 
 		//상단 고정 갯수
 		Map<String,Object> pinpostCount=service.selectPinPostCount();
@@ -51,28 +53,31 @@ public class SelectedProjectSelectController {
 		
 		//언급
 		List<Map<String,Object>> notification=service.selectNotification();
-		List<Map<String,Object>> projectMember=service.selectProjectMember();
+//		List<Map<String,Object>> projectMember=service.selectProjectMember();
 		 
 		
 		
 		mv.addObject("projectBoardList",projectBoardList);
 		mv.addObject("writingList",writingList);
-		mv.addObject("scheduleList",scheduleList);
-		mv.addObject("taskList",taskList);
+		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);
 		
-		mv.addObject("pinpostCount",pinpostCount);
+		if(writingAttachment.size()>0)mv.addObject("writingAttachment",writingAttachment);
+		if(taskList.size()>0)mv.addObject("taskList",taskList);
+		if(taskComment.size()>0)mv.addObject("taskComment",taskComment);
+		if(taskAttachment.size()>0)mv.addObject("taskAttachment",taskAttachment);
+		if(taskManager.size()>0)mv.addObject("taskManager",taskManager);
 		
-		mv.addObject("writingComment",writingComment);
-		mv.addObject("taskComment",taskComment);
-		mv.addObject("scheduleComment",scheduleComment);
+		if(scheduleList.size()>0)mv.addObject("scheduleList",scheduleList);
+		if(scheduleComment.size()>0)mv.addObject("scheduleComment",scheduleComment);
 		
-		mv.addObject("writingAttachment",writingAttachment);
-		mv.addObject("taskAttachment",taskAttachment);
+		if(pinpostCount.size()>0)mv.addObject("pinpostCount",pinpostCount);
 		
-		mv.addObject("taskManager",taskManager);
-		mv.addObject("hashTag",hashTag);
-		mv.addObject("notification",notification);
-		mv.addObject("projectMember",projectMember);
+		
+		if(hashTag.size()>0)mv.addObject("hashTag",hashTag);
+		if(notification.size()>0)mv.addObject("notification",notification);
+//		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		
+		
 		mv.setViewName("selectedProject/selectedProject");
 		return mv;
 	}

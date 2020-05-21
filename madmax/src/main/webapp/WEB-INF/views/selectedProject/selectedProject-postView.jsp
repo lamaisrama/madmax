@@ -10,7 +10,7 @@
 					<!-- 1. 글 -->
 					<c:if test="${pb.BOARDTYPE.equals('W')}">
                     <c:forEach items="${writingList }" var="w">
-                    <c:if test="${pb.BOARDNO==w.BOARDNO }">
+                    <c:if test='${pb.BOARDNO==w.BOARDNO}'>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
@@ -52,7 +52,6 @@
                             <div class="pjViewBody w-100 flex-column pl-3 pr-3">
                                 <h5 class="m-0 font-weight-bolder mb-4">
                                 	<c:out value="${w.WRITINGTITLE}"/>
-                                	왜지
                                 </h5> <!-- 글 제목 -->
                                 <div class="w-100 pjView-content"> <!-- 게시글 내용 -->
 				                	<c:out value="${w.WRITINGCONTENT}"/>                    
@@ -72,15 +71,15 @@
                                 </div>
                                 <div class="collapse" id="collapseExample"> 
                                     <!-- 공통) 태그 & 언급 -->
-									<c:if test="${w.BOARDNO==hashTag.BOARDNO}">
-									<c:forEach items="${hashTag }" var="i" begin="1">
+									<c:forEach items="${hashTag }" var="i">
+									<c:if test="${w.BOARDNO==i.BOARDNO}">
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">${hashTag.HASHTAGNO[i].HASHTAGTEXT}</span>
+                                                    <span class="">${i.HASHTAGTEXT}</span>
                                                 </div>
                                                 <!-- <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
@@ -90,8 +89,8 @@
                                         </div>
                                         <hr class="w-100">
                                     </div>  <!-- 태그 입력 끝 -->
-                                    </c:forEach>
                                     </c:if> 
+                                    </c:forEach>
                                     <!-- 언급 입력 -->
                                     
                                     <div class="col-12 addMentionListBox mb-2">                           
@@ -118,8 +117,8 @@
                                     <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
-                                        <c:if test="${writingAttachment.WRITINGNO==w.WRITINGNO }">
-                                        <c:forEach var="i" begin="1" items="${writingAttachment }">
+                                        <c:forEach var="i" items="${writingAttachment }">
+                                        <c:if test="${i.WRITINGNO==w.WRITINGNO }">
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -130,7 +129,7 @@
                                                     <div class='col-2 p-1' style='height: 150px;'>
                                                         <div class='imgPreview h-100'>
                                                         	<!-- 아무 이미지나 넣어논 것! -->
-                                                            <img src='${path}/resources/images/defaultProfile.png'/> 
+                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${i.WRITINGRENAME}'/> 
                                                         </div>
                                                     </div>
                                                 </div>
@@ -149,7 +148,7 @@
                                                             <div class='d-flex align-items-center'>
                                                                 <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
                                                                 <span>파일명넣기
-                                                                	<c:out value="${writingAttachment.WRITINGORINAME[i] }"/>
+                                                                	<%-- <c:out value="${writingAttachment.WRITINGORINAME[i] }"/> --%>
                                                                 </span>
                                                             </div>
                                                             <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
@@ -159,8 +158,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:forEach>                               
                                         </c:if>
+                                        </c:forEach>                               
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
                                 </div>
 
@@ -327,8 +326,8 @@
                                 <div class="d-flex align-items-center">
                                     <strong class="mr-2">담당자</strong>
                                     <!-- 담당자 프로필 for문 시작 -->
-                                    <c:if test="${t.TASKNO==taskManager.TASKNO }">
                                     <c:forEach var="i" begin="1" items="${taskManager }">
+                                    <c:if test="${t.TASKNO==taskManager.TASKNO }">
                                     <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
                                         <div class='selectedWorker_imgDiv mr-2'>
                                             <img src="${path}/resources/images/defaultProfile.png"><!-- 여기서 해당 프로필 파일 어떻게 가져오는지? -->
@@ -337,8 +336,8 @@
                                         	<c:out value="${taskManager.TASKMANAGERID[i]}"/>
                                         </span>
                                     </div>
-                                    </c:forEach>                  
                                     </c:if>                  
+                                    </c:forEach>                  
                                     <!-- 담당자 프로필 for문 끝 -->
                                 </div>
                                 <hr class="w-100 mt-1 mb-2">
@@ -383,15 +382,15 @@
 
                                 <div class="collapse" id="collapseExample"> 
                                     <!-- 공통) 태그 & 언급 -->
-									<c:if test="${t.BOARDNO==hashTag.BOARDNO}">
-                                    <c:forEach items="${hashTag }" var="i" begin="1">
+                                    <c:forEach items="${hashTag }" var="i">
+									<c:if test="${t.BOARDNO==i.BOARDNO}">
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">${hashTag.HASHTAGNO[i].HASHTAGTEXT}</span>
+                                                    <span class="">${i.HASHTAGTEXT}</span>
                                                 </div>
                                                 <!-- <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
@@ -401,8 +400,8 @@
                                         </div>
                                         <hr class="w-100">
                                     </div>  <!-- 태그 입력 끝 -->     
-                                    </c:forEach>
                                     </c:if>
+                                    </c:forEach>
                                     <!-- 언급 입력 -->
                                     <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
@@ -428,8 +427,8 @@
                                     <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
-                                        <c:if test="${taskAttachment.TASKNO==t.TASKNO }">
                                         <c:forEach var="i" begin="1" items="${taskAttachment }">
+                                        <c:if test="${taskAttachment.TASKNO==t.TASKNO }">
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -440,7 +439,7 @@
                                                     <div class='col-2 p-1' style='height: 150px;'>
                                                         <div class='imgPreview h-100'>
                                                         	<!-- 아무 이미지나 넣어논 것! -->
-                                                            <img src='${path}/resources/images/defaultProfile.png'/> 
+                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${i.TASKRENAME}'/> 
                                                         </div>
                                                     </div>
                                                 </div>
@@ -468,8 +467,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:forEach>
                                         </c:if>                                
+                                        </c:forEach>
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
                                 </div>
 
@@ -680,15 +679,15 @@
 
                                 <div class="collapse" id="collapseExample"> 
                                     <!-- 공통) 태그 & 언급 -->
-									<c:if test="${s.BOARDNO==hashTag.BOARDNO}">
-                                    <c:forEach items="${hashTag }" var="i" begin="1">
+                                    <c:forEach items="${hashTag }" var="i">
+									<c:if test="${s.BOARDNO==i.BOARDNO}">
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">${hashTag.HASHTAGNO[i].HASHTAGTEXT}</span>
+                                                    <span class="">${i.HASHTAGTEXT}</span>
                                                 </div>
                                                 <!-- <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
@@ -698,8 +697,8 @@
                                         </div>
                                         <hr class="w-100">
                                     </div>  <!-- 태그 입력 끝 -->     
-                                    </c:forEach>
                                     </c:if>
+                                    </c:forEach>
                                     <!-- 언급 입력 -->
                                     <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
