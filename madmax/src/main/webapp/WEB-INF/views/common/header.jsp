@@ -99,7 +99,7 @@
 				        	<!-- Modal footer -->
 					        <div class="modal-footer">
 					            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" onclick="stateRequest();">요청완료</button>
+	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" >요청완료</button>
 					        </div>
 				        </form>
 				      </div>
@@ -131,8 +131,54 @@
 		
 		
 		<script>
+		$(document).ready(function() {
+
+			$("#come").click(function() { 
+				//console.log("!!!");
+				$.ajax({
+					url : '${path}/attd/checkCometime.do',
+					type:"post",
+					data:$("#checkForm").serialize(),
+					success : function(data) { 
+						console.log(data);
+						if(data){
+							alert("출근 시간이 이미 입력되었습니다.");
+							//$('#checkState').modal("hide");
+						}else if(data==false) {
+							
+							//console.log(stateRequest());
+							//$('#checkState').modal("hide");
+							stateRequest();
+						}
+					}
+				});
+			});
+		});
 		
-		 	function stateRequest(){
+		$(document).ready(function() {
+
+			$("#go").click(function() { 
+				$.ajax({
+					url : '${path}/attd/checkCometime.do',
+					type:"post",
+					data:$("#checkForm").serialize(),
+					success : function(data) { 
+						console.log(data);
+						if(!data){
+							alert("출근시간이 입력되지 않았습니다.");
+							return ;
+						}else{
+							stateRequest();
+						}
+					}
+				});
+			});
+		});
+		
+		
+		
+
+ 		 	function stateRequest(){
 				
 				alert("요청 완료됐습니다.");
 		
@@ -157,7 +203,7 @@
                     $(this).addClass("changeBtn");
                     
                 })
-            })
+            }) 
 		
 		
 		</script>	
