@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myBoard">
+	
+	<select id="selectBW" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+	  SELECT PB.*,W.*,SU.USERNAME AS WNAME 
+	  FROM PROJECTBOARD PB 
+	  JOIN WRITING W ON PB.BOARDNO=W.BOARDNO 
+	  JOIN STOOLUSER SU ON W.WRITINGID=SU.USERID
+	  WHERE  W.WRITINGID=#{id}
+	</select>
+	<select id="selectBT" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+	  SELECT PB.*,T.*,SU.USERNAME AS TNAME,
+	  S.USERNAME AS TMNAME 
+	  FROM PROJECTBOARD PB 
+	  JOIN TASK T ON PB.BOARDNO=T.BOARDNO 
+	  JOIN TASKMANAGER TM ON T.TASKNO=TM.TASKNO 
+	  JOIN STOOLUSER SU ON T.TASKID=SU.USERID 
+	  JOIN STOOLUSER S ON TM.TASKMANAGERID=S.USERID 
+	  WHERE  T.TASKID=#{id}
+	</select>
+	<select id="selectBS" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+	  SELECT PB.*,S.*,SU.USERNAME AS SNAME FROM PROJECTBOARD PB
+	  JOIN SCHEDULE S ON PB.BOARDNO=S.BOARDNO 
+	  JOIN STOOLUSER SU ON S.SCHEDULEID=SU.USERID 
+	  WHERE  S.SCHEDULEID=#{id}
+	</select>
+	
+</mapper>

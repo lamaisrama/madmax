@@ -82,7 +82,7 @@ public class TaskController {
 		  logger.debug("프로젝트상태:"+tf.getStatus());
 		
 		  ModelAndView mv=new ModelAndView();
-		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();;
+		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		  List<Project> projects=service.selectProject(id);
 		  
 		  tf.setUserId(id);

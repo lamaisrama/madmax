@@ -27,7 +27,7 @@
 	</update>
 	
 	<!-- pw수정 -->
-	<update id="updatePw" parameterType="String">
-		UPDATE STOOLUSER SET PASSWORD=#{password} where USERID=#{userId}	
+	<update id="updatePw" parameterType="map">
+		UPDATE STOOLUSER SET PASSWORD=#{newPwd} where USERID=#{id}	
 	</update>
 </mapper>

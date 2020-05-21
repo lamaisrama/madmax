@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.madmax.stool.project.model.vo.Bookmark;
 import com.madmax.stool.project.model.vo.BookmarkAll;
 import com.madmax.stool.project.model.vo.Notification;
+import com.madmax.stool.project.model.vo.Project;
+import com.madmax.stool.project.model.vo.ProjectBoard;
 
 @Repository
 public class BookmarkDaoImpl implements BookmarkDao {
 
+	//***********여기서 부터 북마크한 글
 	@Override
 	public List<Bookmark> selectBkList(SqlSessionTemplate session, String id) {
 		// TODO Auto-generated method stub
@@ -36,7 +39,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		// TODO Auto-generated method stub
 		return session.selectList("bookmark.selectBkS",map);
 	}
-
+	//***********여기서 부터 내가 언급된 글
+	
 	@Override
 	public List<Notification> selectNotiList(SqlSessionTemplate session, String id) {
 		// TODO Auto-generated method stub
@@ -59,6 +63,28 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	public List<BookmarkAll> selectNotiSchedule(SqlSessionTemplate session,Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectList("noti.selectNotiS",map);
+	}
+
+	
+	//***********여기서 부터 내가 쓴글
+
+
+	@Override
+	public List<BookmarkAll> selectBoardW(SqlSessionTemplate session, String id) {
+		// TODO Auto-generated method stub
+		return session.selectList("myBoard.selectBW",id);
+	}
+
+	@Override
+	public List<BookmarkAll> selectBoardT(SqlSessionTemplate session, String id) {
+		// TODO Auto-generated method stub
+		return session.selectList("myBoard.selectBT",id);
+	}
+
+	@Override
+	public List<BookmarkAll> selectBoardS(SqlSessionTemplate session, String id) {
+		// TODO Auto-generated method stub
+		return session.selectList("myBoard.selectBS",id);
 	}
 
 }

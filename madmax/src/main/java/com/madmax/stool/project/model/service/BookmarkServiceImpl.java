@@ -14,6 +14,8 @@ import com.madmax.stool.project.model.dao.BookmarkDao;
 import com.madmax.stool.project.model.vo.Bookmark;
 import com.madmax.stool.project.model.vo.BookmarkAll;
 import com.madmax.stool.project.model.vo.Notification;
+import com.madmax.stool.project.model.vo.Project;
+import com.madmax.stool.project.model.vo.ProjectBoard;
 
 @Service
 public class BookmarkServiceImpl implements BookmarkService {
@@ -109,6 +111,23 @@ public class BookmarkServiceImpl implements BookmarkService {
 			
 		
 			}
+		
+		
+		return list;
+	}
+
+	@Override
+	public List<BookmarkAll> selectMyBoardList(String id) {
+		// TODO Auto-generated method stub
+		List<BookmarkAll> list=new ArrayList<BookmarkAll>();//전체 리스트
+		List<BookmarkAll> boardW=dao.selectBoardW(session,id);
+		List<BookmarkAll> boardT=dao.selectBoardT(session,id);
+		List<BookmarkAll> boardS=dao.selectBoardS(session,id);
+		
+		list.addAll(boardW);
+		list.addAll(boardT);
+		list.addAll(boardS);
+			
 		
 		
 		return list;

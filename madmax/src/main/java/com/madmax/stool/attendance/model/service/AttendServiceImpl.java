@@ -63,8 +63,6 @@ public class AttendServiceImpl implements AttendService {
 		return dao.selectCometime(session,w);
 	}
 
-
-
 	// 퇴근시간 가져오기
 	@Override
 	public Worktime selectGotime(Worktime w) {
@@ -95,6 +93,5 @@ public class AttendServiceImpl implements AttendService {
 		return dao.updateRequestState(session, a);
 	}
 
-	
 
 }

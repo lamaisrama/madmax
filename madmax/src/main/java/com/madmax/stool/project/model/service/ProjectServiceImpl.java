@@ -1,5 +1,7 @@
 package com.madmax.stool.project.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +41,39 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return result;
 	}
+
+
+	@Override
+	public List<Project> selectProjectList(String id,int cPage,int numPerpage) {
+		// TODO Auto-generated method stub
+		return dao.selectProjectList(session,id,cPage,numPerpage);
+	}
+
+
+	@Override
+	public String selectProjectMembers(int pNo) {
+		// TODO Auto-generated method stub
+		List<String> names= dao.selectProjectMembers(session,pNo);
+		//2개의 list가져온단말이지
+		String pmNames="";
+		
+		pmNames=String.join(",",names);
+		
+		//가져온 리스트를 
+		logger.debug("합친 이름:"+pmNames);
+			
+			
+		return pmNames;
+		}
+
+
+	@Override
+	public int selectProjectCount(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectProjectCount(session,id);
+	}
+		
+		
+	
 
 }

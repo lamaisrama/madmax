@@ -16,5 +16,6 @@ public class Project {
 	private String userId;
 	private String pjMemberNo;
 	private String pjMemberId;
-	
+	private String members;
+	private String deptName;
 }

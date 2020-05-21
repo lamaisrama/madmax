@@ -19,6 +19,7 @@ public interface AttendDao {
 	
 	List<Worktime> selectWorktimeList(SqlSessionTemplate session,String userId);
 	
+	// 출근시간 가져오기
 	Worktime selectCometime(SqlSessionTemplate session,Worktime w);
 	
 	Worktime selectGotime(SqlSessionTemplate session,Worktime w);
@@ -32,5 +33,6 @@ public interface AttendDao {
 	int insertAbsence(SqlSessionTemplate session,int no);
 	
 	int updateRequestState(SqlSessionTemplate session,Attendance a);
+
 	
 }

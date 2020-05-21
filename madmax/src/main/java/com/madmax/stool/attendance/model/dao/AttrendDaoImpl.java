@@ -79,6 +79,4 @@ public class AttrendDaoImpl implements AttendDao {
 		return session.update("attend.updateRequestState", a);
 	}
 
-
-	
 }
