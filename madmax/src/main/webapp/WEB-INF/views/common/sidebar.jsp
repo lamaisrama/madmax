@@ -155,7 +155,6 @@
 					<br>
 					<c:if test="${loginUser!=null}">
 						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
-						<a href="${path}/user/updatePw">비밀번호 변경하기</a>
 					</c:if>				
 				</div>
 			</li>
