@@ -82,19 +82,19 @@
 	                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
 	                                    	<c:choose>
 								                  <c:when test="${l.taskState eq '요청' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+								                   <div style="background-color:#0275d8; color:white">${l.taskState}</div>
 								                   </c:when>
 								             		<c:when test="${l.taskState eq '진행' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+								                   <div style="background-color:#5cb85c; color:white">${l.taskState}</div>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '피드백' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:20%"><div style="background-color:#d9534f; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '완료' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+								                  <div style="background-color:#5bc0de; color:white">${l.taskState}</div>
 								                   </c:when>
 								                     <c:when test="${l.taskState eq '보류' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:20%"><div style="background-color:grey; color:white">${l.taskState}</div></td>
 								                   </c:when>
 							            	</c:choose>
 	                                </div>                        
@@ -161,7 +161,7 @@
 	                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
 	                                            <p class="m-0 mAddress">${l.schedulePlace }</p>  <!-- 일정주소 -->
 	                                        </div>
-	                                        <div id="map" class="border map"  style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+	                                        <div  class="border map"  style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">
@@ -177,9 +177,9 @@
 
 
                             <!--★ 하단공통  ----------------------------------------------------------------------------------------------------------------------->       
-                            <div class="w-100 mt-4">      
+                            <!-- <div class="w-100 mt-4">      
                                 <div class="col-12 mb-3">
-                                	<!-- ※※※ collapse div의 변수를 반드시 다르게 주어야합니다!! -->
+                                	※※※ collapse div의 변수를 반드시 다르게 주어야합니다!!
                                     <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
                                             onclick="addBtniconChange(this)">
                                        	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
@@ -188,7 +188,7 @@
                                 </div>
 
                                 <div class="collapse" id="collapseExample"> 
-                                    <!-- 공통) 태그 & 언급 -->
+                                    공통) 태그 & 언급
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
@@ -204,10 +204,10 @@
                                             </div>
                                         </div>
                                         <hr class="w-100">
-                                    </div>  <!-- 태그 입력 끝 -->     
+                                    </div>  태그 입력 끝  -->    
                                     
                                     <!-- 언급 입력 -->
-                                    <div class="col-12 addMentionListBox mb-2">                           
+               <%--                      <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
                                             <strong class="mr-2 mb-1">언급된 참여자</strong>                                        
                                             <div class="d-flex align-items-center">
@@ -271,7 +271,7 @@
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
                                 </div>
 
-                            </div>
+                            </div> --%>
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
     					
 
@@ -328,25 +328,45 @@
 			}
 			console.log(addArr);
 			
-			//주소로 좌표를 검색
-			for(var i=0;i<$(".mAddress").length;i++){
-				geocoder.addressSearch(addArr[i],  function(result,status){
-			
-			    // 정상적으로 검색이 완료됐으면 
-			     if (status === kakao.maps.services.Status.OK) {
-			
-			        var coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
-					console.log("coords:"+coords);
-			       	console.log("maps:"+maps[i]);
-			
-			       	maps[i].setCenter(coords);
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        
-			    		}
-			     
-				});    
+	
+				$.each(maps,function(i,map){
+					console.log(map);
+					var coords;
+					var marker;
+					geocoder.addressSearch(addArr[i],  function(result,status){
+						
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+					        coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
+					        marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+						}
+						console.log(coords);
+						map.setCenter(coords);
+					});
+				});		
+				//주소로 좌표를 검색
+				/* for(var i=0;i<$(".mAddress").length;i++){
+					console.log(maps);
+					geocoder.addressSearch(addArr[i],  function(result,status){
+					
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+				
+				        var coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
+						console.log("coords:"+coords);
+				
+				       	maps[i].setCenter(coords);
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        
+				    		}			     
+					});    
+				
+				}; */ 
 		
-			};
 	
 	
 	
