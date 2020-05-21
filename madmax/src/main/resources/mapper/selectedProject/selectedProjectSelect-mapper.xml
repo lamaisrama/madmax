@@ -21,12 +21,6 @@
         JOIN TASK T USING(BOARDNO) -->
 	</select>
 	
-<<<<<<< HEAD
-	<select id="selectScheduleList" parameterType="_int" resultType="map">
-		SELECT * FROM PROJECTTABLE PJ 
-        JOIN PROJECTBOARD PB USING(PROJECTNO)
-        JOIN SCHEDULE S USING(BOARDNO)
-=======
 	<select id="selectScheduleList" parameterType="map" resultType="map">
 		SELECT * FROM SCHEDULE 
         <!-- JOIN PROJECTBOARD PB USING(PROJECTNO)
@@ -40,10 +34,9 @@
 	
 	<select id="selectWritingAttachment" parameterType="map" resultType="map">
 		SELECT * FROM WRITINGATTACHMENT
->>>>>>> refs/heads/dev
 	</select>
 	
-<<<<<<< HEAD
+
 	<select id="selectProjectTB" parameterType="map" resultType="map">
 		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo}    
 	</select>
@@ -63,14 +56,14 @@
 	
 	<select id="selectPinPostCount" resultType="map">
 		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y'; <!--상단 고정글 갯수 -->
-=======
+	</select>	
+		
 	<select id="selectTaskManager" parameterType="map" resultType="map">
 		SELECT *FROM TASKMANAGER
 	</select>
 
 	<select id="selectHashTag" parameterType="map" resultType="map">
 		SELECT * FROM HASHTAG
->>>>>>> refs/heads/dev
 	</select>
 	
 	<select id="selectNotification" parameterType="map" resultType="map">
