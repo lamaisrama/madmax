@@ -36,7 +36,8 @@
                         </button>
 
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                           	<c:out value="${loginUser.userId}"/>
+                           	<%-- <c:out value="${loginUser.userId}"/> --%>
+                           	<c:out value="${scheduleList.size()}"/>
                         </h4>
                         
                         <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
