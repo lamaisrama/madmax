@@ -379,7 +379,7 @@ function fn_selectColor(e){
     switch(id){
         case "selectColor-lightGray" : 
             $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(200, 200, 200);"); 
+            $("#pjInfoContainer").attr("style", "background-color: #c8c8c8;"); 
             $("#pjInfoBoxColor").val("lightGray");
             break;
         case "selectColor-gray": 

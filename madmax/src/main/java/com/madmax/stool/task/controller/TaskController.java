@@ -2,6 +2,8 @@ package com.madmax.stool.task.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
 
 @Controller
+
 public class TaskController {
 	
 	@Autowired
@@ -25,12 +28,12 @@ public class TaskController {
 	
 	
 	@RequestMapping("/task/selectTask.do")
-	public ModelAndView selectTask(ModelAndView mv) {
+	public ModelAndView selectTask(ModelAndView mv,HttpServletRequest req) {
 		//프로젝트 테이블에서 프로젝트 명 가져오기
 		//세션에서 로그인한 멤버의 아이디값을 가져와서
 		//그 사용자를 프로젝트 참여 멤버테이블에서 찾아. 
 		//세션에서 가져왔다고 가정하고, String을 보내자
-		String id="user1";
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		//프로젝트 테이블&업무 테이블 조인해서 데이터 가져오기
 		List<Project> projects=service.selectProject(id);
 		
@@ -56,14 +59,14 @@ public class TaskController {
 	
 	
 	  @RequestMapping("/task/selectTaskEach.do") 
-	  public ModelAndView selectTaskEach(int no,ModelAndView mv) { 
+	  public ModelAndView selectTaskEach(int no,ModelAndView mv,HttpServletRequest req) { 
 		/*
 		 * logger.debug("번호:"+no); List<Task> tasks=service.selectTaskEach(no);
 		 * logger.debug("내용:"+tasks); model.addAttribute("tasks", tasks);
 		 */
 		  List<TaskPb> tasks=service.selectTaskEach(no);
 		  
-		  String id="user1";
+		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		  List<Project> projects=service.selectProject(id);
 		
 			
@@ -74,12 +77,12 @@ public class TaskController {
 		  return mv; 
 	  }
 	  @RequestMapping("/task/selectTaskFilter.do")
-	  public ModelAndView selectTaskFilter(TaskFilter tf) {
+	  public ModelAndView selectTaskFilter(TaskFilter tf,HttpServletRequest req) {
 		  logger.debug("프로젝트번호:"+tf.getProjectNo());
 		  logger.debug("프로젝트상태:"+tf.getStatus());
 		
 		  ModelAndView mv=new ModelAndView();
-		  String id="user1";
+		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		  List<Project> projects=service.selectProject(id);
 		  
 		  tf.setUserId(id);
@@ -104,7 +107,7 @@ public class TaskController {
 		  String notiMember=service.selectTaskNoti(boardNo);
 		  
 		  mv.addObject("task",tp);
-		  mv.addObject("notiMember",notiMember);
+		  mv.addObject("notiMember",notiMember);//이건 업무 담당자임..
 		  mv.setViewName("jsonView");
 		  return mv;
 		  

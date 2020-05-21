@@ -8,4 +8,8 @@ public interface BookmarkService {
 
 	List<BookmarkAll> selectBkList(String id);
 
+	List<BookmarkAll> selectNotiList(String id);
+
+	List<BookmarkAll> selectMyBoardList(String id);
+
 }

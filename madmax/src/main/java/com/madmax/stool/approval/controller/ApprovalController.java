@@ -2,6 +2,7 @@ package com.madmax.stool.approval.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -122,15 +123,15 @@ public class ApprovalController {
 		return "approval/apprWaitBox";
 	}
 
-	@RequestMapping("/appr/apprProgBox.do")
-	public String approvalProgBox() {
-		return "approval/apprProgBox";
-	}
+	/*
+	 * @RequestMapping("/appr/apprProgBox.do") public String approvalProgBox() {
+	 * return "approval/apprProgBox"; }
+	 */
 
-	@RequestMapping("/appr/apprDoneBox.do")
-	public String approvalDoneBox() {
-		return "approval/apprDoneBox";
-	}
+	/*
+	 * @RequestMapping("/appr/apprDoneBox.do") public String approvalDoneBox() {
+	 * return "approval/apprDoneBox"; }
+	 */
 
 	@RequestMapping("/appr/myDocBox")
 	public String myDocBox() {
@@ -180,6 +181,23 @@ public class ApprovalController {
 	public boolean deleteDoc(int apprNo) {
 		if(service.deleteDoc(apprNo)>0) return true;
 		else return false;
-		
 	}
+	
+	@RequestMapping("/appr/executeApproval")
+	@ResponseBody 
+	public boolean updateAppr(@RequestParam Map<String, String> map) {
+		ApprLine line = new ApprLine();
+		line.setApprNo(Integer.parseInt(map.get("apprNo")));
+		line.setApprStep(Integer.parseInt(map.get("apprStep")));
+		line.setApprUser(map.get("apprUser"));
+		line.setApprType(map.get("apprType"));
+		line.setApprResult(Integer.parseInt(map.get("apprResult")));
+		line.setApprMessage(map.get("apprMessage"));
+		
+		//1 .apprLine, approval 업데이트
+		int result = service.updateAppr(line);
+		if(result>0) return true;
+		else return false;
+	}
+
 }

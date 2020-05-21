@@ -66,14 +66,19 @@
 					<th>기안일</th>
 					<th>결재일</th>
 				</tr>
+				<c:forEach items="${list}" var="l" varStatus="i">
 				<tr>
-					<td>1</td>
-					<td><a href="#">Document_title</a></td>
-					<td>writerName</td>
-					<td>writerDept</td>
-					<td>20-05-01</td>
+					<td>${i.index+1}</td>
+					<td><a href="javascript:void(0)" 
+							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+							${l.apprTitle }</a></td>
+					<td>${l.userName}</td>
+					<td>${l.deptName }</td>
+					<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td>
 					<td>20-05-06</td>
 				</tr>
+				</c:forEach>
 			</table>
 		</div>
 	</div>

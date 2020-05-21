@@ -177,7 +177,7 @@ table.content tr{
 			<td>출장 지역</td>
 			<td ><input type="text" name="loc" value=""></td>
 			<td>출장 목적</td>
-			<td colspan="3"><input type="text" name="why" value=""></td>
+			<td><input type="text" name="why" value=""></td>
 		</tr>
 	
 	</table>

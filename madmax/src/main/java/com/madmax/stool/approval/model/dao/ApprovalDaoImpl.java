@@ -99,6 +99,24 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId) {
 		return session.selectList("approval.selectApprWaitList", userId);
+	}
+
+	@Override
+	public int updateAppr(SqlSessionTemplate session, ApprLine line) {
+		// TODO Auto-generated method stub
+		return session.update("approval.updateAppr", line);
+	}
+
+	@Override
+	public int updateApprStatusEnd(SqlSessionTemplate session, ApprLine line) {
+		// TODO Auto-generated method stub
+		return session.update("approval.updateApprovalStatusEnd", line);
+	}
+
+	@Override
+	public int updateApprStatusIng(SqlSessionTemplate session, ApprLine line) {
+		// TODO Auto-generated method stub
+		return session.update("approval.updateApprovalStatusIng", line);
 	}	
 
 	
