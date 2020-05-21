@@ -42,20 +42,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findPw(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+		
 		return dao.findPw(session, map);
 	}
 
 	@Override
 	public int changePw(Map<String, String> map) {
-		// TODO Auto-generated method stub
+		
 		return dao.changePw(session, map);
 	}
 
 	@Override
-	public int updatePw(User u) {
-		// TODO Auto-generated method stub
-		return dao.updatePw(session, u);
+	public int updatePw(Map param) {
+		
+		return dao.updatePw(session, param);
 	}
 
 	
