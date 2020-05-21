@@ -16,17 +16,34 @@
 	</select>
 	
 	<select id="selectTaskList" parameterType="map" resultType="map">
-		SELECT * FROM PROJECTTABLE PJ 
-        JOIN PROJECTBOARD PB USING(PROJECTNO)
-        JOIN TASK T USING(BOARDNO)
+		SELECT * FROM TASK
+        <!-- JOIN PROJECTBOARD PB USING(PROJECTNO)
+        JOIN TASK T USING(BOARDNO) -->
 	</select>
 	
+<<<<<<< HEAD
 	<select id="selectScheduleList" parameterType="_int" resultType="map">
 		SELECT * FROM PROJECTTABLE PJ 
         JOIN PROJECTBOARD PB USING(PROJECTNO)
         JOIN SCHEDULE S USING(BOARDNO)
+=======
+	<select id="selectScheduleList" parameterType="map" resultType="map">
+		SELECT * FROM SCHEDULE 
+        <!-- JOIN PROJECTBOARD PB USING(PROJECTNO)
+        JOIN SCHEDULE S USING(BOARDNO) -->
+	</select>
+
+	<select id="selectPinPostCount" parameterType="map" resultType="map">
+		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y' <!--상단 고정글 갯수 -->
+	</select>
+
+	
+	<select id="selectWritingAttachment" parameterType="map" resultType="map">
+		SELECT * FROM WRITINGATTACHMENT
+>>>>>>> refs/heads/dev
 	</select>
 	
+<<<<<<< HEAD
 	<select id="selectProjectTB" parameterType="map" resultType="map">
 		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo}    
 	</select>
@@ -46,19 +63,42 @@
 	
 	<select id="selectPinPostCount" resultType="map">
 		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y'; <!--상단 고정글 갯수 -->
+=======
+	<select id="selectTaskManager" parameterType="map" resultType="map">
+		SELECT *FROM TASKMANAGER
+	</select>
+
+	<select id="selectHashTag" parameterType="map" resultType="map">
+		SELECT * FROM HASHTAG
+>>>>>>> refs/heads/dev
 	</select>
 	
+	<select id="selectNotification" parameterType="map" resultType="map">
+		SELECT * FROM NOTIFICATIONTABLE
+	</select>
 	
-	<!-- <select id="selectProjectNo" resultType="map">
+
+	<select id="selectTaskAttachment" parameterType="map" resultType="map">
+		SELECT * FROM TASKATTACHMENT
+	</select>
+	
+	<select id="selectWritingComment" parameterType="map" resultType="map">
+		SELECT * FROM WRITINGCOMMENT
+	</select>
+	
+	<select id="selectTaskComment" parameterType="map" resultType="map">
+		SELECT * FROM TASKCOMMENT
+	</select>
+	
+	<select id="selectScheduleComment" parameterType="map" resultType="map">
+		SELECT * FROM SCHEDULECOMMENT
+	</select>
+	
+	<select id="selectProjectNo" resultType="map">
 		SELECT * FROM PROJECTTABLE PJ
 		JOIN PROJECTBOARD PB USING(PROJECTNO) WHERE BOARDNO=#{no}
 	</select>
 	
-	<select id="selectPjRecentList" resultType="map">
-  	<![CDATA[
-  	SELECT BOARDNO FROM (SELECT BOARDNO FROM PROJECTTABLE PT JOIN PROJECTBOARD PB USING(PROJECTNO) ORDER BY BOARDNO DESC) 
-  	WHERE ROWNUM <=5
-  	]]>
-	</select> -->
+
 	
 </mapper>

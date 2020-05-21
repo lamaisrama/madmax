@@ -162,7 +162,7 @@
 			      	<input type="radio" name="apprResult" value="1" id="apprAgree">
 			      	<label for="apprAgree">합의&nbsp;&nbsp;</label>
 			      </c:if>
-			        <input type="radio" name="apprResult" value="2" id="apprReject">
+			        <input type="radio" name="apprResult" value="0" id="apprReject">
 			        <label for="apprReject">반려</label>
 			        <br>
 			         <input class="form-control" type="text" name="apprMessage" placeholder="결재 의견을 남겨주세요">

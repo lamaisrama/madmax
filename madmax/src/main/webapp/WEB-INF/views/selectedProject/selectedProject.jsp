@@ -43,7 +43,12 @@
 						</c:if>
 						
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+<<<<<<< HEAD
                            	<c:out value="${projectInfo.PROJECTTITLE}"/>
+=======
+                           	<%-- <c:out value="${loginUser.userId}"/> --%>
+                           	<c:out value="${scheduleList.size()}"/>
+>>>>>>> refs/heads/dev
                         </h4>
                         
                         <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
@@ -83,7 +88,13 @@
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item d-flex flex-column">
                                     <strong>프로젝트 번호</strong>
+<<<<<<< HEAD
                                     <p class="p-0 m-0"><c:out value="${projectInfo.PROJECTNO}"/></p>
+=======
+                                    <p class="p-0 m-0">
+                                    	<c:out value="${PROJECTNO }"/>
+                                    </p>
+>>>>>>> refs/heads/dev
                                 </div>
                             </div>
                         </div>

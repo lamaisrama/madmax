@@ -77,7 +77,7 @@
             </div>    
     </div>
     <!-- 전체업무 센터 -->
-    <div class="taskCenter col col-sm-7"  >
+    <div class="taskCenter col col-sm-7 bg-light"   >
     	<div>
         	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무(전체업무count수)</p> 
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->

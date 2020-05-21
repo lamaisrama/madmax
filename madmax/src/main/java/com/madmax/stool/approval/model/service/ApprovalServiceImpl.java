@@ -115,6 +115,26 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<Approval> selectApprWaitList(String userId) {
 		return dao.selectApprWaitList(session, userId);
 	}
+
+	@Override
+	public int updateAppr(ApprLine line) {
+		//1. apprLine 업데이트
+		int result=dao.updateAppr(session, line);
+		//2. approval 업데이트
+		if(result>0) {
+			int apprNo=line.getApprNo();
+			ApprDoc appr = dao.selectApproval(session, apprNo);
+			if(appr.getCurrApprStep()+1==appr.getFinalApprStep()) {
+				result=dao.updateApprStatusEnd(session,line);
+			}else {
+				result=dao.updateApprStatusIng(session,line);
+			}
+		}else {
+			return 0;
+		}
+		
+		return result;
+	}
 	
 	
 
