@@ -48,10 +48,12 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public int updatePw(SqlSessionTemplate session, User u) {
+	public int updatePw(SqlSessionTemplate session, Map param) {
 		
-		return session.update("user.updatePw", u);
+		return session.update("user.updatePw", param);
 	}
+
+
 
 
 	

@@ -156,6 +156,7 @@
 					success : function(data) {
 						/* console.log(data); */
 						alert(data.msg);
+						location.replace("${path}/user/updatePw?userId="+$("#userId").val());
 					},
 				})
 			});

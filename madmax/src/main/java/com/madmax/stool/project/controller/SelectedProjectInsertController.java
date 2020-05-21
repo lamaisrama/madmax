@@ -37,17 +37,17 @@ public class SelectedProjectInsertController {
 	private SelectedProjectInsertService service;
 
 	
-	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectedProject(ModelAndView mv, int pjNo) {
-
-		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
-
-		mv.addObject("pjNo", pjNo);
-		mv.addObject("projectMember", projectMember);
-		mv.setViewName("selectedProject/selectedProject");
-
-		return mv;
-	}
+//	@RequestMapping("/selectedProject/selectedProject.do")
+//	public ModelAndView selectedProject(ModelAndView mv, int pjNo) {
+//
+//		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
+//
+//		mv.addObject("pjNo", pjNo);
+//		mv.addObject("projectMember", projectMember);
+//		mv.setViewName("selectedProject/selectedProject");
+//
+//		return mv;
+//	}
 	 
 	
 	@RequestMapping("/selectedProject/insertSelectedProject.do")

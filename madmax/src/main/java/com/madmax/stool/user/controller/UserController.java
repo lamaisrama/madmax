@@ -56,11 +56,18 @@ public class UserController {
 	private Email email;
 	
 	
+	
+	@RequestMapping("/main.do")
+	public String main() {
+		return "main";
+	}
+	
 	@RequestMapping("/user/joinUser.do")
 	public String joinUser() {
 		
 		return "user/login/joinUser";
 	}
+	
 	
 	@RequestMapping("/user/userEnrollEnd.do")
 	public String insertUser(@RequestParam Map param, Model m, MultipartFile upFile, HttpSession session) {
@@ -199,13 +206,14 @@ public class UserController {
 		// 임시비번 랜덤값을 돌려 -> 랜덤값을 가지고 db에 가서 변경
 		String password = getNewPwd();
 		
-		String newPwd = encoder.encode(password);
+		//String newPwd = encoder.encode(password);
 		
 		int result =0;
 		if(u!=null) {
 			Map<String, String> map = new HashMap();
 			map.put("userId", u.getUserId());
-			map.put("password", newPwd);
+//			map.put("password", newPwd());
+			map.put("password", password);
 			
 			result = service.changePw(map);
 		}
@@ -215,7 +223,7 @@ public class UserController {
 		if(result>0) {
 			email.setContent("임시 비밀번호는 "+password+" 입니다."); // 이메일로 보낼 메시지
 			email.setReceiver(EMAIL); 
-			email.setSubject(USERID+"님 비밀번호 찾기 메일입니다.");
+			email.setSubject("[MADMAX] " + USERID + "님 비밀번호 찾기 메일입니다.");
 			
 			try {
 				MimeMessage msg = mailSender.createMimeMessage();
@@ -244,20 +252,56 @@ public class UserController {
 	
 	@RequestMapping("/user/updatePw")
 	public String updatePwView() {
-		return "user/updatePw";
+		return "user/login/updatePw";
+	}
+	@RequestMapping("/checkTemp.do")
+	@ResponseBody
+	public boolean checkTemp(String id, String pw) {
+		
+		User check=service.selectUser(id);
+		
+		return check.getPassword().equals(pw);
+		
 	}
 	
+	
 	@RequestMapping("/user/updatePw.do")
-	public String updatePw(@ModelAttribute User u) {
+	public String updatePw(@RequestParam Map param, Model m) {
 		
-		int result = service.updatePw(u);
+		String userId = (String)param.get("userId");
+		String newPwd = (String)param.get("password1");
+		String newPw = (String)param.get("password2");
 		
-		if(result>0) {
-			return "redirect:/";
-		}else {
-			throw new UserException("비밀번호변경실패!");
-		}
+		System.out.println("pwb : "+newPwd);
+		System.out.println("pwc : "+newPw);
+		System.out.println("id : "+userId);
+
+//		if(newPwd.equals(newPw)) {
 		
+			newPwd = encoder.encode(newPwd);
+		
+			System.out.println("pwa : "+newPwd);
+		
+			param.put("id", userId);
+			param.put("newPwd", newPwd);
+		
+			int result = service.updatePw(param);
+
+			String page = "";
+			
+			if(result>0) {
+				page="common/msg";
+				m.addAttribute("msg", "비밀번호 변경 성공!");
+				m.addAttribute("loc", "/");
+			}else {
+				page = "common/msg";
+				m.addAttribute("msg", "비밀번호 변경 실패!");
+				m.addAttribute("loc", "/user/login/findIdPw");
+			}
+			
+//		}
+			
+		return page;
 	}
 
 
