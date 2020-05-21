@@ -12,8 +12,8 @@
 <!-- 내가 쓴 게시물 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
- 			<div id="bookmarkTitle">
-               <h4>담아둔 글 보기</h4>
+ 			<div id="myBoardTitle">
+               <h4>내 게시물 보기</h4>
             </div>
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
@@ -158,9 +158,9 @@
 	                                    <div class="w-100 d-flex flex-column align-items-center">
 	                                        <div class="d-flex mb-3" style="width: 90%;">
 	                                            <i class="fas fa-map-marker-alt mr-2 stoolGrey" style="font-size: 25px;"></i>
-	                                            <p class="m-0">${l.schedulePlace }</p>  <!-- 일정주소 -->
+	                                            <p class="m-0 mAddress">${l.schedulePlace }</p>  <!-- 일정주소 -->
 	                                        </div>
-	                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+	                                        <div class="border map" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
 	                                        
 	                                        </div>
 	                                    </div>
@@ -298,6 +298,60 @@
 <div class="col col-sm-3">
 
 </div>
-
+<script>
+	//일단. 지도를 출력해줄 위치가 여러곳.
+	//장소도 각각 다르다.
+	
+			var mapContainers = document.getElementsByClassName('map');// 지도를 표시할 div 
+			
+			mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+			
+			//지도를 객체 배열로 생성하기
+			var maps=[];
+			for(var i=0;i<mapContainers.length;i++){
+				maps.push(new kakao.maps.Map(mapContainers[i], mapOption)); 
+			}
+			console.log(maps[0]);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			//검색할 주소를 가져옴
+			var addArr=[];
+			var addr=document.getElementsByClassName('mAddress').innerHTML;
+			for(var i=0;i<$(".mAddress").length;i++){
+				addArr.push($(".mAddress").eq(i).html()); 
+			}
+			console.log(addArr);
+			
+	
+				$.each(maps,function(i,map){
+					console.log(map);
+					var coords;
+					var marker;
+					geocoder.addressSearch(addArr[i],  function(result,status){
+						
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+					        coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
+					        marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+						}
+						console.log(coords);
+						map.setCenter(coords);
+					});
+				});		
+		
+	
+	
+	
+	
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

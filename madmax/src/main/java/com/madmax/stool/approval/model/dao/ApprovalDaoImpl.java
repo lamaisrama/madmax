@@ -117,6 +117,12 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	public int updateApprStatusIng(SqlSessionTemplate session, ApprLine line) {
 		// TODO Auto-generated method stub
 		return session.update("approval.updateApprovalStatusIng", line);
+	}
+
+	@Override
+	public List<ApprDoc> selectAttachAppredDoc(SqlSessionTemplate session, String deptCode) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval.selectAttachAppredDoc", deptCode);
 	}	
 
 	

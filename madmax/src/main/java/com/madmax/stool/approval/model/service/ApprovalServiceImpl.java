@@ -122,18 +122,27 @@ public class ApprovalServiceImpl implements ApprovalService{
 		int result=dao.updateAppr(session, line);
 		//2. approval 업데이트
 		if(result>0) {
-			int apprNo=line.getApprNo();
-			ApprDoc appr = dao.selectApproval(session, apprNo);
-			if(appr.getCurrApprStep()+1==appr.getFinalApprStep()) {
+			if(line.getApprResult()==2) {
 				result=dao.updateApprStatusEnd(session,line);
 			}else {
-				result=dao.updateApprStatusIng(session,line);
+				int apprNo=line.getApprNo();
+				ApprDoc appr = dao.selectApproval(session, apprNo);				
+				if(appr.getCurrApprStep()+1==appr.getFinalApprStep()) {
+					result=dao.updateApprStatusEnd(session,line);
+				}else {
+					result=dao.updateApprStatusIng(session,line);
+				}
 			}
 		}else {
 			return 0;
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<ApprDoc> selectAttachAppredDoc(String deptCode) {
+		return dao.selectAttachAppredDoc(session, deptCode);
 	}
 	
 	

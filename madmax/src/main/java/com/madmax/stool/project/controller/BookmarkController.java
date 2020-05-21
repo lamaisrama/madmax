@@ -58,7 +58,11 @@ public class BookmarkController {
 	@RequestMapping("/project/myBoard.do")
 	public ModelAndView selectBoardList(HttpServletRequest req) {
 		ModelAndView mv=new ModelAndView();
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<BookmarkAll> boardlist=service.selectMyBoardList(id);
 		
+		mv.addObject("List", boardlist);
+		mv.setViewName("project/myBoardList");
 		return mv;
 	}
 	

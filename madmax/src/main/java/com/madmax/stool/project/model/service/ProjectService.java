@@ -9,6 +9,12 @@ public interface ProjectService {
 
 	int insertProject(Project p);
 
+	List<Project> selectProjectList(String id, int cPage, int numPerpage);
+
+	String selectProjectMembers(int pNo);
+
+	int selectProjectCount(String id);
+
 
 
 }

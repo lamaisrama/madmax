@@ -17,34 +17,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
-	<section class="section normalhead lb">
-      <div class="container">
-         <div class="row">
-            <div class="col-md-10 col-md-offset-1 col-sm-12 text-center">
-               <h2>비밀번호 수정</h2>
-            </div>
-            <!-- end col -->
-         </div>
-         <!-- end row -->
-      </div>
-      <!-- end container -->
-   </section>
-   <!-- end section -->
 
-   <section class="section overfree">
-      <div class="icon-center">
-         <i class="fa fa-code"></i>
-      </div>
+   <section class="section overfree text-center">
+      
+      <h2>비밀번호 수정</h2>
+
       <div class="container">
          <div class="row">
             <div class="col-md-4"></div>
 
             <div class="col-md-4">
-               <form action="/user/updatePw.do" role="form" class="contactform">
-                  <input type="hidden" name="userId"
-                     value="${ loginUser.userId }"/>
+               <form action="${path}/user/updatePw.do" method="post" role="form" class="contactform">
+                  <input type="hidden" name="userId" value="${ param.userId }"/>
                   <div class="form-group">
-                     <input type="password" class="form-control" id="password" placeholder="현재 비밀번호를 입력해주세요." required/>
+                     <input type="password" class="form-control" id="password" name="password" placeholder="임시 비밀번호를 입력해주세요." required/>
                         <div class="alert alert-success" id="alert-success1">비밀번호가 일치합니다.</div>
                         <div class="alert alert-danger" id="alert-danger1">비밀번호가 일치하지 않습니다.</div>
                   </div>
@@ -56,52 +42,55 @@
                         <div class="alert alert-success" id="alert-success2">비밀번호가 일치합니다.</div>
                         <div class="alert alert-danger" id="alert-danger2">비밀번호가 일치하지 않습니다.</div>
                   </div>
-                  <script>
-                     $(function(){
-                        $("#alert-success1").hide();
-                        $("#alert-danger1").hide();
-                        $("input").keyup(function(){
-                           var pwd1 = $("#password").val();
-                           var pwd2 = "${ loginUser.password }";
-                           if(pwd1 != "" || pwd2 != ""){
-                              if(pwd1 == pwd2){
-                                 $("#alert-success1").show();
-                                 $("#alert-danger1").hide();
-                                 $("#check").removeAttr("disabled");
-                              } else {
-                                 $("#alert-success1").hide();
-                                 $("#alert-danger1").show();
-                                 $("#check").attr("disabled","disabled");
-                              }
-                           }
-                        });
-                     });
-                     $(function(){
-                        $("#alert-success2").hide();
-                        $("#alert-danger2").hide();
-                        $("input").keyup(function(){
-                           var pwd1 = $("#password1").val();
-                           var pwd2 = $("#password2").val();
-                           if(pwd1 != "" || pwd2 != ""){
-                              if(pwd1 == pwd2){
-                                 $("#alert-success2").show();
-                                 $("#alert-danger2").hide();
-                                 $("#check").removeAttr("disabled");
-
-                              } else {
-                                 $("#alert-success2").hide();
-                                 $("#alert-danger2").show();
-                                 $("#check").attr("disabled","disabled");
-                                 
-                              }
-                           }
-                        });
-                     });
-                  </script>
+                  
                   <input type="submit" id="check" class="btn btn-transparent" value="수정하기" style="background: white;"/>
                </form>
             </div>
-            
+            <script>
+	                     $(function(){
+	                        $("#alert-success1").hide();
+	                        $("#alert-danger1").hide();
+	                        $("input").keyup(function(){
+	                           var pwd1 = $("#password").val();
+	                           $.ajax({
+	                        	   url:"${path}/checkTemp.do",
+	                        	   data:{id:"${param.userId}",pw:pwd1},
+	                        	   success:function(data){
+	                        		   if(data){
+	                                       $("#alert-success1").show();
+	                                       $("#alert-danger1").hide();
+	                                       $("#check").removeAttr("disabled");
+	                                    } else {
+	                                       $("#alert-success1").hide();
+	                                       $("#alert-danger1").show();
+	                                       $("#check").attr("disabled","disabled");
+	                                    }
+	                        	   }
+	                           })
+	                        });
+	                     });
+	
+	                      $(function(){
+	                        $("#alert-success2").hide();
+	                        $("#alert-danger2").hide();
+	                        $("input").keyup(function(){
+	                           var pwd1 = $("#password1").val();
+	                           var pwd2 = $("#password2").val();
+	                           if(pwd1 != "" || pwd2 != ""){
+	                              if(pwd1 == pwd2){
+	                                 $("#alert-success2").show();
+	                                 $("#alert-danger2").hide();
+	                                 $("#check").removeAttr("disabled");
+	                              } else {
+	                                 $("#alert-success2").hide();
+	                                 $("#alert-danger2").show();
+	                                 $("#check").attr("disabled","disabled");
+	                              }
+	                           }
+	                        });
+	                    }); 
+	                      
+	                  </script>
       
             <!-- end col -->
 

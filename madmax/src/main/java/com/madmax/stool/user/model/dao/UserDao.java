@@ -21,7 +21,7 @@ public interface UserDao {
 	User findPw(SqlSessionTemplate session, Map<String, Object> map);
 	int changePw(SqlSessionTemplate session, Map<String, String> map);
 
-	int updatePw(SqlSessionTemplate session, User u);
+	int updatePw(SqlSessionTemplate session, Map param);
 
 
 
