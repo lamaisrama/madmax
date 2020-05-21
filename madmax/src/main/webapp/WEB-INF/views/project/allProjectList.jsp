@@ -9,13 +9,13 @@
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
 	<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <!-- jQuery library -->
+ <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    jQuery library
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Popper JS -->
+    Popper JS
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    Latest compiled JavaScript
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>  -->
 
     <!--dataTable-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -50,75 +50,55 @@
 	});
 	
 	$(document).ready(function() {
-        $('#projectList').DataTable();
+        $('#projectList').DataTable({
+        		info: false,
+        		// 페이징 기능 숨기기
+        		paging: false
+        });
     } );
+
 
 </script>
 
 
-<div class="col-sm-9">
-	<table id="projectList" class="table">
-		<thead>
-			<tr class="table">
-				<th>부서</th>
-				<th data-orderable="false">프로젝트명</th>
-				<th class="title">상태</th>
-				<th class="title">시작일</th>
-				<th data-orderable="false">참여자</th>
-			</tr>
-		</thead>
-		<tbody id="allPjList">
-			<tr>
-				<td>마케팅팀</td>
-				<td class="pjName">
-					<a href="${path}/selectedProject/selectedProjectView.do?pjNo=1">project01</a> 
-				</td>
-				<td>완료</td>
-				<td>2019.11.24</td>
-				<td>김경인, 김규열, 김서율 등 9명 참여중</td>
-			</tr>
-			<tr>
-				<td>총무팀</td>
-				<td class="pjName">임직원 총무 업무지원</td>
-				<td>진행중</td>
-				<td>2019.05.13</td>
-				<td>강수진, 강주영, 고윤진 등 95명 참여중</td>
-			</tr>
-			<tr>
-				<td>디자인팀</td>
-				<td class="pjName">마케팅 켐페인 배너 디자인 프로젝트</td>
-				<td>완료</td>
-				<td>2019.03.02</td>
-				<td>강인규, 강철규, 강현준 등 50명 참여중</td>
-			</tr>
-			<tr>
-				<td>인사팀</td>
-				<td class="pjName">인사팀 업무지원</td>
-				<td>진행중</td>
-				<td>2019.08.30</td>
-				<td>성연미, 손병욱, 신호석 등 50명 참여중</td>
-			</tr>
-			<tr>
-				<td>IT팀</td>
-				<td class="pjName">시스템 유지운영 프로젝트</td>
-				<td>진행중</td>
-				<td>2019.02.07</td>
-				<td>김연지, 남기웅, 박서희 등 40명 참여중</td>
-			</tr>
-			<tr>
-				<td>IT팀</td>
-				<td class="pjName">앱 2.0 업데이트 프로젝트</td>
-				<td>진행중</td>
-				<td>2020.01.05</td>
-				<td>김우현, 김재형, 문재영 등 28명 참여중</td>
-			</tr>
-		</tbody>
-	</table>
+<div class="col-sm-7 mt-5">
+			<div id="myBoardTitle">
+		               <h4><b>전체 프로젝트</b></h4>
+		    </div>
+				<table id="projectList" class="table">
+					<thead>
+						<tr class="table">
+							<th>부서</th>
+							<th data-orderable="false">프로젝트명</th>
+							<th class="title">상태</th>
+							<th class="title">시작일</th>
+							<th data-orderable="false">참여자</th>
+						</tr>
+					</thead>
+					<tbody id="allPjList">
+					<!-- FOR문 시작 -->
+						<c:forEach items="${list }" var="l">
+						<tr>
+							<td>${l.deptName }</td>
+							<td class="pjName">
+								<a href="${path}/selectedProject/selectedProjectView.do?pjNo=${l.projectNo}">${l.projectTitle }</a> 
+							</td>
+							<td>완료</td>
+							<td>2019.11.24</td>
+							<td>${l.members}</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+					
+				</table>
+			<div class="mt-5">
+			${pageBar }
+			</div>
 </div>
 <!--col-sm-9 끝-->
 
 <!-- 오른쪽 여백 설정-->
-<div class="col-sm-1"></div>
+<div class="col-sm-3"></div>
 
 
 
