@@ -6,6 +6,8 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.project.model.vo.ProjectMember;
+
 @Repository
 public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 
@@ -34,7 +36,6 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("selectedProjectSelect.selectProjectTB",pjNo);
@@ -45,7 +46,7 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("selectedProjectSelect.selectFavorit",pjInfo);
 	}
-=======
+	
 	public Map<String, Object> selectPinPostCount(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectOne("selectedProjectSelect.selectPinPostCount");
@@ -104,6 +105,11 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		// TODO Auto-generated method stub
 		return session.selectList("selectedProjectSelect.selectScheduleComment");
 	}
+
+	@Override
+	public List<ProjectMember> selectProjectMemberList(SqlSessionTemplate session, int pjNo) {
+		return session.selectList("selectedProjectSelect.selectProjectMemberList", pjNo);
+	}
 	
 	
 	
@@ -117,7 +123,7 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	
 	
 	
->>>>>>> refs/heads/dev
+
 
 	
 }

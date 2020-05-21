@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.madmax.stool.project.model.dao.SelectedProjectSelectDao;
+import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Service
 public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectService {
@@ -43,7 +44,6 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	}
 
 	@Override
-<<<<<<< HEAD
 	public Map<String, Object> selectProjectTB(int pjNo) {
 		// TODO Auto-generated method stub
 		return dao.selectProjectTB(session, pjNo);
@@ -54,7 +54,7 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		// TODO Auto-generated method stub
 		return dao.selectFavorit(session, pjInfo);
 	}
-=======
+
 	public Map<String, Object> selectPinPostCount() {
 		// TODO Auto-generated method stub
 		return dao.selectPinPostCount(session);
@@ -113,6 +113,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		// TODO Auto-generated method stub
 		return dao.selectScheduleComment(session);
 	}
+
+	@Override
+	public List<ProjectMember> selectProjectMemberList(int pjNo) {
+		return dao.selectProjectMemberList(session, pjNo);
+	}
 	
 	
 	
@@ -126,7 +131,7 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	
 	
 	
->>>>>>> refs/heads/dev
+
 	
 	
 }

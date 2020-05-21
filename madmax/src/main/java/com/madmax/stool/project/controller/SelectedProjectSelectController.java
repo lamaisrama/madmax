@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
+import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Controller
 public class SelectedProjectSelectController {
@@ -24,33 +25,18 @@ public class SelectedProjectSelectController {
 	@RequestMapping("/selectedProject/selectedProject.do")
 	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
 		
-<<<<<<< HEAD
-//		Map<String,Object> map=new HashMap();
-		
+		//프로젝트관련 정보
 		Map<String,Object> pjInfo = new HashMap();
 		pjInfo.put("pjNo", pjNo);
 		pjInfo.put("loginId", loginId);
-		System.out.println("tq대체 왜!! :"+pjInfo.get("loginId"));
-		
 		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
 		int favorite=service.selectFavorit(pjInfo);
-=======
-	
->>>>>>> refs/heads/dev
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
+		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		
-<<<<<<< HEAD
-//		map.put("projectBoardList",projectBoardList);
-//		map.put("writingList", writingList);
-		mv.addObject("projectInfo",projectInfo);
-		mv.addObject("favorite",favorite);
-=======
 		//글
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> writingComment=service.selectWritingComment();
-		logger.info("왤까 : "+writingComment.size());
-//		System.out.println("_______++++++++++++++++++____________________");
-//		System.out.println(writingComment.size());
 		List<Map<String,Object>> writingAttachment=service.selectWritingAttachment();
 		
 		//업무
@@ -71,16 +57,18 @@ public class SelectedProjectSelectController {
 		
 		//언급
 		List<Map<String,Object>> notification=service.selectNotification();
-//		List<Map<String,Object>> projectMember=service.selectProjectMember();
-		 
+				 
 		
+
+		mv.addObject("projectInfo",projectInfo);
+		mv.addObject("favorite",favorite);
+		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);
 		
->>>>>>> refs/heads/dev
-		mv.addObject("projectBoardList",projectBoardList);
-		mv.addObject("writingList",writingList);
-		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);
-		
+		if(writingList.size()>0) mv.addObject("writingList",writingList);
+		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);		
 		if(writingAttachment.size()>0)mv.addObject("writingAttachment",writingAttachment);
+		
 		if(taskList.size()>0)mv.addObject("taskList",taskList);
 		if(taskComment.size()>0)mv.addObject("taskComment",taskComment);
 		if(taskAttachment.size()>0)mv.addObject("taskAttachment",taskAttachment);
@@ -94,7 +82,6 @@ public class SelectedProjectSelectController {
 		
 		if(hashTag.size()>0)mv.addObject("hashTag",hashTag);
 		if(notification.size()>0)mv.addObject("notification",notification);
-//		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
 		
 		
 		mv.setViewName("selectedProject/selectedProject");

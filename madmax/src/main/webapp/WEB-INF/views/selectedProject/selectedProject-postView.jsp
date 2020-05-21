@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 				
 			<c:forEach items="${projectBoardList}" var="pb">	
@@ -22,7 +23,11 @@
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-                                        	<c:out value="${w.WRITINGID}"/> <!-- 어떻게 해야 이름을 가져오는지..? 쿼리문..ㅠㅠ -->
+                                        	<c:forEach items="${projectMember}" var="pm">
+                                        	<c:if test="${w.WRITINGID==pm.userId}">
+                                        		<c:out value="${pm.userName}"/>
+                                        	</c:if>
+                                        	</c:forEach>
                                        	</strong>
                                         <p class="m-0" style="font-size: small;">
                                         	<fmt:formatDate value="${w.WRITINGTIME}" pattern="yyyy-MM-dd KK:mm:ss"/>
@@ -59,40 +64,37 @@
                             </div> 
                             <!-- 1) 글 끝  ------------------------------------------------------------------------------------------------------------------------>
                             
+
                             <!--★ 하단공통  ----------------------------------------------------------------------------------------------------------------------->       
                             <div class="w-100 mt-4">      
                                 <div class="col-12 mb-3">
                                 	<!-- ※※※ collapse div의 변수를 반드시 다르게 주어야합니다!! -->
                                     <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                                            onclick="addBtniconChange(this)">
+                                            onclick="addBtniconChange(this);">
                                        	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
                                     </button> 
                                     <span class="stoolGrey">태그 / 언급 / 첨부파일을 보시려면 클릭하세요</span>
                                 </div>
+
                                 <div class="collapse" id="collapseExample"> 
                                     <!-- 공통) 태그 & 언급 -->
-									<c:forEach items="${hashTag }" var="i">
-									<c:if test="${w.BOARDNO==i.BOARDNO}">
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
+                                            <c:forEach items="${hashTag }" var="ht">
+											<c:if test="${w.BOARDNO==ht.BOARDNO}">
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">${i.HASHTAGTEXT}</span>
+                                                    <span class="">${ht.HASHTAGTEXT}</span>
                                                 </div>
-                                                <!-- <div class="d-flex ml-2 mr-2">
-                                                    <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">태그넣기</span>
-                                                </div> -->
+		                                    </c:if>
+		                                    </c:forEach>
                                             </div>
                                         </div>
                                         <hr class="w-100">
-                                    </div>  <!-- 태그 입력 끝 -->
-                                    </c:if> 
-                                    </c:forEach>
+                                    </div>  <!-- 태그 입력 끝 -->     
                                     <!-- 언급 입력 -->
-                                    
                                     <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
                                             <strong class="mr-2 mb-1">언급된 참여자</strong>                                        
@@ -117,8 +119,6 @@
                                     <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
-                                        <c:forEach var="i" items="${writingAttachment }">
-                                        <c:if test="${i.WRITINGNO==w.WRITINGNO }">
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -126,12 +126,19 @@
                                             </p>
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="w-100 row">
+                                                    <c:forEach var="wai" items="${writingAttachment}">
+                                        			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
+                                        			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
+                                        			<c:if test="${splitText[0] eq 'img'}">
                                                     <div class='col-2 p-1' style='height: 150px;'>
                                                         <div class='imgPreview h-100'>
-                                                        	<!-- 아무 이미지나 넣어논 것! -->
-                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${i.WRITINGRENAME}'/> 
-                                                        </div>
-                                                    </div>
+                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${wai.WRITINGRENAME}'/> 
+                                                        </div> 
+                                                    </div>                            
+                                                    </c:if>                                
+                                                    </c:if>                                
+                                        			</c:forEach>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -142,24 +149,27 @@
                                             </p>                                        
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="fileDownBox w-100 row">
-
+                                                    <c:forEach var="waf" items="${writingAttachment}">
+                                        			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
+                                        			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
+                                        			<c:if test="${splitText[0] eq 'file'}">
                                                     <div class='col-4 p-1 w-100' style='height: 46px;'>
                                                         <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' onclick="fileDownload(this)">
                                                             <div class='d-flex align-items-center'>
                                                                 <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
-                                                                <span>파일명넣기
-                                                                	<%-- <c:out value="${writingAttachment.WRITINGORINAME[i] }"/> --%>
+                                                                <span>
+                                                                	<c:out value="${waf.WRITINGORINAME}"/>
                                                                 </span>
                                                             </div>
                                                             <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
                                                         </div>
                                                     </div>
-
+													</c:if>                                
+                                                    </c:if>                                
+                                        			</c:forEach>
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:if>
-                                        </c:forEach>                               
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
                                 </div>
 
@@ -283,7 +293,11 @@
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-                                        	<c:out value="${t.TASKTITLE }"/>
+	                                      	<c:forEach items="${projectMember}" var="pm">
+	                                        	<c:if test="${t.TASKID==pm.userId}">
+	                                        		<c:out value="${pm.userName}"/>
+	                                        	</c:if>
+	                                        </c:forEach>
                                         </strong>
                                         <p class="m-0" style="font-size: small;">
                                             <fmt:formatDate value="${t.TASKTIME}" pattern="yyyy-MM-dd KK:mm:ss"/>
@@ -315,27 +329,66 @@
                                 <div class="d-flex align-items-center">
                                     <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
                                     <div class="btn-group border border-grey rounded overflow-hidden">
-                                        <button type="button" class="btn border-right btn-primary btnRequest" onclick="fn_viewPost_progressState(this, 'request');">요청</button>
-                                        <button type="button" class="btn border-right btnProgress" onclick="fn_viewPost_progressState(this, 'progress');">진행</button>
-                                        <button type="button" class="btn border-right btnFeedback" onclick="fn_viewPost_progressState(this, 'feedback');">피드백</button>
-                                        <button type="button" class="btn border-right btnEnd" onclick="fn_viewPost_progressState(this, 'end');">완료</button>
-                                        <button type="button" class="btn btnHold" onclick="fn_viewPost_progressState(this, 'hold');">보류</button>
+                                        <c:if test="${t.TASKSTATE eq '요청'}">
+                                        	<button type="button" class="btn border-right btn-primary" disabled>
+                                        </c:if>
+                                        <c:if test="${t.TASKSTATE ne '요청'}">
+                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState(this, '요청');">
+                                        </c:if>                                        
+                                        	요청
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '진행'}">
+                                        	<button type="button" class="btn border-right btn-success" disabled>
+                                        </c:if>
+                                     	<c:if test="${t.TASKSTATE ne '진행'}">
+                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">
+                                        </c:if>                                        
+                                        	진행
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '피드백'}">
+                                        	<button type="button" class="btn border-right btn-danger" disabled>
+                                        </c:if>  
+                                     	<c:if test="${t.TASKSTATE ne '피드백'}">
+                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">
+                                        </c:if>                                                                             	 
+                                        	피드백
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '완료'}">
+                                        	<button type="button" class="btn border-right btn-info" disabled>
+                                        </c:if>                                        	
+                                     	<c:if test="${t.TASKSTATE ne '완료'}">
+                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">
+                                        </c:if>
+                                        	완료
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '보류'}">
+                                        	<button type="button" class="btn btn-secondary" disabled>
+                                        </c:if>                                        	
+                                     	<c:if test="${t.TASKSTATE ne '보류'}">
+                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">
+                                        </c:if>                                           
+                                        	보류
+                                       	</button>
                                     </div>
                                 </div>                        
                                 <hr class="w-100 mt-1 mb-2">
                                 <div class="d-flex align-items-center">
                                     <strong class="mr-2">담당자</strong>
                                     <!-- 담당자 프로필 for문 시작 -->
-                                    <c:forEach var="i" begin="1" items="${taskManager }">
-                                    <c:if test="${t.TASKNO==taskManager.TASKNO }">
+                                    <c:forEach var="tm" items="${taskManager}">                                    
+                                    <c:if test="${t.TASKNO==tm.TASKNO }">
+                                    <c:forEach items="${projectMember}" var="pm">
+                                   	<c:if test="${tm.TASKMANAGERID==pm.userId}">
                                     <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
                                         <div class='selectedWorker_imgDiv mr-2'>
                                             <img src="${path}/resources/images/defaultProfile.png"><!-- 여기서 해당 프로필 파일 어떻게 가져오는지? -->
                                         </div>
-                                        <span>
-                                        	<c:out value="${taskManager.TASKMANAGERID[i]}"/>
-                                        </span>
+                                      	<sapn>
+                                    		<c:out value="${pm.userName}"/>
+                                     	</sapn>
                                     </div>
+                                    </c:if>
+                                    </c:forEach>
                                     </c:if>                  
                                     </c:forEach>                  
                                     <!-- 담당자 프로필 for문 끝 -->
@@ -382,26 +435,22 @@
 
                                 <div class="collapse" id="collapseExample"> 
                                     <!-- 공통) 태그 & 언급 -->
-                                    <c:forEach items="${hashTag }" var="i">
-									<c:if test="${t.BOARDNO==i.BOARDNO}">
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
+                                            <c:forEach items="${hashTag }" var="ht">
+											<c:if test="${t.BOARDNO==ht.BOARDNO}">
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">${i.HASHTAGTEXT}</span>
+                                                    <span class="">${ht.HASHTAGTEXT}</span>
                                                 </div>
-                                                <!-- <div class="d-flex ml-2 mr-2">
-                                                    <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">태그넣기</span>
-                                                </div> -->
+		                                    </c:if>
+		                                    </c:forEach>
                                             </div>
                                         </div>
                                         <hr class="w-100">
                                     </div>  <!-- 태그 입력 끝 -->     
-                                    </c:if>
-                                    </c:forEach>
                                     <!-- 언급 입력 -->
                                     <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
@@ -427,8 +476,6 @@
                                     <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
-                                        <c:forEach var="i" begin="1" items="${taskAttachment }">
-                                        <c:if test="${taskAttachment.TASKNO==t.TASKNO }">
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -436,12 +483,19 @@
                                             </p>
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="w-100 row">
+                                                    <c:forEach var="tai" items="${taskAttachment}">
+                                        			<c:if test="${tai.TASKNO==t.TASKNO}">
+                                        			<c:set var = "splitText" value = "${fn:split(tai.TASKRENAME,'_')}"/>
+                                        			<c:if test="${splitText[0] eq 'img'}">
                                                     <div class='col-2 p-1' style='height: 150px;'>
                                                         <div class='imgPreview h-100'>
-                                                        	<!-- 아무 이미지나 넣어논 것! -->
-                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${i.TASKRENAME}'/> 
-                                                        </div>
-                                                    </div>
+                                                            <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${tai.TASKRENAME}'/> 
+                                                        </div> 
+                                                    </div>                            
+                                                    </c:if>                                
+                                                    </c:if>                                
+                                        			</c:forEach>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -452,23 +506,27 @@
                                             </p>                                        
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="fileDownBox w-100 row">
-
+                                                    <c:forEach var="taf" items="${taskAttachment}">
+                                        			<c:if test="${taf.TASKNO==t.TASKNO}">
+                                        			<c:set var = "splitText" value = "${fn:split(taf.TASKRENAME,'_')}"/>
+                                        			<c:if test="${splitText[0] eq 'file'}">
                                                     <div class='col-4 p-1 w-100' style='height: 46px;'>
                                                         <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' onclick="fileDownload(this)">
                                                             <div class='d-flex align-items-center'>
                                                                 <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
-                                                                <span>파일명넣기
-                                                                <c:out value="${taskAttachment.TASKORINAME[i] }"/></span>
+                                                                <span>
+                                                                	<c:out value="${taf.TASKORINAME}"/>
+                                                                </span>
                                                             </div>
                                                             <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
                                                         </div>
                                                     </div>
-
+													</c:if>                                
+                                                    </c:if>                                
+                                        			</c:forEach>
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:if>                                
-                                        </c:forEach>
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
                                 </div>
 
@@ -592,7 +650,11 @@
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-                                        	<c:out value="${s.SCHEDULEID}"/>
+                                        	<c:forEach items="${projectMember}" var="pm">
+	                                        	<c:if test="${s.SCHEDULEID==pm.userId}">
+	                                        		<c:out value="${pm.userName}"/>
+	                                        	</c:if>
+                                        	</c:forEach>
                                         </strong>
                                         <p class="m-0" style="font-size: small;">
                                             <fmt:formatDate value="${s.SCHEDULETIME}" pattern="yyyy-MM-dd KK:mm:ss"/>

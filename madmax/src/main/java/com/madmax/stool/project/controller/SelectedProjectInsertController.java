@@ -97,7 +97,7 @@ public class SelectedProjectInsertController {
 				//파일 리네임		
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 				int rnd = (int)(Math.random()*1000);
-				String rename = "file#"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+				String rename = "file_"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
 				
 			//리네임 된 이름으로 파일 저장하기
 				try {
@@ -119,7 +119,7 @@ public class SelectedProjectInsertController {
 				//파일 리네임		
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 				int rnd = (int)(Math.random()*1000);
-				String rename = "img#"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+				String rename = "img_"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
 				
 			//리네임 된 이름으로 파일 저장하기
 				try {
