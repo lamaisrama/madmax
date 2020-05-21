@@ -37,7 +37,7 @@
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
-                                        <div class="dropdown-menu" style="min-width: 120px;">
+                                        <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
                                         </div>

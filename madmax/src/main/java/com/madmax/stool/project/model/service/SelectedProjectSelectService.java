@@ -9,6 +9,8 @@ public interface SelectedProjectSelectService {
 	List<Map<String, Object>> selectWritingList(int pjNo);
 	List<Map<String, Object>> selectTaskList(int pjNo);
 	List<Map<String, Object>> selectScheduleList(int pjNo);
+	Map<String, Object> selectProjectTB(int pjNo);
+	int selectFavorit(Map<String,Object> pjInfo);
 
 
 

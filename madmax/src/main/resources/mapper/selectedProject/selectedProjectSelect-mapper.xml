@@ -21,10 +21,20 @@
         JOIN TASK T USING(BOARDNO)
 	</select>
 	
-	<select id="selectScheduleList" parameterType="map" resultType="map">
+	<select id="selectScheduleList" parameterType="_int" resultType="map">
 		SELECT * FROM PROJECTTABLE PJ 
         JOIN PROJECTBOARD PB USING(PROJECTNO)
         JOIN SCHEDULE S USING(BOARDNO)
+	</select>
+	
+	<select id="selectProjectTB" parameterType="map" resultType="map">
+		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo}    
+	</select>
+	
+	<select id="selectFavorit" parameterType="map" resultType="_int">
+		SELECT COUNT(*) COUNT
+		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO 
+		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}    
 	</select>
 	
 	

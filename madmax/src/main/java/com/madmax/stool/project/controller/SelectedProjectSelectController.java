@@ -22,11 +22,17 @@ public class SelectedProjectSelectController {
 	private SelectedProjectSelectService service;
 	
 	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo) {
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
 		
-	
 //		Map<String,Object> map=new HashMap();
 		
+		Map<String,Object> pjInfo = new HashMap();
+		pjInfo.put("pjNo", pjNo);
+		pjInfo.put("loginId", loginId);
+		System.out.println("tq대체 왜!! :"+pjInfo.get("loginId"));
+		
+		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
+		int favorite=service.selectFavorit(pjInfo);
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> taskList=service.selectTaskList(pjNo);
@@ -35,6 +41,8 @@ public class SelectedProjectSelectController {
 		
 //		map.put("projectBoardList",projectBoardList);
 //		map.put("writingList", writingList);
+		mv.addObject("projectInfo",projectInfo);
+		mv.addObject("favorite",favorite);
 		mv.addObject("projectBoardList",projectBoardList);
 		mv.addObject("writingList",writingList);
 		mv.addObject("scheduleList",scheduleList);

@@ -33,5 +33,17 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectScheduleList",pjNo);
 	}
 
+	@Override
+	public Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("selectedProjectSelect.selectProjectTB",pjNo);
+	}
+
+	@Override
+	public int selectFavorit(SqlSessionTemplate session, Map<String,Object> pjInfo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("selectedProjectSelect.selectFavorit",pjInfo);
+	}
+
 	
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +50,8 @@ public class SelectedProjectInsertController {
 	 */
 	
 	@RequestMapping("/selectedProject/insertSelectedProject.do")
-	public ModelAndView insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+	@ResponseBody
+	public String insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
 
 		
         // 방법 01 : entrySet()
@@ -257,11 +259,12 @@ public class SelectedProjectInsertController {
         }
 			
 
-		mv.addObject("pjNo", pjNo);
-		mv.addObject("projectMember", projectMember);
-		mv.setViewName("selectedProject/selectedProject");
-		
-		return mv;
+//		mv.addObject("pjNo", pjNo);
+//		mv.addObject("projectMember", projectMember);
+//		mv.setViewName("selectedProject/selectedProject");
+//		
+//		return mv;
+		return "성공";
 	}
 	
 }

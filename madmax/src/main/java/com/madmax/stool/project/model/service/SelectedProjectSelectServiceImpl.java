@@ -41,6 +41,18 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		// TODO Auto-generated method stub
 		return dao.selectScheduleList(session, pjNo);
 	}
+
+	@Override
+	public Map<String, Object> selectProjectTB(int pjNo) {
+		// TODO Auto-generated method stub
+		return dao.selectProjectTB(session, pjNo);
+	}
+
+	@Override
+	public int selectFavorit(Map<String,Object> pjInfo) {
+		// TODO Auto-generated method stub
+		return dao.selectFavorit(session, pjInfo);
+	}
 	
 	
 }
