@@ -36,28 +36,6 @@
 		SELECT * FROM WRITINGATTACHMENT
 	</select>
 	
-
-	<select id="selectProjectTB" parameterType="map" resultType="map">
-		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo}    
-	</select>
-	
-	<select id="selectFavorit" parameterType="map" resultType="_int">
-		SELECT COUNT(*) COUNT
-		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO 
-		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}    
-	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	<select id="selectPinPostCount" resultType="map">
-		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y'; <!--상단 고정글 갯수 -->
-	</select>	
-		
 	<select id="selectTaskManager" parameterType="map" resultType="map">
 		SELECT *FROM TASKMANAGER
 	</select>
