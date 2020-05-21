@@ -26,6 +26,7 @@ public interface ApprovalService {
 	List<Approval> selectApprTempList(String userId);
 	List<Approval> selectApprWaitList(String userId);
 	int updateAppr(ApprLine line);
+	List<ApprDoc> selectAttachAppredDoc(String deptCode);
 
 	
 	
