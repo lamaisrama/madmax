@@ -352,8 +352,7 @@ new daum.Postcode({
 
                 // 해당 주소에 대한 좌표를 받아서
                 var coords = new daum.maps.LatLng(result.y, result.x);
-                console.log(result.y, result.x);
-                $("#schedulePlace").val(result.y + "," + result.x);
+                $("#schedulePlace").val(addr);
                 // 지도를 보여준다.
 //                mapContainer.style.display = "block";
                 $("#mapBox").attr("style", "display:block; height:300px;");
