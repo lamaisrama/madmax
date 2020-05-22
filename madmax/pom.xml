@@ -208,14 +208,49 @@
 		
 		<!-- 웹소켓 받아오기 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-websocket</artifactId>
-	    <version>${org.springframework-version}</version>
-	</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 		
-		
+		<!-- Java Mail API -->
+		  <dependency>
+		     <groupId>javax.mail</groupId>
+		     <artifactId>mail</artifactId>
+		     <version>1.4.3</version>
+		  </dependency>
+		  
+		  <dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 	
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support  -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-mail</artifactId>
+		    <version>4.3.8.RELEASE</version>
+		</dependency>
+		
+		<!-- 임시비번발송 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.4</version>
+		</dependency>
+
+
+
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -260,6 +295,14 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 </project>

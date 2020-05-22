@@ -24,7 +24,7 @@
 	<context:component-scan base-package="com.madmax.stool" />
 	
 	<!-- Interceptor -->
-<!-- 	<interceptors>
+	<!-- <interceptors>
 		<interceptor>
 			<mapping path="/**/"/> 
 			<exclude-mapping path="/**/**.png"/>
@@ -43,7 +43,10 @@
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="1" />
 	</beans:bean>
-	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView" />
+	<!-- jsonView 인코딩 속성추가-->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType" value="application/json;charset=UTF-8"/>
+	</beans:bean>
 	
 	<!--  jackson converter -->
 	<beans:bean id="jacksonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
@@ -54,6 +57,7 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-	
+
+
 	
 </beans:beans>

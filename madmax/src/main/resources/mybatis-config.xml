@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+<!--  oracle null 처리  -->
+    <settings>
+        <setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="callSettersOnNulls" value="true"/>
+    </settings>
 	<typeAliases>
 		<typeAlias type="com.madmax.stool.common.StringArrayType" alias="strArr"/>
+		<typeAlias type="com.madmax.stool.user.model.vo.User" alias="user"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.Project" alias="project"/>
+		<typeAlias type="com.madmax.stool.task.model.vo.TaskJoinPnPm" alias="taskJoinPnPm"/>
+		<typeAlias type="com.madmax.stool.attendance.model.vo.Attendance" alias="attend"/>
+		<typeAlias type="com.madmax.stool.attendance.model.vo.Worktime" alias="worktime"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.Approval" alias="approval"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.ApprDocType" alias="apprDocType"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.ApprLine" alias="apprLine"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.ApprDoc" alias="apprDoc" />
+		<typeAlias type="com.madmax.stool.approval.model.vo.DeptUsers" alias="deptUsers"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.User" alias="apprUser"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.ProjectMember" alias="projectMember"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.AdminAttendManagement" alias="adminAttend"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertWriting" alias="writing"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertProjectBoard" alias="projectBoard"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertHashTag" alias="hashTag"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertNotification" alias="notification"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.Attachment" alias="attachment"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.ProjectFile" alias="projectFile"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTask" alias="task"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertTaskManager" alias="insertTaskManager"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertSchedule" alias="schedule"/>
 	</typeAliases>
 </configuration>
+

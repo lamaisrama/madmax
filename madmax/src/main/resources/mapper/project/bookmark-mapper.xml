@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bookmark">
+  <select id="selectBkList" resultType="com.madmax.stool.project.model.vo.Bookmark">
+  	SELECT *FROM BOOKMARK B JOIN PROJECTBOARD P USING(BOARDNO) WHERE USERID=#{id}
+  </select>
+  <select id="selectBkW" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+ SELECT B.*,P.*,W.*,SU.USERNAME AS WNAME,S.USERNAME AS BMNAME FROM BOOKMARK B JOIN PROJECTBOARD P ON B.BOARDNO=P.BOARDNO  
+  JOIN WRITING  W ON P.BOARDNO=W.BOARDNO JOIN STOOLUSER SU ON W.WRITINGID=SU.USERID  JOIN STOOLUSER S 
+  ON B.USERID=S.USERID WHERE B.USERID=#{userId} AND B.BOARDNO=#{boardNo}
+  </select>
+  <select id="selectBkT" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+   SELECT P.*,T.*,S.USERNAME AS TASKNAME,ST.USERNAME AS TMNAME,STU.USERNAME AS BMNAME FROM BOOKMARK B JOIN PROJECTBOARD P 
+   ON B.BOARDNO=P.BOARDNO JOIN TASK T ON P.BOARDNO=T.BOARDNO
+  JOIN TASKMANAGER TM ON T.TASKNO=TM.TASKNO JOIN STOOLUSER S ON T.TASKID=S.USERID JOIN STOOLUSER ST ON TM.TASKMANAGERID=ST.USERID
+  JOIN STOOLUSER STU ON B.USERID=STU.USERID WHERE B.USERID=#{userId}  AND B.BOARDNO=#{boardNo}
+  </select>
+  <select id="selectBkS" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+  SELECT B.*,P.*,S.*,SU.USERNAME AS SNAME,ST.USERNAME AS BMNAME FROM BOOKMARK B JOIN PROJECTBOARD P ON B.BOARDNO=P.BOARDNO  
+  JOIN SCHEDULE S ON P.BOARDNO=S.BOARDNO JOIN STOOLUSER SU ON S.SCHEDULEID=SU.USERID  JOIN STOOLUSER ST 
+  ON B.USERID=ST.USERID WHERE B.USERID=#{userId} AND B.BOARDNO=#{boardNo}
+  </select>
+</mapper>

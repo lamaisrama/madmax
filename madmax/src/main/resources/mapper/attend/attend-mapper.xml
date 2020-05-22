@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="attend">
+	<insert id="insertRequest" parameterType="attend">
+		INSERT INTO MODIFYREQUEST VALUES(SEQ_REQUESTNO.NEXTVAL,#{requestReason},#{requestCategory},SYSDATE,NULL,#{userId},#{managementNo})
+	</insert>
+	
+	<insert id="insertState" parameterType="worktime">
+		INSERT INTO WORKTIMEMANAGEMENT VALUES(SEQ_MANAGEMENTNO.NEXTVAL,SYSTIMESTAMP,NULL,#{timeState},#{userId},SYSDATE)
+	</insert>
+	
+	<update id="updateState" parameterType="worktime">
+		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='출근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</update>
+	
+	<select id="selectWorktimeList" parameterType="string" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT LEFT JOIN EMPLOYEEMANAGEMENT USING(MANAGEMENTNO) WHERE USERID=#{userId} ORDER BY CHECKDATE DESC
+	</select>
+	
+	<select id="selectCometime" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</select>
+	
+	<select id="selectGotime" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD') AND GOTIME=NULL
+	</select>
+	
+	<select id="selectWorktime" parameterType="worktime" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	</select>
+	
+	<insert id="insertEmpManage" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'출근',#{managementNo})
+	</insert>
+	
+	<insert id="insertLate" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'지각',#{managementNo})
+	</insert>
+	
+	<insert id="insertAbsence" parameterType="_int">
+		INSERT INTO EMPLOYEEMANAGEMENT VALUES(seq_workStateNo.NEXTVAL,'결근',#{managementNo})
+	</insert>
+	
+	<update id="updateRequestState" parameterType="attend">
+		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestReason} WHERE MANAGEMENTNO=#{managementNo}
+	</update>
+
+</mapper>

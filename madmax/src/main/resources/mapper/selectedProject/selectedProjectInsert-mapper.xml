@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SelectedProjectInsert">
+	<insert id="insertProjectBoardTB" parameterType="projectBoard">
+		INSERT INTO PROJECTBOARD VALUES(seq_boardNo.NEXTVAL, #{projectNo},#{boardType},'N')
+		<selectKey order="AFTER" keyProperty="boardNo" resultType="_int">
+			SELECT seq_boardNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertWritingTB" parameterType="writing">
+		INSERT INTO WRITING VALUES(seq_writingNo.NEXTVAL, #{writingTitle}, #{writingContent}, #{writingId}, #{boardNo}, DEFAULT)
+		<selectKey order="AFTER" keyProperty="writingNo" resultType="_int">
+			SELECT seq_writingNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertHashTagTB" parameterType="hashTag">
+		INSERT INTO HASHTAG VALUES(seq_hashtagNo.NEXTVAL, #{hashtagText}, #{boardNo})
+	</insert>
+	
+	<insert id="InsertNotificationTB" parameterType="notification">
+		INSERT INTO NOTIFICATIONTABLE VALUES(seq_notNo.NEXTVAL, #{receiveId}, #{senderId}, #{notType}, DEFAULT, DEFAULT, #{boardNo})
+	</insert>
+
+	<insert id="insertWritingAttachmentTB" parameterType="attachment">
+		INSERT INTO WRITINGATTACHMENT VALUES(#{no},#{originalFilename},#{renamedFilename})
+	</insert>
+
+	<insert id="insertProjectFileTB" parameterType="projectFile">
+		INSERT INTO projectFile VALUES(seq_pjFileNo.NEXTVAL, #{pjFileOriname},#{pjFileRenamedname},#{projectNo})
+	</insert>
+	
+	<!-- 2) 업무  -->
+	<insert id="insertTaskTB" parameterType="task">
+		INSERT INTO TASK VALUES(seq_taskNo.NEXTVAL, #{taskTitle}, #{taskState}, #{taskProiority}, #{taskStartdate}, #{taskEnddate}
+								, #{taskContent}, #{taskId}, #{boardNo}, DEFAULT)
+		<selectKey order="AFTER" keyProperty="taskNo" resultType="_int">
+			SELECT seq_taskNo.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertTaskAttachmentTB" parameterType="attachment">
+		INSERT INTO TASKATTACHMENT VALUES(#{no},#{originalFilename},#{renamedFilename})
+	</insert>
+	
+	<insert id="insertTaskManagerTB" parameterType="insertTaskManager">
+		INSERT INTO TASKMANAGER VALUES(#{taskManagerName},#{taskNo})
+	</insert>
+	
+	<!-- 3) 일정  -->
+	<insert id="insertScheduleTB" parameterType="schedule">
+		INSERT INTO SCHEDULE VALUES(seq_scheduleNo.NEXTVAL, #{scheduleTitle}, #{scheduleStartdate}, #{scheduleEnddate}, #{schedulePlace}, #{scheduleMemo}
+								, #{scheduleId}, #{boardNo}, DEFAULT)
+	</insert>
+</mapper>

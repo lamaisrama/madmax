@@ -1,0 +1,266 @@
+/*--------- 전체설정 ------*/
+#map img {
+
+	max-width: none;
+
+	height: auto;
+
+	border: 0
+
+}
+
+.stoolGrey{
+	color: #E8E8EB;
+}
+.stoolPink{
+	color: #EBDACE;
+}
+.stoolDarkBlue{
+	background-color: #25558F;
+	color: white;
+	font-weight: bold;
+}
+.stoolDarkBlue:hover{
+	background-color: #233C61;
+	color: white;
+	font-weight: bold;
+}
+
+.stoolDarkBlue-outline{
+	border: 2px solid #25558F;
+	color: #233C61;
+	font-weight: bold;
+}
+.stoolDarkBlue-outline:hover{
+	border: 2px solid #233C61;
+	background-color: #233C61;
+	color: white;
+}
+
+
+.stoolDateInput{
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-color: #E8E8EB;
+	width: 170px;
+}
+
+
+input:focus, textarea:focus { 
+    outline: none;
+}
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+input[type="date"]::-webkit-outer-spin-button,
+input[type="date"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+	-webkit-appearance: none;
+}
+}
+/*------------------------*/
+#pjInfoBox button{
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+}
+#pjInfoBox button > .fas {
+    font-size: 25px;
+}
+#pjInfoBox button >  .fa  {
+    font-size: 25px;
+}
+#pjInfoBox button > .far {
+    font-size: 25px;
+}
+#pjInfoBox .dropdown{
+    height: 40px;
+    padding: 0px;
+}
+
+#pjInfoBox{
+    height: 60px;
+}
+#pjInfoBox .dropdown-toggle::after {
+    display: none;
+}
+
+#tagBox{
+    height: 40px;
+}
+
+#writeCategoryBtns{
+    height: 40px;
+}
+/* textArea css */
+#boardContentAreaDiv{
+    min-height: 120px;
+}
+#boardContentAreaDiv .divPlaceHolder{
+    color: #6c757d;
+}
+#boardContentArea, #taskContentArea{
+    height: 120px;
+    overflow: hidden;
+}
+#scheduleContentArea{
+    height: 60px;
+    overflow: hidden;
+}
+.tooltip-inner{
+    background-color: rgb(146, 146, 146);
+}
+.tooltip.bs-tooltip-top .arrow:before {
+    border-top-color: rgb(146, 146, 146) !important;
+}
+
+.cBtnSelect, .cBtnSelect:hover{
+    font-weight: bolder;
+    color: #25558F;
+}
+
+#selectColorBox .dropdown-menu{
+    width: 120px;
+    min-width: 120px;
+    height: 150px;
+    border-radius: 15px;
+}
+
+#colorBox div{
+    width: 25px;
+    height: 25px;
+    border: 1px solid #dadada;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+#pjInfoContainer .dropdown-menu > a{
+    cursor: pointer;
+}
+.pjSetModal{
+    width: 400px;
+}
+.pjSetModal .modal-title{
+    font-size: 20px;
+}
+
+
+/* 업무 관련 css */
+.addWorkerModal{
+    width: 600px;
+}
+.addWorkerModal .modal-title{
+    font-size: 20px;
+}
+.addWorkerModal_searchBox{
+    border: 1px solid lightgray;
+}
+.addWorkerModal_searchBox input{
+    border: 0px;
+}
+.addWorkerModal_searchBox img{
+    width: 20px;
+    height: 20px;
+}
+.addWorkerModal_searchBox{
+    border-radius: 5px;
+}
+.addWorker_profile_div{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.addWorker_profile_div img{
+    max-width: 100%; 
+    height: auto;
+}
+.selectedWorker{
+    background-color: #F1F0F5;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.selectedWorker .selectedWorker_imgDiv{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.selectedWorker .selectedWorker_imgDiv img{
+    max-width: 100%; 
+    height: auto;
+}
+.selectedWorker button{
+    border: 0px;
+    background: none;
+}
+
+/* 업무 우선순위  */
+#taskPriority-dropItem p{
+    cursor: pointer;
+}
+
+/* 첨부파일 미리보기 스타일 */
+#imgFileBox .imgPreview{
+    border: 1px solid #dadada;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#imgFileBox .imgPreview img{
+    max-width: 100%; 
+    height: auto;
+}
+
+#fileBox .filePreview{
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+#fileBox img{
+    max-width: 25px; 
+    height: 25px;
+}
+#fileBox span{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 24px;
+}
+
+/* 태그추가 */
+.addTagInputDiv{
+    width: 140px;
+    height: 26px;
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    font-weight: bolder;
+    color: #25558F;
+    overflow: hidden;
+}
+.addTagInputDiv input{
+    width: 120px;
+    height: 26px;
+    border: none;
+    text-align: center;
+}
+.addTagList p i{
+    visibility: hidden;
+    cursor: pointer;
+    font-size: 20px;
+}
+.addTagList p:hover i{
+    visibility: visible;
+}
+

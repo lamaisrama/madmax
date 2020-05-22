@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approval">
+	<select id="selectDeptInfo" resultType="deptUsers">
+		SELECT * FROM DEPT
+	</select>
+	<select id="selectDeptUsers" parameterType="deptUsers"
+								 resultType="apprUser">
+		SELECT * FROM STOOLUSER LEFT JOIN DEPT USING(DEPTCODE)
+								LEFT JOIN JOBTABLE USING(JOBCODE) 
+								WHERE DEPTCODE=#{deptCode} ORDER BY jobcode
+	</select>
+	
+	<select id="selectApprDocList" resultType="apprDocType">
+		SELECT * FROM APPRDOCTYPE 
+	</select>
+	
+	<select id="selectApprDocListCount" resultType="_int">
+		SELECT COUNT(*) FROM APPRDOCTYPE
+	</select>
+	
+	<select id="selectApprDocForm" parameterType="_int" 
+								resultType="apprDocType">
+		SELECT * FROM APPRDOCTYPE WHERE APPRDOCTYPENO=#{apprDocTypeNo}
+	</select>
+	
+	<insert id="insertApproval" parameterType="approval">
+		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1, #{receiver})
+		<selectKey order="AFTER" keyProperty="apprNo" resultType="_int">
+			SELECT SEQ_APPRNO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertApprLine" parameterType="apprLine">
+		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, 0, null, null)
+	</insert>
+	
+	<select id="selectApproval" parameterType="_int" resultType="apprDoc">
+		SELECT * FROM APPROVAL 
+			JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) 
+    		LEFT JOIN DEPT USING(DEPTCODE)	
+    		LEFT JOIN JOBTABLE USING(JOBCODE)
+		 WHERE APPRNO=#{apprNo} 
+	</select>
+	
+	<select id="selectDoApproval" parameterType="approval" resultType="apprDoc">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) 
+    		LEFT JOIN DEPT USING(DEPTCODE)	
+    		LEFT JOIN JOBTABLE USING(JOBCODE)
+    		JOIN APPRLINE USING(APPRNO)
+		 WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRNO=#{apprNo} 
+	</select>
+	
+	<select id="selectApprLine" parameterType="_int" resultType="apprLine">
+		SELECT * FROM APPRLINE 
+			JOIN STOOLUSER ON(APPRUSER=USERID) 
+			LEFT JOIN DEPT USING(DEPTCODE) LEFT JOIN JOBTABLE USING(JOBCODE) 
+			WHERE APPRNO=#{apprNo} ORDER BY APPRSTEP
+	</select>
+	
+	<select id="selectReceiverName" parameterType="string" resultType="string">
+		SELECT USERNAME AS RECEIVERNAME FROM STOOLUSER WHERE USERID=#{userId}
+	</select>
+
+	<update id="updateTemporary" parameterType="_int">
+		UPDATE APPROVAL SET APPRSTATUS=0 WHERE APPRNO=#{apprNo}	
+	</update>
+	
+	<delete id="deleteDoc" parameterType="_int">
+		DELETE FROM APPROVAL WHERE APPRNO=#{apprNo}
+	</delete>
+	
+	<select id="selectApprReqList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (1,2) ORDER BY WRITEDATE DESC	 
+	</select>
+	
+	<select id="selectApprTempList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS=0 ORDER BY WRITEDATE DESC
+	</select>
+	
+	<select id="selectApprWaitList" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) LEFT JOIN DEPT USING(DEPTCODE) 
+			JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId}
+	</select>
+	
+	<update id="updateAppr" parameterType="apprLine">
+		UPDATE APPRLINE SET APPRRESULT=#{apprResult}, APPRTIME=SYSDATE, APPRMESSAGE=#{apprMessage} WHERE APPRNO=#{apprNo} AND APPRUSER=#{apprUser}
+	</update>
+	<update id="updateApprovalStatusEnd" parameterType="apprLine">
+		UPDATE APPROVAL SET CURRAPPRSTEP=FINALAPPRSTEP, 
+			APPRSTATUS= <if test="apprResult==1">3</if>	
+			<if test="apprResult==2">4</if>
+			WHERE APPRNO=${apprNo}
+	</update>
+	<update id="updateApprovalStatusIng" parameterType="apprLine">
+		UPDATE APPROVAL SET CURRAPPRSTEP = #{apprStep},  WHERE APPRNO=#{apprNo}
+	</update>
+	
+	<select id="selectAttachAppredDoc" parameterType="string" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID) 
+    		LEFT JOIN DEPT USING(DEPTCODE)	
+    		LEFT JOIN JOBTABLE USING(JOBCODE)
+    		JOIN APPRLINE USING(APPRNO) WHERE DEPTCODE=#{deptCode} AND APPRSTATUS=3
+	</select>
+</mapper>
