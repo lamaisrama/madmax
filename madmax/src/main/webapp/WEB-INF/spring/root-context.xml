@@ -47,7 +47,7 @@
 	<!-- xml방식 트랜젝션 매니저 등록 -->
 	 <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="insert*" />
+			<tx:method name="insert*" rollback-for="Exception"/>
 			<tx:method name="update*" />
 			<tx:method name="delete*" />
 		</tx:attributes>

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.common.MyException;
 import com.madmax.stool.project.model.service.SelectedProjectInsertService;
 import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
@@ -53,7 +54,8 @@ public class SelectedProjectInsertController {
 	
 	@RequestMapping("/selectedProject/insertSelectedProject.do")
 	@ResponseBody
-	public String insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+	public String insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, 
+			MultipartHttpServletRequest mtfRequest, HttpSession session) throws MyException{
 
 		
         // 방법 01 : entrySet()
@@ -180,6 +182,7 @@ public class SelectedProjectInsertController {
     		try {
             	result = service.insertWriting(writing, pb, hashTagList, notList, files);
     		}catch(RuntimeException e){
+    			e.printStackTrace();
     			for(Attachment a : files) {
     				File delF=new File(path+"/"+a.getRenamedFilename());
     				if(delF.exists()) {
@@ -224,6 +227,7 @@ public class SelectedProjectInsertController {
     		try {
             	result = service.insertTask(task, pb, hashTagList, notList, tmList, files);
     		}catch(RuntimeException e){
+    			e.printStackTrace();
     			for(Attachment a : files) {
     				File delF=new File(path+"/"+a.getRenamedFilename());
     				if(delF.exists()) {

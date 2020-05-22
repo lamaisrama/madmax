@@ -137,8 +137,7 @@
                                                     </div>                            
                                                     </c:if>                                
                                                     </c:if>                                
-                                        			</c:forEach>
-                                                    
+                                        			</c:forEach>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +170,7 @@
                                             </div>
                                         </div>
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
-                                </div>
+                                </div> <!-- collapse 닫기 -->
 
                             </div>
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
@@ -325,7 +324,9 @@
 
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                             <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
-                                <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
+                                <h5 class="m-0 font-weight-bolder mb-4">
+									<c:out value="${t.TASKTITLE}"/>
+								</h5> <!-- 업무제목 -->
                                 <div class="d-flex align-items-center">
                                     <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
                                     <div class="btn-group border border-grey rounded overflow-hidden">

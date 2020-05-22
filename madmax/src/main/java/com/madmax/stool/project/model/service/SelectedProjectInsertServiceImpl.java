@@ -36,19 +36,21 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 	}
 
 	@Override
-	@Transactional //트랜젝션처리!
+//	@Transactional //트랜젝션처리!
 	public int insertWriting(InsertWriting writing, InsertProjectBoard pb, List<InsertHashTag> hashTagList, List<InsertNotification> notList,
-			List<Attachment> files) {
+			List<Attachment> files) throws MyException {
 		//1. ProjectBoard TB
 		int result = dao.insertProjectBoardTB(session, pb);		
-
+		result = 0;
 		//2-1. Writing TB - 총괄번호
 		if(result == 0) {
 			throw new MyException("ProjectBoard 삽입에러!");
 		}
+		
 		if(result != 0){
 			writing.setBoardNo(pb.getBoardNo());
 			result = dao.insertWritingTB(session, writing);
+			
 			if(result==0) {
 				throw new MyException("WritingTB 삽입에러!");
 			}
@@ -107,7 +109,7 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 	}
 
 	@Override
-	@Transactional //트랜젝션처리!
+//	@Transactional //트랜젝션처리!
 	public int insertTask(InsertTask task, InsertProjectBoard pb, List<InsertHashTag> hashTagList,
 			List<InsertNotification> notList, List<InsertTaskManager> tmList, List<Attachment> files) {
 		//1. ProjectBoard TB
