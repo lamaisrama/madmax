@@ -27,7 +27,7 @@ public class ProjectController {
 	
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
-	public String insertProject(Project p,Model m) {
+	public String insertProject(Project p,Model m,HttpServletRequest req) {
 		
 	
 		if(p.getProjectType()==null) {
@@ -35,18 +35,18 @@ public class ProjectController {
 		}else {
 			p.setProjectType("Y");
 		}
-	
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		//세션에서 받아와 넣을것!
-		p.setUserId("user1");	
+		p.setUserId(id);	
 		 int result=service.insertProject(p);
 		  
 		
 		 if(result>0) {
 		 m.addAttribute("msg","프로젝트 생성 성공"); 
-		 m.addAttribute("loc","/"); 
+		 m.addAttribute("loc","/task/backhome.do"); 
 		 }else {
 		 m.addAttribute("msg","프로젝트 생성 실패"); 
-		 m.addAttribute("loc","/"); 
+		 m.addAttribute("loc","/task/backhome.do"); 
 		 }
 		 
 
