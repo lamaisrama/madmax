@@ -154,7 +154,6 @@
                       
                       <h5 class="colum">&nbsp;부서</h5>
                       <div class="input-group mb-3">
-                        <!-- <input type="text" class="form-control" list="dept" placeholder="클릭하여 부서 선택" size="30"> -->
                         <select class="form-control text-dark" name="deptCode" required>
 							<option value="" disabled selected>부서선택</option>
 							<option value="HR" >인사팀</option>    

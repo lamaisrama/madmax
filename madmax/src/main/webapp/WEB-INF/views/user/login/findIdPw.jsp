@@ -156,8 +156,16 @@
 					success : function(data) {
 						/* console.log(data); */
 						alert(data.msg);
-						location.replace("${path}/user/updatePw?userId="+$("#userId").val());
+						if(data.flag){
+							location.replace("${path}/user/updatePw?userId="+$("#userId").val());						
+						}else{
+							$("#userId").val("");
+							$("#email").val("");
+							$("#userId").focus();
+							return;
+						}
 					},
+			        
 				})
 			});
 		})

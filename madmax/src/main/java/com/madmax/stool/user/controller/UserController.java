@@ -241,13 +241,16 @@ public class UserController {
 				e.printStackTrace();
 			}
 			mv.addObject("msg", "작성한 이메일로 임시비번이 전송되었습니다.");
-			mv.setViewName("jsonView");
+			mv.addObject("flag", true);
 			return mv;
 		}else {
 			mv.addObject("msg", "일치하는 정보가 없습니다.");
-			mv.setViewName("jsonView");
-			return mv;
+			mv.addObject("flag", false);
 		}
+			mv.setViewName("jsonView");		
+			return mv;
+		
+		
 	}
 	
 	@RequestMapping("/user/updatePw")
@@ -264,7 +267,6 @@ public class UserController {
 		
 	}
 	
-	
 	@RequestMapping("/user/updatePw.do")
 	public String updatePw(@RequestParam Map param, Model m) {
 		
@@ -276,7 +278,9 @@ public class UserController {
 		System.out.println("pwc : "+newPw);
 		System.out.println("id : "+userId);
 
-//		if(newPwd.equals(newPw)) {
+		String page = "";
+
+		if(newPwd.equals(newPw)) {
 		
 			newPwd = encoder.encode(newPwd);
 		
@@ -287,19 +291,18 @@ public class UserController {
 		
 			int result = service.updatePw(param);
 
-			String page = "";
 			
 			if(result>0) {
 				page="common/msg";
 				m.addAttribute("msg", "비밀번호 변경 성공!");
 				m.addAttribute("loc", "/");
-			}else {
-				page = "common/msg";
-				m.addAttribute("msg", "비밀번호 변경 실패!");
-				m.addAttribute("loc", "/user/login/findIdPw");
 			}
 			
-//		}
+		}else if(!newPwd.equals(newPw)) {
+			page = "common/msg";
+			m.addAttribute("msg", "비밀번호 변경 실패!");
+			m.addAttribute("loc", "/user/findIdPw");
+		}
 			
 		return page;
 	}
