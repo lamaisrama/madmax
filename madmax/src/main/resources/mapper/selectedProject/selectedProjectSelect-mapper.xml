@@ -89,5 +89,23 @@
 	<select id="selectUser" parameterType="map" resultType="map">
 		SELECT * FROM STOOLUSER
 	</select>
+
+	<select resultType="map" parameterType="map" id="selectProjectTB">
+		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo} 
+	</select>
+	
+	<select resultType="_int" parameterType="map" id="selectFavorit">
+		SELECT COUNT(*) COUNT 
+		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO
+		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId} 
+	</select>
+	
+	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
+		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
+		FROM PROJECTMEMBER PM
+		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
+<!-- 		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo} -->
+
+	</select>
 	
 </mapper>

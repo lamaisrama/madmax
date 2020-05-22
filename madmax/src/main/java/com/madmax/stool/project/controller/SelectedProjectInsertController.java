@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +52,8 @@ public class SelectedProjectInsertController {
 	 
 	
 	@RequestMapping("/selectedProject/insertSelectedProject.do")
-	public ModelAndView insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+	@ResponseBody
+	public String insertSelectedProject(ModelAndView mv, @RequestParam Map<String, String> map, MultipartHttpServletRequest mtfRequest, HttpSession session) {
 
 		
         // 방법 01 : entrySet()
@@ -95,7 +97,7 @@ public class SelectedProjectInsertController {
 				//파일 리네임		
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 				int rnd = (int)(Math.random()*1000);
-				String rename = "file#"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+				String rename = "file_"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
 				
 			//리네임 된 이름으로 파일 저장하기
 				try {
@@ -117,7 +119,7 @@ public class SelectedProjectInsertController {
 				//파일 리네임		
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 				int rnd = (int)(Math.random()*1000);
-				String rename = "img#"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+				String rename = "img_"+sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
 				
 			//리네임 된 이름으로 파일 저장하기
 				try {
@@ -259,11 +261,12 @@ public class SelectedProjectInsertController {
         }
 			
 
-		mv.addObject("pjNo", pjNo);
-		mv.addObject("projectMember", projectMember);
-		mv.setViewName("selectedProject/selectedProject");
-		
-		return mv;
+//		mv.addObject("pjNo", pjNo);
+//		mv.addObject("projectMember", projectMember);
+//		mv.setViewName("selectedProject/selectedProject");
+//		
+//		return mv;
+		return "성공";
 	}
 	
 }

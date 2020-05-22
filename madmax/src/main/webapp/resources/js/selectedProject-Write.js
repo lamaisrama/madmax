@@ -7,7 +7,29 @@ function captureReturnKey(e) {
 }
 
 function fn_writeSubmit(){
-	return location.replace("http://localhost:9090/stool/selectedProject/selectedProject.do?pjNo=1");
+    // Get form
+    var form = $('#pjMainForm')[0];
+
+    // Create an FormData object 
+    var data = new FormData(form);
+
+
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "http://localhost:9090/stool/selectedProject/insertSelectedProject.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+        	alert("complete");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("fail");
+        }
+    });
 }
 
 //카테고리버튼 선택

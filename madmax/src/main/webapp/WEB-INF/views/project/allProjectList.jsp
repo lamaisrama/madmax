@@ -60,8 +60,6 @@
 
 </script>
 
-
-
 <div class="col-sm-7 mt-5">
 			<div id="myBoardTitle">
 		               <h4><b>전체 프로젝트</b></h4>
