@@ -5,12 +5,16 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.madmax.stool.project.model.vo.ProjectMember;
+
 public interface SelectedProjectSelectDao {
 
 	List<Map<String, Object>> selectProjectBoard(SqlSessionTemplate session, int pjNo);
 	List<Map<String, Object>> selectWritingList(SqlSessionTemplate session, int pjNo);
 	List<Map<String, Object>> selectTaskList(SqlSessionTemplate session, int pjNo);
 	List<Map<String, Object>> selectScheduleList(SqlSessionTemplate session, int pjNo);
+	Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo);
+	int selectFavorit(SqlSessionTemplate session, Map<String,Object> pjInfo);
 	Map<String, Object> selectPinPostCount(SqlSessionTemplate session);
 	List<Map<String, Object>> selectHashTag(SqlSessionTemplate session);
 	List<Map<String, Object>> selectNotification(SqlSessionTemplate session);
@@ -21,6 +25,7 @@ public interface SelectedProjectSelectDao {
 	List<Map<String, Object>> selectWritingComment(SqlSessionTemplate session);
 	List<Map<String, Object>> selectTaskComment(SqlSessionTemplate session);
 	List<Map<String, Object>> selectScheduleComment(SqlSessionTemplate session);
+	List<ProjectMember> selectProjectMemberList(SqlSessionTemplate session, int pjNo);
 	
 
 	

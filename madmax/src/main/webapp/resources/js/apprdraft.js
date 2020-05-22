@@ -35,7 +35,3 @@
 			if(flag) window.close();
 		}	
 
-		function date(){
-			
-		}
-		

@@ -355,11 +355,11 @@ $("#moreOption").click(()=>{
     $("#moreOptionModal").show();
 });
 $("#mainClose").click(()=>{
-$("#myModal").modal("hide");
+$("#myModal").modal('hide');
 });
-$("#optionClose").click(()=>{
-$("#myModal").modal("hide");
+/* $("#optionClose").click(()=>{
+$("#myModal").hide();
 $("#moreOptionModal").modal("hide");
-});
+}); */
 
 </script>

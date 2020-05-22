@@ -18,11 +18,11 @@
 	</select>
 	
 	<select id="selectCometime" resultType="worktime">
-		SELECT TO_CHAR(COMETIME,'hh24:mi') FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
 	</select>
 	
-	<select id="selectGotime">
-		SELECT TO_CHAR(GOTIME,'hh24:mi') FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+	<select id="selectGotime" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD') AND GOTIME=NULL
 	</select>
 	
 	<select id="selectWorktime" parameterType="worktime" resultType="worktime">
@@ -44,4 +44,5 @@
 	<update id="updateRequestState" parameterType="attend">
 		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestReason} WHERE MANAGEMENTNO=#{managementNo}
 	</update>
+
 </mapper>

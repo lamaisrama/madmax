@@ -28,16 +28,22 @@
     
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
-                <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: #25558F;">
+                <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: ${projectInfo.PROJECTCOLOR};">
                     <div id="pjInfoBox" class="row w-100 d-flex align-items-center m-0">
                         <input type="hidden" name="pjBookmark" id="pjBookmark"/>
-                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_bookmark();">
-                            <i class="far fa-star text-white" id="bookmarkIcon"></i>
-                        </button>
-
+						<c:if test="${favorite > 0}">
+	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_bookmark();">
+	                            <i class="fas fa-star text-white" id="bookmarkIcon"></i>
+	                        </button>
+                        </c:if>
+                     	<c:if test="${favorite == 0}">
+	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_bookmark();">
+	                            <i class="far fa-star text-white" id="bookmarkIcon"></i>
+	                        </button>
+						</c:if>
+						
                         <h4 class="col-9 h-50 w-100 flex-wrap text-white m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                           	<%-- <c:out value="${loginUser.userId}"/> --%>
-                           	<c:out value="${scheduleList.size()}"/>
+                           	<c:out value="${projectInfo.PROJECTTITLE}"/>
                         </h4>
                         
                         <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
@@ -70,11 +76,14 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" onclick="fn_pjHide()">프로젝트 숨기기</a>
                                 <a class="dropdown-item" onclick="fn_pjGoOut()">프로젝트 나가기</a>
-                                <a class="dropdown-item" onclick="fn_pjUpdate()">프로젝트 수정</a>
-                                <a class="dropdown-item" onclick="fn_pjDelete()">프로젝트 삭제</a>
+                                <c:if test="${projectInfo.USERID == loginUser.userId}">
+	                                <a class="dropdown-item" onclick="fn_pjUpdate()">프로젝트 수정</a>
+	                                <a class="dropdown-item" onclick="fn_pjDelete()">프로젝트 삭제</a>
+	                            </c:if>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item d-flex flex-column">
                                     <strong>프로젝트 번호</strong>
+                                    <p class="p-0 m-0"><c:out value="${projectInfo.PROJECTNO}"/></p>
                                     <p class="p-0 m-0">
                                     	<c:out value="${PROJECTNO }"/>
                                     </p>
@@ -115,12 +124,13 @@
 
 
                 <!-- 게시물 작성 -->
-                <form action="${path}/selectedProject/insertSelectedProject.do" method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
+                <form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
 				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
-				    <input type="hidden" name="writer" value="user05"/>    
+				    <%-- <input type="hidden" name="writer" value="${loginUser.userId}"/> --%>    
+				    <input type="hidden" name="writer" value="admin"/>    
 				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
-				    <input type="hidden" name="selectedProjectNo" value="${pjNo}"/>    
+				    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
                     <!-- 2) 글 타입 -->
                     <input type="hidden" name="boardType" id="boardType" value="writing"/>
                     <!-- 3) 파일-->                

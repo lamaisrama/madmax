@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -173,6 +174,14 @@ public class ApprovalController {
 	public boolean updateTemporary(int apprNo) {
 		if(service.updateTemporary(apprNo)>0) return true;
 		else return false;
+		
+	}
+	
+	@RequestMapping("/appr/attachAppredDoc.do")
+	public String attachAppredDoc(String deptCode, Model m) {
+		List<ApprDoc> list = service.selectAttachAppredDoc(deptCode);
+		m.addAttribute("list", list);
+		return "approval/appredDocList";
 		
 	}
 	

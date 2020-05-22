@@ -25,10 +25,10 @@
 	<form action="${path }/appr/draftFormEnd" method="post" onsubmit="return beforeSubmit();">
 	<input type="hidden" name="apprDocTypeNo" value="${appr.typeTitle }">
 	<div class="header">
-		<c:if test="${appr.apprStatus==1 }">
+		<c:if test="${appr.userId}.equals('${ loginUser.userId}') && appr.apprStatus==1 }">
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">회수</button>
 		</c:if>
-		<c:if test="${appr.apprStatus==0 }">
+		<c:if test="${appr.userId}.equals('${ loginUser.userId}') &&  ${appr.apprStatus==0 }">
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">재기안</button>
 			<button type="button" class="btn btnPrimary" onclick="deleteDraft('${appr.apprNo }');">삭제</button>
 		</c:if>

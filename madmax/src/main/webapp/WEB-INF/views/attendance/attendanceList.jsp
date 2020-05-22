@@ -60,38 +60,7 @@
             </tr>
             </c:forEach>
             </c:if>
-            <!-- <tr class="">
-                <th scope="row">4</th>
-                <td>2020-05-12</td>
-                <td>9:00</td>
-                <td>18:00</td>
-                <td>출근</td>
-                <td><button type="button" class="btn btn-outline-secondary">수정요청</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>2020-05-11</td>
-                <td>9:00</td>
-                <td>18:00</td>
-                <td>출근</td>
-                <td><button type="button" class="btn btn-outline-secondary">수정요청</button></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>2020-05-10</td>
-                <td>-</td>
-                <td>-</td>
-                <td>결근</td>
-                <td><button type="button" class="btn btn-outline-secondary">수정요청</button></td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>2020-05-09</td>
-                <td>-</td>
-                <td>-</td>
-                <td>휴가</td>
-                <td><button type="button" class="btn btn-outline-secondary">수정요청</button></td>
-            </tr> -->
+ 
             </tbody>
         </table>	
         

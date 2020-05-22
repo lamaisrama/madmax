@@ -19,8 +19,10 @@ public interface AttendService {
 	
 	int insertEmpManage(int no);
 	
+	// 출근시간 가져오기
 	Worktime selectCometime(Worktime w);
 	
+	// 퇴근시간 가져오기
 	Worktime selectGotime(Worktime w);
 
 	Worktime selectWorktime(Worktime w);
@@ -30,4 +32,5 @@ public interface AttendService {
 	int insertAbsence(int no);
 	
 	int updateRequestState(Attendance a);
+	
 }
