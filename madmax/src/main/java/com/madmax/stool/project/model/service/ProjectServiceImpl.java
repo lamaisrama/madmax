@@ -72,6 +72,20 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return dao.selectProjectCount(session,id);
 	}
+
+
+	@Override
+	public List<Project> selectComProjectList(String id, int cPage, int numPerpage) {
+		// TODO Auto-generated method stub
+		return dao.selectComProjectList(session,id,cPage,numPerpage);
+	}
+
+
+	@Override
+	public int selectComProjectCount(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectComProjectCount(session,id);
+	}
 		
 		
 	
