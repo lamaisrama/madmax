@@ -76,7 +76,7 @@
 							data-toggle="modal"
 							data-target="#member">
 								<c:choose>
-									<c:when test="${user.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+									<c:when test="${projectMember.PROFILE eq null}"> <!-- 프로필이 널이면 -->
 										<img 
 										id="profileImg"
 										src="${path}/resources/images/defaultProfile.png"
@@ -85,12 +85,12 @@
 									<c:otherwise>
 										<img 
 										id="profileImg"
-										src="${path}/resources/images${user.PROFILE}"
+										src="${path}/resources/images${projectMember.PROFILE}"
 										alt="프로필사진">
 									</c:otherwise>
 								</c:choose>  
 								<span id="memberName">
-									<%-- 프로젝트 생성자 <c:out value="${}"/>  --%>
+									<c:out value="${projectMember.USERNAME}"/> <!-- 플젝 생성자 이름 -->
 								</span>
 							</div>
 						</c:if>
@@ -103,7 +103,7 @@
 					<p>참여자(<c:out value="${projectMemberNo}-1"/>)</p>
 					
 					<ul class="detailedList">
-						<c:forEach var="pm" items="${projectMember}">
+						<c:forEach var="pm" items="${projectMemberList}">
 						<c:if test="${pm.USERID eq user.USERID }">
 						<li>
 							<div 
@@ -111,7 +111,7 @@
 							data-toggle="modal"
 							data-target="#member">
 							<c:choose>
-								<c:when test="${user.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+								<c:when test="${pm.PROFILE eq null}"> <!-- 프로필이 널이면 -->
 									<img 
 									id="profileImg"
 									src="${path}/resources/images/defaultProfile.png"
@@ -120,12 +120,12 @@
 								<c:otherwise>
 									<img 
 									id="profileImg"
-									src="${path}/resources/images${user.PROFILE}"
+									src="${path}/resources/images${pm.PROFILE}"
 									alt="프로필사진">
 								</c:otherwise>
 							</c:choose>
 								<span id="memberName"> 
-									<c:out value="${user.USERNAME}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
+									<c:out value="${pm.USERNAME}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
 								</span>
 							</div>
 						</li>
@@ -239,18 +239,18 @@ img#cardProfileImg {
 										<td>
 											<button type="button" 
 											class="btn btn-sm btn-outline-dark"
-											onclick="fn_filedownload">
+											onclick="fileDownload('${afl.PJFILEORINAME}','${afl.PJFILERENAMEDNAME }')">
 												<span class="material-icons" style="font-size: smaller;">
 													save_alt 
 												</span>
 											</button>
 											
-											<script>
+											<!-- <script>
 											/*파일다운로드 스크립트*/
-												function fn_filedownload(){
+												function fileDownload(){
 													
 												}
-											</script>
+											</script> -->
 										</td>
 										<!--버튼을 누르면 파일을 자동으로 다운받음 -->
 									</tr>
@@ -359,7 +359,7 @@ img#cardProfileImg {
 				<div style="padding: 25px 40px;">
 					<div>
 						<span id="">이시은</span> <span>과장</span>
-						<p>test | 항공업무부</p>
+						<p>항공업무부</p>
 					</div>
 					<hr>
 					<div style="margin-bottom: 20px;">

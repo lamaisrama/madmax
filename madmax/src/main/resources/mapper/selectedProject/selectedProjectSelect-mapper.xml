@@ -65,11 +65,11 @@
 		SELECT * FROM SCHEDULECOMMENT
 	</select>
 	
-	
-	<!-- 관리자 포함 또는 관리자 제외 전체 프로젝트 참여 인원수 -->
+	<!--  asidebar-mapper로 이동
+	관리자 포함 또는 관리자 제외 전체 프로젝트 참여 인원수
 	<select id="selectProjectMemberNo" parameterType="map" resultType="map">
 		SELECT COUNT(USERID) FROM PROJECTMEMBER
-	</select>
+	</select> -->
 	
 	<!-- 프로젝트의 파일 가져오기 -->
 	<select id="selectAllFileList" parameterType="map" resultType="map">
@@ -79,16 +79,19 @@
 		JOIN PROJECTBOARD PB USING (PROJECTNO) 
 		JOIN WRITING W USING (BOARDNO) 
 		JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
-		JOIN STOOLUSER U USING (USERID)
+		JOIN STOOLUSER U USING (USERID) WHERE PROJECTNO=#{pjNo}
 	</select>
 	
+	
+	<!--
 	<select id="selectProjectMember" parameterType="map" resultType="map">
 		SELECT * FROM PROJECTMEMBER
 	</select>
 	
 	<select id="selectUser" parameterType="map" resultType="map">
 		SELECT * FROM STOOLUSER
-	</select>
+	</select> 
+	-->
 
 	<select resultType="map" parameterType="map" id="selectProjectTB">
 		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo} 
@@ -104,8 +107,6 @@
 		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
 		FROM PROJECTMEMBER PM
 		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
-<!-- 		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo} -->
-
 	</select>
 	
 </mapper>

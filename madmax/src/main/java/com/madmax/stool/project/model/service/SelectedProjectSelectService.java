@@ -13,15 +13,15 @@ public interface SelectedProjectSelectService {
 	List<Map<String, Object>> selectHashTag();
 	List<Map<String, Object>> selectNotification();
 	List<Map<String, Object>> selectTaskManager();
-	List<Map<String, Object>> selectProjectMember();
+//	List<Map<String, Object>> selectProjectMember();
 	List<Map<String, Object>> selectWritingAttachment();
 	List<Map<String, Object>> selectTaskAttachment();
 	List<Map<String, Object>> selectWritingComment();
 	List<Map<String, Object>> selectTaskComment();
 	List<Map<String, Object>> selectScheduleComment();
-	Map<String, Object> selectProjectMemberNo();
+//	Map<String, Object> selectProjectMemberNo();
 	List<Map<String, Object>> selectAllFileList();
-	List<Map<String, Object>> selectUser();
+//	List<Map<String, Object>> selectUser();
 	
 
 

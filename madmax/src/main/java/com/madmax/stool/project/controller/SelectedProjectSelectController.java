@@ -55,16 +55,16 @@ public class SelectedProjectSelectController {
 		List<Map<String,Object>> notification=service.selectNotification();
 		
 		//프로젝트 참여 멤버 수
-		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
+//		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
 		
 		//한 프로젝트의 파일함의 파일 가져오기
 		List<Map<String,Object>> allFileList=service.selectAllFileList();
 		
 		//오른쪽 사이드바 프로젝트 참여자 가져오기
-		List<Map<String,Object>> projectMember=service.selectProjectMember();
+//		List<Map<String,Object>> projectMember=service.selectProjectMember();
 		
 		//스툴유저 테이블 가져오기
-		List<Map<String,Object>> user=service.selectUser();
+//		List<Map<String,Object>> user=service.selectUser();
 		
 		mv.addObject("projectBoardList",projectBoardList);
 		mv.addObject("writingList",writingList);
@@ -84,11 +84,11 @@ public class SelectedProjectSelectController {
 		if(hashTag.size()>0)mv.addObject("hashTag",hashTag);
 		if(notification.size()>0)mv.addObject("notification",notification);
 		
-		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+//		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
 		
-		mv.addObject("projectMemberNo",projectMemberNo);
+//		mv.addObject("projectMemberNo",projectMemberNo);
 		if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
-		mv.addObject("user",user);
+//		mv.addObject("user",user);
 		
 		
 		

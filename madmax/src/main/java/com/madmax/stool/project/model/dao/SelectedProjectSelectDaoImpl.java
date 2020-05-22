@@ -57,11 +57,11 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectTaskManager");
 	}
 
-	@Override
-	public List<Map<String, Object>> selectProjectMember(SqlSessionTemplate session) {
+//	@Override
+//	public List<Map<String, Object>> selectProjectMember(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectList("selectedProjectSelect.selectProjectMember");
-	}
+//		return session.selectList("selectedProjectSelect.selectProjectMember");
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment(SqlSessionTemplate session) {
@@ -93,11 +93,11 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectScheduleComment");
 	}
 
-	@Override
-	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session) {
+//	@Override
+//	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectOne("selectedProjectSelect.selectProjectMemberNo");
-	}
+//		return session.selectOne("selectedProjectSelect.selectProjectMemberNo");
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session) {
@@ -105,11 +105,11 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectAllFileList");
 	}
 
-	@Override
-	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
+//	@Override
+//	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectList("selectedProjectSelect.selectUser");
-	}
+//		return session.selectList("selectedProjectSelect.selectUser");
+//	}
 	
 	
 	

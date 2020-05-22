@@ -66,11 +66,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectTaskManager(session);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectProjectMember() {
+//	@Override
+//	public List<Map<String, Object>> selectProjectMember() {
 		// TODO Auto-generated method stub
-		return dao.selectProjectMember(session);
-	}
+//		return dao.selectProjectMember(session);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment() {
@@ -102,11 +102,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectScheduleComment(session);
 	}
 
-	@Override
-	public Map<String, Object> selectProjectMemberNo() {
+//	@Override
+//	public Map<String, Object> selectProjectMemberNo() {
 		// TODO Auto-generated method stub
-		return dao.selectProjectMemberNo(session);
-	}
+//		return dao.selectProjectMemberNo(session);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectAllFileList() {
@@ -114,11 +114,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectAllFileList(session);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectUser() {
+//	@Override
+//	public List<Map<String, Object>> selectUser() {
 		// TODO Auto-generated method stub
-		return dao.selectUser(session);
-	}
+//		return dao.selectUser(session);
+//	}
 	
 	
 	
