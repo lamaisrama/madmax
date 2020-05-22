@@ -69,7 +69,7 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	@Override
 	public List<Map<String, Object>> selectProjectMember() {
 		// TODO Auto-generated method stub
-		return dao.selectprojectMember(session);
+		return dao.selectProjectMember(session);
 	}
 
 	@Override
@@ -101,6 +101,26 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		// TODO Auto-generated method stub
 		return dao.selectScheduleComment(session);
 	}
+
+	@Override
+	public Map<String, Object> selectProjectMemberNo() {
+		// TODO Auto-generated method stub
+		return dao.selectProjectMemberNo(session);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAllFileList() {
+		// TODO Auto-generated method stub
+		return dao.selectAllFileList(session);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectUser() {
+		// TODO Auto-generated method stub
+		return dao.selectUser(session);
+	}
+	
+	
 	
 	
 	

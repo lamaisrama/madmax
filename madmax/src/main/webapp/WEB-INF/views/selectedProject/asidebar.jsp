@@ -25,7 +25,7 @@
 	<div class="row">
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
 		<div>
-			<button id="beforePage" type="button" class="btn btn-outline-primary">
+			<button id="beforePage" type="button" class="btn btn-outline-primary" onclick="fn_goBack()">
 				<span>이전화면</span>
 			</button>
 		</div>
@@ -39,10 +39,10 @@
 			<button type="button" id="threeBtn" class="btn btn-outline-primary" data-toggle="modal" data-target="#fileListModal">
 				<span>파일함</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn btn-outline-primary">
+			<button type="button" id="threeBtn" class="btn btn-outline-primary" onclick="">
 				<span>업무</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn btn-outline-primary">
+			<button type="button" id="threeBtn" class="btn btn-outline-primary" onclick="">
 				<span>일정</span>
 			</button>
 		</div>
@@ -54,7 +54,7 @@
 		<!--전체참여자 확인박스-->
 		<div class="allMemberListBox">
 			<div class="allMemberListCount">
-				<span>전체 참여자 4명</span> 
+				<span>전체 참여자 ${projectMemberNo}명</span> 
 					<a 
 					href="#" 
 					style="text-decoration: none;"
@@ -70,61 +70,69 @@
 					<p>관리자(1)</p>
 					<ul class="detailedList">
 						<li>
+						<c:if test="${user.USERID eq projectBoardList.USERID eq projectMember.USERID}">
 							<div
 							class="member"
 							data-toggle="modal"
 							data-target="#member">
-								<img 
-								id="profileImg"
-								src="${path}/resources/images/defaultProfile.png"
-								alt="프로필사진">  
-								<span id="memberName"> 홍길동 </span>
+								<c:choose>
+									<c:when test="${user.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+										<img 
+										id="profileImg"
+										src="${path}/resources/images/defaultProfile.png"
+										alt="프로필사진">
+									</c:when>
+									<c:otherwise>
+										<img 
+										id="profileImg"
+										src="${path}/resources/images${user.PROFILE}"
+										alt="프로필사진">
+									</c:otherwise>
+								</c:choose>  
+								<span id="memberName">
+									<%-- 프로젝트 생성자 <c:out value="${}"/>  --%>
+								</span>
 							</div>
+						</c:if>
 						</li>
 					</ul>
 				</div>
 				<!--관리자-->
 				<hr>
 				<div class="memberList">
-					<p>참여자(3)</p>
+					<p>참여자(<c:out value="${projectMemberNo}-1"/>)</p>
+					
 					<ul class="detailedList">
+						<c:forEach var="pm" items="${projectMember}">
+						<c:if test="${pm.USERID eq user.USERID }">
 						<li>
 							<div 
 							class="member"
 							data-toggle="modal"
 							data-target="#member">
-								<img 
-								id="profileImg"
-								src="${path}/resources/images/defaultProfile.png"
-								alt="프로필사진"> 
-								<span id="memberName"> 홍길동 </span>
+							<c:choose>
+								<c:when test="${user.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+									<img 
+									id="profileImg"
+									src="${path}/resources/images/defaultProfile.png"
+									alt="프로필사진">
+								</c:when>
+								<c:otherwise>
+									<img 
+									id="profileImg"
+									src="${path}/resources/images${user.PROFILE}"
+									alt="프로필사진">
+								</c:otherwise>
+							</c:choose>
+								<span id="memberName"> 
+									<c:out value="${user.USERNAME}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
+								</span>
 							</div>
 						</li>
-						<li>
-							<div 
-							class="member"
-							data-toggle="modal"
-							data-target="#member">
-								<img 
-								id="profileImg"
-								src="${path}/resources/images/defaultProfile.png"
-								alt="프로필사진"> 
-								<span id="memberName"> 홍길동 </span>
-							</div>
-						</li>
-						<li>
-							<div 
-							class="member"
-							data-toggle="modal"
-							data-target="#member">
-								<img 
-								id="profileImg"
-								src="${path}/resources/images/defaultProfile.png"
-								alt="프로필사진"> 
-								<span id="memberName"> 홍길동 </span>
-							</div>
-						</li>
+						</c:if>
+						</c:forEach>
 					</ul>
+					
 				</div>
 				<!--참여자-->
 			</div>
@@ -216,21 +224,38 @@ img#cardProfileImg {
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach var="afl" items="${allFileList }">
+									<c:if test="${afl.PROJECTNO==pb.PROJECTNO }">
 									<tr>
-										<td class="fileName">파일이름.jpg</td>
-										<td>2020.05.01</td>
-										<!-- 파일 올린 날짜 -->
-										<td>홍길동</td>
-										<!-- 파일 올린 사람 -->
+										<td class="fileName">${afl.PJFILEORINAME}</td>
 										<td>
-											<button type="button" class="btn btn-sm btn-outline-dark">
+											<fmt:formatDate type="date" value="${afl.WRITINGTIME}" />
+										</td>
+										<!-- 파일 올린 날짜 -->
+										<td>
+											<c:out value="${afl.USERNAME }"/>
+										</td>
+										<!-- 파일 올린 사람 이름-->
+										<td>
+											<button type="button" 
+											class="btn btn-sm btn-outline-dark"
+											onclick="fn_filedownload">
 												<span class="material-icons" style="font-size: smaller;">
 													save_alt 
 												</span>
 											</button>
+											
+											<script>
+											/*파일다운로드 스크립트*/
+												function fn_filedownload(){
+													
+												}
+											</script>
 										</td>
 										<!--버튼을 누르면 파일을 자동으로 다운받음 -->
 									</tr>
+									</c:if>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

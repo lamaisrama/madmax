@@ -19,6 +19,9 @@ public interface SelectedProjectSelectService {
 	List<Map<String, Object>> selectWritingComment();
 	List<Map<String, Object>> selectTaskComment();
 	List<Map<String, Object>> selectScheduleComment();
+	Map<String, Object> selectProjectMemberNo();
+	List<Map<String, Object>> selectAllFileList();
+	List<Map<String, Object>> selectUser();
 	
 
 

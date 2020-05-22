@@ -58,7 +58,7 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectprojectMember(SqlSessionTemplate session) {
+	public List<Map<String, Object>> selectProjectMember(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectList("selectedProjectSelect.selectProjectMember");
 	}
@@ -92,6 +92,27 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		// TODO Auto-generated method stub
 		return session.selectList("selectedProjectSelect.selectScheduleComment");
 	}
+
+	@Override
+	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("selectedProjectSelect.selectProjectMemberNo");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectAllFileList");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectUser");
+	}
+	
+	
+	
 	
 	
 	

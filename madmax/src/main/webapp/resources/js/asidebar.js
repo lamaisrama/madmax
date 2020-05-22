@@ -1,4 +1,9 @@
-/*파일함의 파일명으로 검색하기*/
+/*이전화면*/
+function fn_goBack() {
+	window.history.go(-1);
+}
+			
+/* 파일함의 파일명으로 검색하기 */
 $(document).ready(function(){
 	$("#searchFileName").on("keyup", function() {
 		var value = $(this).val().toLowerCase();
@@ -24,6 +29,7 @@ $(document).ready(function(){
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();
 });
+
 
 function exitFunction() {
 	var exitBtn = document.getElementById("exitBtn");
