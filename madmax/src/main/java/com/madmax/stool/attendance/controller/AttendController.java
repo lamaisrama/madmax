@@ -124,8 +124,10 @@ public class AttendController {
 				
 				result=service.insertEmpManage(wt.getManagementNo());
 			}else if(come.get(Calendar.HOUR)>9){
+				// 지각
 				result=service.insertLate(wt.getManagementNo());
 			}else {
+				//결근
 				result=service.insertAbsence(wt.getManagementNo());
 			}
 			

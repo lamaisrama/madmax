@@ -145,6 +145,8 @@
 							alert("출근 시간이 이미 입력되었습니다.");
 							//$('#checkState').modal("hide");
 						}else if(data==false) {
+							// 출근 시간이 있으면 true,없으면 false;
+							
 							
 							//console.log(stateRequest());
 							//$('#checkState').modal("hide");
@@ -155,25 +157,26 @@
 			});
 		});
 		
-		$(document).ready(function() {
+ 		$(document).ready(function() {
 
 			$("#go").click(function() { 
 				$.ajax({
-					url : '${path}/attd/checkCometime.do',
+					url : '${path}/attd/checkGotime.do',
 					type:"post",
 					data:$("#checkForm").serialize(),
 					success : function(data) { 
 						console.log(data);
-						if(!data){
-							alert("출근시간이 입력되지 않았습니다.");
+						// 있으면 true,없으면 false;
+						if(data){
+							alert("퇴근 했습니다.");
 							return ;
-						}else{
+						}else if(data==false){
 							stateRequest();
 						}
 					}
 				});
 			});
-		});
+		}); 
 		
 		
 		
