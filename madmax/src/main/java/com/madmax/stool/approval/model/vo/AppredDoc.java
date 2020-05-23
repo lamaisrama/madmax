@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class AppredDoc {
 	private int apprNo;
 	private int appredNo;
+	private String apprTitle;
 }

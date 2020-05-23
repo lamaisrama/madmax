@@ -1,17 +1,23 @@
 package com.madmax.stool.approval.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -92,7 +98,7 @@ public class ApprovalController {
 		List<AppredDoc> appred = new ArrayList(); 
 		if(appredNo!=null) {			
 			for(int i : appredNo) {
-				AppredDoc a = new AppredDoc(0, i);
+				AppredDoc a = new AppredDoc(0, i, "");
 				appred.add(a);
 			}
 		}
@@ -265,4 +271,44 @@ public class ApprovalController {
 		else return false;
 	}
 
+	@RequestMapping("/appr/fileDownload")
+	public void fileDownload(String ori, String rename, ServletOutputStream out,
+				HttpSession session, @RequestHeader(value="user-agent") String header,
+				HttpServletResponse res) {
+	
+		//파일 경로
+		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		//보조스트림
+		BufferedInputStream bis = null;
+		File f = new File(path+"/"+rename);
+		try {
+			bis = new BufferedInputStream(new FileInputStream(f));
+			boolean MSIE = header.indexOf("MSIE")!=-1||header.indexOf("Trident")!=-1;
+			String oriName="";
+			if(MSIE) {
+				oriName=URLEncoder.encode(ori, "UTF-8");
+				oriName=oriName.replaceAll("\\+","%20");
+				
+			}else {
+				oriName=new String(ori.getBytes("UTF-8"), "ISO-8859-1");	
+			}
+			res.setContentType("application/otect-stream;charset=UTF-8");
+			res.addHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+			
+			int read=-1;
+			while((read=bis.read())!=-1) {
+				out.write(read);
+			}
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				bis.close();
+				out.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

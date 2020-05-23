@@ -26,9 +26,9 @@
 	                 <tr>
 	                 		<td>${l.typeTitle }</td>
 	                 		<td><a href="javascript:void(0)" 
-		onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
-		'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-		${l.apprTitle }</a></td>
+								onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+								'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+								${l.apprTitle }</a></td>
 	                 		<td>${l.userName }</td>
 	                 		<td><fmt:formatDate value="${l.writeDate }" pattern="yyyy-MM-dd" /> </td>
 	                 		<td><button type="button" class="btn btn-light btn-sm" onclick="addAppredDoc('${l.apprNo}', '${l.apprTitle }')">선택</button></td>

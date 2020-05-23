@@ -68,6 +68,15 @@
 			WHERE APPRNO=#{apprNo} ORDER BY APPRSTEP
 	</select>
 	
+	<select id="selectAppredDoc" parameterType="_int" resultType="appredDoc">
+		SELECT A.APPRNO, APPREDNO, APPRTITLE FROM APPR_APPRED A 
+			JOIN APPROVAL B ON (A.APPREDNO=B.APPRNO) WHERE A.APPRNO=#{apprNo}
+	</select>
+	
+	<select id="selectApprAttachment" parameterType="_int" resultType="apprAttachment">
+		SELECT * FROM APPRATTACHMENT WHERE APPRNO=#{apprNo}
+	</select>
+	
 	<select id="selectReceiverName" parameterType="string" resultType="string">
 		SELECT USERNAME AS RECEIVERNAME FROM STOOLUSER WHERE USERID=#{userId}
 	</select>

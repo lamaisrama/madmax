@@ -41,6 +41,8 @@ public interface ApprovalDao {
 	int updateApprStatusEnd(SqlSessionTemplate session, ApprLine line);
 	int updateApprStatusIng(SqlSessionTemplate session, ApprLine line);
 	List<ApprDoc> selectAttachAppredDoc(SqlSessionTemplate session, String deptCode);
+	List<AppredDoc> selectAppredDoc(SqlSessionTemplate session, int apprNo);
+	List<ApprAttachment> selectApprAttachment(SqlSessionTemplate session, int apprNo);
 
 
 }

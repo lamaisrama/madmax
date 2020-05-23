@@ -86,7 +86,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return session.selectList("approval.selectApprLine", apprNo);
 	}
 	
-	
+	@Override
+	public List<AppredDoc> selectAppredDoc(SqlSessionTemplate session, int apprNo) {
+		return session.selectList("approval.selectAppredDoc", apprNo);
+	}
+
+	@Override
+	public List<ApprAttachment> selectApprAttachment(SqlSessionTemplate session, int apprNo) {
+		return session.selectList("approval.selectApprAttachment", apprNo);
+	}
+
 	@Override
 	public String selectReceiverName(SqlSessionTemplate session, String userId) {
 		return session.selectOne("approval.selectReceiverName", userId);

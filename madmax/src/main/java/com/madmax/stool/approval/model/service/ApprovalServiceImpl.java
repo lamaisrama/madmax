@@ -107,6 +107,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setApprLine(lines);
 		//3. 수신인 이름 가져오기
 		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
+		//4. 기결재문서 가져오기
+		appr.setAppredDoc(dao.selectAppredDoc(session, apprNo));
+		//5. 첨부파일 가져오기
+		appr.setApprAttachment(dao.selectApprAttachment(session, apprNo));
 		return appr;
 	}
 
@@ -119,6 +123,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setApprLine(lines);
 		//3. 수신인 이름 가져오기
 		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
+		//4. 기결재문서 가져오기
+		appr.setAppredDoc(dao.selectAppredDoc(session, approval.getApprNo()));
+		//5. 첨부파일 가져오기
+		appr.setApprAttachment(dao.selectApprAttachment(session, approval.getApprNo()));
 		return appr;
 	}
 

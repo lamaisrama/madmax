@@ -126,24 +126,9 @@
 					initialEditType: 'wysiwyg',
 					previewStyle: 'vertical',
 					hideModeSwitch: 'true',
-					toolbarItems: [
-						'heading',
-						'bold',
-						'italic',
-						'strike',
-						'divider',
-						'hr',
-						'quote',
-						'divider',
-						'ul',
-						'ol',
-						'task',
-						'indent',
-						'outdent',
-						'divider',
-						'table',
-						'divider',
-					]
+					toolbarItems: ['heading', 'bold', 'italic', 'strike', 'divider',
+						'hr', 'quote', 'divider', 'ul', 'ol', 'task', 'indent',
+						'outdent', 'divider', 'table', 'divider',]
 				});
 			}
 
