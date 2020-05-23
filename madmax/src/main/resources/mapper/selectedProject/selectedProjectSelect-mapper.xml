@@ -4,7 +4,7 @@
 
 	<select id="selectProjectBoard" parameterType="map" resultType="map">
 		 <![CDATA[
-			 SELECT * FROM (SELECT * FROM PROJECTBOARD PB JOIN PROJECTTABLE PT USING(PROJECTNO) ORDER BY BOARDNO DESC) 
+			 SELECT * FROM (SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO ORDER BY BOARDNO DESC) 
 			 WHERE ROWNUM <=5
 		 ]]>
 	</select>
@@ -12,6 +12,8 @@
 	<!-- 글,업무,일정에 대한 기본 테이블 불러오기 -->
 	<select id="selectWritingList" parameterType="map" resultType="map">
 		SELECT * FROM WRITING
+		<!-- JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
+		JOIN WRITINGCOMMENT WC USING (WRITINGNO) -->
 	</select>
 	
 	<select id="selectTaskList" parameterType="map" resultType="map">
@@ -92,21 +94,21 @@
 		SELECT * FROM STOOLUSER
 	</select> 
 	-->
-
-	<select resultType="map" parameterType="map" id="selectProjectTB">
-		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo} 
-	</select>
-	
-	<select resultType="_int" parameterType="map" id="selectFavorit">
-		SELECT COUNT(*) COUNT 
-		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO
-		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId} 
-	</select>
 	
 	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
 		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
 		FROM PROJECTMEMBER PM
 		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
+	</select>
+	
+	<select resultType="map" parameterType="map" id="selectProjectTB">
+		SELECT * FROM PROJECTTABLE WHERE PROJECTNO = #{pjNo} 
+	</select>
+	
+	<select resultType="_int" parameterType="map" id="selectFavorit">
+		SELECT COUNT(*) COUNT
+		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO
+		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}
 	</select>
 	
 </mapper>

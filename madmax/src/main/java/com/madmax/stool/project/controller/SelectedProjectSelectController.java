@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
+import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Controller
 public class SelectedProjectSelectController {
@@ -22,17 +23,22 @@ public class SelectedProjectSelectController {
 	private SelectedProjectSelectService service;
 	
 	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo) {
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
 		
 	
+		//프로젝트관련 정보
+		Map<String,Object> pjInfo = new HashMap();
+		pjInfo.put("pjNo", pjNo);
+		pjInfo.put("loginId", loginId);
+		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
+		int favorite=service.selectFavorit(pjInfo);
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
+		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		
 		//글
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> writingComment=service.selectWritingComment();
-		logger.info("왤까 : "+writingComment.size());
-//		System.out.println("_______++++++++++++++++++____________________");
-//		System.out.println(writingComment.size());
+		
 		List<Map<String,Object>> writingAttachment=service.selectWritingAttachment();
 		
 		//업무
@@ -66,10 +72,14 @@ public class SelectedProjectSelectController {
 		//스툴유저 테이블 가져오기
 //		List<Map<String,Object>> user=service.selectUser();
 		
-		mv.addObject("projectBoardList",projectBoardList);
-		mv.addObject("writingList",writingList);
-		if(taskList.size()>0)mv.addObject("taskList",taskList);
-		if(scheduleList.size()>0)mv.addObject("scheduleList",scheduleList);
+		mv.addObject("projectInfo",projectInfo);
+		mv.addObject("favorite",favorite);
+		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
+		
+		if(writingList.size()>0) mv.addObject("writingList",writingList);
+		if(taskList.size()>0) mv.addObject("taskList",taskList);
+		if(scheduleList.size()>0) mv.addObject("scheduleList",scheduleList);
 		
 		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);
 		if(taskComment.size()>0)mv.addObject("taskComment",taskComment);

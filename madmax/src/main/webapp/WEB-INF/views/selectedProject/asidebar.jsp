@@ -308,7 +308,7 @@ img#cardProfileImg {
 								<span>관리자</span>
 								<hr>
 							</div>
-
+							<c:forEach var="" items="${ }">
 							<div class="pjJoinAllMemberList">
 								<img 
 								id="profileImg"
@@ -328,6 +328,7 @@ img#cardProfileImg {
 								</button>
 								<hr>
 							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
