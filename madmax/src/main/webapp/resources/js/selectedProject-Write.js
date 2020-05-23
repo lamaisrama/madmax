@@ -22,8 +22,12 @@ function fn_writeSubmit(){
         processData: false,
         contentType: false,
         cache: false,
-        success: function (data) {
-        	alert("complete");
+        success: function (data) {        	
+        	if(data>0){
+        		alert("게시글이 등록되었습니다.");
+        	}else{
+        		alert("게시글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
+        	}
         },
         error: function (e) {
             console.log("ERROR : ", e);
