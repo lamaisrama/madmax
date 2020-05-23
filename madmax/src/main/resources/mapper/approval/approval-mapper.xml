@@ -35,6 +35,14 @@
 		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, 0, null, null)
 	</insert>
 	
+	<insert id="insertAppredDoc" parameterType="appredDoc">
+		INSERT INTO APPR_APPRED VALUES(${apprNo}, ${appredNo})
+	</insert>
+	
+	<insert id="insertApprAttachment" parameterType="apprAttachment">
+		INSERT INTO APPRATTACHMENT VALUES(seq_docfileno.nextval, #{docOriFileName}, #{docRenamedFile}, #{apprNo})
+	</insert>
+	
 	<select id="selectApproval" parameterType="_int" resultType="apprDoc">
 		SELECT * FROM APPROVAL 
 			JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 

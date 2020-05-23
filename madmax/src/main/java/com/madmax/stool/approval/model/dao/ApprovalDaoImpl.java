@@ -6,9 +6,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.approval.model.vo.ApprAttachment;
 import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.AppredDoc;
 import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
@@ -51,6 +53,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int insertApprLine(SqlSessionTemplate session, ApprLine apprLine) {
 		return session.insert("approval.insertApprLine", apprLine);
+	}
+
+	@Override
+	public int insertAppredDoc(SqlSessionTemplate session, AppredDoc ad) {
+		return session.insert("approval.insertAppredDoc", ad);
+	}
+
+	@Override
+	public int insertApprAttachment(SqlSessionTemplate session, ApprAttachment at) {
+		return session.insert("approval.insertApprAttachment", at);
 	}
 
 	@Override
