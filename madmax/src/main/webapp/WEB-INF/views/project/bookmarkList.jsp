@@ -12,13 +12,19 @@
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
-			<!-- <div id="map" style="width:500px;height:400px;"></div> -->
+			
  			<div id="bookmarkTitle">
                <h4>담아둔 글 보기</h4>
             </div>
-            <c:forEach items="${List }" var="l">
-               <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
+       		<c:if test="${empty List }">
+       			<div class="w-100 h-25 mt-5 text-center bg-light ">
+            		<h6 class="pt-5 pl-5">담아둔 글이 없습니다.</h6>
+            	</div>
+            </c:if> 
+            <c:forEach items="${List }" var="l"> 
+              <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
                 <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
+                
             	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              

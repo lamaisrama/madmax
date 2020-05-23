@@ -6,8 +6,6 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.madmax.stool.project.model.vo.ProjectMember;
-
 @Repository
 public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 
@@ -36,17 +34,6 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	}
 
 	@Override
-	public Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo) {
-		// TODO Auto-generated method stub
-		return session.selectOne("selectedProjectSelect.selectProjectTB",pjNo);
-	}
-
-	@Override
-	public int selectFavorit(SqlSessionTemplate session, Map<String,Object> pjInfo) {
-		// TODO Auto-generated method stub
-		return session.selectOne("selectedProjectSelect.selectFavorit",pjInfo);
-	}
-	
 	public Map<String, Object> selectPinPostCount(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectOne("selectedProjectSelect.selectPinPostCount");
@@ -70,11 +57,11 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectTaskManager");
 	}
 
-	@Override
-	public List<Map<String, Object>> selectprojectMember(SqlSessionTemplate session) {
+//	@Override
+//	public List<Map<String, Object>> selectProjectMember(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectList("selectedProjectSelect.selectProjectMember");
-	}
+//		return session.selectList("selectedProjectSelect.selectProjectMember");
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment(SqlSessionTemplate session) {
@@ -106,10 +93,26 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectScheduleComment");
 	}
 
+//	@Override
+//	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+//		return session.selectOne("selectedProjectSelect.selectProjectMemberNo");
+//	}
+
 	@Override
-	public List<ProjectMember> selectProjectMemberList(SqlSessionTemplate session, int pjNo) {
-		return session.selectList("selectedProjectSelect.selectProjectMemberList", pjNo);
+	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectAllFileList");
 	}
+
+//	@Override
+//	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+//		return session.selectList("selectedProjectSelect.selectUser");
+//	}
+	
+	
+	
 	
 	
 	
@@ -123,7 +126,6 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	
 	
 	
-
 
 	
 }

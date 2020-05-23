@@ -75,7 +75,7 @@
 					<br>
 					
 					<div class="form-group">
-						<button id="findId" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
+						<button id="findId" type="button"  class="btn btn-primary btn-block">확인</button>
 					<a class="btn btn-danger btn-block"	href="${path}">취소</a>
 					</div>
 				</div>
@@ -133,8 +133,16 @@
 		        dataType : "json",
 		
 		        success:function(data){
+		        	
+		        	console.log(data);
+		        	if(data.User!=null){
 		       		/* console.log(data.User.userId); */
 	       	 		$("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
+		        	}else{
+		        		alert("일치하는 회원정보가 없습니다");
+		        		location.reload();
+		        	}
+		        	
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown){
 		        	alert('정보를 다시 입력해주시길 바랍니다.' );
@@ -154,7 +162,7 @@
 						email : $("#email").val()
 					},
 					success : function(data) {
-						/* console.log(data); */
+						 console.log(data); 
 						alert(data.msg);
 						location.replace("${path}/user/updatePw?userId="+$("#userId").val());
 					},
