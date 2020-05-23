@@ -79,7 +79,7 @@
     <!-- 전체업무 센터 -->
     <div class="taskCenter col col-sm-7 bg-light"   >
     	<div>
-        	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무(전체업무count수)</p> 
+        	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무</p> 
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
         	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/task/backhome.do'">닫기&times;</button></span>
         </div>

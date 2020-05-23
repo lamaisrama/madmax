@@ -1,5 +1,7 @@
 package com.madmax.stool.project.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +20,6 @@ public class Project {
 	private String pjMemberId;
 	private String members;
 	private String deptName;
+	private Date creationDate;
+	private String projectState;
 }

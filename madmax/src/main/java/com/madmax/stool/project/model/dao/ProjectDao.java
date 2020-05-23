@@ -18,6 +18,10 @@ public interface ProjectDao {
 	List<String> selectProjectMembers(SqlSessionTemplate session, int pNo);
 
 	int selectProjectCount(SqlSessionTemplate session, String id);
+
+	List<Project> selectComProjectList(SqlSessionTemplate session, String id, int cPage, int numPerpage);
+
+	int selectComProjectCount(SqlSessionTemplate session, String id);
 	
 	
 }

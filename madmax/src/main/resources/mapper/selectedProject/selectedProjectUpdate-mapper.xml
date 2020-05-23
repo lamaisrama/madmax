@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SelectedProjectUpdate">
+	<delete id="deleteFavorite" parameterType="map">
+		DELETE FAVORITE WHERE PROJECTNO = #{pjNo} AND USERID = #{loginId}
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="map">
+		INSERT INTO FAVORITE VALUES(#{pjNo}, #{loginId})
+	</insert>
+	
+	<update id="updateProjectColor" parameterType="map">
+		UPDATE PROJECTTABLE SET PROJECTCOLOR = #{color} WHERE PROJECTNO = #{pjNo}
+	</update>
+</mapper>
