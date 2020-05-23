@@ -63,6 +63,9 @@
 <div class="col-sm-9 mt-5">
 			<div id="myBoardTitle">
 		               <h4><b>전체 프로젝트</b></h4>
+		               <!-- 지울게 -->
+		               <a href="${path}/selectedProject/selectedProject.do?pjNo=1&loginId=${loginUser.userId}">지울게</a>
+		               <!-- 지울게 -->
 		    </div>
 				<table id="projectList" class="table">
 					<thead>

@@ -72,10 +72,14 @@ public class SelectedProjectSelectController {
 		//스툴유저 테이블 가져오기
 //		List<Map<String,Object>> user=service.selectUser();
 		
-		mv.addObject("projectBoardList",projectBoardList);
-		mv.addObject("writingList",writingList);
-		if(taskList.size()>0)mv.addObject("taskList",taskList);
-		if(scheduleList.size()>0)mv.addObject("scheduleList",scheduleList);
+		mv.addObject("projectInfo",projectInfo);
+		mv.addObject("favorite",favorite);
+		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
+		
+		if(writingList.size()>0) mv.addObject("writingList",writingList);
+		if(taskList.size()>0) mv.addObject("taskList",taskList);
+		if(scheduleList.size()>0) mv.addObject("scheduleList",scheduleList);
 		
 		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);
 		if(taskComment.size()>0)mv.addObject("taskComment",taskComment);

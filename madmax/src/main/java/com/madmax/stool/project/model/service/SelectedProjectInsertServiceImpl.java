@@ -197,8 +197,8 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 	public int insertSchedule(InsertSchedule schedule, InsertProjectBoard pb, List<InsertHashTag> hashTagList,
 			List<InsertNotification> notList)  throws MyException {
 		//1. ProjectBoard TB
-		int result = dao.insertProjectBoardTB(session, pb);		
-		result = 0;
+		int result = dao.insertProjectBoardTB(session, pb);	
+
 		//2-1. Schedule TB - 총괄번호
 		if(result == 0) {
 			throw new MyException("ProjectBoard 삽입에러!");

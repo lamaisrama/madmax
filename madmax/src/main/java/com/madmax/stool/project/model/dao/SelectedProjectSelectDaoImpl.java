@@ -120,7 +120,7 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 
 	@Override
 	public List<ProjectMember> selectProjectMemberList(SqlSessionTemplate session, int pjNo) {
-		return session.selectOne("selectedProjectSelect.selectProjectMemberList",pjNo);
+		return session.selectList("selectedProjectSelect.selectProjectMemberList",pjNo);
 	}
 
 //	@Override

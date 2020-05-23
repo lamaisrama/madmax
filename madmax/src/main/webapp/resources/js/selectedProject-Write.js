@@ -25,6 +25,7 @@ function fn_writeSubmit(){
         success: function (data) {        	
         	if(data>0){
         		alert("게시글이 등록되었습니다.");
+        		location.reload();
         	}else{
         		alert("게시글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
         	}
