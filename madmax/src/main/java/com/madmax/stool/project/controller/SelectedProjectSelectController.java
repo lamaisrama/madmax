@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
+import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Controller
 public class SelectedProjectSelectController {
@@ -22,17 +23,22 @@ public class SelectedProjectSelectController {
 	private SelectedProjectSelectService service;
 	
 	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo) {
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
 		
 	
+		//프로젝트관련 정보
+		Map<String,Object> pjInfo = new HashMap();
+		pjInfo.put("pjNo", pjNo);
+		pjInfo.put("loginId", loginId);
+		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
+		int favorite=service.selectFavorit(pjInfo);
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
+		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		
 		//글
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> writingComment=service.selectWritingComment();
-		logger.info("왤까 : "+writingComment.size());
-//		System.out.println("_______++++++++++++++++++____________________");
-//		System.out.println(writingComment.size());
+		
 		List<Map<String,Object>> writingAttachment=service.selectWritingAttachment();
 		
 		//업무

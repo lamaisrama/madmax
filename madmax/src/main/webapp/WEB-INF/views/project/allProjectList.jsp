@@ -80,7 +80,7 @@
 						<tr>
 							<td>${l.deptName }</td>
 							<td class="pjName">
-								<a href="${path}/selectedProject/selectedProjectView.do?pjNo=${l.projectNo}">${l.projectTitle }</a> 
+								<a href="${path}/selectedProject/selectedProjectView.do?pjNo=${l.projectNo}&loginId=${loginUser.userId}">${l.projectTitle }</a> 
 							</td>
 							<c:choose>
 							<c:when test="${l.projectState eq 'P' }">
