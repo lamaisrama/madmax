@@ -52,6 +52,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
+	public int updateUserSign(String userId) {
+		return dao.updateUserSign(session, userId);
+	}
+
+	@Override
 	@Transactional
 	public int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, 
 								List<ApprAttachment> files) throws RuntimeException{

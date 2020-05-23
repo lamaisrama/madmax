@@ -43,6 +43,7 @@ public interface ApprovalDao {
 	List<ApprDoc> selectAttachAppredDoc(SqlSessionTemplate session, String deptCode);
 	List<AppredDoc> selectAppredDoc(SqlSessionTemplate session, int apprNo);
 	List<ApprAttachment> selectApprAttachment(SqlSessionTemplate session, int apprNo);
+	int updateUserSign(SqlSessionTemplate session, String userId);
 
 
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,6 +58,33 @@ public class ApprovalController {
 		mv.addObject("type", service.selectApprDocForm(dNo));
 		mv.setViewName("/approval/apprDocWrite");
 		return mv;
+	}
+	
+	@RequestMapping("/appr/uploadSign")
+	public String uploadSign(MultipartFile sign, String userId, HttpSession session, Model m, SessionStatus status) {
+		String path = session.getServletContext().getRealPath("/resources/upload/sign");
+		File f = new File(path);
+		if(!f.exists()) f.mkdirs();
+		String rename = userId+".png";
+		int result = service.updateUserSign(userId);
+		String msg="";
+		String loc="/";
+		if(result>0) {
+			try {
+				sign.transferTo(new File(path+"/"+rename));
+				msg="서명이 정상적으로 저장되었습니다. 재로그인 후 사용해주세요";
+				if(!status.isComplete()) status.setComplete();
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+				msg="서명 저장 실패. 관리자에게 문의하세요";
+			}			
+		}else {
+			msg="서명 저장 실패. 관리자에게 문의하세요";
+		}
+		m.addAttribute("msg", msg);
+		m.addAttribute("loc", loc);
+		return "common/msg";
 	}
 
 	@RequestMapping("/appr/draftFormEnd")

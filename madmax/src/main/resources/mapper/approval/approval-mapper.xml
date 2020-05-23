@@ -123,4 +123,7 @@
     		LEFT JOIN JOBTABLE USING(JOBCODE)
     		JOIN APPRLINE USING(APPRNO) WHERE DEPTCODE=#{deptCode} AND APPRSTATUS=3
 	</select>
+	<update id="updateUserSign" parameterType="string">
+		update stooluser set sign=#{userId}||'.png' where userId=#{userId}
+	</update>
 </mapper>

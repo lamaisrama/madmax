@@ -29,6 +29,7 @@ public interface ApprovalService {
 	List<Approval> selectApprWaitList(String userId);
 	int updateAppr(ApprLine line);
 	List<ApprDoc> selectAttachAppredDoc(String deptCode);
+	int updateUserSign(String userId);
 
 	
 	

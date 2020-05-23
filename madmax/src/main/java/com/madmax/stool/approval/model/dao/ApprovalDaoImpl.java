@@ -142,10 +142,14 @@ public class ApprovalDaoImpl implements ApprovalDao{
 
 	@Override
 	public List<ApprDoc> selectAttachAppredDoc(SqlSessionTemplate session, String deptCode) {
-		// TODO Auto-generated method stub
 		return session.selectList("approval.selectAttachAppredDoc", deptCode);
-	}	
+	}
 
+	@Override
+	public int updateUserSign(SqlSessionTemplate session, String userId) {
+		return session.update("approval.updateUserSign", userId);
+	}	
+	
 	
 	
 

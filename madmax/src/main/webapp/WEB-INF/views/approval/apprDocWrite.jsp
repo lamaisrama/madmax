@@ -105,6 +105,12 @@
 				<i class="fas fa-paperclip"> &nbsp;파일 업로드</i>
 				<button type="button" class="btn btn-primary badge" onclick="addUpfile();">+</button>
 			</h6>
+			<div class="input-group mb-3 upfile-content">
+				<input type="file" name="upFile" class="form-control form-control-file border">
+				<div class="input-group-append">
+					<button type="button" class="btn btn-dark badge" onclick="delUpfile();">&nbsp;&nbsp;-&nbsp;&nbsp; </button>
+				</div>
+			</div>
 		</div>
 
 		<div class="row-vh d-flex flex-row justify-content-end">
