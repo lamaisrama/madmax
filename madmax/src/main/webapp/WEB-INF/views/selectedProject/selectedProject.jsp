@@ -25,20 +25,20 @@
     <!-- JS -->
     <script type="text/javascript" src="${path}/resources/js/selectedProject-Write.js"></script>
     <script type="text/javascript" src="${path}/resources/js/selectedProject-View.js"></script>
+    <jsp:include page="/resources/js/selectedProject-Ajax.jsp" />
     
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
                 <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: ${projectInfo.PROJECTCOLOR};">
                     <div id="pjInfoBox" class="row w-100 d-flex align-items-center m-0">
-                        <input type="hidden" name="pjBookmark" id="pjBookmark"/>
 						<c:if test="${favorite > 0}">
-	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_bookmark();">
-	                            <i class="fas fa-star text-white" id="bookmarkIcon"></i>
+	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_favorite(${favorite},${projectInfo.PROJECTNO},'${loginUser.userId}');">
+	                            <i class="fas fa-star text-white" id="favoriteIcon"></i>
 	                        </button>
                         </c:if>
                      	<c:if test="${favorite == 0}">
-	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_bookmark();">
-	                            <i class="far fa-star text-white" id="bookmarkIcon"></i>
+	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_favorite(${favorite},${projectInfo.PROJECTNO},'${loginUser.userId}');">
+	                            <i class="far fa-star text-white" id="favoriteIcon"></i>
 	                        </button>
 						</c:if>
 						
@@ -46,26 +46,26 @@
                            	<c:out value="${projectInfo.PROJECTTITLE}"/>
                         </h4>
                         
-                        <!-- Ajax 해야됨 ㅋㅎ ㅋㅋㅋㅋㅋ -->
+                     
                         <div class="dropdown col-1" id="selectColorBox">
-                            <input type="hidden" id="pjInfoBoxColor" name="pjInfoBoxColor"/>
+                            
                             <button type="button" class="btn dropdown-toggle justify-content-center align-items-center" data-toggle="dropdown">
                             	<i class="fas fa-paint-roller text-white"></i>
                             </button>
                             <div class="dropdown-menu">
                                 <div class="w-100 h-100 d-flex justify-content-center align-items-center flex-wrap" id="colorBox">                                    
-                                    <div id="selectColor-lightGray" onclick="fn_selectColor(this)" style="background-color: #c8c8c8;" class="m-1"></div>
-                                    <div id="selectColor-gray" onclick="fn_selectColor(this)" style="background-color: rgb(80, 80, 80);" class="m-1"></div>
-                                    <div id="selectColor-yellow" onclick="fn_selectColor(this)" style="background-color: rgb(255, 227, 70);" class="m-1"></div>
-                                    <div id="selectColor-orange" onclick="fn_selectColor(this)" style="background-color: rgb(255, 147, 24);" class="m-1"></div>
-                                    <div id="selectColor-red" onclick="fn_selectColor(this)" style="background-color: rgb(255, 59, 41);" class="m-1"></div>
-                                    <div id="selectColor-pink" onclick="fn_selectColor(this)" style="background-color: rgb(255, 147, 156);" class="m-1"></div>
-                                    <div id="selectColor-purple" onclick="fn_selectColor(this)" style="background-color: rgb(161, 61, 156);" class="m-1"></div>
-                                    <div id="selectColor-blue" onclick="fn_selectColor(this)" style="background-color: #25558F;" class="m-1"></div>
-                                    <div id="selectColor-lightBlue" onclick="fn_selectColor(this)" style="background-color: rgb(172, 194, 255);" class="m-1"></div>
-                                    <div id="selectColor-lightMint" onclick="fn_selectColor(this)" style="background-color: rgb(129, 221, 198);" class="m-1"></div>
-                                    <div id="selectColor-mint" onclick="fn_selectColor(this)" style="background-color: #17a2b8;" class="m-1"></div>
-                                    <div id="selectColor-green" onclick="fn_selectColor(this)" style="background-color: rgb(113, 211, 100);" class="m-1"></div>
+                                    <div id="selectColor-lightGray" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#c8c8c8')" style="background-color: #c8c8c8;" class="m-1"></div>
+                                    <div id="selectColor-gray" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#505050')" style="background-color: #505050;" class="m-1"></div>
+                                    <div id="selectColor-yellow" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#ffe346')" style="background-color: #ffe346;" class="m-1"></div>
+                                    <div id="selectColor-orange" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#ff9318')" style="background-color: #ff9318;" class="m-1"></div>
+                                    <div id="selectColor-red" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#ff3b29')" style="background-color: #ff3b29;" class="m-1"></div>
+                                    <div id="selectColor-pink" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#ff939c')" style="background-color: #ff939c;" class="m-1"></div>
+                                    <div id="selectColor-purple" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#a13d9c')" style="background-color: #a13d9c;" class="m-1"></div>
+                                    <div id="selectColor-blue" onclick="fn_selectColor(this,${projectInfo.PROJECTNO}, '#25558F')" style="background-color: #25558F;" class="m-1"></div>
+                                    <div id="selectColor-lightBlue" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#acc2ff')" style="background-color: #acc2ff;" class="m-1"></div>
+                                    <div id="selectColor-lightMint" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#81ddc6')" style="background-color: #81ddc6;" class="m-1"></div>
+                                    <div id="selectColor-mint" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#17a2b8')" style="background-color: #17a2b8;" class="m-1"></div>
+                                    <div id="selectColor-green" onclick="fn_selectColor(this,${projectInfo.PROJECTNO},'#71d364')" style="background-color: #71d364;" class="m-1"></div>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,6 @@
                                 <i class="fas fa-bars text-white"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" onclick="fn_pjHide()">프로젝트 숨기기</a>
                                 <a class="dropdown-item" onclick="fn_pjGoOut()">프로젝트 나가기</a>
                                 <c:if test="${projectInfo.USERID == loginUser.userId}">
 	                                <a class="dropdown-item" onclick="fn_pjUpdate()">프로젝트 수정</a>
@@ -414,7 +413,7 @@
                     <p>프로젝트에서 나가시겠습니까?</p>
                     <div class="w-100 row flex m-0 justify-content-around">
                         <button type="button" class="btn btn-outline-dark col-5" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-info col-5" onclick="">
+                        <button type="button" class="btn btn-info col-5" onclick="fn_pjGoOut(${projectInfo.PROJECTNO},'${loginUser.userId}')">
                             	나가기
                         </button>
                     </div>

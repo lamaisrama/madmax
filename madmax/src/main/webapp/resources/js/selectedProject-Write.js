@@ -6,36 +6,6 @@ function captureReturnKey(e) {
     return false; 
 }
 
-function fn_writeSubmit(){
-    // Get form
-    var form = $('#pjMainForm')[0];
-
-    // Create an FormData object 
-    var data = new FormData(form);
-
-
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "http://localhost:9090/stool/selectedProject/insertSelectedProject.do",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        success: function (data) {        	
-        	if(data>0){
-        		alert("게시글이 등록되었습니다.");
-        		location.reload();
-        	}else{
-        		alert("게시글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
-        	}
-        },
-        error: function (e) {
-            console.log("ERROR : ", e);
-            alert("fail");
-        }
-    });
-}
 
 //카테고리버튼 선택
 function fn_writeCategory(e, id){
@@ -385,94 +355,15 @@ new daum.Postcode({
 
 
 //프로젝트 > 프로젝트 정보 ------------------------------------------>
-//1)즐겨찾기 기능
-function fn_bookmark(){
-    if($("#bookmarkIcon").hasClass("far")){
-        $("#bookmarkIcon").removeClass("far");
-        $("#bookmarkIcon").addClass("fas");
-        $("#pjBookmark").val("Y");
-    }else{
-        $("#bookmarkIcon").removeClass("fas");
-        $("#bookmarkIcon").addClass("far");
-        $("#pjBookmark").val("N");
-    }
-    console.log($("#pjBookmark").val());
-}
+//1) 즐찾 js/Update-Ajax로 이동
 
-//2) 프로젝트 정보박스 컬러변경
-function fn_selectColor(e){
-    let id = $(e).attr("id");
-    switch(id){
-        case "selectColor-lightGray" : 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: #c8c8c8;"); 
-            $("#pjInfoBoxColor").val("lightGray");
-            break;
-        case "selectColor-gray": 
-            $("#pjInfoContainer").removeClass("bg-info");
-            $("#pjInfoContainer").attr("style", "background-color: rgb(80, 80, 80);"); 
-            $("#pjInfoBoxColor").val("gray");
-            break;
-        case "selectColor-yellow": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(255, 227, 70);"); 
-            $("#pjInfoBoxColor").val("yellow");
-            break;
-        case "selectColor-orange": 
-            $("#pjInfoContainer").removeClass("bg-info");
-            $("#pjInfoContainer").attr("style", "background-color: rgb(255, 147, 24);"); 
-            $("#pjInfoBoxColor").val("orange");
-            break;
-        case "selectColor-red": 
-            $("#pjInfoContainer").removeClass("bg-info");
-            $("#pjInfoContainer").attr("style", "background-color: rgb(255, 59, 41);");
-            $("#pjInfoBoxColor").val("red");
-            break;
-        case "selectColor-pink": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(255, 147, 156);"); 
-            $("#pjInfoBoxColor").val("pink");
-            break;
-        case "selectColor-purple": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(161, 61, 156);"); 
-            $("#pjInfoBoxColor").val("purple");
-            break;
-        case "selectColor-blue": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: #25558F;"); 
-            $("#pjInfoBoxColor").val("blue");
-            break;
-        case "selectColor-lightBlue": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(172, 194, 255);"); 
-            $("#pjInfoBoxColor").val("lightBlue");
-            break;
-        case "selectColor-lightMint": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(129, 221, 198);"); 
-            $("#pjInfoBoxColor").val("lightMint");
-            break;
-        case "selectColor-mint": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: #17a2b8;"); 
-            $("#pjInfoBoxColor").val("mint");
-            break;
-        case "selectColor-green": 
-            $("#pjInfoContainer").removeClass("bg-info"); 
-            $("#pjInfoContainer").attr("style", "background-color: rgb(113, 211, 100);"); 
-            $("#pjInfoBoxColor").val("green");
-            break;
-    }
-    
-    console.log($("#pjInfoBoxColor").val());
-}
+//2) 프로젝트 정보박스 컬러변경  js/Update-Ajax로 이동
     
 // 3) 프로젝트 숨김 / 나가기 / 수정 / 삭제
 // a. 숨김
-function fn_pjHide(){
+/*function fn_pjHide(){
     $("#pjHideModal").modal("show");
-}
+}*/
 // b. 나가기
 function fn_pjGoOut(){
     $("#pjGoOutModal").modal("show");
