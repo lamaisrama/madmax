@@ -65,6 +65,7 @@
 					<th>기안부서</th>
 					<th>기안일</th>
 					<th>배정일</th>
+					
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 					<tr>

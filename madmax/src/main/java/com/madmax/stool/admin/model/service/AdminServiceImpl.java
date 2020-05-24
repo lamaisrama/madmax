@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.madmax.stool.admin.model.dao.AdminDao;
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
+import com.madmax.stool.admin.model.vo.AdminUserManage;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -35,6 +36,31 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.updateEmployeeManagement(session,am);
 	}
+
+	@Override
+	public List<AdminUserManage> selectAignupApproval() {
+		// TODO Auto-generated method stub
+		return dao.selectAignupApproval(session);
+	}
+
+	@Override
+	public int updateUserState(String userId) {
+		// TODO Auto-generated method stub
+		return dao.updateUserState(session,userId);
+	}
+
+	@Override
+	public List<AdminUserManage> selectAllUser(int cPage,int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectAllUser(session,cPage,numPerPage);
+	}
+
+	@Override
+	public int selectUserCount() {
+		// TODO Auto-generated method stub
+		return dao.selectUserCount(session);
+	}
+	
 	
 	
 	
