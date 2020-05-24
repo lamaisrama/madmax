@@ -18,6 +18,8 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- fontawesome -->
+<script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
+<link href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="${path }/resources/css/apprDoc.css">
 <script src="${pageContext.request.contextPath }/resources/js/apprdraft.js"></script>
 </head>
@@ -25,10 +27,10 @@
 	<form action="${path }/appr/draftFormEnd" method="post" onsubmit="return beforeSubmit();">
 	<input type="hidden" name="apprDocTypeNo" value="${appr.typeTitle }">
 	<div class="header">
-		<c:if test="${appr.userId}.equals('${ loginUser.userId}') && appr.apprStatus==1 }">
+		<c:if test="${appr.userId == loginUser.userId && appr.apprStatus==1 }">
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">회수</button>
 		</c:if>
-		<c:if test="${appr.userId}.equals('${ loginUser.userId}') &&  ${appr.apprStatus==0 }">
+		<c:if test="${appr.userId==loginUser.userId && appr.apprStatus==0 }">
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">재기안</button>
 			<button type="button" class="btn btnPrimary" onclick="deleteDraft('${appr.apprNo }');">삭제</button>
 		</c:if>
@@ -95,7 +97,18 @@
 					<th>수신처</th>
 					<td id="receivingInfo"><span class="badge-dark">${appr.receiverName }</span></td>
 					<th>기결재첨부</th>
-					<td>><i><b style="color:red">이 부분 처리 해야됨</b></i></td>
+					<td>
+						<c:forEach items="${appr.appredDoc }"  var="appred">
+							<span style="color:#233C61;">
+								<a href="javascript:void(0)" 
+									onclick="window.open('${path}/appr/openApprDoc?apprNo=${appred.appredNo }',
+									'_blank','width = 1000, height = 600')">
+									${appred.apprTitle }
+								</a>
+							</span>
+							<br>
+						</c:forEach>
+					</td>
 				</tr>
 				<tr class="basicContent">
 					<th>기안 제목</th>
@@ -123,6 +136,18 @@
 			<table class="table table-hover" id="doc-form-table">
 					<c:out value="${appr.apprContent }" escapeXml="false"/>
 			</table>
+			<!-- 파일 첨부 -->
+			<div class="fileUpload-container m-2">
+				<h6>
+					<i class="fas fa-paperclip"> &nbsp;첨부파일 </i>
+				</h6>
+				<c:forEach items="${appr.apprAttachment }" var="attachment" varStatus="vs">
+            		<button type="button" class="btn btn-outline-dark"
+                    	onclick="fileDownload('${attachment.docOriFileName}', '${attachment.docRenamedFile }');"> 
+                    	첨부파일 ${vs.count } - ${attachment.docOriFileName}
+            		</button>
+				</c:forEach> 
+			</div>
 		</div>
 		<br>
 	</form>
@@ -161,6 +186,12 @@
 				})
 			}
 		}
+		
+		function fileDownload(ori, rename){
+			ori=encodeURIComponent(ori);
+			location.href="${path}/appr/fileDownload?ori="+ori+"&rename="+rename;
+		}
+		
 		
 	</script>
 </body>

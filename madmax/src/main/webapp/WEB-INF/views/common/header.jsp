@@ -68,8 +68,10 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"></li>
 				</ul>
+				<c:if test="${loginUser.userId=='admin'}">
+					<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/admin/adminIndex.do')">관리자 페이지</button>
+				</c:if>
 				<button type="button" class="btn checkBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
-				
 				<!-- 모달창 -->
 				
 				 <div class="modal fade" id="checkState">

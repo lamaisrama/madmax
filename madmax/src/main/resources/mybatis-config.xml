@@ -20,6 +20,8 @@
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprDoc" alias="apprDoc" />
 		<typeAlias type="com.madmax.stool.approval.model.vo.DeptUsers" alias="deptUsers"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.User" alias="apprUser"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.AppredDoc" alias="appredDoc"/>
+		<typeAlias type="com.madmax.stool.approval.model.vo.ApprAttachment" alias="apprAttachment"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.ProjectMember" alias="projectMember"/>
 		<typeAlias type="com.madmax.stool.admin.model.vo.AdminAttendManagement" alias="adminAttend"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertWriting" alias="writing"/>
@@ -31,6 +33,7 @@
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertTask" alias="task"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertTaskManager" alias="insertTaskManager"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertSchedule" alias="schedule"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.AdminUserManage" alias="adminUserManage"/>
 	</typeAliases>
 </configuration>
 

@@ -24,13 +24,16 @@
 	<br><br>
 	<h4 style="font-weight:bolder">&nbsp;<i class="fas fa-clipboard-list"></i> &nbsp;기안문 작성</h4>
 	<br>
-	<div class="row currList" >
+	<c:if test="${loginUser.sign==null }">
+	<p style="color:red; font-weight:bolder;"> &nbsp; 기안을 작성하기 전에 F5를 눌러 전자서명을 등록해주세요.</p>
+	</c:if>
+<!-- 	<div class="row currList" >
 		<div class="col-sm-8">
 			<ul>
 				<li><strong><i class="fas fa-history"></i> &nbsp; &nbsp;기안문 검색</strong></li>
-<!-- 				<li><a href="">휴가신청서</a></li>
+				<li><a href="">휴가신청서</a></li>
 				<li><a href="">출장신청서</a></li>
-				<li><a href="">품의문</a></li> -->
+				<li><a href="">품의문</a></li>
 			</ul>		
 		</div>
 		<div class="col-sm-4 docForm">
@@ -46,7 +49,7 @@
 				</div>
 			</form>
 		</div>
-	</div>	 
+	</div>	  -->
 	
 	<div class="row draftList" style="clear:both;">
 		<div class="col">
@@ -67,54 +70,56 @@
 						<td><i class="fa fa-star-o"></i></td>
 					</tr>
 				</c:forEach>
-				<%-- <tr>
-					<td>1</td>
-					<td>문서결재</td>
-					<!-- <td><a href="javascript:void(0)" onclick="openPopup(this)">품의문</a></td> -->
-					<td><a href="javascript:void(0)" 
-					onclick="window.open('${path}/appr/draftForm.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-					품의문</a></td>
-					<td><i class="fa fa-star"></i></td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>문서결재</td>
-					<td><a href="javascript:void(0)" 
-					onclick="window.open('${path}/appr/purchaseForm.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">구매신청서</a></td>
-					<td><i class="fa fa-star-o"></i></td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>인사</td>
-					<td><a href="javascript:void(0)" 
-					onclick="window.open('${path}/appr/businesTrip.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">출장신청서</a></td>
-					<td><i class="fa fa-star-o"></i></td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>인사</td>
-					<td><a href="javascript:void(0)" 
-					onclick="window.open('${path}/appr/businesTripSettlement.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">출장정산신청서</a></td>
-					<td><i class="fa fa-star-o"></i></td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>인사</td>
-					<td><a href="javascript:void(0)" 
-					onclick="window.open('${path}/appr/dayOff.do','_blank','width = 1000, height = 600, top = 120px, left = 400px')">휴가신청서</a></td>
-					<td><i class="fa fa-star-o"></i></td>
-				</tr> --%>
 			</table>
 		</div>
 	</div>
 	<div id="pagebar-container">
 		${pageBar }
 	</div>
+
+	<!-- The Modal -->
+	<form action="${path }/appr/uploadSign" method="post" enctype="multipart/form-data" onsubmit="return validate();">
+		<div class="modal" id="add-sign">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <!-- Modal Header -->
+		      <div class="modal-header">
+		        <h5 class="modal-title" style="color:#233c61; font-weight:bolder">전자결재 서명 등록</h5>
+		      </div>
+		      <!-- Modal body -->
+		      <div class="modal-body">
+				<h6>전자결재에 사용할 서명파일을 등록해주십시오.</h6>
+					<span>.png 파일만 가능합니다.</span><br>
+					<span>전자 서명이 등록되지 않으면 전자결재 기능을 원활히 사용할 수 없습니다.</span>
+				</ul>
+	   			<div class="fileUpload-container m-2">
+					<input type="file" class="form-control-file border" name="sign" id="sign">
+					<input type="hidden" name="userId" value="${loginUser.userId }">
+				</div>	
+		      </div>
+		
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		        <button type="submit" class="btn btn-primary" >제출</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</form>
+	
+	
 </div>
 		
+	<c:if test="${loginUser.sign==null }">
+		<script>
+			$(function(){
+				$("#add-sign").modal();
+			});
+		</script>
+	</c:if>
 
 <script>
-
+	
 	function openPopup(e){
 		console.log(e.id);
 		const no = e.id;
@@ -136,6 +141,23 @@
 		}); */
 		
 	}
+	
+	function validate(){
+		var fileCheck = document.getElementById("sign").value;
+		if(!fileCheck){
+			alert('파일을 첨부해주세요');
+			return false;
+		}
+		fileExt=fileCheck.slice(fileCheck.indexOf(".")+1).toLowerCase();
+
+		if(fileExt!='png'){
+			alert('확장자가 png인 파일만 등록 가능합니다.');
+			return false;
+		}
+	
+			
+	}
+	
 	
 </script>
 

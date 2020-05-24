@@ -5,11 +5,14 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.madmax.stool.approval.model.dao.ApprovalDao;
+import com.madmax.stool.approval.model.vo.ApprAttachment;
 import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.AppredDoc;
 import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
@@ -49,13 +52,20 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public int insertApproval(Approval appr, List<ApprLine> lines) {
+	public int updateUserSign(String userId) {
+		return dao.updateUserSign(session, userId);
+	}
+
+	@Override
+	@Transactional
+	public int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, 
+								List<ApprAttachment> files) throws RuntimeException{
 		//1 Approval TBL에 추가
-		int result = dao.insertApproval(session, appr);
-		//2 ApprLine TBL에 추가
+		int result = dao.insertApproval(session, appr);			
 		if(result==0) {
 			throw new RuntimeException("결재 문서 입력 오류");
 		}
+		//2 ApprLine TBL에 추가
 		for(ApprLine al : lines) {
 			al.setApprNo(appr.getApprNo());
 			result=dao.insertApprLine(session, al);
@@ -63,7 +73,28 @@ public class ApprovalServiceImpl implements ApprovalService{
 				throw new RuntimeException("결재선 입력 오류");
 			}
 		}
+		// AppredDoc 추가
+		if(!appred.isEmpty()) {
+			for(AppredDoc ad : appred) {
+				ad.setApprNo(appr.getApprNo());
+				result=dao.insertAppredDoc(session, ad);
+				if(result==0) {
+					throw new RuntimeException("결재선 입력 오류");
+				}
+			}
+		}
 		
+		//업로드파일 추가
+		if(!files.isEmpty()) {
+			for(ApprAttachment at : files) {
+				at.setApprNo(appr.getApprNo());
+				result=dao.insertApprAttachment(session, at);
+				if(result==0) {
+					throw new RuntimeException("결재선 입력 오류");
+				}
+			}
+		}
+
 		return 1;
 	}
 
@@ -81,6 +112,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setApprLine(lines);
 		//3. 수신인 이름 가져오기
 		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
+		//4. 기결재문서 가져오기
+		appr.setAppredDoc(dao.selectAppredDoc(session, apprNo));
+		//5. 첨부파일 가져오기
+		appr.setApprAttachment(dao.selectApprAttachment(session, apprNo));
 		return appr;
 	}
 
@@ -93,6 +128,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setApprLine(lines);
 		//3. 수신인 이름 가져오기
 		appr.setReceiverName(dao.selectReceiverName(session, appr.getReceiver()));
+		//4. 기결재문서 가져오기
+		appr.setAppredDoc(dao.selectAppredDoc(session, approval.getApprNo()));
+		//5. 첨부파일 가져오기
+		appr.setApprAttachment(dao.selectApprAttachment(session, approval.getApprNo()));
 		return appr;
 	}
 
