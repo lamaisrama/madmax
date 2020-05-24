@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.madmax.stool.project.model.dao.SelectedProjectSelectDao;
+import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Service
 public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectService {
@@ -66,11 +67,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectTaskManager(session);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectProjectMember() {
+//	@Override
+//	public List<Map<String, Object>> selectProjectMember() {
 		// TODO Auto-generated method stub
-		return dao.selectProjectMember(session);
-	}
+//		return dao.selectProjectMember(session);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment() {
@@ -102,11 +103,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectScheduleComment(session);
 	}
 
-	@Override
-	public Map<String, Object> selectProjectMemberNo() {
+//	@Override
+//	public Map<String, Object> selectProjectMemberNo() {
 		// TODO Auto-generated method stub
-		return dao.selectProjectMemberNo(session);
-	}
+//		return dao.selectProjectMemberNo(session);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectAllFileList() {
@@ -115,10 +116,25 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	}
 
 	@Override
-	public List<Map<String, Object>> selectUser() {
-		// TODO Auto-generated method stub
-		return dao.selectUser(session);
+	public Map<String, Object> selectProjectTB(int pjNo) {
+		return dao.selectProjectTB(session,pjNo);
 	}
+
+	@Override
+	public int selectFavorit(Map<String, Object> pjInfo) {
+		return dao.selectFavorit(session,pjInfo);
+	}
+
+	@Override
+	public List<ProjectMember> selectProjectMemberList(int pjNo) {
+		return dao.selectProjectMemberList(session,pjNo);
+	}
+
+//	@Override
+//	public List<Map<String, Object>> selectUser() {
+		// TODO Auto-generated method stub
+//		return dao.selectUser(session);
+//	}
 	
 	
 	

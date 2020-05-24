@@ -1,28 +1,41 @@
 package com.madmax.stool.approval.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.approval.model.service.ApprovalService;
+import com.madmax.stool.approval.model.vo.ApprAttachment;
 import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.AppredDoc;
 import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
 import com.madmax.stool.common.PagingFactory;
+import com.madmax.stool.common.RenameFactory;
 
 @Controller
 public class ApprovalController {
@@ -46,9 +59,37 @@ public class ApprovalController {
 		mv.setViewName("/approval/apprDocWrite");
 		return mv;
 	}
+	
+	@RequestMapping("/appr/uploadSign")
+	public String uploadSign(MultipartFile sign, String userId, HttpSession session, Model m, SessionStatus status) {
+		String path = session.getServletContext().getRealPath("/resources/upload/sign");
+		File f = new File(path);
+		if(!f.exists()) f.mkdirs();
+		String rename = userId+".png";
+		int result = service.updateUserSign(userId);
+		String msg="";
+		String loc="/";
+		if(result>0) {
+			try {
+				sign.transferTo(new File(path+"/"+rename));
+				msg="서명이 정상적으로 저장되었습니다. 재로그인 후 사용해주세요";
+				if(!status.isComplete()) status.setComplete();
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+				msg="서명 저장 실패. 관리자에게 문의하세요";
+			}			
+		}else {
+			msg="서명 저장 실패. 관리자에게 문의하세요";
+		}
+		m.addAttribute("msg", msg);
+		m.addAttribute("loc", loc);
+		return "common/msg";
+	}
 
 	@RequestMapping("/appr/draftFormEnd")
-	public String selectDraftFormEnd(HttpServletRequest req,String[] apprLine, Approval appr) {
+	public String selectDraftFormEnd(HttpServletRequest req, HttpSession session, String[] apprLine, Approval appr, 
+								int[] appredNo, MultipartFile[] upFile, Model m) {
 		// 결재문서 정보 treat
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		appr.setUserId(userId);
@@ -63,7 +104,11 @@ public class ApprovalController {
 		} else { //ApprText 없을 때
 			appr.setApprText("");
 		}
-
+		System.out.println("1");
+		System.out.println(appr);
+		System.out.println(apprLine);
+		System.out.println(appredNo);
+		System.out.println(upFile);
 		// 결재선 정보 입력
 		List<ApprLine> apprLines=new ArrayList();
 		for(int i=0;i<apprLine.length;i++){  
@@ -77,11 +122,56 @@ public class ApprovalController {
 		//receiver 유무 확인
 		if(appr.getReceiver()==null) appr.setReceiver("");
 
+		//기결재
+		List<AppredDoc> appred = new ArrayList(); 
+		if(appredNo!=null) {			
+			for(int i : appredNo) {
+				AppredDoc a = new AppredDoc(0, i, "");
+				appred.add(a);
+			}
+		}
+		
+		//파일업로드
+		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		File f=new File(path);
+		if(!f.exists()) f.mkdirs();
+		List<ApprAttachment> files=new ArrayList();
+		for(MultipartFile mf : upFile) {
+			if(!mf.isEmpty()) {
+				String ori = mf.getOriginalFilename();
+				String rename = RenameFactory.getRenamedFileName(ori);
+				try {
+					mf.transferTo(new File(path+"/"+rename));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				ApprAttachment a = new ApprAttachment();
+				a.setDocOriFileName(ori);
+				a.setDocRenamedFile(rename);
+				files.add(a);
+			}
+		}
+		
+		
+		//insert 메소드 실행
+		int result=0;
 		try{
-			int result =service.insertApproval(appr, apprLines);
-		}catch(RuntimeException e) { e.printStackTrace(); }
-
-		return "";
+			result =service.insertApproval(appr, apprLines, appred, files);
+		}catch(RuntimeException e) {
+			e.printStackTrace(); 
+		}
+		String msg = "", loc ="";
+		if(result>0) {
+			msg ="결재문서 작성 완료";
+			loc = "";
+		}else{
+			msg = "결재 문서 작성 실패";
+			loc = "";
+		}
+		m.addAttribute("loc", loc);
+		m.addAttribute("msg", msg);
+		m.addAttribute("script", "window.close();");
+		return "common/msg";
 	}
 	
 	@RequestMapping("/appr/line.do")
@@ -209,4 +299,44 @@ public class ApprovalController {
 		else return false;
 	}
 
+	@RequestMapping("/appr/fileDownload")
+	public void fileDownload(String ori, String rename, ServletOutputStream out,
+				HttpSession session, @RequestHeader(value="user-agent") String header,
+				HttpServletResponse res) {
+	
+		//파일 경로
+		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		//보조스트림
+		BufferedInputStream bis = null;
+		File f = new File(path+"/"+rename);
+		try {
+			bis = new BufferedInputStream(new FileInputStream(f));
+			boolean MSIE = header.indexOf("MSIE")!=-1||header.indexOf("Trident")!=-1;
+			String oriName="";
+			if(MSIE) {
+				oriName=URLEncoder.encode(ori, "UTF-8");
+				oriName=oriName.replaceAll("\\+","%20");
+				
+			}else {
+				oriName=new String(ori.getBytes("UTF-8"), "ISO-8859-1");	
+			}
+			res.setContentType("application/otect-stream;charset=UTF-8");
+			res.addHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+			
+			int read=-1;
+			while((read=bis.read())!=-1) {
+				out.write(read);
+			}
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				bis.close();
+				out.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -30,7 +30,7 @@ public class ProjectController {
 	public String insertProject(Project p,Model m,HttpServletRequest req) {
 		
 	
-		if(p.getProjectType()==null) {
+		if(p.getProjectType()==null) {//디폴트는 공개 안함
 			p.setProjectType("N");
 		}else {
 			p.setProjectType("Y");
@@ -77,6 +77,30 @@ public class ProjectController {
 		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
 		//mv.addObject("member",pmNames);
 		mv.setViewName("project/allProjectList");
+		
+		
+		return mv;
+	}
+	
+	//회사공개프로젝트 가져오는 메소드
+	@RequestMapping("/project/companyProjectList.do")
+	public ModelAndView selectComprojectList(HttpServletRequest req,
+			@RequestParam(required = false, defaultValue="1") int cPage, 
+			@RequestParam(required=false,defaultValue="7") int numPerpage) {
+		
+		ModelAndView mv=new ModelAndView();
+		
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		 
+		List<Project> list=service.selectComProjectList(id,cPage,numPerpage);
+		
+		int totalData=service.selectComProjectCount(id);
+		//List<String> pmNames=new ArrayList();
+		
+		mv.addObject("list",list);
+		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
+		//mv.addObject("member",pmNames);
+		mv.setViewName("project/companyProjectList");
 		
 		
 		return mv;

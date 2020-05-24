@@ -191,15 +191,17 @@
                                         	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
 											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
 											<li><a href="${path }/project/bookmarkProjectList.do"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
-                                        	<hr>
+                                        	<hr/>
+                                        	<li><a href="${path }/project/companyProjectList.do"><i class='icon fas fa-building'></i>회사 공개 프로젝트</a></li>
+                                        	<hr/>
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href="${path }/calendar/calendar.do"><i class="icon far fa-calendar-alt"></i>전체 일정</a></li>
 											<li><a href="${path }/project/bookmarkList.do"><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href="${path }/project/myNoti.do"><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href="${path }/project/myBoard.do"><i class="icon far fa-smile"></i>내 게시물</a></li>
-											<hr>
+											<hr/>
 											<li><a href=""><i class="icon far fa-eye-slash"></i>숨긴 프로젝트</a></li>
-											<hr>
+											<hr/>
                                         </ul>
                                     </div>
                                 </div>
@@ -300,7 +302,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header" style="background-color: #F1F0F5">
                     <h6 class="modal-title">프로젝트 만들기</h6>
-                    <button type="button" class="close" id="mainClose">&times;</button>
+                    <button type="button"  class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!--Modal Body-->
                 <div class="modal-body d-block ml-3">
@@ -318,9 +320,9 @@
                             <div class="mr-3">
                             <i class='fas fa-globe-asia' style='font-size:24px'></i>
                             </div>
-                           		 프로젝트 전체공개 여부 &nbsp;
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input"  name="projectType" id="projectType" checked>
+                           		 프로젝트 전체공개 설정 &nbsp;
+                            <div class="ml-2 custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"  name="projectType" id="projectType" >
                                 <label class="custom-control-label" for="projectType"></label>
                             </div>
                         </li>
@@ -341,23 +343,6 @@
 </div>
 
 <script>
-/* $('#openProject').on( 'click', function() {
-    if($("#openProject").is(":checked")){
-    	$(".custom-control-label").text('공개');
-    }else{
-    	
-    }
-}); */
-$("#moreOption").click(()=>{
-    $("#myModal").hide();
-    $("#moreOptionModal").show();
-});
-$("#mainClose").click(()=>{
-$("#myModal").modal('hide');
-});
-/* $("#optionClose").click(()=>{
-$("#myModal").hide();
-$("#moreOptionModal").modal("hide");
-}); */
+
 
 </script>

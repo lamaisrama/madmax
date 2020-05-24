@@ -6,9 +6,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.approval.model.vo.ApprAttachment;
 import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.ApprDocType;
 import com.madmax.stool.approval.model.vo.ApprLine;
+import com.madmax.stool.approval.model.vo.AppredDoc;
 import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.approval.model.vo.DeptUsers;
 import com.madmax.stool.approval.model.vo.User;
@@ -54,6 +56,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
+	public int insertAppredDoc(SqlSessionTemplate session, AppredDoc ad) {
+		return session.insert("approval.insertAppredDoc", ad);
+	}
+
+	@Override
+	public int insertApprAttachment(SqlSessionTemplate session, ApprAttachment at) {
+		return session.insert("approval.insertApprAttachment", at);
+	}
+
+	@Override
 	public List<Approval> selectApprReqList(SqlSessionTemplate session, String userId) {
 		return session.selectList("approval.selectApprReqList", userId);
 	}
@@ -74,7 +86,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return session.selectList("approval.selectApprLine", apprNo);
 	}
 	
-	
+	@Override
+	public List<AppredDoc> selectAppredDoc(SqlSessionTemplate session, int apprNo) {
+		return session.selectList("approval.selectAppredDoc", apprNo);
+	}
+
+	@Override
+	public List<ApprAttachment> selectApprAttachment(SqlSessionTemplate session, int apprNo) {
+		return session.selectList("approval.selectApprAttachment", apprNo);
+	}
+
 	@Override
 	public String selectReceiverName(SqlSessionTemplate session, String userId) {
 		return session.selectOne("approval.selectReceiverName", userId);
@@ -121,10 +142,14 @@ public class ApprovalDaoImpl implements ApprovalDao{
 
 	@Override
 	public List<ApprDoc> selectAttachAppredDoc(SqlSessionTemplate session, String deptCode) {
-		// TODO Auto-generated method stub
 		return session.selectList("approval.selectAttachAppredDoc", deptCode);
-	}	
+	}
 
+	@Override
+	public int updateUserSign(SqlSessionTemplate session, String userId) {
+		return session.update("approval.updateUserSign", userId);
+	}	
+	
 	
 	
 

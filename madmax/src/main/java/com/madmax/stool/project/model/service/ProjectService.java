@@ -15,6 +15,10 @@ public interface ProjectService {
 
 	int selectProjectCount(String id);
 
+	List<Project> selectComProjectList(String id, int cPage, int numPerpage);
+
+	int selectComProjectCount(String id);
+
 
 
 }

@@ -30,4 +30,7 @@ public class ApprDoc {
 	private String typeTitle;
 	private String apprType;
 	private List<ApprLine> apprLine;
+	private List<AppredDoc> appredDoc;
+	private List<ApprAttachment> apprAttachment;
+	
 }

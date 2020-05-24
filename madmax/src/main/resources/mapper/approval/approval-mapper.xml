@@ -35,6 +35,14 @@
 		INSERT INTO APPRLINE VALUES(#{apprNo}, #{apprType}, #{apprStep}, #{apprUser}, 0, null, null)
 	</insert>
 	
+	<insert id="insertAppredDoc" parameterType="appredDoc">
+		INSERT INTO APPR_APPRED VALUES(${apprNo}, ${appredNo})
+	</insert>
+	
+	<insert id="insertApprAttachment" parameterType="apprAttachment">
+		INSERT INTO APPRATTACHMENT VALUES(seq_docfileno.nextval, #{docOriFileName}, #{docRenamedFile}, #{apprNo})
+	</insert>
+	
 	<select id="selectApproval" parameterType="_int" resultType="apprDoc">
 		SELECT * FROM APPROVAL 
 			JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
@@ -58,6 +66,15 @@
 			JOIN STOOLUSER ON(APPRUSER=USERID) 
 			LEFT JOIN DEPT USING(DEPTCODE) LEFT JOIN JOBTABLE USING(JOBCODE) 
 			WHERE APPRNO=#{apprNo} ORDER BY APPRSTEP
+	</select>
+	
+	<select id="selectAppredDoc" parameterType="_int" resultType="appredDoc">
+		SELECT A.APPRNO, APPREDNO, APPRTITLE FROM APPR_APPRED A 
+			JOIN APPROVAL B ON (A.APPREDNO=B.APPRNO) WHERE A.APPRNO=#{apprNo}
+	</select>
+	
+	<select id="selectApprAttachment" parameterType="_int" resultType="apprAttachment">
+		SELECT * FROM APPRATTACHMENT WHERE APPRNO=#{apprNo}
 	</select>
 	
 	<select id="selectReceiverName" parameterType="string" resultType="string">
@@ -106,4 +123,7 @@
     		LEFT JOIN JOBTABLE USING(JOBCODE)
     		JOIN APPRLINE USING(APPRNO) WHERE DEPTCODE=#{deptCode} AND APPRSTATUS=3
 	</select>
+	<update id="updateUserSign" parameterType="string">
+		update stooluser set sign=#{userId}||'.png' where userId=#{userId}
+	</update>
 </mapper>
