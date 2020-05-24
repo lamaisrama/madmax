@@ -78,7 +78,7 @@ input:focus, textarea:focus {
 
 /* 게시글 목록 일정 -------*/
 .pjViewBody-schedule{
-    background-color: #F1F0F5;
+    background-color: #f6f7f8;
     border: 1px solid #E8E8EB;
 }
 /*------------------------*/

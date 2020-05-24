@@ -18,4 +18,10 @@ public interface SelectedProjectUpdateDao {
 
 	int updateSelectedProject(SqlSessionTemplate session, Map<String, Object> upMap);
 
+	int insertBookmark(SqlSessionTemplate session, Map<String, Object> bInfo);
+
+	int deleteBookmark(SqlSessionTemplate session, Map<String, Object> bInfo);
+
+	int updatePinPost(SqlSessionTemplate session, Map<String, Object> pjInfo);
+
 }

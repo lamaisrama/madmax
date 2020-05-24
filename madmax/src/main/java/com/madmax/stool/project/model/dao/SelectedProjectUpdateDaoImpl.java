@@ -38,4 +38,19 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.update("SelectedProjectUpdate.updateSelectedProject", upMap);
 	}
 
+	@Override
+	public int insertBookmark(SqlSessionTemplate session, Map<String, Object> bInfo) {
+		return session.insert("SelectedProjectUpdate.insertBookmark", bInfo);
+	}
+
+	@Override
+	public int deleteBookmark(SqlSessionTemplate session, Map<String, Object> bInfo) {
+		return session.delete("SelectedProjectUpdate.deleteBookmark", bInfo);
+	}
+
+	@Override
+	public int updatePinPost(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.update("SelectedProjectUpdate.updatePinPost", pjInfo);
+	}
+
 }

@@ -29,6 +29,7 @@ public interface SelectedProjectSelectDao {
 	Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo);
 	int selectFavorit(SqlSessionTemplate session, Map<String, Object> pjInfo);
 	List<ProjectMember> selectProjectMemberList(SqlSessionTemplate session, int pjNo);
+	List<Map<String, Object>> selectBookmarkList(SqlSessionTemplate session, Map<String, Object> pjInfo);
 	
 
 	

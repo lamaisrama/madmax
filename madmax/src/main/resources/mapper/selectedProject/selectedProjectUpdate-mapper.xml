@@ -23,5 +23,17 @@
 	
 	<update id="updateSelectedProject" parameterType="map">
 		UPDATE PROJECTTABLE SET PROJECTTITLE= #{title}, PROJECTSTATE= #{projectState} WHERE PROJECTNO = #{pjNo}
+	</update>	
+	
+	<insert id="insertBookmark" parameterType="map">
+		INSERT INTO BOOKMARK VALUES(#{loginId},#{bNo})
+	</insert>
+	
+	<delete id="deleteBookmark" parameterType="map">
+		DELETE BOOKMARK WHERE BOARDNO = #{bNo} AND USERID = #{loginId}
+	</delete>
+	
+	<update id="updatePinPost" parameterType="map">
+		UPDATE PROJECTBOARD SET PINPOST = #{check} WHERE PROJECTNO = #{pjNo} AND BOARDNO = #{bNo}
 	</update>
 </mapper>

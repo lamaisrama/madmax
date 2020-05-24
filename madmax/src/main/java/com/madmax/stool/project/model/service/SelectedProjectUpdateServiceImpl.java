@@ -62,4 +62,20 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 		return dao.updateSelectedProject(session, upMap);
 	}
 
+	@Override
+	public int insertBookmark(Map<String, Object> bInfo) {
+		return dao.insertBookmark(session, bInfo);
+	}
+
+	@Override
+	public int deleteBookmark(Map<String, Object> bInfo) {
+		return dao.deleteBookmark(session, bInfo);
+	}
+
+	@Override
+	public int updatePinPost(Map<String, Object> pjInfo) {
+		return dao.updatePinPost(session, pjInfo);
+	}
+	
+
 }

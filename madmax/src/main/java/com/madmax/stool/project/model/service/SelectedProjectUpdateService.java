@@ -16,4 +16,10 @@ public interface SelectedProjectUpdateService {
 
 	int updateSelectedProject(Map<String, Object> upMap);
 
+	int insertBookmark(Map<String, Object> bInfo);
+
+	int deleteBookmark(Map<String, Object> bInfo);
+
+	int updatePinPost(Map<String, Object> pjInfo);
+
 }

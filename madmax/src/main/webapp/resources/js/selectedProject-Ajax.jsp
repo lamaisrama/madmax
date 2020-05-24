@@ -193,4 +193,55 @@ function fn_updateProjectSubmit(){
     });	
 }
 
+//북마크 설정
+function fn_insertBookmark(e,bNo,loginId){
+	$.ajax({
+		url:"${path}/selectedProject/insertBookmark.do",
+		data:{bNo:bNo,
+			  loginId:loginId},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("북마크설정에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
+//북마크 해제
+function fn_deleteBookmark(e,bNo,loginId){
+	$.ajax({
+		url:"${path}/selectedProject/deleteBookmark.do",
+		data:{bNo:bNo,
+			  loginId:loginId},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("북마크해제에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
+//고정글 설정
+function fn_updatePin(check,pjNo,bNo){
+	$.ajax({
+		url:"${path}/selectedProject/updatePinPost.do",
+		data:{check:check,
+			  pjNo:pjNo,
+			  bNo:bNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("고정글 설정에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
+
+
 </script>

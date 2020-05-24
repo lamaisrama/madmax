@@ -4,8 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-				
-			<c:forEach items="${projectBoardList}" var="pb">	
+					
+			<c:forEach items="${projectBoardList}" var="pb">
+
+			<c:set var="bookmark" value="N" />
+			<c:forEach var="b" items="${bookmarkList}">
+			  <c:if test="${pb.BOARDNO eq b.BOARDNO}">
+			    <c:set var="bookmark" value="Y" />
+			  </c:if>
+			</c:forEach>
+			
+			
                 <div class="w-100 bg-white border border-grey rounded overflow-hidden mb-3">                
 
 					<!-- 1. 글 -->
@@ -35,11 +44,32 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
+                                	<c:if test="${bookmark eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_insertBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolGrey" style="font-size: 25px;"></i>
+                                    </button>    
+                                    </c:if>      
+                             	
+                                	<c:if test="${bookmark eq 'Y'}">                         
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_deleteBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolDarkBlue-text" style="font-size: 25px;"></i>
+                                    </button>                  
+                                    </c:if> 
+                                    
+                                	<!-- 관리자만 보임 -->
                                 	<c:if test="${projectInfo.USERID==loginUser.userId}">
-                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
-                                        <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
+                                	<c:if test="${pb.PINPOST eq 'Y'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('N',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolDarkBlue-text" style="font-size: 25px;"></i>
                                     </button>  
                                     </c:if>   
+                                	<c:if test="${pb.PINPOST eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('Y',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolGrey" style="font-size: 25px;"></i>
+                                    </button>  
+                                    </c:if>   
+                                    </c:if>    
+                                    <!-- 글 작성자만 보임 -->
                                     <c:if test="${w.WRITINGID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
@@ -81,47 +111,70 @@
 
                                 <div class="collapse" id="collapseW${pb.BOARDNO}"> 
                                     <!-- 공통) 태그 & 언급 -->
+									<c:set var="hashTagCk" value="N"/>
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
                                             <strong class="mb-2">태그</strong>
                                             <div class="w-100 d-flex flex-wrap align-items-center addTagList">
-                                            <c:forEach items="${hashTag }" var="ht">
+                                            <c:forEach items="${hashTag}" var="ht">
 											<c:if test="${w.BOARDNO==ht.BOARDNO}">
+											<c:set var="hashTagCk" value="Y" />
                                                 <div class="d-flex ml-2 mr-2">
                                                     <span style='color:#25558F; font-weight: bold;'>#</span>
                                                     <span class="">${ht.HASHTAGTEXT}</span>
                                                 </div>
 		                                    </c:if>
 		                                    </c:forEach>
+		                                    <c:if test="${hashTagCk eq 'N'}">
+		                                        <div class="d-flex ml-2 mr-2 stoolGrey">
+													태그가 없습니다.
+                                                </div>
+		                                    </c:if>
                                             </div>
                                         </div>
                                         <hr class="w-100">
-                                    </div>  <!-- 태그 입력 끝 -->     
+                                    </div>  <!-- 태그 입력 끝 --> 
                                     <!-- 언급 입력 -->
+									<c:set var="notificationCk" value="N" />
+
                                     <div class="col-12 addMentionListBox mb-2">                           
                                         <div class="d-flex flex-column justify-content-center">
                                             <strong class="mr-2 mb-1">언급된 참여자</strong>                                        
                                             <div class="d-flex align-items-center">
+                                            <c:forEach items="${notification}" var="n">
+											<c:if test="${w.BOARDNO==n.BOARDNO}">
+											<c:set var="notificationCk" value="Y" />
                                                 <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
                                                     <div class='selectedWorker_imgDiv mr-2'>
                                                         <img src="${path}/resources/images/defaultProfile.png">
                                                     </div>
-                                                    <span>김OO</span>
+                                                    <c:forEach items="${projectMember}" var="pm">
+                        							<c:if test="${pm.userId ne n.RECEIVEID}">
+                                                    <span><c:out value="${pm.userName}"/></span>
+                                                    </c:if>
+                                                    </c:forEach>
                                                 </div>
-                                                <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
-                                                    <span>김OO</span>
-                                                </div>
+											</c:if>
+											</c:forEach>
+											<c:if test="${notificationCk eq 'N'}">
+		                                        <div class="d-flex ml-2 mr-2 stoolGrey">
+													언급된 참여자가 없습니다.
+                                                </div>								
+											</c:if>
                                             </div>
                                         </div>
                                         <hr class="w-100">
                                     </div>  <!-- 언급 입력 끝 -->    
-
                                     <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
+									<c:set var="attachmentCk" value="N" />
+
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
+                                        <c:forEach var="wai" items="${writingAttachment}">
+                            			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
+                            			<c:set var="attachmentCk" value="Y" />
+                            			<c:set var = "imgArr" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
+                            			<c:if test="${!empty imgArr}">                                       
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -144,6 +197,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </c:if>
+                            			</c:if>
+                            			</c:forEach> 
+                                        <c:forEach var="waf" items="${writingAttachment}">
+                            			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
+                            			<c:set var="attachmentCk" value="Y" />
+                            			<c:set var = "fileArr" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
+                            			<c:if test="${!empty fileArr}">                            			
                                         <div class="col-12 d-flex flex-column">
                                             <p class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -172,7 +233,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </c:if>
+                                        </c:if>
+                                        </c:forEach>
+                                        <c:if test="${attachmentCk eq 'N'}">
+	                                        <div class="d-flex ml-2 mr-2 stoolGrey">
+												첨부된 파일이 없습니다.
+                                            </div>								
+										</c:if>
+                                        <div>
+                                        </div>
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
+
                                 </div> <!-- collapse 닫기 -->
 
                             </div>
@@ -201,8 +273,11 @@
                             </p>
                         </div>
                         <table class="borderSpacing">                            
-                            <!-- ▼ 지우기 -->
+                            <c:forEach items="${writingComment}" var="wc" varStatus="status">
+                            <c:if test="${!status.last}">
                             <tr class="hiddenComment d-none">
+                            <c:forEach items="${projectMember}" var="pm">
+                        	<c:if test="${pm.userId ne wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
                                         <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
@@ -210,36 +285,23 @@
                                     <div class="d-flex flex-column justify-content-center">
                                         <div class="d-flex flex-column justify-content-center">
                                             <span style="font-size: 12px;">
-                                                <strong class="mr-2">정집집</strong>
-                                                <span style="color: lightgrey">2020-05-01 21:20</span>
+                                                <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
+                                                <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
                                             <p class="m-0">
-                                                	숨겨진 댓글1내용입니다.
+                                            	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             </p>
                                         </div>
                                     </div>
                                 </td>
-                            </tr>                                                     
-                            <tr class="hiddenComment d-none">
-                                <td class="d-flex align-items-start">
-                                    <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <span style="font-size: 12px;">
-                                                <strong class="mr-2">정집집</strong>
-                                                <span style="color: lightgrey">2020-05-01 21:20</span>
-                                            </span>
-                                            <p class="m-0">
-                                               	 숨겨진 댓글2내용입니다.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- ▲ 지우기 -->
+                            </c:if>
+                            </c:forEach>
+                            </tr>  
+                            </c:if>                                                   
+                            <c:if test="${status.last}">
                             <tr>
+                            <c:forEach items="${projectMember}" var="pm">
+                        	<c:if test="${pm.userId ne wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
                                         <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
@@ -247,17 +309,20 @@
                                     <div class="d-flex flex-column justify-content-center">
                                         <div class="d-flex flex-column justify-content-center">
                                             <span style="font-size: 12px;">
-                                                <strong class="mr-2">정집집</strong>
-                                                <span style="color: lightgrey">2020-05-01 21:20</span>
+                                                <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
+                                                <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
                                             <p class="m-0">
-                                                	댓글내용입니다.
+                                            	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             </p>
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                        
+                            </c:if>
+                            </c:forEach>
+                            </tr>  
+                            </c:if>                   
+                        	</c:forEach>
                         </table>
                         <!-- 댓글 입력창 -->
                         <div class="d-flex mt-1">
@@ -307,11 +372,32 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
+                                	<c:if test="${bookmark eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_insertBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolGrey" style="font-size: 25px;"></i>
+                                    </button>    
+                                    </c:if>      
+                             	
+                                	<c:if test="${bookmark eq 'Y'}">                         
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_deleteBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolDarkBlue-text" style="font-size: 25px;"></i>
+                                    </button>                  
+                                    </c:if> 
+                                    
+                                	<!-- 관리자만 보임 -->                                
                                 	<c:if test="${projectInfo.USERID==loginUser.userId}">
-                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
-                                        <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
+                                	<c:if test="${pb.PINPOST eq 'Y'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('N',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolDarkBlue-text" style="font-size: 25px;"></i>
                                     </button>  
                                     </c:if>   
+                                	<c:if test="${pb.PINPOST eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('Y',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolGrey" style="font-size: 25px;"></i>
+                                    </button>  
+                                    </c:if>   
+                                    </c:if>   
+                                    <!-- 업무 작성자만 보임 --> 
                                     <c:if test="${t.TASKID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
@@ -670,11 +756,32 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
+                                	<c:if test="${bookmark eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_insertBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolGrey" style="font-size: 25px;"></i>
+                                    </button>    
+                                    </c:if>      
+                             	
+                                	<c:if test="${bookmark eq 'Y'}">                         
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_deleteBookmark(this,${pb.BOARDNO},'${loginUser.userId}');">
+                                        <i class="fas fa-bookmark stoolDarkBlue-text" style="font-size: 25px;"></i>
+                                    </button>                  
+                                    </c:if> 
+                                    
+                                	<!-- 관리자만 보임 -->                                
                                 	<c:if test="${projectInfo.USERID==loginUser.userId}">
-                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
-                                        <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
+                                	<c:if test="${pb.PINPOST eq 'Y'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('N',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolDarkBlue-text" style="font-size: 25px;"></i>
                                     </button>  
                                     </c:if>   
+                                	<c:if test="${pb.PINPOST eq 'N'}">
+                                    <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_updatePin('Y',${pb.PROJECTNO},${pb.BOARDNO});">
+                                        <i class="fas fa-thumbtack stoolGrey" style="font-size: 25px;"></i>
+                                    </button>  
+                                    </c:if>   
+                                    </c:if>   
+                                    <!-- 일정 작성자만 보임 -->  
                                     <c:if test="${s.SCHEDULEID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
@@ -694,17 +801,17 @@
                             <!-- 3) 일정 시작 ------------------------------------------------------------------------------------------------------------------------>
                             <div class="pjViewBody w-100 flex-column pl-3 pr-3">
                                 <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
-                                    <div class="w-100 row d-flex">
+                                    <div class="w-100 row d-flex align-items-center">
                                         <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                                            <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
-                                                <fmt:formatDate value="${s.SCHEDULETIME}" pattern="MM"/>
+                                            <p class="m-0 text-danger" style="font-size: 25px;"> <!-- 일정 실행일 : 월만 표기 -->
+                                                <fmt:formatDate value="${s.SCHEDULETIME}" pattern="MM월"/>
                                             </p>
                                             <p class="m-0 font-weight-bolder" style="font-size: 40px;"> <!-- 일정 실행일 : 일만 표기 -->
                                             	<fmt:formatDate value="${s.SCHEDULETIME}" pattern="dd"/>  
                                             </p>
                                         </div>
                                         <div class="col-10 d-flex flex-column">
-                                            <strong class="">
+                                            <strong class="" style="font-size: 25px;">
                                             	<c:out value="${s.SCHEDULETITLE }"/>
                                             </strong> <!-- 일정제목 -->
                                             <hr class="w-100">
@@ -975,10 +1082,9 @@
                 	</c:if>   <!-- 타입별로 forEach 닫기 -->                	                	
                 	
                 	
-                </div>	<!-- greyBorder -->
+                </div>	<!-- greyBorder -->      
 			</c:forEach>
                 
                 
             
-                
                 

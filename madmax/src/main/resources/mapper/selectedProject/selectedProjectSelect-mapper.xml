@@ -56,15 +56,15 @@
 	
 	<!-- 글,업무,일정 댓글 가져오기 -->
 	<select id="selectWritingComment" parameterType="map" resultType="map">
-		SELECT * FROM WRITINGCOMMENT
+		SELECT * FROM WRITINGCOMMENT ORDER BY WRITINGCOMMENTTIME
 	</select>
 	
 	<select id="selectTaskComment" parameterType="map" resultType="map">
-		SELECT * FROM TASKCOMMENT
+		SELECT * FROM TASKCOMMENT ORDER BY TASKCOMMENTTIME
 	</select>
 	
 	<select id="selectScheduleComment" parameterType="map" resultType="map">
-		SELECT * FROM SCHEDULECOMMENT
+		SELECT * FROM SCHEDULECOMMENT ORDER BY SCHEDULECOMMENTTIME
 	</select>
 	
 	<!--  asidebar-mapper로 이동
@@ -111,4 +111,10 @@
 		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}
 	</select>
 	
+	<select resultType="map" parameterType="map" id="selectBookmarkList">
+		SELECT PB.*, B.USERID
+		FROM PROJECTBOARD PB JOIN BOOKMARK B ON PB.BOARDNO = B.BOARDNO
+		WHERE B.USERID = #{loginId} AND PB.PROJECTNO = #{pjNo}
+	</select>
+
 </mapper>

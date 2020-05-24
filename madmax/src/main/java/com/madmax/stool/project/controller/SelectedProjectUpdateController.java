@@ -143,5 +143,70 @@ public class SelectedProjectUpdateController {
 		return result;
 	}
 	
+	@RequestMapping("/selectedProject/insertBookmark.do")
+	@ResponseBody
+	public int insertBookmark(@RequestParam Map<String, String> map) {
+		//값 받기
+		int bNo = Integer.parseInt(map.get("bNo"));
+		String loginId = map.get("loginId");
+		
+		Map<String, Object> bInfo = new HashMap();
+		bInfo.put("bNo",bNo);
+		bInfo.put("loginId",loginId);
+		
+		int result = 0;
+		try {
+			result = service.insertBookmark(bInfo);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping("/selectedProject/deleteBookmark.do")
+	@ResponseBody
+	public int deleteBookmark(@RequestParam Map<String, String> map) {
+		//값 받기
+		int bNo = Integer.parseInt(map.get("bNo"));
+		String loginId = map.get("loginId");
+		
+		Map<String, Object> bInfo = new HashMap();
+		bInfo.put("bNo",bNo);
+		bInfo.put("loginId",loginId);
+		
+		int result = 0;
+		try {
+			result = service.deleteBookmark(bInfo);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping("/selectedProject/updatePinPost.do")
+	@ResponseBody
+	public int updatePinPost(@RequestParam Map<String, String> map) {
+		//값 받기
+		String check = map.get("check");
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		int bNo = Integer.parseInt(map.get("bNo"));
+		
+		Map<String, Object> pjInfo = new HashMap();
+		pjInfo.put("check",check);
+		pjInfo.put("pjNo",pjNo);
+		pjInfo.put("bNo",bNo);
+		
+		int result = 0;
+		try {
+			result = service.updatePinPost(pjInfo);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	
 }
