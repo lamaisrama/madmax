@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -79,4 +80,68 @@ public class SelectedProjectUpdateController {
 		
 		return result;
 	}
+	
+	@RequestMapping("/selectedProject/deleteProjectMember.do")
+	@ResponseBody
+	public int deleteProjectMember(@RequestParam Map<String, String> map) {
+		//값 받기
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		String loginId = map.get("loginId");
+		
+		Map<String, Object> pjInfo = new HashMap();
+		pjInfo.put("pjNo",pjNo);
+		pjInfo.put("loginId",loginId);
+		
+		int result = service.deleteProjectMember(pjInfo);
+
+		return result;
+	}
+	
+	@RequestMapping("/selectedProject/updateProjectManager.do")
+	@ResponseBody
+	public int updateProjectManager(@RequestParam Map<String, String> map) {
+		//값 받기
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		String loginId = map.get("loginId");
+		String newManagerId = map.get("newManagerId");
+		
+		Map<String, Object> pjInfo = new HashMap();
+		pjInfo.put("pjNo",pjNo);
+		pjInfo.put("loginId",loginId);
+		pjInfo.put("newManagerId",newManagerId);
+		
+		int result = 0;
+		try {
+			result = service.updateProjectManager(pjInfo);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping("/selectedProject/updateSelectedProject.do")
+	@ResponseBody
+	public int updateSelectedProject(@RequestParam Map<String, String> map) {
+		//값 받기
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		String title = map.get("projectTitle");
+		String projectState = map.get("projectState")==null?"P":"E";
+		
+		Map<String, Object> upMap = new HashMap();
+		upMap.put("title",title);
+		upMap.put("projectState",projectState);
+		upMap.put("pjNo",pjNo);
+		
+		int result = 0;
+		try {
+			result = service.updateSelectedProject(upMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
 }

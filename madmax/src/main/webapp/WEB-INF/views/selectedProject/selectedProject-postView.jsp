@@ -35,10 +35,12 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <input type="hidden" name="selectPin" class="selectPin"/>
+                                	<c:if test="${projectInfo.USERID==loginUser.userId}">
                                     <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
                                         <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
-                                    </button>                                        
+                                    </button>  
+                                    </c:if>   
+                                    <c:if test="${w.WRITINGID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
@@ -48,6 +50,7 @@
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
+                                    </c:if>
                                 </div>
                             </div>  
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
@@ -304,19 +307,22 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <input type="hidden" name="selectPin" class="selectPin"/>
+                                	<c:if test="${projectInfo.USERID==loginUser.userId}">
                                     <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
                                         <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
-                                    </button>                                        
+                                    </button>  
+                                    </c:if>   
+                                    <c:if test="${t.TASKID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
-                                        <div class="dropdown-menu" style="min-width: 120px;">
+                                        <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
+                                    </c:if>
                                 </div>
                             </div>  
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
@@ -664,19 +670,22 @@
                                     </div>                        
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <input type="hidden" name="selectPin" class="selectPin"/>
+                                	<c:if test="${projectInfo.USERID==loginUser.userId}">
                                     <button type="button" class="btn justify-content-center align-items-center pl-2 mr-3" onclick="fn_selectPin(this);">
                                         <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
-                                    </button>                                        
+                                    </button>  
+                                    </c:if>   
+                                    <c:if test="${s.SCHEDULEID==loginUser.userId}">                                   
                                     <div class="dropdown">
                                         <button type="button" class="btn dropdown-toggle justify-content-center align-items-center p-0" data-toggle="dropdown">
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
-                                        <div class="dropdown-menu" style="min-width: 120px;">
+                                        <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
+                                    </c:if>
                                 </div>
                             </div>  
                             <!--★ 상단공통  끝 -------------------------------------------------------------------------------------------------------------------->
@@ -713,12 +722,12 @@
                                             	<c:out value="${s.SCHEDULEPLACE }"/>
                                             </p>  <!-- 일정주소 -->
                                         </div>
-                                        <div class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
+                                        <div id="map${s.SCHEDULENO}" class="border" style="width: 90%; height: 300px;"> <!-- 지도가 들어가는 곳 -->
                                         </div>
                                     </div>
                                     <hr class="w-100">
 
-                                    <div class="w-100 d-flex"><!-- "src/main/webapp/WEB-INF/views/selectedProject/selectedProject-postView.jsp" -->
+                                    <div class="w-100 d-flex">
                                   		<i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>
                                         <div class="ml-2">
                                         	<c:out value="${s.SCHEDULEMEMO }"/>
@@ -726,6 +735,41 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            	<!-- 지도 script ---->
+								<script>
+								var mapContainer${s.SCHEDULENO} = document.getElementById('map${s.SCHEDULENO}'), // 지도를 표시할 div 
+								    mapOption${s.SCHEDULENO} = {
+								        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+								        level: 3 // 지도의 확대 레벨
+								    };  
+
+								// 지도를 생성합니다    
+								var map${s.SCHEDULENO} = new kakao.maps.Map(mapContainer${s.SCHEDULENO}, mapOption${s.SCHEDULENO}); 
+
+								// 주소-좌표 변환 객체를 생성합니다
+								var geocoder${s.SCHEDULENO} = new kakao.maps.services.Geocoder();
+
+								// 주소로 좌표를 검색합니다
+								geocoder${s.SCHEDULENO}.addressSearch('${s.SCHEDULEPLACE}', function(result, status) {
+
+								    // 정상적으로 검색이 완료됐으면 
+								     if (status === kakao.maps.services.Status.OK) {
+
+								        var coords${s.SCHEDULENO} = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+								        // 결과값으로 받은 위치를 마커로 표시합니다
+								        var marker${s.SCHEDULENO} = new kakao.maps.Marker({
+								            map: map${s.SCHEDULENO},
+								            position: coords${s.SCHEDULENO}
+								        });
+
+								        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+								        map${s.SCHEDULENO}.setCenter(coords${s.SCHEDULENO});
+								    } 
+								});   
+								</script>                            	
+                            	<!-- 지도 script 끝 -->
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
 
 

@@ -123,18 +123,74 @@ function fn_selectColor(e,pjNo,color){
 	$.ajax({
 		url:"${path}/selectedProject/updateProjectColor.do",
 		data:{pjNo:pjNo,
-			  color:color}/* ,
-		success:function(data){
-			if(data > 0){
-				alert("즐겨찾기 해제되었습니다.");
-        		location.reload(true);
-			}else{
-				alert("즐겨찾기 해제에 실패하였습니다. 다시 시도해주세요");
-			}
-		} */
+			  color:color}
 	});
 }
     
     
-    
+//프로젝트 나가기
+function fn_pjGoOutAjax(pjNo, loginId){
+	$.ajax({
+		url:"${path}/selectedProject/deleteProjectMember.do",
+		data:{pjNo:pjNo,
+			  loginId:loginId},
+		success:function(data){
+			if(data > 0){
+				alert("프로젝트에서 나가기 되었습니다.");
+        		location.replace("${path }/project/projectList.do");
+			}else{
+				alert("나가기에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
+//프로젝트 나가기 - 관리자
+function fn_changePjManager(pjNo, loginId, newManagerId){
+	$.ajax({
+		url:"${path}/selectedProject/updateProjectManager.do",
+		data:{pjNo:pjNo,
+			  loginId:loginId,
+			  newManagerId:newManagerId},
+		success:function(data){
+			if(data > 0){
+				alert(newManagerId+"님으로 관리자 변경 후 프로젝트에서 나가기 되었습니다.");
+        		location.replace("${path }/project/projectList.do");
+			}else{
+				alert("나가기에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
+//프로젝트 수정
+function fn_updateProjectSubmit(){
+    // Get form
+    var form = $('#updateProjectForm')[0];
+
+    // Create an FormData object 
+    var data = new FormData(form);
+
+    $.ajax({
+        type: "POST",
+        url: "${path}/selectedProject/updateSelectedProject.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {        	
+        	if(data>0){
+        		alert("프로젝트가 수정되었습니다.");
+        		location.reload(true);
+        	}else{
+        		alert("프로젝트가 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
+        	}
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("프로젝트가 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
+        }
+    });	
+}
+
 </script>

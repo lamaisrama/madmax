@@ -10,4 +10,10 @@ public interface SelectedProjectUpdateService {
 
 	int updateProjectColor(Map<String, Object> pjInfo);
 
+	int deleteProjectMember(Map<String, Object> pjInfo);
+
+	int updateProjectManager(Map<String, Object> pjInfo);
+
+	int updateSelectedProject(Map<String, Object> upMap);
+
 }

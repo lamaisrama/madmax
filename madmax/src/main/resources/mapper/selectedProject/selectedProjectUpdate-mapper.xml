@@ -12,4 +12,16 @@
 	<update id="updateProjectColor" parameterType="map">
 		UPDATE PROJECTTABLE SET PROJECTCOLOR = #{color} WHERE PROJECTNO = #{pjNo}
 	</update>
+	
+	<delete id="deleteProjectMember" parameterType="map">
+		DELETE PROJECTMEMBER WHERE PROJECTNO = #{pjNo} AND USERID = #{loginId}
+	</delete>
+	
+	<update id="updateProjectManager" parameterType="map">
+		UPDATE PROJECTTABLE SET USERID = #{newManagerId} WHERE PROJECTNO = #{pjNo}
+	</update>
+	
+	<update id="updateSelectedProject" parameterType="map">
+		UPDATE PROJECTTABLE SET PROJECTTITLE= #{title}, PROJECTSTATE= #{projectState} WHERE PROJECTNO = #{pjNo}
+	</update>
 </mapper>

@@ -23,4 +23,19 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.update("SelectedProjectUpdate.updateProjectColor", pjInfo);
 	}
 
+	@Override
+	public int deleteProjectMember(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.delete("SelectedProjectUpdate.deleteProjectMember", pjInfo);
+	}
+
+	@Override
+	public int updateProjectManager(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.update("SelectedProjectUpdate.updateProjectManager", pjInfo);
+	}
+
+	@Override
+	public int updateSelectedProject(SqlSessionTemplate session, Map<String, Object> upMap) {
+		return session.update("SelectedProjectUpdate.updateSelectedProject", upMap);
+	}
+
 }
