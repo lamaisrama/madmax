@@ -35,7 +35,7 @@ html, body{
 
 body{
   background: #030321;
-  
+  margin-bottom : 150px;
 }
 
 svg {
