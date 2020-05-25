@@ -246,9 +246,7 @@
                         </div>
 	                </div>
 			</li>
-			<li>
-				<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/admin/adminIndex.do')">관리자 버튼</button>
-			</li>
+			
 		</ul>
 	</nav>
 	<!-- 
