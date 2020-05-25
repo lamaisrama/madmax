@@ -30,6 +30,8 @@ public interface ApprovalService {
 	int updateAppr(ApprLine line);
 	List<ApprDoc> selectAttachAppredDoc(String deptCode);
 	int updateUserSign(String userId);
+	int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred, List<ApprAttachment> files,
+			List<ApprAttachment> delFiles);
 
 	
 	

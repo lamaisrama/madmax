@@ -184,7 +184,49 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<ApprDoc> selectAttachAppredDoc(String deptCode) {
 		return dao.selectAttachAppredDoc(session, deptCode);
 	}
-	
+
+	@Override
+	public int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred,
+			List<ApprAttachment> files, List<ApprAttachment> delFiles) {
+		
+		//1 Approval TBL에 업데이트
+		int result=0; // = dao.updateApproval(session, appr);			
+		if(result==0) {
+			throw new RuntimeException("결재 문서 입력 오류");
+		}
+		//2 ApprLine TBL에 추가
+		for(ApprLine al : apprLines) {
+			al.setApprNo(appr.getApprNo());
+			result=dao.insertApprLine(session, al);
+			if(result==0) {
+				throw new RuntimeException("결재선 입력 오류");
+			}
+		}
+		// AppredDoc 추가
+		if(!appred.isEmpty()) {
+			for(AppredDoc ad : appred) {
+				ad.setApprNo(appr.getApprNo());
+				result=dao.insertAppredDoc(session, ad);
+				if(result==0) {
+					throw new RuntimeException("결재선 입력 오류");
+				}
+			}
+		}
+		
+		//업로드파일 추가
+		if(!files.isEmpty()) {
+			for(ApprAttachment at : files) {
+				at.setApprNo(appr.getApprNo());
+				result=dao.insertApprAttachment(session, at);
+				if(result==0) {
+					throw new RuntimeException("결재선 입력 오류");
+				}
+			}
+		}
+
+		return 1;
+
+	}
 	
 
 	

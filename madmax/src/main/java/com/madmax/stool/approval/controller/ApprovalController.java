@@ -152,7 +152,6 @@ public class ApprovalController {
 			}
 		}
 		
-		
 		//insert 메소드 실행
 		int result=0;
 		try{
@@ -187,6 +186,23 @@ public class ApprovalController {
 		mv.addObject("list", deptUsers);
 		mv.setViewName("approval/apprLine");
 		return mv;
+	}
+	
+	@RequestMapping("/appr/saveAsTemp")
+	public String saveAsTemp(HttpServletRequest req, Approval appr, 
+			int[] appredNo, MultipartFile[] upFile, Model m) {
+		
+		return "";
+	}
+	
+	@RequestMapping("/appr/reuseTemp")
+	public String reuseTemp(int apprNo, Model m) {
+		ApprDoc appr= service.selectApprDoc(apprNo);
+		if(appr.getApprText()!=null){
+			appr.setApprText(appr.getApprText().replace("\r\n", "<br>"));
+		}
+		m.addAttribute("appr", appr);
+		return "approval/re-apprDocWrite";
 	}
 
 	@RequestMapping("/appr/apprReqBox.do")
@@ -243,7 +259,6 @@ public class ApprovalController {
 	public String openApproval(Model m, int apprNo) {
 		ApprDoc appr= service.selectApprDoc(apprNo);
 		m.addAttribute("appr", appr);
-		System.out.println(appr);	
 		return "approval/openApprDoc";
 	}
 
@@ -338,5 +353,101 @@ public class ApprovalController {
 				e.printStackTrace();
 			}
 		}
+	}
+	@RequestMapping("appr/reDraftFormEnd")
+	public String reDraftFormEnd(HttpServletRequest req, HttpSession session, String[] apprLine, Approval appr, 
+			int[] appredNo, MultipartFile[] upFile, String[] delFile, Model m) {
+		// 결재문서 정보 treat
+		appr.setFinalApprStep(apprLine.length);
+		if (appr.getApprContent() != null) {
+			appr.getApprContent().replace("\'", "\''").replace("\"", "\\\"");
+		} else { //ApprContent 없을 때
+			appr.setApprContent("");
+		}
+		if (appr.getApprText() != null) {
+			appr.getApprText().replace("\'", "\''").replace("\"", "\\\"");
+		} else { //ApprText 없을 때
+			appr.setApprText("");
+		}
+		// 결재선 정보 입력
+		List<ApprLine> apprLines=new ArrayList();
+		for(int i=0;i<apprLine.length;i++){  
+			String[] lineInfo=apprLine[i].split("/"); 
+			ApprLine a = new ApprLine();
+			a.setApprStep(i+1);
+			a.setApprUser(lineInfo[0]);
+			a.setApprType(lineInfo[1]);
+			apprLines.add(a); 
+		}
+		//receiver 유무 확인
+		if(appr.getReceiver()==null) appr.setReceiver("");
+		//기결재
+		List<AppredDoc> appred = new ArrayList(); 
+		if(appredNo!=null) {			
+			for(int i : appredNo) {
+				AppredDoc a = new AppredDoc(0, i, "");
+				appred.add(a);
+			}
+		}
+		//파일업로드
+		
+		//새로 올라온 파일 있는지 확인
+		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		File f=new File(path);
+		if(!f.exists()) f.mkdirs();
+		List<ApprAttachment> files=new ArrayList();
+		for(MultipartFile mf : upFile) {
+			if(!mf.isEmpty()) {
+				String ori = mf.getOriginalFilename();
+				String rename = RenameFactory.getRenamedFileName(ori);
+				try {
+					mf.transferTo(new File(path+"/"+rename));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				ApprAttachment a = new ApprAttachment();
+				a.setDocOriFileName(ori);
+				a.setDocRenamedFile(rename);
+				files.add(a);
+			}
+		}
+		
+		//삭제할 파일 있는지 확인
+		List<ApprAttachment> delFiles= new ArrayList();
+		if(delFile!=null) {
+			for(String s : delFile) {
+				ApprAttachment delAttachment = new ApprAttachment();
+				String[] delFileInfo=s.split("/");
+				//delFileInfo[0] - renamed filename
+				//delFileInfo[1] - docFileNo
+				//1. 파일 삭제
+				File delF = new File(path+"/"+delFileInfo[0]);
+				if(delF.exists()) delF.delete();
+				//2. 삭제할 파일번호 list에 담기
+				delAttachment.setDocFileNo(Integer.parseInt(delFileInfo[1]));
+				delFiles.add(delAttachment);
+			}
+		}
+		
+		//update 메소드 실행
+		int result=0;
+		try{
+		result =service.updateTempApproval(appr, apprLines, appred, files, delFiles);
+		}catch(RuntimeException e) {
+			e.printStackTrace(); 
+		}
+		String msg = "", loc ="";
+		if(result>0) {
+			msg ="결재문서 작성 완료";
+			loc = "";
+		}else{
+			msg = "결재 문서 작성 실패";
+			loc = "";
+		}
+			m.addAttribute("loc", loc);
+			m.addAttribute("msg", msg);
+			m.addAttribute("script", "window.close();");
+			
+		return "common/msg";
 	}
 }
