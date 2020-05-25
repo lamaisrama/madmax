@@ -33,6 +33,7 @@
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertTask" alias="task"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertTaskManager" alias="insertTaskManager"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertSchedule" alias="schedule"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.AdminUserManage" alias="adminUserManage"/>
 	</typeAliases>
 </configuration>
 

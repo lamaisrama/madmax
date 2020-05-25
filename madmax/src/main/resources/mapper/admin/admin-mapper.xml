@@ -3,7 +3,7 @@
 <mapper namespace="admin">
 
 	<select id="selectAttendList" resultType="adminAttend">
-	SELECT * FROM  modifyRequest LEFT JOIN EMPLOYEEMANAGEMENT USING(MANAGEMENTNO)  JOIN STOOLUSER USING(USERID)
+		SELECT * FROM  modifyRequest LEFT JOIN EMPLOYEEMANAGEMENT USING(MANAGEMENTNO)  JOIN STOOLUSER USING(USERID)
 	</select>
 	<update id="updateModifyRequest" parameterType="adminAttend">
 		UPDATE MODIFYREQUEST SET REQUESTRESULT=#{requestCategory} WHERE REQUESTNO=#{requestNo}
@@ -11,4 +11,21 @@
 	<update id="updateEmployeeManagement" parameterType="adminAttend">
 		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestCategory} WHERE WORKSTATENO=#{workStateNo}
 	</update>
+	
+	<select id="selectAignupApproval" resultType="adminUserManage">
+		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) WHERE STATUS='W'
+	</select>
+	
+	<update id="updateUserState" parameterType="string">
+		UPDATE STOOLUSER SET STATUS='Y' WHERE USERID=#{userId}
+	</update>
+	
+	<select id="selectAllUser" resultType="adminUserManage">
+		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE)
+	</select>
+	
+	<select id="selectUserCount" resultType="_int">
+		SELECT COUNT(*) FROM STOOLUSER
+	</select>
+	
 </mapper>

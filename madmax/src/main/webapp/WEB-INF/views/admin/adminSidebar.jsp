@@ -153,7 +153,7 @@
 				<div class="user-container text-center">
 					<div class="imgbox">
 		                <div class="img2">
-		                	<img src="${path }/resources/upload/profile/${loginUser.profile }" 
+		                	<img src="${path}/resources/upload/profile/${loginUser.profile}" 
 		                		style="border: 3px solid #233C61; 
 					            border-radius: 500px; width:150px; height:150px; overflow:hidden;">
             			</div> 
@@ -183,10 +183,11 @@
                                 <div id="collapseOne" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <ul>
-                                        	<li><a href=""><i class="fas fa-user-plus"> 가입 승인</i></a></li>
-                                        	<li><a href=""><i class="fas fa-user-times"> 회원 탈퇴</i></a></li>
+                                        	<li><a href="${path}/admin/signupApproval.do"><i class="fas fa-user-plus"> 가입 승인</i></a></li>
+                                        	<li><a href="${path}/admin/userManagement.do"><i class="fas fa-user-times"> 회원 관리</i></a></li>
                                         </ul>
                                     </div>
+                                    <hr>
                                 </div>
                             </div>
                             <div class="card">
@@ -197,12 +198,11 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
-                                       <div class="card-content">
 	                                        <div class="p-2">
 										      <span class="p-3"><a href="${path}/admin/adminAttendManagement.do">근태관리</a></span><br>
 										    </div>
-                                    	</div>
                                     </div>
+                                    <hr>
                                 </div>
                             </div>
                             <div class="card">
@@ -228,7 +228,7 @@
                                         전자결재관리
                                     </a>
                                 </div>
-                                <div id="collapseThree" class="collapse" data-parent="#accordionExample">
+                                <div id="collapseFour" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
                                         <div class="p-2">
 									      <span class="p-3"><a href="">양식 작성</a></span><br>
