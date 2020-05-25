@@ -9,63 +9,60 @@
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
 	<!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"> -->
-	<link href='${path }/resources/css/fullcalendar.css' rel='stylesheet' />
-	<link href='${path }/resources/css/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='${path }/resources/js/jquery-1.10.2.js' type="text/javascript"></script>
-	<script src='${path }/resources/js/jquery-ui.custom.min.js' type="text/javascript"></script>
-	<script src='${path }/resources/js/fullcalendar.js' type="text/javascript"></script>
+ 	<link href='${path}/resources/mainresources/calendar/core/main.css' rel='stylesheet' /> 
+<%-- 	<link href='${path}/resources/mainresources/calendar/daygrid/main.css' rel='stylesheet' />
+ --%>
+	<link href='${path}/resources/mainresources/calendar/list/main.css' rel='stylesheet' />
+	<script src='${path}/resources/mainresources/calendar/core/main.js'></script>
+	<script src='${path}/resources/mainresources/calendar/interaction/main.js'></script>
+	<script src='${path}/resources/mainresources/calendar/google-calendar/main.js'></script>
+	<script src='${path}/resources/mainresources/calendar/daygrid/main.js'></script>
+	<script src='${path}/resources/mainresources/calendar/timegrid/main.js'></script>
+	<script src='${path}/resources/mainresources/calendar/list/main.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<link href="${path}/resources/css/fullcalendar.css" rel="stylesheet">
+<script src="${path}/resources/js/fullcalendar.js" type="text/javascript"></script>
+<!-- 전체일정 -->
+<div class="col col-sm-7">	
+<div id='wrap'>
+	<h4><i class="far fa-calendar-alt"></i>&nbsp;전체일정</h4>	
+	<hr>
+	<br>
+	<div id='calendar'></div>
+	<div style='clear:both'></div>
+</div>
+</div>
 
+
+<div class="col col-sm-3">
+
+</div> 
+
+	
 <script>
-	$(document).ready(function() {
-	    var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
 
-		/*  className colors
-
-		className: default(transparent), important(red), chill(pink), success(green), info(blue)
-
-		*/
-
-
-		/* initialize the external events
-		-----------------------------------------------------------------*/
-
-		$('#external-events div.external-event').each(function() {
-
-			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-			// it doesn't need to have a start or end
-			var eventObject = {
-				title: $.trim($(this).text()) // use the element's text as the event title
-			};
-
-			// store the Event Object in the DOM element so we can get to it later
-			$(this).data('eventObject', eventObject);
-
-			// make the event draggable using jQuery UI
-			$(this).draggable({
-				zIndex: 999,
-				revert: true,      // will cause the event to go back to its
-				revertDuration: 0  //  original position after the drag
-			});
-
-		});
 
 
 		/* initialize the calendar
 		-----------------------------------------------------------------*/
+		
+		document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
 
-		var calendar =  $('#calendar').fullCalendar({
-			header: {
-				left: 'title',
+	    var calendar = new FullCalendar.Calendar(calendarEl,{
+		/* var calendar =  $('#calendar').fullCalendar({  */
+			plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction',  'googleCalendar' ],
+			googleCalendarApiKey:'AIzaSyDL2TuMBMjldVwSFT5zvntlpQRrbndMhDk',
+			header: {//실행된 달력화면에서 
+				left: 'title',//현재 출력된 month에 대한 정보
 				center: 'agendaDay,agendaWeek,month',
-				right: 'prev,next today'
+				right: 'prev,next today'//이전달,다음달 ,오늘(이번달 )로 이동하는 기능
 			},
-			editable: true,
+			defaultDate: new Date(),
+			editable: false,//일정을 마우스로 이동시킴
 			firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
 			selectable: true,
-			defaultView: 'month',
+			defaultView: 'dayGridMonth', 
 
 			axisFormat: 'h:mm',
 			columnFormat: {
@@ -74,106 +71,64 @@
                 day: 'dddd M/d',  // Monday 9/7
                 agendaDay: 'dddd d'
             },
-            titleFormat: {
-                month: 'MMMM yyyy', // September 2009
-                week: "MMMM yyyy", // September 2009
-                day: 'MMMM yyyy'  // Tuesday, Sep 8, 2009
-            },
+          
 			allDaySlot: false,
 			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = open('','_blank','width=500,height=500');
+		
+			eventClick: function(info) {//window창으로 보이는 부분!!
+				console.log(info);
+			
+				var title = open('','_blank','width=500,height=300');
 				var js = '<script>';
 				js+='function viewScd(){';
 				js+='location.href="//.do?no="';
 				js+='}';
 				js+='</';
 				js+='script>';
-				var content = '<html><body>';
-				content+='<h1>Title</h1>';
-				content+='<p>subtitle</p>';
+				var content = '<html>';
+				content+='<head>';
+				content+='<script ';
+				content+="src='https://kit.fontawesome.com/b5f4d53f14.js'";
+				content+="crossorigin='anonymous'>";
+				content+='</';
+				content+='script>';
+				content+='</';
+				content+='head>';
+				content+='<body>';
+				content+="<div style='text-align:center;'>";
+				content+='<h1 style="color:#25558F;">'+info.event.title+'</h1>';
 				content+='<hr>';
-				content+='<h5>일자</h5>';
-				content+='<h5>장소</h5>';
+				content+='<h4><i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>&nbsp;'+info.event.extendedProps.scheduleMemo+'</h4>';
+				content+='<h4>주소:'+info.event.extendedProps.schedulePlace+'</h4>';
 				content+='<button onclick="viewScd();">상세보러가기</button>';
+				content+='</div>'
 				content+=js+'</body>';
 				content+='</html>';
 				title.document.write(content);
-				calendar.fullCalendar('unselect');
+				//calendar.fullCalendar('unselect'); 
 			},
-			droppable: true, // this allows things to be dropped onto the calendar !!!
-			drop: function(date, allDay) { // this function is called when something is dropped
-
-				// retrieve the dropped element's stored Event Object
-				var originalEventObject = $(this).data('eventObject');
-
-				// we need to copy it, so that multiple events don't have a reference to the same object
-				var copiedEventObject = $.extend({}, originalEventObject);
-
-				// assign it the date that was reported
-				copiedEventObject.start = date;
-				copiedEventObject.allDay = allDay;
-
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-					// if so, remove the element from the "Draggable Events" list
-					$(this).remove();
-				}
-
-			},
-
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-3, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+4, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+1, 19, 0),
-					end: new Date(y, m, d+1, 22, 30),
-					allDay: false,
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'http://google.com/',
-					className: 'success'
-				}
-			],
+		
+			//일정데이터 넣는 객체 events
+			eventSources:['ko.south_korea#holiday@group.v.calendar.google.com']
+			,events:[
+				'ko.south_korea#holiday@group.v.calendar.google.com',
+			 	<c:forEach items="${schedule}" var="s" varStatus="status">
+				{	"title":'<c:out value="${s.scheduleTitle}"/>'
+					,"start":'<c:out value="${s.scheduleStartDate}"/>'
+					,"end":'<c:out value="${s.scheduleEndDate}"/>'
+					,"className":'info'
+					,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
+					,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
+					},
+				
+			</c:forEach>  	
+			]
+	    
+		
 		});
+	    calendar.render();
 	});
+
 
 </script>
 <style>
@@ -223,22 +178,10 @@
 		border-radius: 6px;
         box-shadow: 0 1px 2px #C3C3C3;
 		}
-
+	.fc-event{//공휴일 글씨색 설정
+	color:#FFFFFF;
+	background-color:#cc3333;
+	}
 </style>
-<div class="col col-sm-7">	
-<div id='wrap'>
-	<h4><i class="far fa-calendar-alt"></i>&nbsp;전체일정</h4>	
-	<hr>
-	<br>
-	<div id='calendar'></div>
-	<div style='clear:both'></div>
-</div>
-</div>
-
-
-<div class="col col-sm-3">
-
-</div> 
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

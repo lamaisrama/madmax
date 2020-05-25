@@ -73,12 +73,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/updateUserState.do")
-	public String updateUserState(Model m,HttpServletRequest req) {
+	public String updateUserState(Model m,HttpServletRequest req,@RequestParam String userId) {
 		//String userId=aum.getUserId();
-		String userId=req.getParameter("userId");
+		
 		
 		int result=service.updateUserState(userId);
-		
 		
 		return "redirect:/admin/signupApproval.do";
 	}
@@ -104,6 +103,23 @@ public class AdminController {
 		
 		return mv;
 	}
+	
+	
+	
+	  // 직급 부여 
+	@RequestMapping("/admin/modifyJobLevel.do")
+	public ModelAndView jobManagement(ModelAndView mv,AdminUserManage aum) {
+		System.out.println("확인"+aum);
+		
+		int result=service.updateJobCode(aum);
+		
+		mv.setViewName("redirect:/admin/userManagement.do");
+		
+		return mv;
+	  
+	}
+	  
+	 
 	
 	
 }

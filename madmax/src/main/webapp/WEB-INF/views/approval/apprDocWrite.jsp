@@ -4,13 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="UTF-8">
-	<title>S'tool | ${type.typeTitle }</title>
+	<title>S'tool | ${appr.typeTitle }</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<!-- jQuery library -->
@@ -29,12 +29,11 @@
 
 <body>
 	<form action="${path }/appr/draftFormEnd" method="post"  enctype="multipart/form-data" onsubmit="return beforeSubmit();">
-		<input type="hidden" name="apprDocTypeNo" value="${type.apprDocTypeNo }">
+		<input type="hidden" name="apprDocTypeNo" value="${apprDocTypeNo }">
 		<div class="header">
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-			<button type="submit" class="btn btnPrimary">결재요청</button>
 			<button type="button" class="btn btnLight" style="width:7em" onclick="attachAppredDoc();">기결재첨부</button>
-			<button type="button" class="btn btnLight" onclick="">임시저장</button>
+			<button type="button" class="btn btnLight" onclick="saveAsTemp();">임시저장</button>
 			<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 		</div>
 		<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
@@ -42,10 +41,14 @@
 			<table class="lineTbl">
 				<tr id="apprTbl-dept">
 					<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-					<th class="line writerInfo">department</th>
+					<th class="line writerInfo">${loginUser.deptName}</th>
 				</tr>
 				<tr id="apprTbl-user">
-					<td height="60" class="writerInfo">${loginUser.userName }</td>
+					<td height="60" class="writerInfo">
+						${loginUser.userName } ${loginUser.jobName }
+						<img src="${path }/resources/upload/sign/${loginUser.userId}.png" width="50" alt="sign"/> <br>
+						<span style="font-size:8px;"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></span>
+					</td>
 				</tr>
 			</table>
 			<table class="lineTbl ">
@@ -65,16 +68,16 @@
 					<td>자동채번</td>
 					<th>기안일자</th>
 					<td>
-						<fmt:formatDate value="${today }" dateStyle="long" type="date" />
+						<fmt:formatDate value="${now }" dateStyle="long" type="date" />
 					</td>
 				</tr>
 				<tr class="basicContent">
 					<th>기안자</th>
 					<td>
-						박나정
+						${loginUser.userName }
 					</td>
 					<th>기안 부서</th>
-					<td>개발팀</td>
+					<td>${loginUser.deptName }</td>
 				</tr>
 				<tr class="basicContent">
 					<th>수신처</th>
@@ -112,9 +115,9 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="row-vh d-flex flex-row justify-content-end">
-			<button type="submit" class="btn btnPrimary">결재요청</button>
+		<br>
+		<div class="row-vh d-flex flex-row justify-content-end m-3">
+			<button type="submit" class="btn btnPrimary " >결재요청</button>
 		</div>
 		<br>
 	</form>
@@ -145,7 +148,7 @@
 			const name = "S'toll | 결재선 ";
 			const option = "width = 1000, height = 700, top=120 left=400 location=no";
 			console.log($("#apprTbl-user").children());
-			if ($("#apprTbl-user").children().length > 1) {
+			if ($("#apprTbl-user").children().length > 1 || $("#agreeTbl-user").children().length > 1) {
 				if (confirm('결재선과 수신처 정보가 모두 사라집니다. 다시 입력하시겠습니까?')) {
 					window.open(url, name, option);
 				}
@@ -191,7 +194,6 @@
 		}
 		
 		function addUpfile(){
-	    
 			var inp_upfile = '<div class="input-group mb-3 upfile-content">';
 				inp_upfile += '<input type="file" name="upFile" class="form-control form-control-file border">'
 				inp_upfile += '<div class="input-group-append">';
@@ -211,7 +213,27 @@
 			$(event.target).parent().remove();
 			$(event.target).remove();
 		}
-
+		
+/* 		function saveAsTemp(){
+			if (document.querySelector("#doc-form-table") != null) {
+				const content = document.querySelector("#doc-form-table").innerHTML;
+				const apprContent = $("<input>").attr("type", "hidden").attr("id", "apprContent").attr("name", "apprContent").attr("value", content);
+				$(".content-container").append(apprContent);
+			}
+			if (document.querySelector("#editor") != null) {
+				const apprText = $("<input>").attr("type", "hidden").attr("name", "apprText").attr("value", editor.getHtml());
+				$(".content-container").append(apprText);
+			}
+			
+			$.ajax({
+				url:"${path}/appr/saveAsTemp",
+				data:$("input").serialize(),
+				success:function(data){
+					console.log(data);
+				}
+			})
+			
+		} */
 
 
 	</script>

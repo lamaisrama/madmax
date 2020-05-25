@@ -156,6 +156,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
+	@Transactional
 	public int updateAppr(ApprLine line) {
 		//1. apprLine 업데이트
 		int result=dao.updateAppr(session, line);
@@ -183,7 +184,64 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<ApprDoc> selectAttachAppredDoc(String deptCode) {
 		return dao.selectAttachAppredDoc(session, deptCode);
 	}
-	
+
+	@Override
+	@Transactional
+	public int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred,
+			List<ApprAttachment> files, List<ApprAttachment> delFiles) throws RuntimeException{
+		
+		//1 Approval TBL에 업데이트
+		int result = dao.updateApproval(session, appr);			
+		if(result==0) {
+			throw new RuntimeException("결재 문서 입력 오류");
+		}
+		//2-1 ApprLine TBL 삭제
+		dao.deleteApprLine(session, appr.getApprNo());
+		//2-2 ApprLine update
+		for(ApprLine al : apprLines) {
+			al.setApprNo(appr.getApprNo());
+			result=dao.insertApprLine(session, al);
+			if(result==0) {
+				throw new RuntimeException("결재선 입력 오류");
+			}
+		}
+		//3-1AppredDoc 삭제
+		dao.deleteAppredDoc(session, appr.getApprNo());
+		//3-2 AppredDoc 추가
+		if(!appred.isEmpty()) {
+			for(AppredDoc ad : appred) {
+				ad.setApprNo(appr.getApprNo());
+				result=dao.insertAppredDoc(session, ad);
+				if(result==0) {
+					throw new RuntimeException("기결재 문서 입력 오류");
+				}
+			}
+		}
+		
+		//4-1 업로드파일 추가
+		if(!files.isEmpty()) {
+			for(ApprAttachment at : files) {
+				at.setApprNo(appr.getApprNo());
+				result=dao.insertApprAttachment(session, at);
+				if(result==0) {
+					throw new RuntimeException("파일 업로드오류");
+				}
+			}
+		}
+		//4-2 삭제 파일 있을 시 DB에서 삭제
+		System.out.println("삭제파일 있어야되는데 없냐? 엠티니? 트루펄스?"+delFiles.isEmpty());
+		if(!delFiles.isEmpty()) {
+			for(ApprAttachment at : delFiles) {
+				result = dao.deleteApprAttachment(session, at.getDocFileNo());
+				if(result==0) {
+					throw new RuntimeException("파일 삭제 오류");
+				}
+			}
+		}
+
+		return 1;
+
+	}
 	
 
 	

@@ -87,9 +87,8 @@ public class TaskController {
 		  
 		  tf.setUserId(id);
 		  List<TaskPb> tasks=service.selectTaskFilter(tf);
-		 
-		 
-		  
+		 logger.debug("가져왔니?"+tasks);
+		
 		  
 		  mv.addObject("projects",projects);
 		  mv.addObject("tasks",tasks);

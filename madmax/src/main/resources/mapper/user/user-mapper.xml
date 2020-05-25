@@ -8,7 +8,7 @@
 
 	<!-- id중복확인 -->
 	<select id="selectUser" parameterType="string" resultType="user">
-		SELECT * FROM STOOLUSER WHERE USERID=#{userId}
+		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE) WHERE USERID=#{userId}
 	</select>
 	
 	<!-- 아이디찾기 -->
@@ -23,11 +23,11 @@
 	
 	<!-- 임시 pw로 변경 -->
 	<update id="changePw" parameterType="map">
-		UPDATE STOOLUSER SET PASSWORD=#{password} where USERID=#{userId}	
+		UPDATE STOOLUSER SET PASSWORD=#{password} WHERE USERID=#{userId}	
 	</update>
 	
 	<!-- pw수정 -->
 	<update id="updatePw" parameterType="map">
-		UPDATE STOOLUSER SET PASSWORD=#{newPwd} where USERID=#{id}	
+		UPDATE STOOLUSER SET PASSWORD=#{newPwd} WHERE USERID=#{id}	
 	</update>
 </mapper>

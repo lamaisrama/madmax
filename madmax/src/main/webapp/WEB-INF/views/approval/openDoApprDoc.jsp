@@ -45,14 +45,14 @@
 				</tr>
 				<tr id="apprTbl-user">
 					<td height="60" class="writerInfo">${appr.userName } ${appr.jobName }
-						<img src="${path }/resources/upload/sign/${appr.userId}.PNG" width="50" alt="sign"/> <br>
+						<img src="${path }/resources/upload/sign/${appr.userId}.png" width="50" alt="sign"/> <br>
 						<span style="font-size:8px;"><fmt:formatDate value="${appr.writeDate}" pattern="yyyy-MM-dd"/></span>
 					</td>
 					<c:forEach items="${appr.apprLine }" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
 							<td height="60" class="writerInfo">${l.userName } ${l.jobName }
 								<c:if test="${l.apprTime!=null and l.apprTime!=''}">
-									<img src="${path }/resources/upload/sign/${l.apprUser}.PNG" width="50" alt="sign"/> <br>
+									<img src="${path }/resources/upload/sign/${l.apprUser}.png" width="50" alt="sign"/> <br>
 									<span style="font-size:8px;"><fmt:formatDate value="${l.apprTime }" pattern="yyyy-MM-dd"/></span>
 								</c:if>
 							</td>

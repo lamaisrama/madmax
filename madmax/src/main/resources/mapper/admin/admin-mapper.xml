@@ -28,4 +28,8 @@
 		SELECT COUNT(*) FROM STOOLUSER
 	</select>
 	
+	<update id="updateJobCode" parameterType="adminUserManage">
+		UPDATE STOOLUSER SET JOBCODE=#{jobCode} WHERE USERID=#{userId}
+	</update>
+	
 </mapper>

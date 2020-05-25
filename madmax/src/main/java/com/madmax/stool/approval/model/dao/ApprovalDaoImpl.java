@@ -148,6 +148,26 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int updateUserSign(SqlSessionTemplate session, String userId) {
 		return session.update("approval.updateUserSign", userId);
+	}
+
+	@Override
+	public int updateApproval(SqlSessionTemplate session, Approval appr) {
+		return session.update("approval.updateApproval", appr);
+	}
+
+	@Override
+	public void deleteApprLine(SqlSessionTemplate session, int apprNo) {
+		session.delete("approval.deleteApprLine", apprNo);
+	}
+
+	@Override
+	public void deleteAppredDoc(SqlSessionTemplate session, int apprNo) {
+		session.delete("approval.deleteAppredDoc", apprNo);
+	}
+
+	@Override
+	public int deleteApprAttachment(SqlSessionTemplate session, int docFileNo) {
+		return session.delete("approval.deleteApprAttachment", docFileNo);
 	}	
 	
 	

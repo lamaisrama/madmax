@@ -8,9 +8,10 @@
   <select id="selectTaskEach" resultType="com.madmax.stool.task.model.vo.TaskPb">
   		SELECT * FROM TASK JOIN PROJECTBOARD USING(BOARDNO) WHERE PROJECTNO=#{no}
   </select>
-  <select id="selectTaskFilter" resultType="com.madmax.stool.task.model.vo.TaskPb">
-  		SELECT P.BOARDNO,T.TASKNO,TASKTITLE,TASKSTATE,TASKPROIORITY,TASKCONTENT,TASKID,P.PROJECTNO,BOARDTYPE,PINPOST,
-  		TO_CHAR(TO_DATE(TASKSTARTDATE), 'yyyy/mm/dd') AS TASKSTARTDATE,TO_CHAR(TO_DATE(TASKENDDATE), 'yyyy/mm/dd') AS TASKENDDATE
+  <select id="selectTaskFilter" parameterType="com.madmax.stool.task.model.vo.TaskFilter" resultType="com.madmax.stool.task.model.vo.TaskPb">
+  		SELECT P.BOARDNO,T.TASKNO,TASKTITLE,TASKSTATE,TASKPROIORITY,
+  		TO_CHAR(TO_DATE(TASKSTARTDATE), 'yyyy/mm/dd') AS TASKSTARTDATE,TO_CHAR(TO_DATE(TASKENDDATE), 'yyyy/mm/dd') AS TASKENDDATE,
+  		TASKCONTENT,TASKID,P.PROJECTNO,BOARDTYPE,PINPOST
   		FROM TASK T  
   		JOIN PROJECTBOARD P ON T.BOARDNO=P.BOARDNO 
   		JOIN TASKMANAGER TM ON T.TASKNO=TM.TASKNO 
