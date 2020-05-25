@@ -13,7 +13,7 @@
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
  			<div id="myNotiTitle">
-               <h4>나를 지정한 글 보기 </h4>
+               <h4><i class="icon fas fa-at"></i>나를 지정한 글 보기 </h4>
             </div>
             <c:if test="${empty List }">
        			<div class="w-100 h-25 mt-5 text-center bg-light ">

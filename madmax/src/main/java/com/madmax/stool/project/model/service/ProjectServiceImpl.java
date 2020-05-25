@@ -51,19 +51,18 @@ public class ProjectServiceImpl implements ProjectService {
 
 
 	@Override
-	public String selectProjectMembers(int pNo) {
+	public List<String> selectProjectMembers(int pNo) {
 		// TODO Auto-generated method stub
 		List<String> names= dao.selectProjectMembers(session,pNo);
-		//2개의 list가져온단말이지
-		String pmNames="";
-		
-		pmNames=String.join(",",names);
-		
-		//가져온 리스트를 
-		logger.debug("합친 이름:"+pmNames);
+		/*
+		 * //2개의 list가져온단말이지 String pmNames="";
+		 * 
+		 * pmNames=String.join(",",names);
+		 * 
+		 * //가져온 리스트를 logger.debug("합친 이름:"+pmNames);
+		 */
 			
-			
-		return pmNames;
+		return names;
 		}
 
 

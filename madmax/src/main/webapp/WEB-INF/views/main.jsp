@@ -80,13 +80,13 @@
 
                           
 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"><a href="">여기에 즐겨찾는제목</a></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
                       </div>
                       
