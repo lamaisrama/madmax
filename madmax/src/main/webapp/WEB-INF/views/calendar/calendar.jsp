@@ -75,25 +75,37 @@
 			allDaySlot: false,
 			selectHelper: true,
 		
-			select: function(start, end, allDay) {//window창으로 보이는 부분!!
-				var title = open('','_blank','width=500,height=500');
+			eventClick: function(info) {//window창으로 보이는 부분!!
+				console.log(info);
+			
+				var title = open('','_blank','width=500,height=300');
 				var js = '<script>';
 				js+='function viewScd(){';
 				js+='location.href="//.do?no="';
 				js+='}';
 				js+='</';
 				js+='script>';
-				var content = '<html><body>';
-				content+='<h1>Title</h1>';
-				content+='<p>subtitle</p>';
+				var content = '<html>';
+				content+='<head>';
+				content+='<script ';
+				content+="src='https://kit.fontawesome.com/b5f4d53f14.js'";
+				content+="crossorigin='anonymous'>";
+				content+='</';
+				content+='script>';
+				content+='</';
+				content+='head>';
+				content+='<body>';
+				content+="<div style='text-align:center;'>";
+				content+='<h1 style="color:#25558F;">'+info.event.title+'</h1>';
 				content+='<hr>';
-				content+='<h5>일자</h5>';
-				content+='<h5>장소</h5>';
+				content+='<h4><i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>&nbsp;'+info.event.extendedProps.scheduleMemo+'</h4>';
+				content+='<h4>주소:'+info.event.extendedProps.schedulePlace+'</h4>';
 				content+='<button onclick="viewScd();">상세보러가기</button>';
+				content+='</div>'
 				content+=js+'</body>';
 				content+='</html>';
 				title.document.write(content);
-				calendar.fullCalendar('unselect'); 
+				//calendar.fullCalendar('unselect'); 
 			},
 		
 			//일정데이터 넣는 객체 events
@@ -101,11 +113,13 @@
 			,events:[
 				'ko.south_korea#holiday@group.v.calendar.google.com',
 			 	<c:forEach items="${schedule}" var="s" varStatus="status">
-				{"title":'<c:out value="${s.scheduleTitle}"/>'
+				{	"title":'<c:out value="${s.scheduleTitle}"/>'
 					,"start":'<c:out value="${s.scheduleStartDate}"/>'
 					,"end":'<c:out value="${s.scheduleEndDate}"/>'
 					,"className":'info'
-				},
+					,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
+					,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
+					},
 				
 			</c:forEach>  	
 			]

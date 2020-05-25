@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 public class Calendar {
  //캘린더에 들어갈 내용들 받아오기
 	
+	private int scheduleNo;
 	private String scheduleTitle;
 	private Date scheduleStartDate;
 	private Date scheduleEndDate;
+	private String schedulePlace;
+	private String scheduleMemo;
 	
 }

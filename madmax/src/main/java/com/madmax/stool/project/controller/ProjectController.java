@@ -53,7 +53,7 @@ public class ProjectController {
 		return "common/msg";
 	}
 	
-
+	//전체프로젝트 리스트 가져오기
 	@RequestMapping("/project/projectList.do")
 	public ModelAndView selectprojectList(HttpServletRequest req,
 			@RequestParam(required = false, defaultValue="1") int cPage, 
@@ -66,11 +66,18 @@ public class ProjectController {
 		List<Project> list=service.selectProjectList(id,cPage,numPerpage);
 		
 		int totalData=service.selectProjectCount(id);
+		int nameSize=0;//이름 숫자
 		//List<String> pmNames=new ArrayList();
 		for(Project p:list) {
 			int pNo=p.getProjectNo();
-			String names=service.selectProjectMembers(pNo);
-			p.setMembers(names);
+			List<String> names=service.selectProjectMembers(pNo);
+			String pmNames="";
+			
+			pmNames=String.join(",",names);
+			p.setMemberCount(names.size());
+			
+			p.setMembers(pmNames);
+			
 			
 		}
 		mv.addObject("list",list);

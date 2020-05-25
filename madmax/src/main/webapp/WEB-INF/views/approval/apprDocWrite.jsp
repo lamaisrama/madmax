@@ -29,10 +29,9 @@
 
 <body>
 	<form action="${path }/appr/draftFormEnd" method="post"  enctype="multipart/form-data" onsubmit="return beforeSubmit();">
-		<input type="hidden" name="apprDocTypeNo" value="${appr.apprDocTypeNo }">
+		<input type="hidden" name="apprDocTypeNo" value="${apprDocTypeNo }">
 		<div class="header">
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-			<button type="submit" class="btn btnPrimary">결재요청</button>
 			<button type="button" class="btn btnLight" style="width:7em" onclick="attachAppredDoc();">기결재첨부</button>
 			<button type="button" class="btn btnLight" onclick="saveAsTemp();">임시저장</button>
 			<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
@@ -116,9 +115,9 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="row-vh d-flex flex-row justify-content-end">
-			<button type="submit" class="btn btnPrimary">결재요청</button>
+		<br>
+		<div class="row-vh d-flex flex-row justify-content-end m-3">
+			<button type="submit" class="btn btnPrimary " >결재요청</button>
 		</div>
 		<br>
 	</form>
@@ -215,7 +214,7 @@
 			$(event.target).remove();
 		}
 		
-		function saveAsTemp(){
+/* 		function saveAsTemp(){
 			if (document.querySelector("#doc-form-table") != null) {
 				const content = document.querySelector("#doc-form-table").innerHTML;
 				const apprContent = $("<input>").attr("type", "hidden").attr("id", "apprContent").attr("name", "apprContent").attr("value", content);
@@ -234,7 +233,7 @@
 				}
 			})
 			
-		}
+		} */
 
 
 	</script>
