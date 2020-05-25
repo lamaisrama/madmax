@@ -15,6 +15,11 @@
  			<div id="myBoardTitle">
                <h4>내 게시물 보기</h4>
             </div>
+            <c:if test="${empty List }">
+       			<div class="w-100 h-25 mt-5 text-center bg-light ">
+            		<h6 class="pt-5 pl-5">작성한 글이 없습니다.</h6>
+            	</div>
+            </c:if> 
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
                 <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
@@ -140,17 +145,19 @@
 	                                <div class="pjViewBody-schedule w-100 d-flex flex-column p-3">
 	                                    <div class="w-100 row d-flex">
 	                                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-	                                            <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
-	                                                5월
+	                                         <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
+	                                                <fmt:formatDate var="dateFmt" pattern="MM" value="${l.scheduleTime}"/>
+													<c:out value="${dateFmt }"/>월
 	                                            </p>
 	                                            <p class="m-0 font-weight-bolder" style="font-size: 40px;"> <!-- 일정 실행일 : 일만 표기 -->
-	                                            	11  
+	                                            	<fmt:formatDate var="dateFmt1" pattern="dd" value="${l.scheduleTime}"/>
+													<c:out value="${dateFmt1 }"/>
 	                                            </p>
 	                                        </div>
 	                                        <div class="col-10 d-flex flex-column">
 	                                            <strong class="">${l.scheduleTitle }</strong> <!-- 일정제목 -->
 	                                            <hr class="w-100">
-	                                            <strong class="">${l.scheduleTime }</strong> <!-- 일정 실행일 -->
+	                                            <strong class=""><fmt:formatDate value="${l.scheduleTime}" dateStyle="long"/></strong> <!-- 일정 실행일 -->
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">

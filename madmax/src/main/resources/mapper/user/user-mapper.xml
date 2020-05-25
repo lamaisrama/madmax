@@ -8,7 +8,7 @@
 
 	<!-- id중복확인 -->
 	<select id="selectUser" parameterType="string" resultType="user">
-		SELECT * FROM STOOLUSER WHERE USERID=#{userId}
+		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE) WHERE USERID=#{userId}
 	</select>
 	
 	<!-- 아이디찾기 -->
