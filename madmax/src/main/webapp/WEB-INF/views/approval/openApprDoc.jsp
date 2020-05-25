@@ -31,7 +31,7 @@
 			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">회수</button>
 		</c:if>
 		<c:if test="${appr.userId==loginUser.userId && appr.apprStatus==0 }">
-			<button type="button" class="btn btnPrimary" onclick="moveToTempBox('${appr.apprNo }');">재기안</button>
+			<button type="button" class="btn btnPrimary" onclick="location.replace('${path }/appr/reuseTemp?apprNo=${appr.apprNo }')"> 재기안 </button>
 			<button type="button" class="btn btnPrimary" onclick="deleteDraft('${appr.apprNo }');">삭제</button>
 		</c:if>
 		<button type="button" class="btn btnLight" onclick="self.close();">닫기</button>
@@ -52,7 +52,7 @@
 					<td height="60" class="writerInfo">${appr.userName } <br> ${appr.jobName }</td>
 					<c:forEach items="${appr.apprLine }" var="l">
 						<c:if test="${l.apprType.equals('approval') }">
-							<td height="60" class="writerInfo">${l.userName } <br> ${l.jobName }</td>
+							<td height="60" class="writerInfo">${l.userName } ${l.jobName }</td>
 						</c:if>
 					</c:forEach>
 				</tr>
@@ -69,7 +69,7 @@
 				<tr id="agreeTbl-user">
 					<c:forEach items="${appr.apprLine}" var="l">
 						<c:if test="${l.apprType.equals('agree') }">
-							<td height="60" class="writerInfo">${l.userName } <br> ${l.jobName }</td>
+							<td height="60" class="writerInfo">${l.userName } ${l.jobName }</td>
 						</c:if>
 					</c:forEach>
 				</tr>

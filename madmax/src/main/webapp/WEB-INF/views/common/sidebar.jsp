@@ -21,10 +21,10 @@
 		width: 70px;
 		height: 70px;
 	}
-	
+/* 	
 	.menu a{cursor:pointer;}
     .menu .hide{display:none;}
-    
+  */   
     .icon {
     	text-align:center;
     	width:35px; 

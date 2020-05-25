@@ -10,13 +10,13 @@
 				console.log(i, item);
 				if(item.apprType=='approval'){
 					$("#apprTbl-dept").append($("<th>").addClass('line').html(item.deptName));
-					$("#apprTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
+					$("#apprTbl-user").append($("<td>").attr('height','60').html(item.userName+" "+item.jobName));
 					var inputValue=$("<input>").attr("type","hidden").attr("id", "apprLine").attr("name","apprLine").attr("value",""+item.userId+"/"+item.apprType);
 					$(".line-container").append(inputValue);
 					
 				}else if(item.apprType=="agree"){
 					$("#agreeTbl-dept").append($("<th>").addClass('line').html(item.deptName));
-					$("#agreeTbl-user").append($("<td>").attr('height','60').html(item.userName+"<br>"+item.jobName));
+					$("#agreeTbl-user").append($("<td>").attr('height','60').html(item.userName+" "+item.jobName));
 					var inputValue=$("<input>").attr("type","hidden").attr("id", "apprLine").attr("name","apprLine").attr("value",""+item.userId+"/"+item.apprType);
 					
 				}else {
