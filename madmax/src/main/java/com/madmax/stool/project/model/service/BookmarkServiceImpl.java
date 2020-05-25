@@ -133,4 +133,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 		return list;
 	}
 
+	@Override
+	public List<ProjectBoard> selectPbList() {
+		// TODO Auto-generated method stub
+		return dao.selectPbList(session);
+	}
+
 }
