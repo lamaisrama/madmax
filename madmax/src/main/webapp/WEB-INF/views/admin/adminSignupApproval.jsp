@@ -36,7 +36,8 @@
 								<td>${l.phone}</td>
 								<td>${l.deptName}</td>
 								<td><fmt:formatDate value="${l.hireDate}" type="both" pattern="yyyy-MM-dd" /></td>
-								<td><button type="button" class="btn btn-outline-primary" id="userId" name="userId" value="${l.userId}" onclick="btn();">가입 승인</button></td>
+								<td><button type="button" class="btn btn-outline-primary" onclick="btn();">가입 승인</button>
+									<input type="hidden" id="userId" name="userId" value="${l.userId}" /></td>
 							</tr>
 						</c:forEach>
 					</form>
@@ -53,8 +54,8 @@
 		var userId=$("#userId").val();
 	if (
 		confirm(" 승인하시겠습니까 ?") == true){    //확인
-		$("#form").attr("action","${path}/admin/updateUserState.do?userId="+userId);
-		$("#form").submit();	
+		$("#form").attr("action","${path}/admin/updateUserState.do");
+		$("#form").submit();
 		
 		}else{   //취소
 		    return;
