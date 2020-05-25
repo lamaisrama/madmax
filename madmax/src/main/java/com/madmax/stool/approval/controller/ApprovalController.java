@@ -54,8 +54,9 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/draftForm.do")
-	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required = false, defaultValue = "3") int dNo) {
+	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required = false, defaultValue = "1") int dNo) {
 		mv.addObject("type", service.selectApprDocForm(dNo));
+		mv.addObject("apprDocTypeNo", dNo);
 		mv.setViewName("/approval/apprDocWrite");
 		return mv;
 	}
@@ -390,18 +391,20 @@ public class ApprovalController {
 			}
 		}
 		//파일업로드
-		
-		//새로 올라온 파일 있는지 확인
+		//1)새로 올라온 파일 있는지 확인
 		String path = session.getServletContext().getRealPath("/resources/upload/approval");
 		File f=new File(path);
 		if(!f.exists()) f.mkdirs();
 		List<ApprAttachment> files=new ArrayList();
 		for(MultipartFile mf : upFile) {
+			
 			if(!mf.isEmpty()) {
 				String ori = mf.getOriginalFilename();
+				System.out.println(ori);
 				String rename = RenameFactory.getRenamedFileName(ori);
 				try {
 					mf.transferTo(new File(path+"/"+rename));
+					System.out.println("트랜스퍼 두번 함");
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
@@ -412,41 +415,50 @@ public class ApprovalController {
 			}
 		}
 		
-		//삭제할 파일 있는지 확인
+		//2)삭제할 파일 있는지 확인
 		List<ApprAttachment> delFiles= new ArrayList();
+
 		if(delFile!=null) {
 			for(String s : delFile) {
 				ApprAttachment delAttachment = new ApprAttachment();
 				String[] delFileInfo=s.split("/");
-				//delFileInfo[0] - renamed filename
 				//delFileInfo[1] - docFileNo
-				//1. 파일 삭제
-				File delF = new File(path+"/"+delFileInfo[0]);
-				if(delF.exists()) delF.delete();
-				//2. 삭제할 파일번호 list에 담기
+				//삭제할 파일번호 list에 담기
 				delAttachment.setDocFileNo(Integer.parseInt(delFileInfo[1]));
+				System.out.println("잘 담겼는지 확인 : "+delAttachment.getDocFileNo());
 				delFiles.add(delAttachment);
 			}
 		}
 		
 		//update 메소드 실행
 		int result=0;
-		try{
-		result =service.updateTempApproval(appr, apprLines, appred, files, delFiles);
-		}catch(RuntimeException e) {
-			e.printStackTrace(); 
-		}
 		String msg = "", loc ="";
-		if(result>0) {
-			msg ="결재문서 작성 완료";
-			loc = "";
-		}else{
-			msg = "결재 문서 작성 실패";
-			loc = "";
+		try{
+			result =service.updateTempApproval(appr, apprLines, appred, files, delFiles);
+			if(delFile!=null) {
+				for(String s : delFile) {
+					String[] delFileInfo=s.split("/");
+					//delFileInfo[0] - renamed filename
+					//파일 삭제
+					File delF = new File(path+"/"+delFileInfo[0]);
+					if(delF.exists()) delF.delete();
+					msg ="결재문서 작성 완료";
+					loc = "";
+				}
+			}
+		}catch(RuntimeException e) {
+			for(ApprAttachment a : files) {
+				File delF=new File(path+"/"+a.getDocRenamedFile());
+				if(delF.exists()) delF.delete();
+				e.printStackTrace();
+				msg = "결재 문서 작성 실패 : "+e.getMessage();
+				loc = "";
+				
+			}
 		}
-			m.addAttribute("loc", loc);
-			m.addAttribute("msg", msg);
-			m.addAttribute("script", "window.close();");
+		m.addAttribute("loc", loc);
+		m.addAttribute("msg", msg);
+		m.addAttribute("script", "window.close();");
 			
 		return "common/msg";
 	}

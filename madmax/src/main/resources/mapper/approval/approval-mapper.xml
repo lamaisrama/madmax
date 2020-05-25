@@ -126,4 +126,21 @@
 	<update id="updateUserSign" parameterType="string">
 		update stooluser set sign=#{userId}||'.png' where userId=#{userId}
 	</update>
+	<update id="updateApproval" parameterType="approval">
+		UPDATE APPROVAL SET APPRTITLE=#{apprTitle}, 
+		<if test='apprContent !=null'>APPRCONTENT=#{apprContent},</if>
+		<if test='apprText != null'>APPRTEXT=#{apprText},</if>
+		WRITEDATE=SYSDATE, FINALAPPRSTEP=#{finalApprStep}, 
+		APPRSTATUS=1, RECEIVER=#{receiver}
+		WHERE APPRNO=#{apprNo}
+	</update>
+	<delete id="deleteApprLine" parameterType="_int">
+		DELETE FROM APPRLINE WHERE APPRNO=#{apprNo}
+	</delete>
+	<delete id="deleteAppredDoc" parameterType="_int">
+		DELETE FROM APPR_APPRED WHERE APPRNO=#{apprNo}
+	</delete>
+	<delete id="deleteApprAttachment" parameterType="_int">
+		DELETE FROM APPRATTACHMENT WHERE DOCFILENO=#{docFileNo} 
+	</delete>
 </mapper>
