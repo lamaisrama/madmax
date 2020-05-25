@@ -200,8 +200,6 @@
 											<li><a href="${path }/project/myNoti.do"><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href="${path }/project/myBoard.do"><i class="icon far fa-smile"></i>내 게시물</a></li>
 											<hr/>
-											<li><a href=""><i class="icon far fa-eye-slash"></i>숨긴 프로젝트</a></li>
-											<hr/>
                                         </ul>
                                     </div>
                                 </div>
