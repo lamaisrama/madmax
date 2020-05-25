@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.madmax.stool.approval.model.service.ApprovalService2;
+import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.Approval;
 import com.madmax.stool.user.model.vo.User;
 
@@ -63,4 +64,40 @@ public class ApprovalController2 {
 		  return "approval/apprDoneBox";
 	  }
 	 
+	  
+	  @RequestMapping("/appr/apprOpinion")
+	  public String apprOpinion(HttpServletRequest req,Model m,int apprNo) {
+		
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  Approval approval=new Approval();
+		  
+		  approval.setUserId(userId);
+		  approval.setApprNo(apprNo);
+		  
+		  List<ApprDoc> appr=service.selectApprOpinionList(approval);
+		  
+		  m.addAttribute("appr",appr);
+		  
+		  return "approval/openApprOpinion";
+		  
+	  }
+	  
+	  @RequestMapping("/appr/openApprDoneOpinion")
+	  public String apprDoneOpinion(HttpServletRequest req,Model m,int apprNo) {
+	  
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  Approval approval=new Approval();
+		  
+		  approval.setUserId(userId);
+		  approval.setApprNo(apprNo);
+		  
+		  List<ApprDoc> appr=service.selectApprDoneOpinionList(approval);
+		  
+		  m.addAttribute("appr",appr);
+		  
+		  return "approval/openApprDoneOpinion";
+	  }
+	  
+	  
+	  
 }
