@@ -14,7 +14,7 @@
 <!-- 페이징 처리할것 -->
 			
  			<div id="bookmarkTitle">
-               <h4>담아둔 글 보기</h4>
+               <h4><i class="icon far fa-bookmark"></i>담아둔 글 보기</h4>
             </div>
        		<c:if test="${empty List }">
        			<div class="w-100 h-25 mt-5 text-center bg-light ">

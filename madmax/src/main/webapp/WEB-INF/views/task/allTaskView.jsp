@@ -256,7 +256,7 @@ function taskFilter(){
     // QueryString의 값을 가져오기 위해서, ? 이후 첫번째 index값을 가져온다.
     var projectNo = getParameterByName("no");
     //var projectNo=pNo;
-
+	console.log(projectNo);
 	var task=$(":input:radio[name=task]:checked").val();
 	var status=$(":input:radio[name=status]:checked").val();
 	var priority=$(":input:radio[name=priority]:checked").val();
@@ -323,7 +323,7 @@ function taskFilter(){
 						table+="<td  style='width:10%'>"+tasks[i].taskProiority+"</td>";
 						table+="<td id='taskTitle' style='width:40%''><a href='#' onclick='taskView("+tasks[i].boardNo+");' style='color:black; text-decoration:none'>"+tasks[i].taskTitle+"</a></td>";
 						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
-						table+="<td style='width:20%'>"+tasks[i].taskStartDate+"</td>";
+						/* table+="<td style='width:20%'>""</td>"; */
 						table+="</tr>";
 						table+="</td>";
 				}
