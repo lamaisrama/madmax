@@ -76,6 +76,27 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 	public int updatePinPost(Map<String, Object> pjInfo) {
 		return dao.updatePinPost(session, pjInfo);
 	}
+
+	@Override
+	@Transactional
+	public int insertComment(Map<String, Object> cMap) {
+		int result =  dao.insertComment(session, cMap);
+		if(result == 0) {
+			throw new MyException("COMMENT INSERT에러!");
+		}
+		
+		String receiveId = (String) cMap.get("receiveId");
+		String senderId = (String) cMap.get("senderId");
+		
+		
+		if(result != 0 && !(receiveId.equals(senderId)) ){
+			result = dao.insertCommentNotification(session, cMap);	
+			if(result==0) {
+				throw new MyException("NOTIFICATION INSERT에러!");
+			}
+		}
+		return result;
+	}
 	
 
 }

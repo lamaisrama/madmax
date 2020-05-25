@@ -36,4 +36,25 @@
 	<update id="updatePinPost" parameterType="map">
 		UPDATE PROJECTBOARD SET PINPOST = #{check} WHERE PROJECTNO = #{pjNo} AND BOARDNO = #{bNo}
 	</update>
+	
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO
+ 		<choose>
+			<when test="postType.equals('W')">
+		  		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,
+		  	</when>
+			<when test="postType.equals('T')">
+		  		TASKCOMMENT VALUES(SEQ_TASKCOMMENTNO.NEXTVAL,
+		  	</when>
+			<when test="postType.equals('S')">
+		  		SCHEDULECOMMENT VALUES(SEQ_SCHEDULECOMMENTNO.NEXTVAL,
+		  	</when>
+		</choose>	
+		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,	
+		#{comment},DEFAULT,#{postNo},#{senderId})		 
+	</insert>
+	
+	<insert id="insertCommentNotification" parameterType="map">
+		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{receiveId}, #{senderId}, 'comment', DEFAULT, DEFAULT, #{boardNo})
+	</insert>	
 </mapper>

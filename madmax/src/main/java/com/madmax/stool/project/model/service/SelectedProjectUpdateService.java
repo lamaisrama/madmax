@@ -22,4 +22,6 @@ public interface SelectedProjectUpdateService {
 
 	int updatePinPost(Map<String, Object> pjInfo);
 
+	int insertComment(Map<String, Object> cMap);
+
 }

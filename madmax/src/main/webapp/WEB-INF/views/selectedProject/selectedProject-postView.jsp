@@ -170,11 +170,7 @@
 
                                     <div id="uploadFilesPreview" class="col-12 mb-2">
                                         <strong class="mb-2">업로드 파일</strong>
-                                        <c:forEach var="wai" items="${writingAttachment}">
-                            			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
-                            			<c:set var="attachmentCk" value="Y" />
-                            			<c:set var = "imgArr" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
-                            			<c:if test="${!empty imgArr}">                                       
+                                      
                                         <div class="col-12 d-flex flex-column mb-2">
                                             <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -184,6 +180,7 @@
                                                 <div class="w-100 row">
                                                     <c:forEach var="wai" items="${writingAttachment}">
                                         			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
+                                        			<c:set var="attachmentCk" value="Y" />
                                         			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
                                         			<c:if test="${splitText[0] eq 'img'}">
                                                     <div class='col-2 p-1' style='height: 150px;'>
@@ -197,14 +194,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:if>
-                            			</c:if>
-                            			</c:forEach> 
-                                        <c:forEach var="waf" items="${writingAttachment}">
-                            			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
-                            			<c:set var="attachmentCk" value="Y" />
-                            			<c:set var = "fileArr" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
-                            			<c:if test="${!empty fileArr}">                            			
+                        			
                                         <div class="col-12 d-flex flex-column">
                                             <p class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
@@ -214,6 +204,7 @@
                                                 <div class="fileDownBox w-100 row">
                                                     <c:forEach var="waf" items="${writingAttachment}">
                                         			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
+                                        			<c:set var="attachmentCk" value="Y" />
                                         			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
                                         			<c:if test="${splitText[0] eq 'file'}">
                                                     <div class='col-4 p-1 w-100' style='height: 46px;'>
@@ -233,9 +224,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </c:if>
-                                        </c:if>
-                                        </c:forEach>
+
                                         <c:if test="${attachmentCk eq 'N'}">
 	                                        <div class="d-flex ml-2 mr-2 stoolGrey">
 												첨부된 파일이 없습니다.
@@ -272,71 +261,173 @@
                                 	이전 댓글 더보기
                             </p>
                         </div>
-                        <table class="borderSpacing">                            
-                            <c:forEach items="${writingComment}" var="wc" varStatus="status">
-                            <c:if test="${!status.last}">
+                        <table class="borderSpacing"> 
+                        	<c:set var="count" value="0" />
+                        	<c:forEach items="${writingComment}" var="wc">
+                    	    	<c:if test="${w.WRITINGNO eq wc.WRITINGNO}">
+                    	    	<c:set var="count" value="${count + 1}" />
+                    	    	</c:if>
+                        	</c:forEach>
+                        	
+                        	<c:set var="inCount" value="0" />                        	                           
+                            <c:forEach items="${writingComment}" var="wc" varStatus="status">                            
+                            <c:if test="${w.WRITINGNO eq wc.WRITINGNO}">
+                            	<c:set var="inCount" value="${inCount + 1}" />
+
+                            <c:if test="${count != inCount}">
                             <tr class="hiddenComment d-none">
                             <c:forEach items="${projectMember}" var="pm">
-                        	<c:if test="${pm.userId ne wc.WRITINGCOMMENTID}">
+                        	<c:if test="${pm.userId eq wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
                                         <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-center">
+                                    <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
                                             <span style="font-size: 12px;">
                                                 <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
-                                            <p class="m-0">
+                                            
+                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
-                                            </p>
+                                            	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
+	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
+															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
+		                                            </button>
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            	<i class="fas fa-times" style='font-size:15px'></i>
+		                                            </button>
+	                                        	</c:if>
+                                            </div>
+											<!-- 댓글 수정창 -->  
+											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                     
+						                        <form method="post" id="updateCommentForm${wc.WRITINGCOMMENTNO}">
+						                        	<!-- 총괄번호 -->
+						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
+						                        	
+						                        	<!-- 게시글 작성자 아이디 -->
+						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
+						                        	
+						                        	<!-- 글 타입 -->
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	
+						                        	<!-- 글 번호 -->
+						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
+						                        	
+						                        	<!-- 댓글작성자 아이디 -->
+						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
+						                        	
+						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
+						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                                </button>
+						                            </div>   
+						                        </form>  
+											</div> 
                                         </div>
                                     </div>
                                 </td>
                             </c:if>
                             </c:forEach>
                             </tr>  
-                            </c:if>                                                   
-                            <c:if test="${status.last}">
+                            </c:if>  
+                                                                             
+                            <c:if test="${count == inCount}">
                             <tr>
                             <c:forEach items="${projectMember}" var="pm">
-                        	<c:if test="${pm.userId ne wc.WRITINGCOMMENTID}">
+                        	<c:if test="${pm.userId eq wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
                                         <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-center">
+                                    <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
                                             <span style="font-size: 12px;">
                                                 <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
-                                            <p class="m-0">
+                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
-                                            </p>
+                                            	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
+	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
+															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
+		                                            </button>
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            	<i class="fas fa-times" style='font-size:15px'></i>
+		                                            </button>
+	                                        	</c:if>
+                                            </div>
+											<!-- 댓글 수정창 -->  
+											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                    
+						                        <form method="post" id="updateCommentForm${pb.BOARDNO}">
+						                        	<!-- 총괄번호 -->
+						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
+						                        	
+						                        	<!-- 게시글 작성자 아이디 -->
+						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
+						                        	
+						                        	<!-- 글 타입 -->
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	
+						                        	<!-- 글 번호 -->
+						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
+						                        	
+						                        	<!-- 댓글작성자 아이디 -->
+						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
+						                        	
+						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
+						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                                </button>
+						                            </div>   
+						                        </form>  
+											</div> 
                                         </div>
                                     </div>
                                 </td>
                             </c:if>
                             </c:forEach>
                             </tr>  
-                            </c:if>                   
+                            </c:if>
+                                 
+                            </c:if>     
+                                          
                         	</c:forEach>
                         </table>
-                        <!-- 댓글 입력창 -->
-                        <div class="d-flex mt-1">
-                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
-                            </div>
-                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-                                <input type="text" class="form-control" placeholder="댓글을 입력하세요" size="100px"/>
-                                <button type="button" class="ml-2" style="border: none; background: none;"
-                                        onclick="insertComment(e);">
-                                    <i class='fas fa-edit' style='font-size:28px'></i>
-                                </button>
-                            </div>   
-                        </div>   
+                        <!-- 댓글 입력창 -->                        
+                        <form method="post" id="insertCommentForm${pb.BOARDNO}">
+                        	<!-- 총괄번호 -->
+                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
+                        	
+                        	<!-- 게시글 작성자 아이디 -->
+                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
+                        	
+                        	<!-- 글 타입 -->
+                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+                        	
+                        	<!-- 글 번호 -->
+                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
+                        	
+                        	<!-- 댓글작성자 아이디 -->
+                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
+                        	
+	                        <div class="d-flex mt-1">
+	                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+	                                <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+	                            </div>
+	                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
+	                                <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" size="100px"/>
+	                                <button type="submit" onclick="fn_insertCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
+	                                    <i class='fas fa-edit' style='font-size:28px'></i>
+	                                </button>
+	                            </div>   
+	                        </div> 
+                        </form>  
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
                 	</c:if>

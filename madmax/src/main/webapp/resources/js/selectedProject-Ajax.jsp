@@ -242,6 +242,33 @@ function fn_updatePin(check,pjNo,bNo){
 	});
 }
 
+//댓글 쓰기 fn_insertCommentSubmit()
+function fn_insertCommentSubmit(bNo){
+    // Get form
+    var form = $('#insertCommentForm'+bNo)[0];
 
+    // Create an FormData object 
+    var data = new FormData(form);
+
+    $.ajax({
+        type: "POST",
+        url: "${path}/selectedProject/insertComment.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {        	
+        	if(data>0){
+        		location.reload(true);
+        	}else{
+        		alert("댓글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
+        	}
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("fail");
+        }
+    });
+}
 
 </script>

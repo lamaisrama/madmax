@@ -208,5 +208,36 @@ public class SelectedProjectUpdateController {
 		return result;
 	}
 	
+	@RequestMapping("/selectedProject/insertComment.do")
+	@ResponseBody
+	public int insertComment(@RequestParam Map<String, String> map) {
+		//값 받기
+		String postType = map.get("postType");
+		String receiveId = map.get("receiveId");
+		String senderId = map.get("senderId");
+		String comment = map.get("comment");
+		int boardNo = Integer.parseInt(map.get("boardNo"));
+		int postNo = Integer.parseInt(map.get("postNo"));
+		
+		Map<String, Object> cMap = new HashMap();
+		cMap.put("postType",postType);
+		cMap.put("receiveId",receiveId);
+		cMap.put("senderId",senderId);
+		cMap.put("comment",comment);
+		cMap.put("boardNo",boardNo);
+		cMap.put("postNo",postNo);
+		
+		int result = 0;
+		try {
+			result = service.insertComment(cMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
 	
 }

@@ -24,4 +24,8 @@ public interface SelectedProjectUpdateDao {
 
 	int updatePinPost(SqlSessionTemplate session, Map<String, Object> pjInfo);
 
+	int insertComment(SqlSessionTemplate session, Map<String, Object> cMap);
+
+	int insertCommentNotification(SqlSessionTemplate session, Map<String, Object> cMap);
+
 }

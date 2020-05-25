@@ -122,3 +122,11 @@ input:focus, textarea:focus {
     border-spacing: 0 20px;
 }
 /*------------------------*/
+
+/* 댓글 수정&삭제버튼 */
+.commentDiv div .commentBtn{
+	visibility: hidden;	
+}
+.commentDiv:hover div .commentBtn{
+	visibility: visible;
+}

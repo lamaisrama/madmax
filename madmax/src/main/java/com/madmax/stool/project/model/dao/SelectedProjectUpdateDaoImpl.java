@@ -53,4 +53,14 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.update("SelectedProjectUpdate.updatePinPost", pjInfo);
 	}
 
+	@Override
+	public int insertComment(SqlSessionTemplate session, Map<String, Object> cMap) {
+		return session.insert("SelectedProjectUpdate.insertComment", cMap);
+	}
+
+	@Override
+	public int insertCommentNotification(SqlSessionTemplate session, Map<String, Object> cMap) {
+		return session.insert("SelectedProjectUpdate.insertCommentNotification", cMap);
+	}
+
 }
