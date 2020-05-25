@@ -25,6 +25,7 @@ public class SelectedProjectSelectController {
 	@RequestMapping("/selectedProject/selectedProject.do")
 	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
 		
+	
 		//프로젝트관련 정보
 		Map<String,Object> pjInfo = new HashMap();
 		pjInfo.put("pjNo", pjNo);
@@ -37,6 +38,7 @@ public class SelectedProjectSelectController {
 		//글
 		List<Map<String,Object>> writingList=service.selectWritingList(pjNo);
 		List<Map<String,Object>> writingComment=service.selectWritingComment();
+		
 		List<Map<String,Object>> writingAttachment=service.selectWritingAttachment();
 		
 		//업무
@@ -57,34 +59,54 @@ public class SelectedProjectSelectController {
 		
 		//언급
 		List<Map<String,Object>> notification=service.selectNotification();
-				 
 		
-
+		//프로젝트 참여 멤버 수
+//		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
+		
+		//한 프로젝트의 파일함의 파일 가져오기
+		List<Map<String,Object>> allFileList=service.selectAllFileList();
+		
+		//오른쪽 사이드바 프로젝트 참여자 가져오기
+//		List<Map<String,Object>> projectMember=service.selectProjectMember();
+		
+		//스툴유저 테이블 가져오기
+//		List<Map<String,Object>> user=service.selectUser();
+		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
 		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
-		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);
+		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
 		
 		if(writingList.size()>0) mv.addObject("writingList",writingList);
-		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);		
-		if(writingAttachment.size()>0)mv.addObject("writingAttachment",writingAttachment);
+		if(taskList.size()>0) mv.addObject("taskList",taskList);
+		if(scheduleList.size()>0) mv.addObject("scheduleList",scheduleList);
 		
-		if(taskList.size()>0)mv.addObject("taskList",taskList);
+		if(writingComment.size()>0) mv.addObject("writingComment",writingComment);
 		if(taskComment.size()>0)mv.addObject("taskComment",taskComment);
+		if(scheduleComment.size()>0)mv.addObject("scheduleComment",scheduleComment);
+		
+		if(writingAttachment.size()>0)mv.addObject("writingAttachment",writingAttachment);
 		if(taskAttachment.size()>0)mv.addObject("taskAttachment",taskAttachment);
 		if(taskManager.size()>0)mv.addObject("taskManager",taskManager);
 		
-		if(scheduleList.size()>0)mv.addObject("scheduleList",scheduleList);
-		if(scheduleComment.size()>0)mv.addObject("scheduleComment",scheduleComment);
-		
 		if(pinpostCount.size()>0)mv.addObject("pinpostCount",pinpostCount);
-		
 		
 		if(hashTag.size()>0)mv.addObject("hashTag",hashTag);
 		if(notification.size()>0)mv.addObject("notification",notification);
 		
+//		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		
+//		mv.addObject("projectMemberNo",projectMemberNo);
+		if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
+//		mv.addObject("user",user);
+		
+		
+		
 		
 		mv.setViewName("selectedProject/selectedProject");
+		
+		
+		
 		return mv;
 	}
 	

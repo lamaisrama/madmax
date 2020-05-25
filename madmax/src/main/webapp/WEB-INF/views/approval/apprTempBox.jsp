@@ -51,7 +51,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> 0 </span></p>
+		<p>전체 <span style="color:red"> ${list.size() } </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">
@@ -72,7 +72,6 @@
 							${l.apprTitle }
 						</a></td>
 					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-					<th>회수or임시</th>
 				</tr>
 				</c:forEach>
 			</table>

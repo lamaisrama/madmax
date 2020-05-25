@@ -9,7 +9,7 @@
                 <div class="w-100 bg-white border border-grey rounded overflow-hidden mb-3">                
 
 					<!-- 1. 글 -->
-					<c:if test="${pb.BOARDTYPE.equals('W')}">
+					<c:if test="${pb.BOARDTYPE eq 'W'}">
                     <c:forEach items="${writingList }" var="w">
                     <c:if test='${pb.BOARDNO==w.BOARDNO}'>
                     <div class="pjViewBox w-100 p-3">                              
@@ -69,14 +69,14 @@
                             <div class="w-100 mt-4">      
                                 <div class="col-12 mb-3">
                                 	<!-- ※※※ collapse div의 변수를 반드시 다르게 주어야합니다!! -->
-                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseW${pb.BOARDNO}" aria-expanded="false" aria-controls="collapseExample"
                                             onclick="addBtniconChange(this);">
                                        	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
                                     </button> 
                                     <span class="stoolGrey">태그 / 언급 / 첨부파일을 보시려면 클릭하세요</span>
                                 </div>
 
-                                <div class="collapse" id="collapseExample"> 
+                                <div class="collapse" id="collapseW${pb.BOARDNO}"> 
                                     <!-- 공통) 태그 & 언급 -->
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
@@ -137,8 +137,7 @@
                                                     </div>                            
                                                     </c:if>                                
                                                     </c:if>                                
-                                        			</c:forEach>
-                                                    
+                                        			</c:forEach>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +170,7 @@
                                             </div>
                                         </div>
                                     </div>  <!-- 공통) 파일 미리보기 끝 -->
-                                </div>
+                                </div> <!-- collapse 닫기 -->
 
                             </div>
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
@@ -279,7 +278,7 @@
  <!-- ----------------------------------------------------------------------------------------------------- -->               	
 
 					<!-- 2. 업무 -->
-					<c:if test="${pb.BOARDTYPE.equals('T')}">
+					<c:if test="${pb.BOARDTYPE eq 'T'}">
 					<c:forEach items="${taskList}" var="t">
 					<c:if test="${pb.BOARDNO==t.BOARDNO }">
                     <div class="pjViewBox w-100 p-3">                              
@@ -325,7 +324,9 @@
 
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
                             <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
-                                <h5 class="m-0 font-weight-bolder mb-4">화면구현하기</h5> <!-- 업무제목 -->
+                                <h5 class="m-0 font-weight-bolder mb-4">
+									<c:out value="${t.TASKTITLE}"/>
+								</h5> <!-- 업무제목 -->
                                 <div class="d-flex align-items-center">
                                     <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
                                     <div class="btn-group border border-grey rounded overflow-hidden">
@@ -426,14 +427,14 @@
                             <div class="w-100 mt-4">      
                                 <div class="col-12 mb-3">
                                 	<!-- ※※※ collapse div의 변수를 반드시 다르게 주어야합니다!! -->
-                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseT${pb.BOARDNO}" aria-expanded="false" aria-controls="collapseExample"
                                             onclick="addBtniconChange(this)">
                                        	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
                                     </button> 
                                     <span class="stoolGrey">태그 / 언급 / 첨부파일을 보시려면 클릭하세요</span>
                                 </div>
 
-                                <div class="collapse" id="collapseExample"> 
+                                <div class="collapse" id="collapseT${pb.BOARDNO}"> 
                                     <!-- 공통) 태그 & 언급 -->
                                     <div class="col-12 addTagListBox mb-2">
                                         <div class="w-100 d-flex flex-column">
@@ -636,7 +637,7 @@
                 	
 
 					<!-- 3. 일정 -->
-					<c:if test="${pb.BOARDTYPE.equals('S')}">
+					<c:if test="${pb.BOARDTYPE eq 'S'}">
 					<c:forEach items="${scheduleList }" var="s">
 					<c:if test="${pb.BOARDNO == s.BOARDNO}">
                     <div class="pjViewBox w-100 p-3">                              
@@ -732,14 +733,14 @@
                             <div class="w-100 mt-4">      
                                 <div class="col-12 mb-3">
                                 	<!-- ※※※ collapse div의 변수를 반드시 다르게 주어야합니다!! -->
-                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseS${pb.BOARDNO}" aria-expanded="false" aria-controls="collapseExample"
                                             onclick="addBtniconChange(this)">
                                        	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
                                     </button> 
                                     <span class="stoolGrey">태그 / 언급 / 첨부파일을 보시려면 클릭하세요</span>
                                 </div>
 
-                                <div class="collapse" id="collapseExample"> 
+                                <div class="collapse" id="collapseS${pb.BOARDNO}"> 
                                     <!-- 공통) 태그 & 언급 -->
                                     <c:forEach items="${hashTag }" var="i">
 									<c:if test="${s.BOARDNO==i.BOARDNO}">

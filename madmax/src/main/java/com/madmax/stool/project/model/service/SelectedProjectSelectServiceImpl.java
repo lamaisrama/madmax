@@ -44,17 +44,6 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	}
 
 	@Override
-	public Map<String, Object> selectProjectTB(int pjNo) {
-		// TODO Auto-generated method stub
-		return dao.selectProjectTB(session, pjNo);
-	}
-
-	@Override
-	public int selectFavorit(Map<String,Object> pjInfo) {
-		// TODO Auto-generated method stub
-		return dao.selectFavorit(session, pjInfo);
-	}
-
 	public Map<String, Object> selectPinPostCount() {
 		// TODO Auto-generated method stub
 		return dao.selectPinPostCount(session);
@@ -78,11 +67,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectTaskManager(session);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectProjectMember() {
+//	@Override
+//	public List<Map<String, Object>> selectProjectMember() {
 		// TODO Auto-generated method stub
-		return dao.selectprojectMember(session);
-	}
+//		return dao.selectProjectMember(session);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment() {
@@ -114,10 +103,40 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectScheduleComment(session);
 	}
 
+//	@Override
+//	public Map<String, Object> selectProjectMemberNo() {
+		// TODO Auto-generated method stub
+//		return dao.selectProjectMemberNo(session);
+//	}
+
+	@Override
+	public List<Map<String, Object>> selectAllFileList() {
+		// TODO Auto-generated method stub
+		return dao.selectAllFileList(session);
+	}
+
+	@Override
+	public Map<String, Object> selectProjectTB(int pjNo) {
+		return dao.selectProjectTB(session,pjNo);
+	}
+
+	@Override
+	public int selectFavorit(Map<String, Object> pjInfo) {
+		return dao.selectFavorit(session,pjInfo);
+	}
+
 	@Override
 	public List<ProjectMember> selectProjectMemberList(int pjNo) {
-		return dao.selectProjectMemberList(session, pjNo);
+		return dao.selectProjectMemberList(session,pjNo);
 	}
+
+//	@Override
+//	public List<Map<String, Object>> selectUser() {
+		// TODO Auto-generated method stub
+//		return dao.selectUser(session);
+//	}
+	
+	
 	
 	
 	
@@ -131,7 +150,6 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	
 	
 	
-
 	
 	
 }

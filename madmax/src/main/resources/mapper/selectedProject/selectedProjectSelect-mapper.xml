@@ -4,37 +4,32 @@
 
 	<select id="selectProjectBoard" parameterType="map" resultType="map">
 		 <![CDATA[
-			 SELECT * FROM (SELECT * FROM PROJECTBOARD PB JOIN PROJECTTABLE PT USING(PROJECTNO) ORDER BY BOARDNO DESC) 
+			 SELECT * FROM (SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO ORDER BY BOARDNO DESC) 
 			 WHERE ROWNUM <=5
 		 ]]>
 	</select>
 
+	<!-- 글,업무,일정에 대한 기본 테이블 불러오기 -->
 	<select id="selectWritingList" parameterType="map" resultType="map">
-		SELECT * FROM WRITING W
+		SELECT * FROM WRITING
 		<!-- JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
 		JOIN WRITINGCOMMENT WC USING (WRITINGNO) -->
 	</select>
 	
 	<select id="selectTaskList" parameterType="map" resultType="map">
 		SELECT * FROM TASK
-        <!-- JOIN PROJECTBOARD PB USING(PROJECTNO)
-        JOIN TASK T USING(BOARDNO) -->
 	</select>
 	
 	<select id="selectScheduleList" parameterType="map" resultType="map">
 		SELECT * FROM SCHEDULE 
-        <!-- JOIN PROJECTBOARD PB USING(PROJECTNO)
-        JOIN SCHEDULE S USING(BOARDNO) -->
 	</select>
 
+	<!-- 상단 고정된 글 갯수 -->
 	<select id="selectPinPostCount" parameterType="map" resultType="map">
 		SELECT COUNT(*) FROM PROJECTBOARD WHERE PINPOST='Y' <!--상단 고정글 갯수 -->
 	</select>
 
 	
-	<select id="selectWritingAttachment" parameterType="map" resultType="map">
-		SELECT * FROM WRITINGATTACHMENT
-	</select>
 	
 	<select id="selectTaskManager" parameterType="map" resultType="map">
 		SELECT *FROM TASKMANAGER
@@ -48,11 +43,18 @@
 		SELECT * FROM NOTIFICATIONTABLE
 	</select>
 	
-
+	
+	<!--글,업무 첨부파일  -->
+	<select id="selectWritingAttachment" parameterType="map" resultType="map">
+		SELECT * FROM WRITINGATTACHMENT
+	</select>
+	
 	<select id="selectTaskAttachment" parameterType="map" resultType="map">
 		SELECT * FROM TASKATTACHMENT
 	</select>
 	
+	
+	<!-- 글,업무,일정 댓글 가져오기 -->
 	<select id="selectWritingComment" parameterType="map" resultType="map">
 		SELECT * FROM WRITINGCOMMENT
 	</select>
@@ -65,9 +67,38 @@
 		SELECT * FROM SCHEDULECOMMENT
 	</select>
 	
-	<select id="selectProjectNo" resultType="map">
-		SELECT * FROM PROJECTTABLE PJ
-		JOIN PROJECTBOARD PB USING(PROJECTNO) WHERE BOARDNO=#{no}
+	<!--  asidebar-mapper로 이동
+	관리자 포함 또는 관리자 제외 전체 프로젝트 참여 인원수
+	<select id="selectProjectMemberNo" parameterType="map" resultType="map">
+		SELECT COUNT(USERID) FROM PROJECTMEMBER
+	</select> -->
+	
+	<!-- 프로젝트의 파일 가져오기 -->
+	<select id="selectAllFileList" parameterType="map" resultType="map">
+		SELECT PF.PJFILENO, PF.PJFILEORINAME, PF.PJFILERENAMEDNAME, W.WRITINGTIME, WRITINGNO, 
+		W.WRITINGID, U.USERNAME, BOARDNO, PROJECTNO FROM PROJECTFILE PF 
+		JOIN PROJECTTABLE PT USING (PROJECTNO) 
+		JOIN PROJECTBOARD PB USING (PROJECTNO) 
+		JOIN WRITING W USING (BOARDNO) 
+		JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
+		JOIN STOOLUSER U USING (USERID) WHERE PROJECTNO=#{pjNo}
+	</select>
+	
+	
+	<!--
+	<select id="selectProjectMember" parameterType="map" resultType="map">
+		SELECT * FROM PROJECTMEMBER
+	</select>
+	
+	<select id="selectUser" parameterType="map" resultType="map">
+		SELECT * FROM STOOLUSER
+	</select> 
+	-->
+	
+	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
+		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
+		FROM PROJECTMEMBER PM
+		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
 	</select>
 	
 	<select resultType="map" parameterType="map" id="selectProjectTB">
@@ -75,16 +106,9 @@
 	</select>
 	
 	<select resultType="_int" parameterType="map" id="selectFavorit">
-		SELECT COUNT(*) COUNT 
+		SELECT COUNT(*) COUNT
 		FROM PROJECTTABLE PJ JOIN FAVORITE F ON PJ.PROJECTNO = F.PROJECTNO
-		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId} 
-	</select>
-	
-	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
-		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
-		FROM PROJECTMEMBER PM
-		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
-<!-- 		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo} -->
+		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}
 	</select>
 	
 </mapper>

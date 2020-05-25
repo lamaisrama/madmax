@@ -45,7 +45,8 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	<!-- xml방식 트랜젝션 매니저 등록 -->
-	 <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 	 <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="insert*" />
 			<tx:method name="update*" />
@@ -55,7 +56,7 @@
 	<aop:config>
 		<aop:pointcut expression="execution(* com.madmax.stool..*ServiceImpl.*(..))" id="serviceMethod"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
-	</aop:config>
+	</aop:config> -->
 	
 	
 	  <!-- 메일인증 -->

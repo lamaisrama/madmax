@@ -68,8 +68,10 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"></li>
 				</ul>
+				<c:if test="${loginUser.userId=='admin'}">
+					<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/admin/adminIndex.do')">관리자 페이지</button>
+				</c:if>
 				<button type="button" class="btn checkBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
-				
 				<!-- 모달창 -->
 				
 				 <div class="modal fade" id="checkState">
@@ -145,6 +147,8 @@
 							alert("출근 시간이 이미 입력되었습니다.");
 							//$('#checkState').modal("hide");
 						}else if(data==false) {
+							// 출근 시간이 있으면 true,없으면 false;
+							
 							
 							//console.log(stateRequest());
 							//$('#checkState').modal("hide");
@@ -155,25 +159,26 @@
 			});
 		});
 		
-		$(document).ready(function() {
+ 		$(document).ready(function() {
 
 			$("#go").click(function() { 
 				$.ajax({
-					url : '${path}/attd/checkCometime.do',
+					url : '${path}/attd/checkGotime.do',
 					type:"post",
 					data:$("#checkForm").serialize(),
 					success : function(data) { 
 						console.log(data);
-						if(!data){
-							alert("출근시간이 입력되지 않았습니다.");
+						// 있으면 true,없으면 false;
+						if(data){
+							alert("퇴근 했습니다.");
 							return ;
-						}else{
+						}else if(data==false){
 							stateRequest();
 						}
 					}
 				});
 			});
-		});
+		}); 
 		
 		
 		

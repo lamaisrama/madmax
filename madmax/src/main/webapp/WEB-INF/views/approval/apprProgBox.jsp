@@ -64,7 +64,6 @@
 					<th>기안자</th>
 					<th>기안부서</th>
 					<th>기안일</th>
-					<th>배정일</th>
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 					<tr>
@@ -76,7 +75,6 @@
 						<td>${l.userName}</td>
 						<td>${l.deptName }</td>
 						<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td>
-						<td>20-05-06</td>
 					</tr>
 				</c:forEach>
 			</table>

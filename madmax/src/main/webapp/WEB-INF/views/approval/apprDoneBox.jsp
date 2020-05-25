@@ -35,16 +35,25 @@
 		<form style="width:100%">
 			<table class="table table-borderless">
 				<tr>
-					<th>기안자</th>
-					<th><input type="text" name="draftUserName"></th>
-					<th>문서제목</th>
-					<td><input type="text" name="draftTitle">
-					<th>완료일</th>
+					<th>결과</th>
+					<td><input type="radio" name="apprStatus" value="3" id="status3">
+						<label for="status3">승인</label> 
+						<input type="radio" name="apprStatus" value="4" id="status4">
+						<label for="status4">반려</label>
+						</td>
+					<th>기안일</th>
 					<td>
 						<input type="date" name="startDate"> ~
 						<input type="date"  name="endDate">
 					</td>
-					<td width="">
+					
+				</tr>
+				<tr>
+					<th>기안자</th>
+					<td><input type="text" name="draftUserName"></td>
+					<th>문서제목</th>
+					<td><input type="text" name="draftTitle">
+					<td>
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
 					</td>
 				</tr>
@@ -53,9 +62,9 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> 0 </span></p>
+		<p>전체 <span style="color:red"> </span></p>
 	</div>
-	<div class="row draft-container">
+	<div class="row draft-container text-center">
 		<div class="col">
 			<table class="table table-hover">
 				<tr style="background-color:#F1F0F5;">
@@ -64,7 +73,7 @@
 					<th>기안자</th>
 					<th>기안부서</th>
 					<th>기안일</th>
-					<th>결재일</th>
+					<th>결과</th>
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 				<tr>
@@ -75,8 +84,11 @@
 							${l.apprTitle }</a></td>
 					<td>${l.userName}</td>
 					<td>${l.deptName }</td>
-					<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td>
-					<td>20-05-06</td>
+					<td><fmt:formatDate value="${l.writeDate }" dateStyle="short" type="date"/></td>
+					<td>
+						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
+						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
+					</td>
 				</tr>
 				</c:forEach>
 			</table>

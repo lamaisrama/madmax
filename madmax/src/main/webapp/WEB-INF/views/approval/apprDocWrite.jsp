@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +28,7 @@
 </head>
 
 <body>
-	<form action="${path }/appr/draftFormEnd" method="post" onsubmit="return beforeSubmit();">
+	<form action="${path }/appr/draftFormEnd" method="post"  enctype="multipart/form-data" onsubmit="return beforeSubmit();">
 		<input type="hidden" name="apprDocTypeNo" value="${type.apprDocTypeNo }">
 		<div class="header">
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
@@ -42,10 +42,14 @@
 			<table class="lineTbl">
 				<tr id="apprTbl-dept">
 					<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-					<th class="line writerInfo">department</th>
+					<th class="line writerInfo">${loginUser.deptCode}</th>
 				</tr>
 				<tr id="apprTbl-user">
-					<td height="60" class="writerInfo">${loginUser.userName }</td>
+					<td height="60" class="writerInfo">
+						${loginUser.userName }
+						<img src="${path }/resources/upload/sign/${loginUser.userId}.png" width="50" alt="sign"/> <br>
+						<span style="font-size:8px;"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></span>
+					</td>
 				</tr>
 			</table>
 			<table class="lineTbl ">
@@ -93,10 +97,26 @@
 			</table>
 			<!-- 문서양식 별 태그 넣는 곳 -->
 			<c:out value="${type.typeContent }" escapeXml="false" />
+		</div>		
+		
+		<!-- 기결재 모달창 정보 넣는 곳 -->
+		<div class="modal" id="add-approved-doc"></div>
+		
+		
+		<!-- 파일 첨부 -->
+		<div class="fileUpload-container m-2">
+			<h6>
+				<i class="fas fa-paperclip"> &nbsp;파일 업로드</i>
+				<button type="button" class="btn btn-primary badge" onclick="addUpfile();">+</button>
+			</h6>
+			<div class="input-group mb-3 upfile-content">
+				<input type="file" name="upFile" class="form-control form-control-file border">
+				<div class="input-group-append">
+					<button type="button" class="btn btn-dark badge" onclick="delUpfile();">&nbsp;&nbsp;-&nbsp;&nbsp; </button>
+				</div>
+			</div>
 		</div>
-		<div id="input-hidden-container"></div>
-		<div class="modal" id="add-approved-doc">
-		</div>
+
 		<div class="row-vh d-flex flex-row justify-content-end">
 			<button type="submit" class="btn btnPrimary">결재요청</button>
 		</div>
@@ -116,24 +136,9 @@
 					initialEditType: 'wysiwyg',
 					previewStyle: 'vertical',
 					hideModeSwitch: 'true',
-					toolbarItems: [
-						'heading',
-						'bold',
-						'italic',
-						'strike',
-						'divider',
-						'hr',
-						'quote',
-						'divider',
-						'ul',
-						'ol',
-						'task',
-						'indent',
-						'outdent',
-						'divider',
-						'table',
-						'divider',
-					]
+					toolbarItems: ['heading', 'bold', 'italic', 'strike', 'divider',
+						'hr', 'quote', 'divider', 'ul', 'ol', 'task', 'indent',
+						'outdent', 'divider', 'table', 'divider',]
 				});
 			}
 
@@ -186,10 +191,30 @@
 				const apprText = $("<input>").attr("type", "hidden").attr("name", "apprText").attr("value", editor.getHtml());
 				$(".content-container").append(apprText);
 			}
-			window.close();
 			return true;
 		}
-
+		
+		function addUpfile(){
+	    
+			var inp_upfile = '<div class="input-group mb-3 upfile-content">';
+				inp_upfile += '<input type="file" name="upFile" class="form-control form-control-file border">'
+				inp_upfile += '<div class="input-group-append">';
+				inp_upfile += '<button type="button" class="btn btn-dark badge" onclick="delUpfile();">';
+				inp_upfile += '&nbsp;&nbsp;-&nbsp;&nbsp; </button>';
+				inp_upfile += '</div>';
+				inp_upfile += '</div>';
+				console.log(inp_upfile);
+			 $(".fileUpload-container").append($(inp_upfile));
+		}
+		
+		function delUpfile(){
+			console.log($(event.target));
+			console.log($(event.target).parent());
+			console.log($(event.target).parent().prev());
+			$(event.target).parent().prev().remove();
+			$(event.target).parent().remove();
+			$(event.target).remove();
+		}
 
 
 

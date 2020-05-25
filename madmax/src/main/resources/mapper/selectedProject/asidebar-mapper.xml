@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="aside">
+
+	<!-- 전체 참여자 수(와 관리자) -->
+	<select id="selectProjectMemberNo" parameterType="map" resultType="map">
+		SELECT COUNT(USERID) FROM PROJECTMEMBER
+	</select>
+  
+	<select id="selectStoolUser" parameterType="map" resultType="map">
+		SELECT USERID,USERNAME FROM STOOLUSER JOIN PROJECTTABLE USING (USERID) WHERE PROJECTNO=#{pjNo}
+	</select>
+
+</mapper>

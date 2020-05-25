@@ -43,6 +43,18 @@ public class ProjectDaoImpl implements ProjectDao {
 		return session.selectOne("project.selectProjectCount",id);
 	}
 
+	@Override
+	public List<Project> selectComProjectList(SqlSessionTemplate session, String id, int cPage, int numPerpage) {
+		// TODO Auto-generated method stub
+		return  session.selectList("project.selectComProjectList",id,new RowBounds((cPage-1)*numPerpage,numPerpage));
+	}
+
+	@Override
+	public int selectComProjectCount(SqlSessionTemplate session, String id) {
+		// TODO Auto-generated method stub
+		return  session.selectOne("project.selectComProjectCount",id);
+	}
+
 	
 	
 	

@@ -26,7 +26,8 @@ ul {list-style: none; padding-left:10px;}
 th{ font-weight:bolder; font-size:14px; }
 ul.info{display: none;}
 ul.dept li{color:darkslategrey; font-weight:bolder; }
-ul.info li{color:slategray; font-weight:bolder; }
+ul.info li{color:slategray; font-weight:bolder;}
+ul, li, td{cursor:pointer;}
 </style>
 </head>
 <body>
@@ -89,11 +90,11 @@ ul.info li{color:slategray; font-weight:bolder; }
 							<tr id="writerInfo">
 								<td>
 									<select disabled="disabled">
-										<option>결재</option>
-										<option>합의</option>
+										<option>기안</option>
+										<option></option>
 									</select>
 								</td>
-								<td><input type="text" value="userName" disabled></td>
+								<td><span>${loginUser.userName } </span></td>
 								<td>
 									<button type="button" class="btn btn-light btn-sm" disabled="disabled">▲</button>
 									<button type="button" class="btn btn-light btn-sm" disabled="disabled">▼</button>
