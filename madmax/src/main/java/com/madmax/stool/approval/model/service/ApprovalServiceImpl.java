@@ -156,6 +156,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
+	@Transactional
 	public int updateAppr(ApprLine line) {
 		//1. apprLine 업데이트
 		int result=dao.updateAppr(session, line);

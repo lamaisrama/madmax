@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <!DOCTYPE html>
 <html>
 
@@ -42,10 +42,14 @@
 			<table class="lineTbl">
 				<tr id="apprTbl-dept">
 					<th class="line title" rowspan="2" style="padding:0 5px;">결<br><br>재</th>
-					<th class="line writerInfo">department</th>
+					<th class="line writerInfo">${loginUser.deptCode}</th>
 				</tr>
 				<tr id="apprTbl-user">
-					<td height="60" class="writerInfo">${loginUser.userName }</td>
+					<td height="60" class="writerInfo">
+						${loginUser.userName }
+						<img src="${path }/resources/upload/sign/${loginUser.userId}.png" width="50" alt="sign"/> <br>
+						<span style="font-size:8px;"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></span>
+					</td>
 				</tr>
 			</table>
 			<table class="lineTbl ">
