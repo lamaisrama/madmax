@@ -22,7 +22,7 @@ public interface SelectedProjectSelectService {
 	List<Map<String, Object>> selectTaskComment();
 	List<Map<String, Object>> selectScheduleComment();
 //	Map<String, Object> selectProjectMemberNo();
-	List<Map<String, Object>> selectAllFileList();
+	List<Map<String, Object>> selectAllFileList(int pjNo);
 //	List<Map<String, Object>> selectUser();
 	Map<String, Object> selectProjectTB(int pjNo);
 	int selectFavorit(Map<String, Object> pjInfo);

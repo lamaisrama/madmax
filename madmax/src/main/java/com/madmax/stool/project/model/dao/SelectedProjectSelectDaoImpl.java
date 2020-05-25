@@ -102,7 +102,7 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 //	}
 
 	@Override
-	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session) {
+	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session,int pjNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("selectedProjectSelect.selectAllFileList");
 	}

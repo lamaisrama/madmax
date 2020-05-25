@@ -24,14 +24,15 @@ public class AsidebarController {
 		Map<String,Object> projectMemberNo=service.selectProjectMemberNo(pjNo);
 		
 		//프로젝트 참여자 리스트 가져옴
-		List<Map<String,Object>> projectMemberList=service.selectProjectMemberList(pjNo);
+//		List<Map<String,Object>> projectMemberList=service.selectProjectMemberList(pjNo);
+		
 		
 		//스툴유저 가져옴
 		List<Map<String,Object>> user=service.selectStoolUser(pjNo);
 		
 		
 		mv.addObject("projectMemberNo",projectMemberNo);
-		if(projectMemberList.size()>0)mv.addObject("projectMemberList",projectMemberList);
+//		if(projectMemberList.size()>0)mv.addObject("projectMemberList",projectMemberList);
 		mv.addObject("user",user);
 		
 		return mv;

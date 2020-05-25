@@ -24,7 +24,7 @@ public interface SelectedProjectSelectDao {
 	List<Map<String, Object>> selectTaskComment(SqlSessionTemplate session);
 	List<Map<String, Object>> selectScheduleComment(SqlSessionTemplate session);
 //	Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session);
-	List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session);
+	List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session, int pjNo);
 //	List<Map<String, Object>> selectUser(SqlSessionTemplate session);
 	Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo);
 	int selectFavorit(SqlSessionTemplate session, Map<String, Object> pjInfo);

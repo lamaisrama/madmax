@@ -65,7 +65,7 @@ public class SelectedProjectSelectController {
 //		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
 		
 		//한 프로젝트의 파일함의 파일 가져오기
-		List<Map<String,Object>> allFileList=service.selectAllFileList();
+		List<Map<String,Object>> allFileList=service.selectAllFileList(pjNo);
 		
 		//오른쪽 사이드바 프로젝트 참여자 가져오기
 //		List<Map<String,Object>> projectMember=service.selectProjectMember();

@@ -110,9 +110,9 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 //	}
 
 	@Override
-	public List<Map<String, Object>> selectAllFileList() {
+	public List<Map<String, Object>> selectAllFileList(int pjNo) {
 		// TODO Auto-generated method stub
-		return dao.selectAllFileList(session);
+		return dao.selectAllFileList(session,pjNo);
 	}
 
 	@Override
