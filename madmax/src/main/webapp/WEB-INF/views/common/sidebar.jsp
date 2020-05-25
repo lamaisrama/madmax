@@ -199,15 +199,9 @@
 											<li><a href="${path }/project/bookmarkList.do"><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href="${path }/project/myNoti.do"><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href="${path }/project/myBoard.do"><i class="icon far fa-smile"></i>내 게시물</a></li>
-<<<<<<< HEAD
-											<hr>
-											<!-- <li><a href=""><i class="icon far fa-eye-slash"></i>숨긴 프로젝트</a></li>
-											<hr> -->
-=======
 											<hr/>
 											<li><a href=""><i class="icon far fa-eye-slash"></i>숨긴 프로젝트</a></li>
 											<hr/>
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
                                         </ul>
                                     </div>
                                 </div>

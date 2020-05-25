@@ -137,10 +137,12 @@ a:hover{
                         <input  style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #030321;"
                         	type="password" class="form-control" name="password" placeholder="비밀번호" size="30" required>
                       </div>
+                      <!-- 
                       <div class="row justify-content-center" style="color: #7b7b7b;">
                       	<lable><input type="checkbox" value="자동로그인">&nbsp;자동로그인</lable>
                       </div>
-                      
+                       -->
+                       <br>
                       <div class="justify-content-center p-1 ml-3">
                       	<button type="submit" class="btn btn-outline-secondary mb-2" style="width:270px; border-radius:0; ">로그인</button>&nbsp;&nbsp;&nbsp;
                       	<br>

@@ -75,11 +75,7 @@
 					<br>
 					
 					<div class="form-group">
-<<<<<<< HEAD
-						<button id="findId" type="button" class="btn btn-primary btn-block">확인</button>
-=======
 						<button id="findId" type="button"  class="btn btn-primary btn-block">확인</button>
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 					<a class="btn btn-danger btn-block"	href="${path}">취소</a>
 					</div>
 				</div>
@@ -109,8 +105,9 @@
 			</div>
 		</div>
 	</div>
+
 	
-	  
+
 	<script>
 		function search_check(num) {
 			if (num == '1') {
@@ -137,19 +134,8 @@
 		        dataType : "json",
 		
 		        success:function(data){
-<<<<<<< HEAD
-		       		console.log(data); 
-		       		//console.log(data.User.userId); 
-		       		if(data.User!=null){
-		                   /* console.log(data.User.userId); */
-		                    $("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
-		                 }else{
-		                    alert("일치하는 회원정보가 없습니다");
-		                    location.reload();
-		                 }
-=======
-		        	
-		        	console.log(data);
+		       	/*
+		        	console.log(data);*/
 		        	if(data.User!=null){
 		       		/* console.log(data.User.userId); */
 	       	 		$("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
@@ -158,18 +144,18 @@
 		        		location.reload();
 		        	}
 		        	
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown){
 		        	alert('정보를 다시 입력해주시길 바랍니다.' );
 		        } 
-		        
+			
 		    });
 		});
 	
 		// pw 찾기
 		$(function(){
 			$("#findPw").click(function(){
+				//console.log("check")
 				$.ajax({
 					url : "${path}/user/findingPw.do",
 					type : "POST",
@@ -178,8 +164,8 @@
 						email : $("#email").val()
 					},
 					success : function(data) {
-						 console.log(data); 
-						alert(data.msg);
+						/* console.log(data); 
+						alert(data.msg); */
 						if(data.flag){
 							location.replace("${path}/user/updatePw?userId="+$("#userId").val());						
 						}else{
@@ -189,13 +175,17 @@
 							return;
 						}
 					},
+		            error:function(){
+		                alert("오류");
+		             }
 			        
 				})
 			});
 		})
 	</script>
-	
-	
+
+
+
     
 </body>
 </html>
