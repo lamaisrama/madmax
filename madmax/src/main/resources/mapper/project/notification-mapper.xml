@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noti">
   <select id="selectNotiList" resultType="com.madmax.stool.project.model.vo.Notification">
-	SELECT *FROM NOTIFICATIONTABLE WHERE RECEIVEID=#{id}
+	SELECT *FROM NOTIFICATIONTABLE WHERE RECEIVEID=#{id} ORDER BY NOTNO DESC
   </select>
   <!-- 글 테이블일때 -->
   <select id="noti.selectNotiW" resultType="com.madmax.stool.project.model.vo.BookmarkAll">

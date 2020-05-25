@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.BookmarkService;
 import com.madmax.stool.project.model.vo.BookmarkAll;
+import com.madmax.stool.project.model.vo.ProjectBoard;
 
 
 @Controller
@@ -30,9 +30,11 @@ public class BookmarkController {
 		//세션에서 로그인한 아이디값 가져오기
 		
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<ProjectBoard> pb=service.selectPbList();
 		List<BookmarkAll> list=service.selectBkList(id);
 		logger.debug("북마크 테이블값:"+list.size());
 		
+		mv.addObject("pBoard",pb);
 		mv.addObject("List",list);
 		mv.setViewName("project/bookmarkList");
 		
