@@ -187,7 +187,6 @@
                                         	<li><a href="${path}/admin/userManagement.do"><i class="fas fa-user-times"> 회원 관리</i></a></li>
                                         </ul>
                                     </div>
-                                    <hr>
                                 </div>
                             </div>
                             <div class="card">
@@ -202,7 +201,6 @@
 										      <span class="p-3"><a href="${path}/admin/adminAttendManagement.do">근태관리</a></span><br>
 										    </div>
                                     </div>
-                                    <hr>
                                 </div>
                             </div>
                             <div class="card">
@@ -218,8 +216,6 @@
 									      <span class="p-3"><a href="">프로젝트 관리자 변경</a></span><br>
 									    </div>
                                     </div>
-
-								    <hr>
                                 </div>
                             </div>
                             <div class="card">
@@ -235,8 +231,6 @@
 									      <span class="p-3"><a href="">자가 결재 권한 부여</a></span><br>
 									    </div>
                                     </div>
-
-								    <hr>
                                 </div>
                             </div>
                         </div>

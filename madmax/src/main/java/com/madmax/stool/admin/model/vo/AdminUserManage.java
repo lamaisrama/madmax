@@ -19,5 +19,6 @@ public class AdminUserManage {
 	private String deptName;
 	private String jobCode;
 	private String jobName;
+	private String updateJC;
 	
 }

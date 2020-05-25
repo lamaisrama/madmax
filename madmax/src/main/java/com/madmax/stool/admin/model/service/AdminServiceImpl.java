@@ -60,7 +60,12 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.selectUserCount(session);
 	}
-	
+
+	@Override
+	public int updateJobCode(AdminUserManage aum) {
+		// TODO Auto-generated method stub
+		return dao.updateJobCode(session,aum);
+	}
 	
 	
 	
