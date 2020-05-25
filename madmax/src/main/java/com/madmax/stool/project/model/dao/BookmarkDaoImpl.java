@@ -87,4 +87,11 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		return session.selectList("myBoard.selectBS",id);
 	}
 
+	//북마크 정렬용
+	@Override
+	public List<ProjectBoard> selectPbList(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("bookmark.selectPb");
+	}
+
 }

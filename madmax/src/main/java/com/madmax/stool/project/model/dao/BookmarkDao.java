@@ -38,6 +38,8 @@ public interface BookmarkDao {
 
 	List<BookmarkAll> selectBoardS(SqlSessionTemplate session, String id);
 
+	List<ProjectBoard> selectPbList(SqlSessionTemplate session);
+
 	
 
 }
