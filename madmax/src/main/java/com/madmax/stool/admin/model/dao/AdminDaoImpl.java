@@ -54,6 +54,13 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectUserCount");
 	}
 
+	@Override
+	public int updateJobCode(SqlSessionTemplate session, AdminUserManage aum) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateJobCode",aum);
+	}
+
+	
 	
 	
 }
