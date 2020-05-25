@@ -130,6 +130,12 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		return dao.selectProjectMemberList(session,pjNo);
 	}
 
+	@Override
+	public List<Map<String,Object>> selectBookmarkList(Map<String, Object> pjInfo) {
+		return dao.selectBookmarkList(session,pjInfo);
+	}
+
+
 //	@Override
 //	public List<Map<String, Object>> selectUser() {
 		// TODO Auto-generated method stub

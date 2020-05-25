@@ -39,8 +39,8 @@
 								<td>${l.deptName}</td>
 								<td>${l.jobName}</td>
 								<td>
-									<input type="hidden" id="userId" name="userId" value="${l.userId}" />
-									<button type="button" class="btn btn-outline-primary"  data-toggle="modal" data-target="#myModal">직급 권한</button>
+									<input type="hidden" id="userId1" name="userId" value="${l.userId}" />
+									<button type="button" class="btn btn-outline-primary" onclick="modalBtn(this);"  data-toggle="modal" data-target="#myModal">직급 권한</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -103,12 +103,21 @@
 </div>
 
 <script>
+	function modalBtn(e){
+		//console.log(e);
+		console.log($(e).prev().val());
+		$('#id').val($(e).prev().val());
+	}
 
-	$('#myModal').on('show.bs.modal',function(e){
+	$('#myModadl').on('show.bs.modal',function(e){
 		
-		var userId=$('#userId').val();
+		
+		//console.log(e.target);
+		
+		//console.log($('#userId').val());
+		var userId=$('#userId1').val();
 		$('#id').val(userId);
-		console.log($('#id').val());
+		//console.log($('#id').val());
 		
 	});
 
@@ -119,7 +128,7 @@
 		for(var i = 0; i<otn.length; i++){
 			if(otn[i].checked==true){
 				console.log(otn[i].value);
-				//console.log($("#userId").val())
+				console.log($("#userId").val())
 				$('#myModal').modal("hide");
 				$("#modifyForm").attr("action","${path}/admin/modifyJobLevel.do");
 				$("#modifyForm").submit();

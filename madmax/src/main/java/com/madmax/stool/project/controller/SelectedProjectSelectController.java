@@ -32,6 +32,7 @@ public class SelectedProjectSelectController {
 		pjInfo.put("loginId", loginId);
 		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
 		int favorite=service.selectFavorit(pjInfo);
+		List<Map<String,Object>> bookmarkList=service.selectBookmarkList(pjInfo);
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
 		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		
@@ -74,7 +75,8 @@ public class SelectedProjectSelectController {
 		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
-		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		if(bookmarkList.size()>0) mv.addObject("bookmarkList",bookmarkList);
+		if(projectMember.size()>0) mv.addObject("projectMember",projectMember);
 		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
 		
 		if(writingList.size()>0) mv.addObject("writingList",writingList);

@@ -105,8 +105,9 @@
 			</div>
 		</div>
 	</div>
+
 	
-	  
+
 	<script>
 		function search_check(num) {
 			if (num == '1') {
@@ -133,8 +134,8 @@
 		        dataType : "json",
 		
 		        success:function(data){
-		        	
-		        	console.log(data);
+		       	/*
+		        	console.log(data);*/
 		        	if(data.User!=null){
 		       		/* console.log(data.User.userId); */
 	       	 		$("#printId").append("<h5>"+"회원님의 정보로 등록된 ID는 [ <b>"+ data.User.userId +"</b> ]입니다.</h5>");
@@ -146,14 +147,15 @@
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown){
 		        	alert('정보를 다시 입력해주시길 바랍니다.' );
-		        }
-		        
+		        } 
+			
 		    });
 		});
 	
 		// pw 찾기
 		$(function(){
 			$("#findPw").click(function(){
+				//console.log("check")
 				$.ajax({
 					url : "${path}/user/findingPw.do",
 					type : "POST",
@@ -162,16 +164,28 @@
 						email : $("#email").val()
 					},
 					success : function(data) {
-						 console.log(data); 
-						alert(data.msg);
-						location.replace("${path}/user/updatePw?userId="+$("#userId").val());
+						/* console.log(data); 
+						alert(data.msg); */
+						if(data.flag){
+							location.replace("${path}/user/updatePw?userId="+$("#userId").val());						
+						}else{
+							$("#userId").val("");
+							$("#email").val("");
+							$("#userId").focus();
+							return;
+						}
 					},
+		            error:function(){
+		                alert("오류");
+		             }
+			        
 				})
 			});
 		})
 	</script>
-	
-	
+
+
+
     
 </body>
 </html>

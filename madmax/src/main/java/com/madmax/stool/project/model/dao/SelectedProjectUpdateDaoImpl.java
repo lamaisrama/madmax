@@ -23,4 +23,44 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.update("SelectedProjectUpdate.updateProjectColor", pjInfo);
 	}
 
+	@Override
+	public int deleteProjectMember(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.delete("SelectedProjectUpdate.deleteProjectMember", pjInfo);
+	}
+
+	@Override
+	public int updateProjectManager(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.update("SelectedProjectUpdate.updateProjectManager", pjInfo);
+	}
+
+	@Override
+	public int updateSelectedProject(SqlSessionTemplate session, Map<String, Object> upMap) {
+		return session.update("SelectedProjectUpdate.updateSelectedProject", upMap);
+	}
+
+	@Override
+	public int insertBookmark(SqlSessionTemplate session, Map<String, Object> bInfo) {
+		return session.insert("SelectedProjectUpdate.insertBookmark", bInfo);
+	}
+
+	@Override
+	public int deleteBookmark(SqlSessionTemplate session, Map<String, Object> bInfo) {
+		return session.delete("SelectedProjectUpdate.deleteBookmark", bInfo);
+	}
+
+	@Override
+	public int updatePinPost(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.update("SelectedProjectUpdate.updatePinPost", pjInfo);
+	}
+
+	@Override
+	public int insertComment(SqlSessionTemplate session, Map<String, Object> cMap) {
+		return session.insert("SelectedProjectUpdate.insertComment", cMap);
+	}
+
+	@Override
+	public int insertCommentNotification(SqlSessionTemplate session, Map<String, Object> cMap) {
+		return session.insert("SelectedProjectUpdate.insertCommentNotification", cMap);
+	}
+
 }

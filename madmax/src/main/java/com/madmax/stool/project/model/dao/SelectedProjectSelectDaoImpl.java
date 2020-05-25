@@ -123,6 +123,12 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 		return session.selectList("selectedProjectSelect.selectProjectMemberList",pjNo);
 	}
 
+	@Override
+	public List<Map<String,Object>> selectBookmarkList(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.selectList("selectedProjectSelect.selectBookmarkList",pjInfo);
+	}
+
+
 //	@Override
 //	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub

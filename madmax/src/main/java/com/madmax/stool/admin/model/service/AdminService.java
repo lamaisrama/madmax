@@ -20,4 +20,6 @@ public interface AdminService {
 	List<AdminUserManage> selectAllUser(int cPage,int numPerPage);
 
 	int selectUserCount();
+	
+	int updateJobCode(AdminUserManage aum);
 }
