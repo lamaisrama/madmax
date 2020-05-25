@@ -11,7 +11,7 @@ public interface ProjectService {
 
 	List<Project> selectProjectList(String id, int cPage, int numPerpage);
 
-	String selectProjectMembers(int pNo);
+	List<String> selectProjectMembers(int pNo);
 
 	int selectProjectCount(String id);
 
