@@ -4,6 +4,8 @@
 	height: 60px;
 }
 
+
+
 /*파일함,업무,일정 버튼*/
 #threeBtn {
 	width: 95px; 
@@ -13,12 +15,14 @@
 /*프로젝트 모든 참여자 박스*/
 div.allMemberListBox {
 	border: 1px solid; 
-	width: 285px; 
+	width: 282px; 
 	height: auto; 
 	min-height: auto; 
 	max-height: auto; 
 	padding: 15px 12px; 
 	border-radius: 0.2rem;
+	
+	
 
 }
 

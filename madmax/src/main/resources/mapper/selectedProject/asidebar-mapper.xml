@@ -3,8 +3,8 @@
 <mapper namespace="aside">
 
 	<!-- 전체 참여자 수(와 관리자) -->
-	<select id="selectProjectMemberNo" parameterType="map" resultType="map">
-		SELECT COUNT(USERID) FROM PROJECTMEMBER
+	<select id="selectProjectMemberNo" parameterType="map" resultType="_int">
+		SELECT COUNT(USERID) COUNT FROM PROJECTMEMBER WHERE PROJECTNO=#{pjNo}
 	</select>
   
 	<select id="selectStoolUser" parameterType="map" resultType="map">

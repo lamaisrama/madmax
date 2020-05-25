@@ -5,13 +5,13 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
 <!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
 
 <!-- aside.jsp에 대한 css -->
@@ -22,37 +22,37 @@
 
 
 <div class="col-sm-3">
-	<div class="row">
+	<!-- <div class="row"> -->
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
 		<div>
-			<button id="beforePage" type="button" class="btn btn-outline-primary" onclick="fn_goBack()">
+			<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="fn_goBack()">
 				<span>이전화면</span>
 			</button>
 		</div>
-	</div>
-	<!--row-->
-	<p></p>
-	<div class="row">
-		<!--각 버튼을 누르면 해당하는 모달창이 뜸-->
-		<!--버튼 css 수정 되는지 확인해보고 안되면 다른 방법으로 찾아보기 ㅠㅠ-->
-		<div class="btn-group">
-			<button type="button" id="threeBtn" class="btn btn-outline-primary" data-toggle="modal" data-target="#fileListModal">
+		<p></p>
+		<div class="btn-group bg-white" style="border 1; border-radius: 0.2rem;">
+			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" data-toggle="modal" data-target="#fileListModal">
 				<span>파일함</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn btn-outline-primary" onclick="">
+			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="">
 				<span>업무</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn btn-outline-primary" onclick="">
+			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="">
 				<span>일정</span>
 			</button>
+		</div> <!-- btn-group -->
+		<p></p>
+		<div>
+			<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="">
+				<span>초대하기</span>
+			</button>
 		</div>
-		<!-- btn-group -->
-	</div>
+	<p></p>
+	<!-- </div> -->
 	<!--row-->
-	<br>
-	<div class="row">
+	
 		<!--전체참여자 확인박스-->
-		<div class="allMemberListBox">
+		<div class="allMemberListBox bg-white border border-grey rounded" >
 			<div class="allMemberListCount">
 				<span>전체 참여자 ${projectMemberNo}명</span> 
 					<a 
@@ -70,13 +70,12 @@
 					<p>관리자(1)</p>
 					<ul class="detailedList">
 						<li>
-						<c:if test="${user.USERID eq projectBoardList.USERID eq projectMember.USERID}">
 							<div
 							class="member"
 							data-toggle="modal"
 							data-target="#member">
 								<c:choose>
-									<c:when test="${projectMember.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+									<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
 										<img 
 										id="profileImg"
 										src="${path}/resources/images/defaultProfile.png"
@@ -85,33 +84,36 @@
 									<c:otherwise>
 										<img 
 										id="profileImg"
-										src="${path}/resources/images${projectMember.PROFILE}"
+										src="${path}/resources/images${pm.profile}"
 										alt="프로필사진">
 									</c:otherwise>
 								</c:choose>  
 								<span id="memberName">
-									<c:out value="${projectMember.USERNAME}"/> <!-- 플젝 생성자 이름 -->
+									<c:out value="${pm.userName}"/> <!-- 플젝 생성자 이름 -->
 								</span>
 							</div>
-						</c:if>
+						
 						</li>
 					</ul>
 				</div>
 				<!--관리자-->
 				<hr>
 				<div class="memberList">
-					<p>참여자(<c:out value="${projectMemberNo}-1"/>)</p>
+					<p>참여자(
+					<c:out value="${projectMemberNo}-1"/>
+					)
+					</p>
 					
 					<ul class="detailedList">
-						<c:forEach var="pm" items="${projectMemberList}">
-						<c:if test="${pm.USERID eq user.USERID }">
+						<c:forEach var="pm" items="${projectMember}">
+						<%-- <c:if test="${pm.USERID eq user.USERID }"> --%>
 						<li>
 							<div 
 							class="member"
 							data-toggle="modal"
 							data-target="#member">
 							<c:choose>
-								<c:when test="${pm.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+								<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
 									<img 
 									id="profileImg"
 									src="${path}/resources/images/defaultProfile.png"
@@ -120,16 +122,16 @@
 								<c:otherwise>
 									<img 
 									id="profileImg"
-									src="${path}/resources/images${pm.PROFILE}"
+									src="${path}/resources/images${pm.profile}"
 									alt="프로필사진">
 								</c:otherwise>
 							</c:choose>
 								<span id="memberName"> 
-									<c:out value="${pm.USERNAME}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
+									<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
 								</span>
 							</div>
 						</li>
-						</c:if>
+						<%-- </c:if> --%>
 						</c:forEach>
 					</ul>
 					
@@ -137,15 +139,15 @@
 				<!--참여자-->
 			</div>
 			<!--모든멤버리스트-->
-			<hr>
-		</div>
+			<hr> 
+		<!-- </div> -->
 		<!--row-->
-
-		<div class="row"></div>
+			
+	</div>
 	</div>
 	<!--col-sm-3-->
 
-</div>
+<!-- </div> -->
 <!--row-->
 
 <!-- ----------------------------------------- 모달창 --------------------------------------------------------- -->
@@ -225,7 +227,7 @@ img#cardProfileImg {
 								</thead>
 								<tbody>
 									<c:forEach var="afl" items="${allFileList }">
-									<c:if test="${afl.PROJECTNO==pb.PROJECTNO }">
+									<%-- <c:if test="${afl.PROJECTNO==pb.PROJECTNO }"> --%>
 									<tr>
 										<td class="fileName">${afl.PJFILEORINAME}</td>
 										<td>
@@ -254,7 +256,7 @@ img#cardProfileImg {
 										</td>
 										<!--버튼을 누르면 파일을 자동으로 다운받음 -->
 									</tr>
-									</c:if>
+									<%-- </c:if> --%>
 									</c:forEach>
 								</tbody>
 							</table>
@@ -308,7 +310,7 @@ img#cardProfileImg {
 								<span>관리자</span>
 								<hr>
 							</div>
-							<c:forEach var="" items="${ }">
+							<%-- <c:forEach var="" items="${ }"> --%>
 							<div class="pjJoinAllMemberList">
 								<img 
 								id="profileImg"
@@ -328,7 +330,7 @@ img#cardProfileImg {
 								</button>
 								<hr>
 							</div>
-							</c:forEach>
+							<%-- </c:forEach> --%>
 						</div>
 					</div>
 				</div>
@@ -364,11 +366,15 @@ img#cardProfileImg {
 					</div>
 					<hr>
 					<div style="margin-bottom: 20px;">
-						<span id="email">koaenging@gmail.com</span> 
+						<span id="email">
+							<c:out value="${user.EMAIL }"/>
+						</span> 
 						<br> 
-						<span id="phoneNo">010-9876-5432</span> 
+						<span id="phoneNo">
+							<c:out value="${user.PHONE }"/>
+						</span> 
 						<br> 
-						<span id="officeNO">02-567-8901</span>
+						<!-- <span id="officeNO">02-567-8901</span> -->
 					</div>
 					<div style="padding-top: 15px;" align="center">
 						<button type="button" class="btn btn-sm btn-outline-dark center">

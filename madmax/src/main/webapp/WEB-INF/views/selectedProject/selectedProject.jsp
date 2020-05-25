@@ -366,9 +366,9 @@
             </div>
 
                 
-            <!-- <div class="col-sm-3">
-			<div class="col col-sm-3"> -->
-			<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+            <div class="col-sm-3">
+				<jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" />
+			<div class="col col-sm-3">
 
 </div>
 

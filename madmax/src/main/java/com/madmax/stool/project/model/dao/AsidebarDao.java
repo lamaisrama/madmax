@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 public interface AsidebarDao {
 
-	Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session);
+	Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session,int pjNo);
 
 	List<Map<String, Object>> selectProjectMemberList(SqlSessionTemplate session, int pjNo);
 

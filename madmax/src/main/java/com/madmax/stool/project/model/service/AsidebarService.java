@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface AsidebarService {
 
-	Map<String, Object> selectProjectMemberNo();
+	Map<String, Object> selectProjectMemberNo(int pjNo);
 
 	List<Map<String, Object>> selectProjectMemberList(int pjNo);
 

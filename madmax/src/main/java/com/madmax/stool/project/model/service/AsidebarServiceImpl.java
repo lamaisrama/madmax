@@ -20,9 +20,9 @@ public class AsidebarServiceImpl implements AsidebarService {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public Map<String, Object> selectProjectMemberNo() {
+	public Map<String, Object> selectProjectMemberNo(int pjNo) {
 		// TODO Auto-generated method stub
-		return dao.selectProjectMemberNo(session);
+		return dao.selectProjectMemberNo(session,pjNo);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class AsidebarController {
 	
 	public ModelAndView selectProjectMemberNo(ModelAndView mv,int pjNo) {
 		//프로젝트 참여자 수 
-		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
+		Map<String,Object> projectMemberNo=service.selectProjectMemberNo(pjNo);
 		
 		//프로젝트 참여자 리스트 가져옴
 		List<Map<String,Object>> projectMemberList=service.selectProjectMemberList(pjNo);
@@ -31,7 +31,7 @@ public class AsidebarController {
 		
 		
 		mv.addObject("projectMemberNo",projectMemberNo);
-		mv.addObject("projectMemberList",projectMemberList);
+		if(projectMemberList.size()>0)mv.addObject("projectMemberList",projectMemberList);
 		mv.addObject("user",user);
 		
 		return mv;

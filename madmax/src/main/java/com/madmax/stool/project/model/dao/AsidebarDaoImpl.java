@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class AsidebarDaoImpl implements AsidebarDao {
 
 	@Override
-	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session) {
+	public Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session,int pjNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("aside.selectProjectMemberNo");
 	}
