@@ -39,10 +39,9 @@
 					<th><input type="text" name="draftUserName"></th>
 					<th>문서제목</th>
 					<td><input type="text" name="draftTitle">
-					<th>배정일</th>
-					<td>
+					<td>기안일
 						<input type="date" name="startDate"> ~
-						<input type="date"  name="endDate">
+						<input type="date" name="endDate">
 					</td>
 					<td width="">
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
@@ -53,7 +52,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> 0 </span></p>
+		<p>전체 <span style="color:red"> <c:out value="${list.size()}"/> </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">

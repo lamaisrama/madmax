@@ -19,7 +19,7 @@ public interface ApprovalService {
 	List<ApprDocType> selectApprDocList(int cPage, int numPerPage);
 	int selectApprDocListCount();
 	ApprDocType selectApprDocForm(int dNo);
-	int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, List<ApprAttachment> files);
+	int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, List<ApprAttachment> files) throws RuntimeException;
 	List<Approval> selectApprReqList(String userId);
 	ApprDoc selectApprDoc(int apprNo);
 	ApprDoc selectDoApproval(Approval approval);
@@ -30,6 +30,8 @@ public interface ApprovalService {
 	int updateAppr(ApprLine line);
 	List<ApprDoc> selectAttachAppredDoc(String deptCode);
 	int updateUserSign(String userId);
+	int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred, List<ApprAttachment> files,
+			List<ApprAttachment> delFiles) throws RuntimeException;
 
 	
 	

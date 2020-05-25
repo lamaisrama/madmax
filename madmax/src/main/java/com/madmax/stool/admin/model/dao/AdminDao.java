@@ -23,4 +23,6 @@ public interface AdminDao {
 	
 	int selectUserCount(SqlSessionTemplate session);
 	
+	int updateJobCode(SqlSessionTemplate session,AdminUserManage aum);
+	
 }

@@ -44,6 +44,10 @@ public interface ApprovalDao {
 	List<AppredDoc> selectAppredDoc(SqlSessionTemplate session, int apprNo);
 	List<ApprAttachment> selectApprAttachment(SqlSessionTemplate session, int apprNo);
 	int updateUserSign(SqlSessionTemplate session, String userId);
+	int updateApproval(SqlSessionTemplate session, Approval appr);
+	void deleteApprLine(SqlSessionTemplate session, int apprNo);
+	void deleteAppredDoc(SqlSessionTemplate session, int apprNo);
+	int deleteApprAttachment(SqlSessionTemplate session, int docFileNo);
 
 
 }

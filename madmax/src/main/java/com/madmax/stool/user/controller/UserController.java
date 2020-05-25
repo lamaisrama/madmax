@@ -103,14 +103,14 @@ public class UserController {
 		
 		int result = service.insertUser(param);
 		
-		String page = "";
+		String page = "common/msg";
 		
 		if(result==0) {
-			page = "common/msg";
 			m.addAttribute("msg", "회원가입실패! 다시 시도해주세요!");
 			m.addAttribute("loc", "/user/joinUser.do");
 		}else {
-			page = "redirect:/";
+			m.addAttribute("msg", "회원가입성공! 관리자의 승인을 기다리세요!");
+			m.addAttribute("loc", "/");
 		}
 		return page;
 	}
@@ -128,7 +128,7 @@ public class UserController {
 			//logger.debug("user:"+login.getUserName());
 		}else {
 			page = "common/msg";
-			m.addAttribute("msg", "로그인실패!");
+			m.addAttribute("msg", "로그인실패! 관리자에게 문의하세요.");
 			m.addAttribute("loc", "/");
 		}
 		return page;
@@ -241,13 +241,16 @@ public class UserController {
 				e.printStackTrace();
 			}
 			mv.addObject("msg", "작성한 이메일로 임시비번이 전송되었습니다.");
-			mv.setViewName("jsonView");
-			return mv;
+			mv.addObject("flag", true);
+			//mv.setViewName("jsonView");
+			//return mv;
+			
 		}else {
 			mv.addObject("msg", "일치하는 정보가 없습니다.");
-			mv.setViewName("jsonView");
-			return mv;
+			mv.addObject("flag", false);
 		}
+		mv.setViewName("jsonView");		
+		return mv;
 	}
 	
 	@RequestMapping("/user/updatePw")
@@ -261,9 +264,7 @@ public class UserController {
 		User check=service.selectUser(id);
 		
 		return check.getPassword().equals(pw);
-		
 	}
-	
 	
 	@RequestMapping("/user/updatePw.do")
 	public String updatePw(@RequestParam Map param, Model m) {
@@ -276,7 +277,9 @@ public class UserController {
 		System.out.println("pwc : "+newPw);
 		System.out.println("id : "+userId);
 
-//		if(newPwd.equals(newPw)) {
+		String page = "";
+
+		if(newPwd.equals(newPw)) {
 		
 			newPwd = encoder.encode(newPwd);
 		
@@ -286,20 +289,18 @@ public class UserController {
 			param.put("newPwd", newPwd);
 		
 			int result = service.updatePw(param);
-
-			String page = "";
 			
 			if(result>0) {
 				page="common/msg";
 				m.addAttribute("msg", "비밀번호 변경 성공!");
 				m.addAttribute("loc", "/");
-			}else {
-				page = "common/msg";
-				m.addAttribute("msg", "비밀번호 변경 실패!");
-				m.addAttribute("loc", "/user/login/findIdPw");
 			}
 			
-//		}
+		}else if(!newPwd.equals(newPw)) {
+			page = "common/msg";
+			m.addAttribute("msg", "비밀번호 변경 실패!");
+			m.addAttribute("loc", "/user/findIdPw");
+		}
 			
 		return page;
 	}

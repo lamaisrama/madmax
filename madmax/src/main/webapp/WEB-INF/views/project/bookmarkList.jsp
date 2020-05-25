@@ -14,7 +14,7 @@
 <!-- 페이징 처리할것 -->
 			
  			<div id="bookmarkTitle">
-               <h4>담아둔 글 보기</h4>
+               <h4><i class="icon far fa-bookmark"></i>담아둔 글 보기</h4>
             </div>
        		<c:if test="${empty List }">
        			<div class="w-100 h-25 mt-5 text-center bg-light ">
@@ -81,6 +81,8 @@
 
                             <!-- if문으로 분기처리 : bordType이 업무인경우 -->
                             <!-- 2) 업무 시작  --------------------------------------------------------------------------------------------------------------------->
+                         <%--   <c:forEach items="${pBoard }" var="pb">
+                           <c:if test='${pb.boardNo==l.boardNo }'> --%>
                             <c:if test="${l.boardType eq 'T' }"> 
 	                            <div class="pjViewBody w-100 d-flex flex-column pl-3 pr-3">
 	                                <h5 class="m-0 font-weight-bolder mb-4">${l.taskTitle }</h5> <!-- 업무제목 -->
@@ -148,16 +150,18 @@
 	                                    <div class="w-100 row d-flex">
 	                                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
 	                                            <p class="m-0 text-danger font-weight-bold"> <!-- 일정 실행일 : 월만 표기 -->
-	                                                5월
+	                                                <fmt:formatDate var="dateFmt" pattern="MM" value="${l.scheduleTime}"/>
+													<c:out value="${dateFmt }"/>월
 	                                            </p>
 	                                            <p class="m-0 font-weight-bolder" style="font-size: 40px;"> <!-- 일정 실행일 : 일만 표기 -->
-	                                            	11  
+	                                            	<fmt:formatDate var="dateFmt1" pattern="dd" value="${l.scheduleTime}"/>
+													<c:out value="${dateFmt1 }"/>
 	                                            </p>
 	                                        </div>
 	                                        <div class="col-10 d-flex flex-column">
 	                                            <strong class="">${l.scheduleTitle }</strong> <!-- 일정제목 -->
 	                                            <hr class="w-100">
-	                                            <strong class="">${l.scheduleTime }</strong> <!-- 일정 실행일 -->
+	                                            <strong class=""><fmt:formatDate value="${l.scheduleTime}" dateStyle="long"/></strong> <!-- 일정 실행일 -->
 	                                        </div>
 	                                    </div>
 	                                    <hr class="w-100">
@@ -182,102 +186,7 @@
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
 
 
-                            <!--★ 하단공통  ----------------------------------------------------------------------------------------------------------------------->       
-                            <!-- <div class="w-100 mt-4">      
-                                <div class="col-12 mb-3">
-                                	※※※ collapse div의 변수를 반드시 다르게 주어야합니다!!
-                                    <button class="btn stoolDarkBlue-btn-outline mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                                            onclick="addBtniconChange(this)">
-                                       	 추가항목보기 <i class="fas fa-plus stoolDarkBlue-text ml-2" style="font-size:20px;"></i>
-                                    </button> 
-                                    <span class="stoolGrey">태그 / 언급 / 첨부파일을 보시려면 클릭하세요</span>
-                                </div>
 
-                                <div class="collapse" id="collapseExample"> 
-                                    공통) 태그 & 언급
-                                    <div class="col-12 addTagListBox mb-2">
-                                        <div class="w-100 d-flex flex-column">
-                                            <strong class="mb-2">태그</strong>
-                                            <div class="w-100 d-flex flex-wrap align-items-center addTagList">
-                                                <div class="d-flex ml-2 mr-2">
-                                                    <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">태그넣기</span>
-                                                </div>
-                                                <div class="d-flex ml-2 mr-2">
-                                                    <span style='color:#25558F; font-weight: bold;'>#</span>
-                                                    <span class="">태그넣기</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr class="w-100">
-                                    </div>  태그 입력 끝  -->    
-                                    
-                                    <!-- 언급 입력 -->
-               <%--                      <div class="col-12 addMentionListBox mb-2">                           
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <strong class="mr-2 mb-1">언급된 참여자</strong>                                        
-                                            <div class="d-flex align-items-center">
-                                                <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
-                                                    <span>김OO</span>
-                                                </div>
-                                                <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
-                                                    <span>김OO</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr class="w-100">
-                                    </div>  <!-- 언급 입력 끝 -->    
-
-                                    <!-- 공통) 파일 미리보기 (※일정은 첨부파일이 없으니 분기처리) -->
-                                    <div id="uploadFilesPreview" class="col-12 mb-2">
-                                        <strong class="mb-2">업로드 파일</strong>
-                                        <div class="col-12 d-flex flex-column mb-2">
-                                            <p  class="align-items-center m-0 pl-1">
-                                                <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
-                                               	첨부이미지
-                                            </p>
-                                            <div class="w-100 d-flex justify-content-center">
-                                                <div class="w-100 row">
-                                                    <div class='col-2 p-1' style='height: 150px;'>
-                                                        <div class='imgPreview h-100'>
-                                                        	<!-- 아무 이미지나 넣어논 것! -->
-                                                            <img src='${path}/resources/images/defaultProfile.png'/> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 d-flex flex-column">
-                                            <p class="align-items-center m-0 pl-1">
-                                                <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
-                                               	첨부파일
-                                            </p>                                        
-                                            <div class="w-100 d-flex justify-content-center">
-                                                <div class="fileDownBox w-100 row">
-
-                                                    <div class='col-4 p-1 w-100' style='height: 46px;'>
-                                                        <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' onclick="fileDownload(this)">
-                                                            <div class='d-flex align-items-center'>
-                                                                <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
-                                                                <span>파일명넣기</span>
-                                                            </div>
-                                                            <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>                                
-                                    </div>  <!-- 공통) 파일 미리보기 끝 -->
-                                </div>
-
-                            </div> --%>
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
     					
 
@@ -296,6 +205,8 @@
                     <!--★☆★ 댓글지움 ------------------------------------------------------------------------------------------------------------------------->
                    
                 </div>
+               <%--  </c:if> --%>
+                <%-- </c:forEach> --%><!-- 프로젝트보드 닫기 -->
 				</c:forEach>
 
 

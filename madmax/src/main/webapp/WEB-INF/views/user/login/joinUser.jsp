@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>사원가입</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -18,28 +18,54 @@
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
+<!-- fontawesome -->
+<script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
+
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
 <style>
+	body{
+	  	background: #233C61;
+	  	color: #F1F0F5;
+	}
+	.icon {
+    	text-align:center;
+    	width:30px; 
+    }
 	.joinBtn {
-		margin-left: 10px; 
+		margin: 100px 0 100px 10px; 
 		width:270px;
 		font-size : 17px;
 		font-weight : 600;
-		color : #233C61; 
-		border: 3px solid #233C61; 
+		color :white; 
+		border: 2px solid #FFE3E3; 
 		border-radius:50px;
 	}
-	.checkEmailBtn {
-		color : #233C61; 
-		border: 3px solid #233C61; 	
+    
+    .joinBtn:hover{
+    	background-color: #FFE3E3;
+    	color : #233C61;
+    }
+    
+    .deptSelect{
+    	-webkit-appearance: none;
+    	-moz-appearance: none;
+	    border-radius: 0;
 	}
+    
+    h6 {
+    	margin-top: 15px;
+    }
+    
+    input {
+    	border:none;
+	  	border-bottom: solid 1px #FFE3E3;
+    }
     
    /*중복아이디체크*/
    div#userId-container{
@@ -48,7 +74,7 @@
  	}
    div#userId-container span.guide{
    		display:none;
-   		font-size: 12px;
+   		font-size: 14px;
    		position:absolute;  
    		top:12px; right:10px;
 	}
@@ -66,23 +92,18 @@
 
             <div class="item mx-auto align-self-center">
                 <br>
-                <h5 class="text-center">회원가입</h5>
+                <h1 class="display-4 text-center pt-4">사원가입</h1>
 
                 <form action="${path}/user/userEnrollEnd.do" enctype="multipart/form-data" name="userEnrollFrm" method="post" onsubmit="return fn_validate();">
-                    <img src="${path}/resources/images/userImg.png" width="280px" height="280px">
+                    <%-- <img src="${path}/resources/images/userImg.png" width="280px" height="280px"> --%>
                     
-                    <div class="input-group">
-					  <div class="custom-file">
-					    <input type="file" class="custom-file-input" name="upFile" id="upFile" aria-describedby="inputGroupFileAddon04">
-					    <label class="custom-file-label" for="upFile">사진등록</label>
-					  </div>
-					</div>
 					<br>
-                    <h5 class="colum">
-                    	<span class="material-icons">person</span>&nbsp;아이디
-                    </h5>
+                    <h6>
+                    	<i class="icon fas fa-user"></i>&nbsp;아이디
+                    </h6>
                       <div class="mb-3" id="userId-container">       
-                        <input type="text" class="form-control" placeholder="아이디를 4글자 이상 입력하세요"  name="userId" id="userId_" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                        		type="text" class="form-control" placeholder="아이디를 4글자 이상 입력하세요"  name="userId" id="userId_" required>
                         <span class="guide ok">이 아이디는 사용이 가능합니다.</span>
 						<span class="guide error">이 아이디는 사용할 수 없습니다.</span>
                       </div>
@@ -123,40 +144,47 @@
  						} 
 */                        
 					</script>
-
-                      <h5 class="colum"><span class="material-icons">lock</span>&nbsp;비밀번호</h5>
+					
+					<br>
+                      <h6><i class="icon fas fa-unlock-alt"></i>&nbsp;비밀번호</h6>
                       <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="영문자나 숫자(4~12자) 입력" size="30" name="password" id="password_" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                        		type="password" class="form-control" placeholder="영문자나 숫자(4~12자) 입력" size="30" name="password" id="password_" required>
                       </div>
                       <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="비밀번호 확인" size="30" id="password2" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                        		type="password" class="form-control" placeholder="비밀번호 확인" size="30" id="password2" required>
                       </div>
-                      
-                      <h5 class="colum">&nbsp;이름</h5>
+                      <br>
+                      <h6><i class="icon far fa-grin"></i>&nbsp;이름</h6>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="이름 입력" size="30" name="userName" id="userName" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;"  
+                        		type="text" class="form-control" placeholder="이름 입력" size="30" name="userName" id="userName" required>
                       </div>
-                      
-                      <h5 class="colum">&nbsp;이메일</h5>
-                      <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="stool@madmax.com" size="30" name="email" id="email" required>
+                      <br>
+                      <h6><i class="icon fas fa-envelope"></i>&nbsp;이메일</h6>
+                      <div class="input-group">
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                        	 	type="text" class="form-control" placeholder="stool@madmax.com" size="30" name="email" id="email" required>
                       </div>
-
-                      <h5 class="colum">&nbsp;전화번호</h5>
+					  <br>
+                      <h6><i class="icon fas fa-mobile-alt"></i>&nbsp;전화번호</h6>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="-제외 숫자만 입력" size="30" name="phone" id="phone" maxlength="11" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                         		type="text" class="form-control" placeholder="-제외 숫자만 입력" size="30" name="phone" id="phone" maxlength="11" required>
                       </div>
-                      
-                      <h5 class="colum">&nbsp;생년월일</h5>
+                      <br>
+                      <h6><i class="icon fas fa-birthday-cake"></i>&nbsp;생년월일</h6>
                       <div class="input-group mb-3">
-                        <input type="date" class="form-control" placeholder="클릭하여 날짜 선택" size="30" name="birthday" id="birthday" required>
+                        <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;"  
+                        		type="date" class="form-control" placeholder="클릭하여 날짜 선택" size="30" name="birthday" id="birthday" required>
                       </div>
-                      
-                      <h5 class="colum">&nbsp;부서</h5>
+                      <br>
+                      <h6><i class="icon fas fa-briefcase"></i>&nbsp;부서</h6>
                       <div class="input-group mb-3">
-                        <!-- <input type="text" class="form-control" list="dept" placeholder="클릭하여 부서 선택" size="30"> -->
-                        <select class="form-control text-dark" name="deptCode" required>
-							<option value="" disabled selected>부서선택</option>
+                        <select style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
+                         		class="deptSelect form-control" name="deptCode" required>
+							<option style="color: #F1F0F5;" value="" disabled selected>부서선택</option>
 							<option value="HR" >인사팀</option>    
                             <option value="RND" >개발팀</option>    
                             <option value="MT" >마케팅팀</option>    
@@ -165,9 +193,19 @@
                             <option value="MS" >관리팀</option>  
 						</select>
                       </div>
+                      <br>
+                      <h6><i class="icon fas fa-camera"></i>&nbsp;사진등록</h6>
+                      <div class="input-group">
+						  <div class="custom-file">
+						    <input type="file" class="custom-file-input" name="upFile" id="upFile" aria-describedby="inputGroupFileAddon04">
+						    <label style="border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;"
+						    		class="custom-file-label" for="upFile">프로필 이미지</label>
+						  </div>
+					  </div>
+                      
                       
                       <div class="row justify-content-center p-1">
-                        <button type="submit" class="btn joinBtn mb-4" style="">회원가입</button>&nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn joinBtn mb-4" style="">승인 요청</button>&nbsp;&nbsp;&nbsp;
                     </div>
                 </form>
             </div>

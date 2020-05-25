@@ -20,4 +20,7 @@
   JOIN SCHEDULE S ON P.BOARDNO=S.BOARDNO JOIN STOOLUSER SU ON S.SCHEDULEID=SU.USERID  JOIN STOOLUSER ST 
   ON B.USERID=ST.USERID WHERE B.USERID=#{userId} AND B.BOARDNO=#{boardNo}
   </select>
+  <select id="selectPb" resultType="com.madmax.stool.project.model.vo.ProjectBoard">
+ 	 SELECT * FROM  PROJECTBOARD ORDER BY BOARDNO DESC
+  </select>
 </mapper>

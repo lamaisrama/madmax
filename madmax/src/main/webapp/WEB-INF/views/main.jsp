@@ -14,6 +14,7 @@
 <script src='${path}/resources/mainresources/calendar/daygrid/main.js'></script>
 <script src='${path}/resources/mainresources/calendar/timegrid/main.js'></script>
 <script src='${path}/resources/mainresources/calendar/list/main.js'></script>
+<script src='${path}/resources/mainresources/calendar/google-calendar/main.js'></script>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
@@ -26,11 +27,12 @@
                   
                   
                     <div class="row justify-content-around">
-                        <div class="colum col-sm-6" id="calendar" >
+                    <!-- 달력출력하는 부분 -->
+                        <div class="column col-sm-6" id="calendar" >
 
                         </div>
 
-                        <div class="colum col-sm-3" style="margin-top: 50px;">
+                        <div class="column col-sm-3" style="margin-top: 50px;">
                           <span>✔️ 진행중인 업무</span>
 <!--                           <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
                             더보기
@@ -78,13 +80,13 @@
 
                           
 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"><a href="">여기에 즐겨찾는제목</a></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
-                            <div class="item p-3"></div>
+                            <div class="item p-3 bookmarkProject"></div>
                 
                       </div>
                       
@@ -128,6 +130,11 @@
        #area{
         height: 768px;
        }
+       .fc-event{//공휴일 글씨색 설정
+		color:#FFFFFF;
+		background-color:#cc3333;
+		border:1px solid #cc3333;
+		}
    </style>
 
 <script>
@@ -136,72 +143,29 @@
       var calendarEl = document.getElementById('calendar');
   
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction' ],
+    	plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction',  'googleCalendar' ],
+		googleCalendarApiKey:'AIzaSyDL2TuMBMjldVwSFT5zvntlpQRrbndMhDk',
         header: {
           //left: 'prev,next today',
           //center: 'title',
           //right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        defaultDate: '2020-02-12',
+        defaultDate: new Date(),
         //navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2020-02-01',
-          },
-          {
-            title: 'Long Event',
-            start: '2020-02-07',
-            end: '2020-02-10'
-          },
-          {
-            groupId: 999,
-            title: 'Repeating Event',
-            start: '2020-02-09T16:00:00'
-          },
-          {
-            groupId: 999,
-            title: 'Repeating Event',
-            start: '2020-02-16T16:00:00'
-          },
-          {
-            title: 'Conference',
-            start: '2020-02-11',
-            end: '2020-02-13'
-          },
-          {
-            title: 'Meeting',
-            start: '2020-02-12T10:30:00',
-            end: '2020-02-12T12:30:00'
-          },
-          {
-            title: 'Lunch',
-            start: '2020-02-12T12:00:00'
-          },
-          {
-            title: 'Meeting',
-            start: '2020-02-12T14:30:00'
-          },
-          {
-            title: 'Happy Hour',
-            start: '2020-02-12T17:30:00'
-          },
-          {
-            title: 'Dinner',
-            start: '2020-02-12T20:00:00'
-          },
-          {
-            title: 'Birthday Party',
-            start: '2020-02-13T07:00:00'
-          },
-          {
-            title: 'Click for Google',
-            url: 'http://google.com/',
-            start: '2020-02-28'
-          }
-        ]
+        eventSources:['ko.south_korea#holiday@group.v.calendar.google.com']
+		,events:[
+			'ko.south_korea#holiday@group.v.calendar.google.com',
+		 	<c:forEach items="${schedule}" var="s" varStatus="status">
+			{"title":'<c:out value="${s.scheduleTitle}"/>'
+				,"start":'<c:out value="${s.scheduleStartDate}"/>'
+				,"end":'<c:out value="${s.scheduleEndDate}"/>'
+				,"className":'info'
+			},
+			
+		</c:forEach>  	
+		]
       });
   
       calendar.render();

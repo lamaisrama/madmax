@@ -22,4 +22,5 @@ public class Project {
 	private String deptName;
 	private Date creationDate;
 	private String projectState;
+	private int memberCount;
 }
