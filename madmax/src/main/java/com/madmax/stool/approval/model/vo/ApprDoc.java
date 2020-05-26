@@ -32,5 +32,9 @@ public class ApprDoc {
 	private List<ApprLine> apprLine;
 	private List<AppredDoc> appredDoc;
 	private List<ApprAttachment> apprAttachment;
+	private String apprMessage;
+	private Date apprTime;
+	private String APPRUSERNAME;
+	
 	
 }

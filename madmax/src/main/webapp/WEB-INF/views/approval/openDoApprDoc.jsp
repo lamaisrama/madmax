@@ -193,6 +193,7 @@
 			         <input class="form-control" type="text" name="apprMessage" placeholder="결재 의견을 남겨주세요">
 		      </div>
 		  </form>
+		  
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>

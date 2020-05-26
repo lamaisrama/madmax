@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
 
 @Repository
@@ -53,6 +54,18 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int selectComProjectCount(SqlSessionTemplate session, String id) {
 		// TODO Auto-generated method stub
 		return  session.selectOne("project.selectComProjectCount",id);
+	}
+
+	@Override
+	public List<Favorite> selectFavorite(SqlSessionTemplate session,String id) {
+		
+		return session.selectList("project.selectFavorite",id);
+	}
+
+	@Override
+	public int selectFavoriteCount(SqlSessionTemplate session,String id) {
+		
+		return session.selectOne("project.selectFavoriteCount",id);
 	}
 
 	

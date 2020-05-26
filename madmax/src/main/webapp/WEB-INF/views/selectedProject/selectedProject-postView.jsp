@@ -142,14 +142,14 @@
                                             <strong class="mr-2 mb-1">언급된 참여자</strong>                                        
                                             <div class="d-flex align-items-center">
                                             <c:forEach items="${notification}" var="n">
-											<c:if test="${w.BOARDNO==n.BOARDNO}">
+											<c:if test="${ (w.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'writing')}">
 											<c:set var="notificationCk" value="Y" />
                                                 <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
                                                     <div class='selectedWorker_imgDiv mr-2'>
                                                         <img src="${path}/resources/images/defaultProfile.png">
                                                     </div>
                                                     <c:forEach items="${projectMember}" var="pm">
-                        							<c:if test="${pm.userId ne n.RECEIVEID}">
+                        							<c:if test="${pm.userId eq n.RECEIVEID}">
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     </c:if>
                                                     </c:forEach>
@@ -172,10 +172,10 @@
                                         <strong class="mb-2">업로드 파일</strong>
                                       
                                         <div class="col-12 d-flex flex-column mb-2">
-                                            <p  class="align-items-center m-0 pl-1">
+                                            <!-- <p  class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
                                                	첨부이미지
-                                            </p>
+                                            </p> -->
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="w-100 row">
                                                     <c:forEach var="wai" items="${writingAttachment}">
@@ -184,7 +184,7 @@
                                         			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
                                         			<c:if test="${splitText[0] eq 'img'}">
                                                     <div class='col-2 p-1' style='height: 150px;'>
-                                                        <div class='imgPreview h-100'>
+                                                        <div class='imgPreview h-100' onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${wai.WRITINGORINAME}','${wai.WRITINGRENAME}');">
                                                             <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${wai.WRITINGRENAME}'/> 
                                                         </div> 
                                                     </div>                            
@@ -196,10 +196,10 @@
                                         </div>
                         			
                                         <div class="col-12 d-flex flex-column">
-                                            <p class="align-items-center m-0 pl-1">
+                                            <!-- <p class="align-items-center m-0 pl-1">
                                                 <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
                                                	첨부파일
-                                            </p>                                        
+                                            </p>  -->                                       
                                             <div class="w-100 d-flex justify-content-center">
                                                 <div class="fileDownBox w-100 row">
                                                     <c:forEach var="waf" items="${writingAttachment}">
@@ -208,7 +208,8 @@
                                         			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
                                         			<c:if test="${splitText[0] eq 'file'}">
                                                     <div class='col-4 p-1 w-100' style='height: 46px;'>
-                                                        <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' onclick="fileDownload(this)">
+                                                        <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' 
+                                                        	onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${waf.WRITINGORINAME}','${waf.WRITINGRENAME}');">
                                                             <div class='d-flex align-items-center'>
                                                                 <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
                                                                 <span>
@@ -256,19 +257,21 @@
                     <!-- 댓글 출력창 .댓글이 2개이상일경우 더보기로 보이도록 출력할것. -->
                     
                     <div class="w-100 p-3" style="background-color:#f6f7f8" id="comment">
-                        <div class="mt-1">
-                            <p onclick="fn_displayHiddenComment(this);" class="m-0 font-weight-bolder stoolDarkBlue-text" style="cursor: pointer;">
-                                	이전 댓글 더보기
-                            </p>
-                        </div>
-                        <table class="borderSpacing"> 
-                        	<c:set var="count" value="0" />
-                        	<c:forEach items="${writingComment}" var="wc">
-                    	    	<c:if test="${w.WRITINGNO eq wc.WRITINGNO}">
-                    	    	<c:set var="count" value="${count + 1}" />
-                    	    	</c:if>
-                        	</c:forEach>
-                        	
+                        <c:set var="count" value="0" />
+                       	<c:forEach items="${writingComment}" var="wc">
+                   	    	<c:if test="${w.WRITINGNO eq wc.WRITINGNO}">
+                   	    		<c:set var="count" value="${count + 1}" />
+                   	    	</c:if>
+                       	</c:forEach>
+                       	<c:if test="${count >= 2 }">
+	                        <div class="mt-1">
+	                            <p onclick="fn_displayHiddenComment(this);" class="m-0 font-weight-bolder stoolDarkBlue-text" style="cursor: pointer;">
+	                                	이전 댓글 더보기
+	                            </p>
+	                        </div>
+                        </c:if>
+                        
+                        <table class="borderSpacing">                         	
                         	<c:set var="inCount" value="0" />                        	                           
                             <c:forEach items="${writingComment}" var="wc" varStatus="status">                            
                             <c:if test="${w.WRITINGNO eq wc.WRITINGNO}">
@@ -289,40 +292,35 @@
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
                                             
-                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
+                                            <div id="commentDiv${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
 	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
-															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
-		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;"
+		                                            		onclick="fn_deleteComment('${pb.BOARDTYPE}', ${pb.BOARDNO},${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-times" style='font-size:15px'></i>
 		                                            </button>
 	                                        	</c:if>
                                             </div>
 											<!-- 댓글 수정창 -->  
-											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                     
-						                        <form method="post" id="updateCommentForm${wc.WRITINGCOMMENTNO}">
-						                        	<!-- 총괄번호 -->
-						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
-						                        	
-						                        	<!-- 게시글 작성자 아이디 -->
-						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
-						                        	
+											<div id="updateCommentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" class="d-none">                     
+						                        <form method="post" id="updateCommentForm${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
 						                        	<!-- 글 타입 -->
-						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>						                        	
+						                        	<!-- 댓글 번호 -->
+						                        	<input type="hidden" name="commentNo" value="${wc.WRITINGCOMMENTNO}"/>	
 						                        	
-						                        	<!-- 글 번호 -->
-						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
-						                        	
-						                        	<!-- 댓글작성자 아이디 -->
-						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
-						                        	
-						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
-						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
-						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                            <div class="pt-1 pb-1 d-flex" style="width: 100%;">
+						                                <input type="text" id="commentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:20px'></i>
+						                                </button>
+						                                <button type="button" class="ml-2" style="border: none; background: none;"
+																onclick="fn_formClose('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
+						                                    <i class="fas fa-undo-alt" style="font-size:20px;"></i>
 						                                </button>
 						                            </div>   
 						                        </form>  
@@ -349,40 +347,35 @@
                                                 <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
-                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
+                                            <div id="commentDiv${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
 	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
-															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
-		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;"
+															onclick="fn_deleteComment('${pb.BOARDTYPE}', ${pb.BOARDNO},${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-times" style='font-size:15px'></i>
 		                                            </button>
 	                                        	</c:if>
                                             </div>
 											<!-- 댓글 수정창 -->  
-											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                    
-						                        <form method="post" id="updateCommentForm${pb.BOARDNO}">
-						                        	<!-- 총괄번호 -->
-						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
-						                        	
-						                        	<!-- 게시글 작성자 아이디 -->
-						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
-						                        	
+											<div id="updateCommentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" class="d-none">                     
+						                        <form method="post" id="updateCommentForm${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
 						                        	<!-- 글 타입 -->
-						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>						                        	
+						                        	<!-- 댓글 번호 -->
+						                        	<input type="hidden" name="commentNo" value="${wc.WRITINGCOMMENTNO}"/>	
 						                        	
-						                        	<!-- 글 번호 -->
-						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
-						                        	
-						                        	<!-- 댓글작성자 아이디 -->
-						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
-						                        	
-						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
-						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
-						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                            <div class="pt-1 pb-1 d-flex" style="width: 100%;">
+						                                <input type="text" id="commentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:20px'></i>
+						                                </button>
+						                                <button type="button" class="ml-2" style="border: none; background: none;"
+																onclick="fn_formClose('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
+						                                    <i class="fas fa-undo-alt" style="font-size:20px;"></i>
 						                                </button>
 						                            </div>   
 						                        </form>  
@@ -1177,5 +1170,12 @@
 			</c:forEach>
                 
                 
-            
                 
+                
+                
+
+<!-- 모달모음 ------------------------------------------------------------------------------------------------------------------------------->   
+        
+                    
+            
+<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                  

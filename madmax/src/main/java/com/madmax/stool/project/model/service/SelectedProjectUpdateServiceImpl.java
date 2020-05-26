@@ -97,6 +97,16 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 		}
 		return result;
 	}
+
+	@Override
+	public int updateComment(Map<String, Object> cMap) {
+		return dao.updateComment(session, cMap);
+	}
+
+	@Override
+	public int deleteComment(Map<String, Object> cMap) { 
+		return dao.deleteComment(session, cMap);
+	}
 	
 
 }

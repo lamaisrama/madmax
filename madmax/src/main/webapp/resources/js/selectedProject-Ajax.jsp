@@ -271,4 +271,57 @@ function fn_insertCommentSubmit(bNo){
     });
 }
 
+//댓글 수정 fn_updateCommentSubmit()
+function fn_updateCommentSubmit(type, cNo){
+    // Get form
+    var form = $('#updateCommentForm'+type+cNo)[0];
+
+    // Create an FormData object 
+    var data = new FormData(form);
+
+    $.ajax({
+        type: "POST",
+        url: "${path}/selectedProject/updateComment.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {        	
+        	if(data>0){
+        		location.reload(true);
+        	}else{
+        		alert("댓글이 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
+        	}
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("fail");
+        }
+    });
+}
+
+//댓글 삭제
+function fn_deleteComment(type, bNo, cNo){
+	$.ajax({
+		url:"${path}/selectedProject/deleteComment.do",
+		data:{type:type,
+			  bNo:bNo,
+			  cNo:cNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("댓글 삭제에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});	
+}
+
+
+//파일 다운로드
+function fn_fileDownload(pjNo,ori,rename){
+	ori=encodeURIComponent(ori);
+	location.href="${path}/selectedProject/fileDownload.do?pjNo="+pjNo+"&ori="+ori+"&rename="+rename;
+}
+
 </script>

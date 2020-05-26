@@ -25,33 +25,96 @@
 </head>
 <body>
 		<div class="content-container">
-			<h5>결재의견</h5>
-			<table class="content">
-				<tr class="basicContent">
-					<th>결재</th>
-					<th>기안일자</th>
-					<th>결재자</th>
-					<th>부서</th>
-					<th>결재일시</th>
-					<th>의견</th>
-				</tr>
-				
-				<c:forEach items="${appr}" var="appr">
-					<tr class="basicContent">
-						<td style="width:10px;">
-							<c:if test="${appr.apprType=='approval' }">결재</c:if>
-							<c:if test="${appr.apprType=='agree' }">승인</c:if>
-						</td>
-						<td style="width:120px;"><fmt:formatDate value="${appr.writeDate }" dateStyle="long" type="date"/> </td>
-						<td style="width:10px;">appruser</td>
-						<td  style="width:10px;">${appr.deptName}</td>
-						<td  style="width:120px;">결재일시</td>
-						<td>apprMessage</td>
-					</tr>
-				</c:forEach>
-			</table>
+			<c:forEach items="${appr}" var="appr">
+				<c:if test="${appr.apprStatus==2}">
+					<h5>결재의견</h5>
+						<table class="content">
+							<tr class="basicContent">
+								<th>결재</th>
+								<th>기안일자</th>
+								<th>결재자</th>
+								<th>부서</th>
+								<th>결재일시</th>
+								<th>의견</th>
+							</tr>
+							
+								<tr class="basicContent">
+										<td style="width:10px;">
+											<c:if test="${appr.apprType=='approval' }">결재</c:if>
+											<c:if test="${appr.apprType=='agree' }">승인</c:if>
+										</td>
+										<td style="width:120px;"><fmt:formatDate value="${appr.writeDate }" dateStyle="long" type="date"/> </td>
+										<td style="width:10px;">${appr['APPRUSERNAME'] }</td>
+										<td  style="width:10px;">${appr.deptName}</td>
+										<td  style="width:150px;"><fmt:formatDate value="${appr.apprTime }" dateStyle="long" type="date"/> </td>
+										<td>
+											<c:if test="${not empty appr.apprMessage}">
+												${appr.apprMessage}
+											</c:if>
+										</td>
+								</tr>
+						</table>
+				</c:if>
+				<c:if test="${appr.apprStatus==3}">
+					<h5>결재의견</h5>
+						<table class="content">
+							<tr class="basicContent">
+								<th>결재</th>
+								<th>기안일자</th>
+								<th>결재자</th>
+								<th>부서</th>
+								<th>결재일시</th>
+								<th>의견</th>
+							</tr>
+							
+							<tr class="basicContent">
+									<td style="width:10px;">
+										<c:if test="${appr.apprType=='approval' }">결재</c:if>
+										<c:if test="${appr.apprType=='agree' }">승인</c:if>
+									</td>
+									<td style="width:120px;"><fmt:formatDate value="${appr.writeDate }" dateStyle="long" type="date"/> </td>
+									<td style="width:10px;">${appr['APPRUSERNAME'] }</td>
+									<td  style="width:10px;">${appr.deptName}</td>
+									<td  style="width:150px;"><fmt:formatDate value="${appr.apprTime }" dateStyle="long" type="date"/> </td>
+									<td>
+										<c:if test="${not empty appr.apprMessage}">
+											${appr.apprMessage}
+										</c:if>
+									</td>
+							</tr>
+					</table>
+				</c:if>
+				<c:if test="${appr.apprStatus==4}">
+					<h5>반려의견</h5>
+						<table class="content">
+							<tr class="basicContent">
+								<th>결재</th>
+								<th>기안일자</th>
+								<th>결재자</th>
+								<th>부서</th>
+								<th>결재일시</th>
+								<th>의견</th>
+							</tr>
+							
+							<tr class="basicContent">
+									<td style="width:10px;">
+										<c:if test="${appr.apprType=='approval' }">결재</c:if>
+										<c:if test="${appr.apprType=='agree' }">승인</c:if>
+									</td>
+									<td style="width:120px;"><fmt:formatDate value="${appr.writeDate }" dateStyle="long" type="date"/> </td>
+									<td style="width:10px;">${appr['APPRUSERNAME'] }</td>
+									<td  style="width:10px;">${appr.deptName}</td>
+									<td  style="width:150px;"><fmt:formatDate value="${appr.apprTime }" dateStyle="long" type="date"/> </td>
+									<td>
+										<c:if test="${not empty appr.apprMessage}">
+											${appr.apprMessage}
+										</c:if>
+									</td>
+							</tr>
+					</table>
+				</c:if>
+			</c:forEach>
 		</div>
-		
 		
 
 </body>

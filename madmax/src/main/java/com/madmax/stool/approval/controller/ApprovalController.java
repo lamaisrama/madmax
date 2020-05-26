@@ -48,6 +48,7 @@ public class ApprovalController {
 		List<ApprDocType> list = service.selectApprDocList(cPage, numPerPage);
 		int totalData = service.selectApprDocListCount();
 		mv.addObject("list", list);
+		mv.addObject("totalData", totalData);
 		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/approval.do"));
 		mv.setViewName("approval/apprList");
 		return mv;
@@ -207,54 +208,84 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/apprReqBox.do")
-	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
-	public String approvalRequestBox(HttpServletRequest req, Model m) {
+	public String approvalRequestBox(HttpServletRequest req, Model m,
+				@RequestParam(required = false, defaultValue = "1") int cPage,
+				@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list = service.selectApprReqList(userId);
+		List<Approval> list = service.selectApprReqList(cPage, numPerPage, userId);
+		int totalData = service.selectApprReqListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprReqBox.do"));
 		return "approval/apprReqBox";
 	}
 	
 	@RequestMapping("/appr/apprTempBox.do")
-	public String approvalTempBox(HttpServletRequest req, Model m) {
+	public String approvalTempBox(HttpServletRequest req, Model m,
+				@RequestParam(required = false, defaultValue = "1") int cPage,
+				@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list = service.selectApprTempList(userId);
+		List<Approval> list = service.selectApprTempList(cPage, numPerPage, userId);
+		int totalData = service.selectApprTempListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprTempBox.do"));
 		return "approval/apprTempBox";
 	}
 
 	@RequestMapping("/appr/apprWaitBox.do")
-	public String approvalWaitBox(HttpServletRequest req, Model m) {
+	public String approvalWaitBox(HttpServletRequest req, Model m,
+							@RequestParam(required = false, defaultValue = "1") int cPage,
+							@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list  = service.selectApprWaitList(userId);
+		List<Approval> list  = service.selectApprWaitList(cPage, numPerPage, userId);
+		int totalData = service.selectApprWaitListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprWaitBox.do"));
 		return "approval/apprWaitBox";
 	}
 
-	/*
-	 * @RequestMapping("/appr/apprProgBox.do") public String approvalProgBox() {
-	 * return "approval/apprProgBox"; }
-	 */
-
-	/*
-	 * @RequestMapping("/appr/apprDoneBox.do") public String approvalDoneBox() {
-	 * return "approval/apprDoneBox"; }
-	 */
-
 	@RequestMapping("/appr/myDocBox")
-	public String myDocBox() {
+	public String myDocBox(HttpServletRequest req, Model m, 
+							@RequestParam(required = false, defaultValue = "1") int cPage,
+							@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<Approval> list = service.selectMyDocList(cPage, numPerPage, userId);
+		int totalData = service.selectMyDocListCount(userId);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/myDocBox"));
 		return "/approval/myDocBox";
 	}
 
 	@RequestMapping("/appr/deptDocBox")
-	public String deptDocBox() {
+	public String deptDocBox(HttpServletRequest req, Model m, 
+			@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userDept = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		List<Approval> list = service.selectDeptDocList(cPage, numPerPage, userDept);
+		int totalData = service.selectDeptDocListCount(userDept);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
 		return "approval/deptDocBox";
 	}
-
-	@RequestMapping("/appr/myStorageBox")
-	public String myStorageBox() {
-		return "approval/myStorageBox";
+	
+	@RequestMapping("/appr/referredDocBox")
+	public String referredDocBox(HttpServletRequest req, Model m, 
+			@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<Approval> list = service.selectRefferedDocList(cPage, numPerPage, userId);
+		int totalData = service.selectRefferedDocListCount(userId);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
+		return "approval/refferedDocBox";
 	}
+
 	
 	@RequestMapping("/appr/openApprDoc")
 	public String openApproval(Model m, int apprNo) {
