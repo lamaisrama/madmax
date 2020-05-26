@@ -28,4 +28,6 @@ public interface SelectedProjectUpdateDao {
 
 	int insertCommentNotification(SqlSessionTemplate session, Map<String, Object> cMap);
 
+	int updateComment(SqlSessionTemplate session, Map<String, Object> cMap);
+
 }

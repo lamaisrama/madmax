@@ -237,6 +237,29 @@ public class SelectedProjectUpdateController {
 		return result;
 	}
 	
+	@RequestMapping("/selectedProject/updateComment.do")
+	@ResponseBody
+	public int updateComment(@RequestParam Map<String, String> map) {
+		//값 받기
+		String postType = map.get("postType");
+		String comment = map.get("comment");
+		int commentNo = Integer.parseInt(map.get("commentNo"));
+		
+		Map<String, Object> cMap = new HashMap();
+		cMap.put("postType",postType);
+		cMap.put("comment",comment);
+		cMap.put("commentNo",commentNo);
+		
+		int result = 0;
+		try {
+			result = service.updateComment(cMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	
 	
 	

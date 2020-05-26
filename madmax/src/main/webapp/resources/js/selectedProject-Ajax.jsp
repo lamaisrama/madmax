@@ -271,4 +271,33 @@ function fn_insertCommentSubmit(bNo){
     });
 }
 
+//댓글 수정 fn_updateCommentSubmit()
+function fn_updateCommentSubmit(type, postNo){
+    // Get form
+    var form = $('#updateCommentForm'+type+postNo)[0];
+
+    // Create an FormData object 
+    var data = new FormData(form);
+
+    $.ajax({
+        type: "POST",
+        url: "${path}/selectedProject/updateComment.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {        	
+        	if(data>0){
+        		location.reload(true);
+        	}else{
+        		alert("댓글이 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
+        	}
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("fail");
+        }
+    });
+}
+
 </script>

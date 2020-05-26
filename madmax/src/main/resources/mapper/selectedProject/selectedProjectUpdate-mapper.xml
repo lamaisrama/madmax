@@ -57,4 +57,16 @@
 	<insert id="insertCommentNotification" parameterType="map">
 		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{receiveId}, #{senderId}, 'comment', DEFAULT, DEFAULT, #{boardNo})
 	</insert>	
+
+	<update id="updateComment-W" parameterType="map">		 
+		UPDATE WRITINGCOMMENT SET WRITINGCOMMENT = #{comment} WHERE WRITINGCOMMENTNO = #{commentNo}
+	</update>		
+
+	<update id="updateComment-T" parameterType="map">		 
+		UPDATE TASKCOMMENT SET TASKCOMMENT = #{comment} WHERETASKCOMMENTNO = #{commentNo}
+	</update>		
+
+	<update id="updateComment-S" parameterType="map">		 
+		UPDATE SCHEDULECOMMENT SET SCHEDULECOMMENT = #{comment} WHERE SCHEDULECOMMENTNO = #{commentNo}
+	</update>		
 </mapper>

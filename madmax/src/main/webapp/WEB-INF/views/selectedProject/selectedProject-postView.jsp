@@ -289,11 +289,11 @@
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
                                             
-                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
+                                            <div id="commentDiv${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
 	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
-															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
 		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
@@ -302,27 +302,21 @@
 	                                        	</c:if>
                                             </div>
 											<!-- 댓글 수정창 -->  
-											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                     
-						                        <form method="post" id="updateCommentForm${wc.WRITINGCOMMENTNO}">
-						                        	<!-- 총괄번호 -->
-						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
-						                        	
-						                        	<!-- 게시글 작성자 아이디 -->
-						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
-						                        	
+											<div id="updateCommentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" class="d-none">                     
+						                        <form method="post" id="updateCommentForm${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
 						                        	<!-- 글 타입 -->
-						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>						                        	
+						                        	<!-- 댓글 번호 -->
+						                        	<input type="hidden" name="commentNo" value="${wc.WRITINGCOMMENTNO}"/>	
 						                        	
-						                        	<!-- 글 번호 -->
-						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
-						                        	
-						                        	<!-- 댓글작성자 아이디 -->
-						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
-						                        	
-						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
-						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
-						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                            <div class="pt-1 pb-1 d-flex" style="width: 100%;">
+						                                <input type="text" id="commentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:20px'></i>
+						                                </button>
+						                                <button type="button" class="ml-2" style="border: none; background: none;"
+																onclick="fn_formClose('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
+						                                    <i class="fas fa-undo-alt" style="font-size:20px;"></i>
 						                                </button>
 						                            </div>   
 						                        </form>  
@@ -349,11 +343,11 @@
                                                 <strong class="mr-2"><c:out value="${pm.userName}"/></strong>
                                                 <span style="color: lightgrey"><c:out value="${wc.WRITINGCOMMENTTIME}"/></span>
                                             </span>
-                                            <div id="commentDiv${wc.WRITINGCOMMENTNO}">
+                                            <div id="commentDiv${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
                                             	<c:out value="${wc.WRITINGCOMMENT}"/>
                                             	<c:if test="${wc.WRITINGCOMMENTID eq loginUser.userId}">
 	                                            	<button type="button" class="ml-4 commentBtn" style="background: none; border: 0px;"
-															onclick="fn_updateCommentInput(${wc.WRITINGCOMMENTNO})">
+															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
 		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
@@ -362,27 +356,21 @@
 	                                        	</c:if>
                                             </div>
 											<!-- 댓글 수정창 -->  
-											<div id="updateCommentInput${wc.WRITINGCOMMENTNO}" class="d-none">                    
-						                        <form method="post" id="updateCommentForm${pb.BOARDNO}">
-						                        	<!-- 총괄번호 -->
-						                        	<input type="hidden" name="boardNo" value="${pb.BOARDNO}"/>
-						                        	
-						                        	<!-- 게시글 작성자 아이디 -->
-						                        	<input type="hidden" name="receiveId" value="${w.WRITINGID}"/>
-						                        	
+											<div id="updateCommentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" class="d-none">                     
+						                        <form method="post" id="updateCommentForm${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}">
 						                        	<!-- 글 타입 -->
-						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>
+						                        	<input type="hidden" name="postType" value="${pb.BOARDTYPE}"/>						                        	
+						                        	<!-- 댓글 번호 -->
+						                        	<input type="hidden" name="commentNo" value="${wc.WRITINGCOMMENTNO}"/>	
 						                        	
-						                        	<!-- 글 번호 -->
-						                        	<input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
-						                        	
-						                        	<!-- 댓글작성자 아이디 -->
-						                        	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
-						                        	
-						                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-						                                <input type="text" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
-						                                <button type="submit" onclick="fn_updateCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
-						                                    <i class='fas fa-edit' style='font-size:28px'></i>
+						                            <div class="pt-1 pb-1 d-flex" style="width: 100%;">
+						                                <input type="text" id="commentInput${pb.BOARDTYPE}${wc.WRITINGCOMMENTNO}" name="comment" class="form-control" value="${wc.WRITINGCOMMENT}" size="100px"/>
+						                                <button type="submit" onclick="fn_updateCommentSubmit('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO});" class="ml-2" style="border: none; background: none;">
+						                                    <i class='fas fa-edit' style='font-size:20px'></i>
+						                                </button>
+						                                <button type="button" class="ml-2" style="border: none; background: none;"
+																onclick="fn_formClose('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
+						                                    <i class="fas fa-undo-alt" style="font-size:20px;"></i>
 						                                </button>
 						                            </div>   
 						                        </form>  

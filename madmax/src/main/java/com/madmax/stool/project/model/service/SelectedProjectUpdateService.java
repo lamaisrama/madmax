@@ -24,4 +24,6 @@ public interface SelectedProjectUpdateService {
 
 	int insertComment(Map<String, Object> cMap);
 
+	int updateComment(Map<String, Object> cMap);
+
 }

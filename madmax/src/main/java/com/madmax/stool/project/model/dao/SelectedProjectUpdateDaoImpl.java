@@ -63,4 +63,16 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.insert("SelectedProjectUpdate.insertCommentNotification", cMap);
 	}
 
+	@Override
+	public int updateComment(SqlSessionTemplate session, Map<String, Object> cMap) {
+		String type = (String) cMap.get("postType");
+		int result = 0;
+		
+		if(type.equals("W")) result = session.update("SelectedProjectUpdate.updateComment-W", cMap);
+		if(type.equals("T")) result = session.update("SelectedProjectUpdate.updateComment-T", cMap);
+		if(type.equals("S")) result = session.update("SelectedProjectUpdate.updateComment-S", cMap);
+		
+		return result;
+	}
+
 }
