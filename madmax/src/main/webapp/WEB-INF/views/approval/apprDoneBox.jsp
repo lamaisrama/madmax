@@ -74,7 +74,6 @@
 					<th>기안부서</th>
 					<th>기안일</th>
 					<th>결과</th>
-					<th>결과</th>
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 				<tr>
@@ -90,11 +89,6 @@
 						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
 						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
 					</td>
-					<td><a href="javascript:void(0)" 
-							onclick="window.open('${path}/appr/openApprDoneOpinion?apprNo=${l.apprNo }',
-							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-							${l.apprTitle }</a></td>
-					
 				</tr>
 				</c:forEach>
 			</table>

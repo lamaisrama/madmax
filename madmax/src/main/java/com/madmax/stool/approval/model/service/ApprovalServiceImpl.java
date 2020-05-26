@@ -112,6 +112,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setAppredDoc(dao.selectAppredDoc(session, apprNo));
 		//5. 첨부파일 가져오기
 		appr.setApprAttachment(dao.selectApprAttachment(session, apprNo));
+		
 		return appr;
 	}
 
