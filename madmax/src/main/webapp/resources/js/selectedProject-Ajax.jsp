@@ -316,4 +316,12 @@ function fn_deleteComment(type, bNo, cNo){
 		}
 	});	
 }
+
+
+//파일 다운로드
+function fn_fileDownload(pjNo,ori,rename){
+	ori=encodeURIComponent(ori);
+	location.href="${path}/selectedProject/fileDownload.do?pjNo="+pjNo+"&ori="+ori+"&rename="+rename;
+}
+
 </script>
