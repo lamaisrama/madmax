@@ -1,5 +1,6 @@
 package com.madmax.stool.project.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.madmax.stool.project.model.service.BookmarkService;
 import com.madmax.stool.project.model.vo.BookmarkAll;
@@ -34,6 +36,9 @@ public class BookmarkController {
 		List<BookmarkAll> list=service.selectBkList(id);
 		logger.debug("북마크 테이블값:"+list.size());
 		
+		//가져온글 정렬하기(내림차순)
+		Collections.sort(list);
+		
 		mv.addObject("pBoard",pb);
 		mv.addObject("List",list);
 		mv.setViewName("project/bookmarkList");
@@ -50,6 +55,8 @@ public class BookmarkController {
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<BookmarkAll> notilist=service.selectNotiList(id);
 		
+		Collections.sort(notilist);
+		
 		mv.addObject("List",notilist);
 		mv.setViewName("project/myNotiList");
 		
@@ -62,6 +69,8 @@ public class BookmarkController {
 		ModelAndView mv=new ModelAndView();
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		List<BookmarkAll> boardlist=service.selectMyBoardList(id);
+		
+		Collections.sort(boardlist);
 		
 		mv.addObject("List", boardlist);
 		mv.setViewName("project/myBoardList");
