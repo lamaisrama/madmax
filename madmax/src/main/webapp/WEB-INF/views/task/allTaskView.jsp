@@ -323,7 +323,7 @@ function taskFilter(){
 						table+="<td  style='width:10%'>"+tasks[i].taskProiority+"</td>";
 						table+="<td id='taskTitle' style='width:40%''><a href='#' onclick='taskView("+tasks[i].boardNo+");' style='color:black; text-decoration:none'>"+tasks[i].taskTitle+"</a></td>";
 						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
-						/* table+="<td style='width:20%'>""</td>"; */
+						/* table+="<td style='width:20%'>""</td>"; 여기에 날짜 출력할것*/
 						table+="</tr>";
 						table+="</td>";
 				}
