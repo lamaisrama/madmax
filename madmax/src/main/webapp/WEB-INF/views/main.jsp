@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="path" value="${pageContext.request.contextPath}" />
 
 <link href='${path}/resources/mainresources/calendar/core/main.css' rel='stylesheet' />
 <link href='${path}/resources/mainresources/calendar/daygrid/main.css' rel='stylesheet' />
@@ -24,7 +23,6 @@
 	<div class="col-sm-7 row" id="area">
 
                   <br>
-                  
                   
                     <div class="row justify-content-around">
                     <!-- 달력출력하는 부분 -->
@@ -74,26 +72,20 @@
                     </div>
                     
                     <div class="container p-5">
-                      <p>🔖 즐겨찾기 프로젝트</p>                    
-                      
-                      <div class="row-vh d-flex flex-row justify-content-around row-nw d-flex flex-wrap">
-
-                          
-
-                            <div class="item p-3 bookmarkProject"><a href="">여기에 즐겨찾는제목</a></div>
-                
-                            <div class="item p-3 bookmarkProject"></div>
-                
-                            <div class="item p-3 bookmarkProject"></div>
-                
-                            <div class="item p-3 bookmarkProject"></div>
-                
+                      <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h5>                    
+						<div class="ml-4">총 ${total }건의 즐겨찾는 프로젝트가 있습니다.</div>
+						<br><br>
+                      <div class="flex-row justify-content-around row-nw d-flex flex-wrap">
+							<c:forEach items="${list }" var="f" begin="0" end="4">
+	                            <div class="item p-3 bookmarkProject">
+	                            	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
+	                            		<c:out value="${f.projectTitle}"/>
+	                            	</a>
+	                            </div>
+                            </c:forEach>
                       </div>
-                      
                     </div>
-
                 </div>
-
 
    <style>
      .list{

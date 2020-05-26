@@ -190,7 +190,7 @@
                                         	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style=""  data-toggle="modal" data-target="#myModal">
                                         	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
 											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
-											<li><a href="${path }/project/bookmarkProjectList.do"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
+											<li><a href="${path }/project/favList"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
                                         	<hr/>
                                         	<li><a href="${path }/project/companyProjectList.do"><i class='icon fas fa-building'></i>회사 공개 프로젝트</a></li>
                                         	<hr/>

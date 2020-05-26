@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
 
 public interface ProjectDao {
@@ -22,6 +23,10 @@ public interface ProjectDao {
 	List<Project> selectComProjectList(SqlSessionTemplate session, String id, int cPage, int numPerpage);
 
 	int selectComProjectCount(SqlSessionTemplate session, String id);
+
+	List<Favorite> selectFavorite(SqlSessionTemplate session, String id);
+
+	int selectFavoriteCount(SqlSessionTemplate session, String id);
 	
 	
 }

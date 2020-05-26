@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static com.madmax.stool.common.PagingFactory.getPage;
 import com.madmax.stool.project.model.service.ProjectService;
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
 
 @Controller
@@ -112,4 +113,42 @@ public class ProjectController {
 		
 		return mv;
 	}
+	
+	//즐찾프로젝트 
+	@RequestMapping("/project/favList")
+	public String favList(Model m, HttpServletRequest req) {
+		
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		
+		List<Favorite> list = service.selectFavorite(id);
+		
+		int total = service.selectFavoriteCount(id); 
+		
+		logger.debug("조회결과 : " + list);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("total", total);
+		
+		return "project/favoriteList";
+	}
+
+	@RequestMapping("/project/favList.do")
+	public ModelAndView favList(ModelAndView mv,HttpServletRequest req) {
+	
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		
+		List<Favorite> list = service.selectFavorite(id);
+		
+		int total = service.selectFavoriteCount(id); 
+		
+		logger.debug("조회결과 : " + list);
+		
+		mv.addObject("list", list);
+		mv.addObject("total", total);
+		mv.setViewName("main");
+		
+		return mv;
+	}
+	
+	
 }
