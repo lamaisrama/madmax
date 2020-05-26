@@ -53,27 +53,43 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> 0 </span></p>
+		<p>전체 <span style="color:red"> ${totalData } </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">
 			<table class="table table-hover">
 				<tr style="background-color:#F1F0F5;">
 					<th>번호</th>
+					<th>문서양식</th>
 					<th>문서제목</th>
 					<th>기안자</th>
-					<th>기안일</th>
-					<th>완료일</th>
+					<th>기안일</th>					
+					<th>상태</th>
 				</tr>
+			<c:forEach items="${list }" var ="l">
 				<tr>
-					<td>1</td>
-					<td><a href="#">Document_title</a></td>
-					<td>writerName</td>
-					<td>20-05-01</td>
-					<td>20-05-06</td>
+					<td>${l.apprNo}</td>
+					<td>${l.typeTitle }</td>
+					<td><a href="javascript:void(0)" 
+							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+							${l.apprTitle }
+						</a></td>
+					<td>${l.userName }</td>
+					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<td>
+						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
+						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
+					</td>	
 				</tr>
+			</c:forEach>
 			</table>
 		</div>
+	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
 	</div>
 </div>		
 

@@ -232,9 +232,9 @@
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
-									      <span class="p-3"><a href="${path }/appr/referedDocBox">참조 문서함</a></span><br>
 									      <span class="p-3"><a href="${path }/appr/myDocBox">내 문서함</a></span><br>
 									      <span class="p-3"><a href="${path }/appr/deptDocBox">부서 문서함</a></span><br>
+									      <span class="p-3"><a href="${path }/appr/referredDocBox">참조 문서함</a></span><br>
 									    </div>
                                     </div>
 								    <hr>

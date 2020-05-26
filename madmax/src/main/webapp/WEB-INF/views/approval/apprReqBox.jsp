@@ -52,7 +52,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> ${list.size() } </span></p>
+		<p>전체 <span style="color:red"> ${totalData } </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">
@@ -85,6 +85,12 @@
 			</table>
 		</div>
 	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
+	</div>
+
 </div>
 		
 

@@ -26,17 +26,24 @@ public interface ApprovalDao {
 	int insertAppredDoc(SqlSessionTemplate session, AppredDoc ad);
 	int insertApprAttachment(SqlSessionTemplate session, ApprAttachment at);
 	
-	List<Approval> selectApprReqList(SqlSessionTemplate session, String userId);
+	List<Approval> selectApprReqList(SqlSessionTemplate session, int cPage, int numPerPage, String userId);
+	int selectApprReqListCount(SqlSessionTemplate session, String userId);
 	ApprDoc selectApproval(SqlSessionTemplate session, int apprNo);
 	ApprDoc selectDoApproval(SqlSessionTemplate session, Approval approval);
 
 	List<ApprLine> selectApprLine(SqlSessionTemplate session, int apprNo);
 	int updateTemporary(SqlSessionTemplate session, int apprNo);
 	int deleteDoc(SqlSessionTemplate session, int apprNo);
-	List<Approval> selectApprTempList(SqlSessionTemplate session, String userId);
-	List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId);
-	String selectReceiverName(SqlSessionTemplate session, String userId);
+	List<Approval> selectApprTempList(SqlSessionTemplate session, int cPage, int numPerPage, String userId);
+	int selectApprTempListCount(SqlSessionTemplate session, String userId);
+	List<Approval> selectApprWaitList(SqlSessionTemplate session, int cPage, int numPerPage, String userId);
+	int selectApprWaitListCount(SqlSessionTemplate session, String userId);
+	List<Approval> selectMyDocList(SqlSessionTemplate session, int cPage, int numPerPage, String userId);
+	int selectMyDocListCount(SqlSessionTemplate session, String userId);
+	List<Approval> selectDeptDocList(SqlSessionTemplate session, int cPage, int numPerPage, String deptCode);
+	int selectDeptDocListCount(SqlSessionTemplate session, String deptCode);
 	
+	String selectReceiverName(SqlSessionTemplate session, String userId);	
 	int updateAppr(SqlSessionTemplate session, ApprLine line);
 	int updateApprStatusEnd(SqlSessionTemplate session, ApprLine line);
 	int updateApprStatusIng(SqlSessionTemplate session, ApprLine line);
@@ -48,6 +55,8 @@ public interface ApprovalDao {
 	void deleteApprLine(SqlSessionTemplate session, int apprNo);
 	void deleteAppredDoc(SqlSessionTemplate session, int apprNo);
 	int deleteApprAttachment(SqlSessionTemplate session, int docFileNo);
+	List<Approval> selectRefferedDocList(SqlSessionTemplate session, int cPage, int numPerPage, String userId);
+	int selectRefferedDocListCount(SqlSessionTemplate session, String userId);
 
 
 }
