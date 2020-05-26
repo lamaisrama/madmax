@@ -31,6 +31,14 @@ $(document).ready(function() {
 });
 
 
+/*파일함에서 파일다운로드 스크립트*/
+	function fileDownload(ori,rename){
+		ori=encodeURIComponent(ori);
+		location.href="${path}/selectedProject/fileDownload.do?ori="+ori+"&rename="+rename;
+	}
+	
+	
+/* 프로젝트 나가기 */
 function exitFunction() {
 	var exitBtn = document.getElementById("exitBtn");
 	if (confirm("프로젝트에서 나가시겠습니까?")) {

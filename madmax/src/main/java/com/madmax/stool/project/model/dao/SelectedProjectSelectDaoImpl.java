@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Repository
@@ -101,12 +102,17 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 //		return session.selectOne("selectedProjectSelect.selectProjectMemberNo");
 //	}
 
-	@Override
-	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session,int pjNo) {
-		// TODO Auto-generated method stub
-		return session.selectList("selectedProjectSelect.selectAllFileList");
-	}
+//	@Override
+//	public List<Map<String, Object>> selectAllFileList(SqlSessionTemplate session,int pjNo) {
+//		// TODO Auto-generated method stub
+//		return session.selectList("selectedProjectSelect.selectAllFileList");
+//	}
 
+	@Override
+	public List<AllAttachment> selectAllAttach(SqlSessionTemplate session,int pjNo) {
+		return session.selectList("selectedProjectSelect.allAttach",pjNo);
+	}
+	
 	@Override
 	public Map<String, Object> selectProjectTB(SqlSessionTemplate session, int pjNo) {
 		// TODO Auto-generated method stub

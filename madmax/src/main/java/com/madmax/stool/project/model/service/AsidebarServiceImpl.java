@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.madmax.stool.project.model.dao.AsidebarDao;
+import com.madmax.stool.project.model.vo.AllAttachment;
 
 
 @Service
@@ -18,24 +19,21 @@ public class AsidebarServiceImpl implements AsidebarService {
 	
 	@Autowired
 	private SqlSessionTemplate session;
+
+	@Override
+	public int selectMemberCount(int pjNo) {
+		return dao.selectMemberCount(session,pjNo);
+	}
+
+//	@Override
+//	public List<AllAttachment> selectAllProjectFiles(int pjNo) {
+//	
+//		List<AllAttachment> allAttach=dao.selectAllAttach(pjNo);
+//		
+//		return allAttach;
+//	}
 	
-	@Override
-	public Map<String, Object> selectProjectMemberNo(int pjNo) {
-		// TODO Auto-generated method stub
-		return dao.selectProjectMemberNo(session,pjNo);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectProjectMemberList(int pjNo) {
-		// TODO Auto-generated method stub
-		return dao.selectProjectMemberList(session,pjNo);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectStoolUser(int pjNo) {
-		// TODO Auto-generated method stub
-		return dao.selectStoolUser(session,pjNo);
-	}
+	
 	
 	
 	

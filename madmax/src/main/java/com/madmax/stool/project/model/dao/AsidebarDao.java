@@ -5,12 +5,11 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.madmax.stool.project.model.vo.AllAttachment;
+
 public interface AsidebarDao {
 
-	Map<String, Object> selectProjectMemberNo(SqlSessionTemplate session,int pjNo);
+	int selectMemberCount(SqlSessionTemplate session, int pjNo);
 
-	List<Map<String, Object>> selectProjectMemberList(SqlSessionTemplate session, int pjNo);
-
-	List<Map<String, Object>> selectStoolUser(SqlSessionTemplate session, int pjNo);
 
 }
