@@ -111,35 +111,37 @@
  				 <c:if test="${tasks!=null}">
  	           <c:forEach items="${tasks }" var="t">
  	           
-	           <table class="tasks" style="width:100%;height:100%; "  >
-	               <tr class="text-sm-center">
-	                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
-						<c:choose>
-	                  <c:when test="${t.taskState eq '요청' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	             		<c:when test="${t.taskState eq '진행' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState  eq '피드백' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState  eq '완료' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState eq '보류' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	            		</c:choose>
-	                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
-	                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
-	                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
-	                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
-	                   <td id="taskStartDate" style="width:20%">${t['taskStartDate'] }</td>
-	               </tr>
+	          		 <table class="tasks" style="width:100%;height:100%; "  >
+		               <tr class="text-sm-center">
+		                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
+							<c:choose>
+		                  <c:when test="${t.taskState eq '요청' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		             		<c:when test="${t.taskState eq '진행' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState  eq '피드백' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState  eq '완료' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState eq '보류' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		            		</c:choose>
+		                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
+		                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
+		                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
+		                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
+		                  	<td id="taskStartDate" style="width:20%">
+		                    <c:set var="string" value="${t['taskStartDate'] }"/>
+								${fn:substring(string,0,10)}
+							</td>
+		               </tr>
 	               </table>
-	               
-	           <br/>
+	               <br/>
 	           </c:forEach> 
 	           </c:if>
  				
@@ -323,7 +325,7 @@ function taskFilter(){
 						table+="<td  style='width:10%'>"+tasks[i].taskProiority+"</td>";
 						table+="<td id='taskTitle' style='width:40%''><a href='#' onclick='taskView("+tasks[i].boardNo+");' style='color:black; text-decoration:none'>"+tasks[i].taskTitle+"</a></td>";
 						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
-						/* table+="<td style='width:20%'>""</td>"; 여기에 날짜 출력할것*/
+						table+="<td style='width:20%'>"+tasks[i].taskStartDate+"</td>";
 						table+="</tr>";
 						table+="</td>";
 				}
