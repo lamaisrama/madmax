@@ -32,7 +32,7 @@
 	<br>
 	<!-- <p><i class="fas fa-search"></i> &nbsp;검색</p> -->
 	<div class="row searchBox" style="font-size:12px;">	
-		<form style="width:100%">
+		<form style="width:100%" action="${path}/appr/searchApprDoneBox.do">
 			<table class="table table-borderless">
 				<tr>
 					<th>결과</th>
@@ -49,10 +49,12 @@
 					
 				</tr>
 				<tr>
-					<th>기안자</th>
-					<td><input type="text" name="draftUserName"></td>
 					<th>문서제목</th>
-					<td><input type="text" name="draftTitle">
+					<td><input type="text" name="draftName"></td>
+					
+					<td>
+						<input type="hidden" name="url" value="approval/apprDoneBox">
+					</td>
 					<td>
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
 					</td>

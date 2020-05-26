@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.approval.model.vo.ApprDoc;
+import com.madmax.stool.approval.model.vo.ApprSearch;
 import com.madmax.stool.approval.model.vo.Approval;
 
 @Repository
@@ -46,6 +47,42 @@ public class ApprovalDaoImpl2 implements ApprovalDao2 {
 		return session.selectOne("approval2.selectApprDoneListCount", userId);
 	}
 
+	@Override
+	public List<Approval> selectSearchApprReqBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchApprReqBox",search);
+	}
+	
+	@Override
+	public List<Approval> selectSearchApprTempBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchApprTempBox",search);
+	}
+	@Override
+	public List<Approval> selectSearchApprWaitBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchApprWaitBox",search);
+	}
+	
+	@Override
+	public List<Approval> selectSearchApprProgBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchApprProgBox",search);
+	}
+	
+	@Override
+	public List<Approval> selectSearchApprDoneBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchApprDoneBox",search);
+	}
+	
+	
+	
+	@Override
+	public List<Approval> selectSearchMyDocBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchMyDocBox",search);
+	}
 	
 	
 }

@@ -32,15 +32,17 @@
 	<br>	
 	<!-- <p><i class="fas fa-search"></i> &nbsp;검색</p> -->
 	<div class="row searchBox" style="font-size:12px;">	
-		<form style="width:80%">
+		<form style="width:80%" action="${path}/appr/searchMyDocBox.do">
 			<table class="table table-borderless">
 				<tr>
 					<th>문서제목</th>
-					<td><input type="text" name="draftTitle">
+					<td><input type="text" name="draftName">
 					<th>완료일</th>
 					<td>
 						<input type="date" name="startDate"> ~
 						<input type="date"  name="endDate">
+						<input type="hidden" name="url" value="approval/myDocBox">
+						
 					</td>
 					<td>
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
@@ -63,22 +65,24 @@
 					<th>기안일</th>
 					<th>상태</th>
 				</tr>
-			<c:forEach items="${list }" var ="l">
-				<tr>
-					<td>${l.apprNo}</td>
-					<td>${l.typeTitle }</td>
-					<td><a href="javascript:void(0)" 
-							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
-							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-							${l.apprTitle }
-						</a></td>
-					<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-					<td>
-						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
-						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
-					</td>	
-				</tr>
-			</c:forEach>
+				<c:if test="${not empty list }">
+					<c:forEach items="${list }" var ="l">
+						<tr>
+							<td>${l.apprNo}</td>
+							<td>${l.typeTitle }</td>
+							<td><a href="javascript:void(0)" 
+									onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+									'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+									${l.apprTitle }
+								</a></td>
+							<td><fmt:formatDate value="${l.writeDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+							<td>
+								<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
+								<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
+							</td>	
+						</tr>
+					</c:forEach>
+				</c:if>
 			</table>
 		</div>
 	</div>
