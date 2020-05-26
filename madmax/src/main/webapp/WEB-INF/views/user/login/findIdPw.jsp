@@ -17,11 +17,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>    
 </head>
 <body>
-	<style>
-		body{ 
-			background-color:#233C61;
-		}
-	</style>
+<style>
+	body{ 
+		background-color:#233C61;
+	}
+</style>
 	<!-- 
 	<h1>까먹은 ID를 찾아봅시다</h1>
 	
@@ -164,8 +164,8 @@
 						email : $("#email").val()
 					},
 					success : function(data) {
-						/* console.log(data); 
-						alert(data.msg); */
+						/* console.log(data); */
+						alert(data.msg); 
 						if(data.flag){
 							location.replace("${path}/user/updatePw?userId="+$("#userId").val());						
 						}else{

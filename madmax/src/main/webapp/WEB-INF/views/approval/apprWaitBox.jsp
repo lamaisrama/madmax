@@ -52,7 +52,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> <c:out value="${list.size()}"/> </span></p>
+		<p>전체 <span style="color:red"> <c:out value="${totalData}"/> </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">
@@ -81,6 +81,11 @@
 				</c:forEach>
 			</table>
 		</div>
+	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
 	</div>
 </div>
 		

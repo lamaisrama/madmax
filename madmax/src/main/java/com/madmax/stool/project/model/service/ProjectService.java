@@ -3,6 +3,7 @@ package com.madmax.stool.project.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
 
 public interface ProjectService {
@@ -18,6 +19,10 @@ public interface ProjectService {
 	List<Project> selectComProjectList(String id, int cPage, int numPerpage);
 
 	int selectComProjectCount(String id);
+
+	List<Favorite> selectFavorite(String id);
+
+	int selectFavoriteCount(String id);
 
 
 

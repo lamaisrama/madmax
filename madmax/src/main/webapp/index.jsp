@@ -48,14 +48,7 @@ svg {
     height: 60%;
     margin: 0 auto;
 }
-/* 
-input .occ { 
-	border: none; 
-	border-bottom: solid 1px #FFE3E3; 
-	border-radius:0; 
-	background: #030321; 
-}
- */
+
 .text-copy {
     fill: none;
     stroke: white;
@@ -153,13 +146,8 @@ a:hover{
                       	<a class="p2" href="${pageContext.request.contextPath }/user/findIdPw">아이디/비밀번호 찾기</a>
                    	  </p>
                 </form>
-
-                
             </div>
-
         </div>
-
-
     </div>
 
 

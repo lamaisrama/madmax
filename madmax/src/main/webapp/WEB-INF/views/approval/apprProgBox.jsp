@@ -53,7 +53,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> <c:out value="${list.size()}"/> </span></p>
+		<p>전체 <span style="color:red"> <c:out value="${totalData}"/> </span></p>
 	</div>
 	<div class="row draft-container">
 		<div class="col">
@@ -64,11 +64,10 @@
 					<th>기안자</th>
 					<th>기안부서</th>
 					<th>기안일</th>
-					<th>결재 의견 </th>
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 					<tr>
-						<td>${i.index+1}</td>
+						<td>${l.apprNo }</td>
 						<td><a href="javascript:void(0)" 
 							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
 							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
@@ -76,14 +75,15 @@
 						<td>${l.userName}</td>
 						<td>${l.deptName }</td>
 						<td><fmt:formatDate value="${l.writeDate }" dateStyle="long" type="date"/></td>
-						<td><a href="javascript:void(0)" 
-							onclick="window.open('${path}/appr/apprOpinion?apprNo=${l.apprNo }',
-							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-							결재 의견</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</div>
+	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
 	</div>
 </div>
 		

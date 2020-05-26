@@ -150,6 +150,9 @@
 			</div>
 		</div>
 		<br>
+		<div id="opinion"></div>
+
+		
 	</form>
 	<script>
 		$(function(){
@@ -192,6 +195,21 @@
 			location.href="${path}/appr/fileDownload?ori="+ori+"&rename="+rename;
 		}
 		
+		$(function(){
+			
+			$.ajax({
+				type:"GET",
+				url:'${path}/appr/apprOpinion?apprNo=${appr.apprNo }',
+				dataType:"html",
+				success:function(data){
+					$("#opinion").html(data);
+				},
+				error:function(data){
+					alert("실패");
+				}
+				
+			});
+		});
 		
 	</script>
 </body>

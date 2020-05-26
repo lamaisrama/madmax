@@ -190,7 +190,7 @@
                                         	<li><button type="button" class="btn mb-4 text-center newProjectBtn" style=""  data-toggle="modal" data-target="#myModal">
                                         	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
 											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
-											<li><a href="${path }/project/bookmarkProjectList.do"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
+											<li><a href="${path }/project/favList"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
                                         	<hr/>
                                         	<li><a href="${path }/project/companyProjectList.do"><i class='icon fas fa-building'></i>회사 공개 프로젝트</a></li>
                                         	<hr/>
@@ -225,7 +225,7 @@
 									      <h5 class="h6"><i class="icon fas fa-edit"></i><b>결재</b></h5>
 									      <span class="p-3"><a href="${path }/appr/apprWaitBox.do">결재 대기함</a></span><br>
 									      <span class="p-3"><a href="${path }/appr/apprProgBox.do">결재 진행함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/apprDoneBox.do"">완료 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/apprDoneBox.do">완료 문서함</a></span>
 									    </div>
                                     </div>
 								  	<hr>
@@ -234,8 +234,7 @@
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
 									      <span class="p-3"><a href="${path }/appr/myDocBox">내 문서함</a></span><br>
 									      <span class="p-3"><a href="${path }/appr/deptDocBox">부서 문서함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/referedDocBox">참조 문서함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/myStorageBox">개인 문서함</a></span>
+									      <span class="p-3"><a href="${path }/appr/referredDocBox">참조 문서함</a></span><br>
 									    </div>
                                     </div>
 								    <hr>

@@ -6,11 +6,13 @@ import static com.madmax.stool.user.email.FindUtil.getNewPwd;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -21,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,8 +31,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.project.model.service.ProjectService;
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.user.email.Email;
-import com.madmax.stool.user.model.exception.UserException;
 import com.madmax.stool.user.model.service.UserService;
 import com.madmax.stool.user.model.vo.User;;
 
@@ -41,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private ProjectService proService;
 	
 	@Autowired
 	private Logger logger;
@@ -116,16 +121,29 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/userLogin.do")
-	public String login(String userId, String password, Model m, HttpSession session) {
+	public String login(String userId, String password, Model m, HttpSession session,HttpServletRequest req) {
 		
 		User login = service.selectUser(userId);
 //		logger.debug(login.toString());
 		
+		String id=login.getUserId();
+		
+		List<Favorite> list = proService.selectFavorite(id);
+		int total = proService.selectFavoriteCount(id); 
+		
+		logger.debug("조회결과 : " + list);
+//		mv.addObject("list", list);
+//		mv.addObject("total", total);
+		
 		String page = "";
 		if(login!=null&&encoder.matches(password, login.getPassword())) {	
 			page = "main";
+			m.addAttribute("list",list);
+			m.addAttribute("total",total);
 			m.addAttribute("loginUser", login);
+			
 			//logger.debug("user:"+login.getUserName());
+			
 		}else {
 			page = "common/msg";
 			m.addAttribute("msg", "로그인실패! 관리자에게 문의하세요.");
