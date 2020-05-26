@@ -260,6 +260,27 @@ public class SelectedProjectUpdateController {
 		return result;
 	}
 	
+	@RequestMapping("/selectedProject/deleteComment.do")
+	@ResponseBody
+	public int deleteComment(@RequestParam Map<String, String> map) {
+		//값 받기
+		String type = map.get("type");
+		int cNo = Integer.parseInt(map.get("cNo"));
+		
+		Map<String, Object> cMap = new HashMap();
+		cMap.put("type",type);
+		cMap.put("cNo",cNo);
+		
+		int result = 0;
+		try {
+			result = service.deleteComment(cMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	
 	
 	

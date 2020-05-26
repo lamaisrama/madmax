@@ -69,4 +69,17 @@
 	<update id="updateComment-S" parameterType="map">		 
 		UPDATE SCHEDULECOMMENT SET SCHEDULECOMMENT = #{comment} WHERE SCHEDULECOMMENTNO = #{commentNo}
 	</update>		
+	
+	<delete id="deleteComment-W" parameterType="map">
+		DELETE WRITINGCOMMENT WHERE WRITINGCOMMENTNO = #{cNo}
+	</delete>
+	
+	<delete id="deleteComment-T" parameterType="map">
+		DELETE TASKCOMMENT WHERE TASKCOMMENT = #{cNo}
+	</delete>
+	
+	<delete id="deleteComment-S" parameterType="map">
+		DELETE SCHEDULECOMMENT WHERE SCHEDULECOMMENT = #{cNo}
+	</delete>
+	
 </mapper>

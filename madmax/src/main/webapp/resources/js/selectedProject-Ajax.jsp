@@ -272,9 +272,9 @@ function fn_insertCommentSubmit(bNo){
 }
 
 //댓글 수정 fn_updateCommentSubmit()
-function fn_updateCommentSubmit(type, postNo){
+function fn_updateCommentSubmit(type, cNo){
     // Get form
-    var form = $('#updateCommentForm'+type+postNo)[0];
+    var form = $('#updateCommentForm'+type+cNo)[0];
 
     // Create an FormData object 
     var data = new FormData(form);
@@ -300,4 +300,20 @@ function fn_updateCommentSubmit(type, postNo){
     });
 }
 
+//댓글 삭제
+function fn_deleteComment(type, bNo, cNo){
+	$.ajax({
+		url:"${path}/selectedProject/deleteComment.do",
+		data:{type:type,
+			  bNo:bNo,
+			  cNo:cNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("댓글 삭제에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});	
+}
 </script>

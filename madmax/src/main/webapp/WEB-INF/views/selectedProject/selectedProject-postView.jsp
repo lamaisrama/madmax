@@ -296,7 +296,8 @@
 															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
-		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;"
+		                                            		onclick="fn_deleteComment('${pb.BOARDTYPE}', ${pb.BOARDNO},${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-times" style='font-size:15px'></i>
 		                                            </button>
 	                                        	</c:if>
@@ -350,7 +351,8 @@
 															onclick="fn_updateCommentInput('${pb.BOARDTYPE}', ${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-edit" style='font-size:15px'></i>
 		                                            </button>
-		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;">
+		                                            <button type="button" class="ml-2 commentBtn" style="background: none; border: 0px;"
+															onclick="fn_deleteComment('${pb.BOARDTYPE}', ${pb.BOARDNO},${wc.WRITINGCOMMENTNO})">
 		                                            	<i class="fas fa-times" style='font-size:15px'></i>
 		                                            </button>
 	                                        	</c:if>
@@ -1165,5 +1167,12 @@
 			</c:forEach>
                 
                 
-            
                 
+                
+                
+
+<!-- 모달모음 ------------------------------------------------------------------------------------------------------------------------------->   
+        
+                    
+            
+<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                  
