@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.madmax.stool.approval.model.service.ApprovalService2;
 import com.madmax.stool.approval.model.vo.ApprDoc;
 import com.madmax.stool.approval.model.vo.Approval;
+import com.madmax.stool.common.PagingFactory;
 import com.madmax.stool.user.model.vo.User;
 
 @Controller
@@ -40,27 +42,33 @@ public class ApprovalController2 {
 
 	
 	  @RequestMapping("/appr/apprProgBox.do") 
-	  public String approvalProgBox(HttpServletRequest req,Model m) {
-	  
-		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  //System.out.println("userId확인 "+userId);
-		  List<Approval> list=service.selectApprProgList(userId);
-		  
-		  m.addAttribute("list",list);
+	  public String approvalProgBox(HttpServletRequest req, Model m,
+					@RequestParam(required = false, defaultValue = "1") int cPage,
+					@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+
+			String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+			List<Approval> list=service.selectApprProgList(cPage, numPerPage, userId);
+			int totalData = service.selectApprProgListCount(userId);		  
+			m.addAttribute("list",list);
+			m.addAttribute("totalData", totalData);
+			m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprProgBox.do"));
 		  
 		  return "approval/apprProgBox";
 	  
 	  }
 	  
 	  @RequestMapping("/appr/apprDoneBox.do")
-	  public String apprDoneBox(HttpServletRequest req,Model m) {
+	  public String apprDoneBox(HttpServletRequest req,Model m,
+				@RequestParam(required = false, defaultValue = "1") int cPage,
+				@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		  	
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
 
-		  List<Approval> list=service.selectApprDoneList(userId);
-		  
+		  List<Approval> list=service.selectApprDoneList(cPage, numPerPage, userId);
+		  int totalData = service.selectApprDoneListCount(userId);	
 		  m.addAttribute("list",list);
-		  
+		  m.addAttribute("totalData", totalData);
+		  m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprDoneBox.do"));
 		  return "approval/apprDoneBox";
 	  }
 	 

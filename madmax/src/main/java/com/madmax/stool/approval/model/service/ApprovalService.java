@@ -16,23 +16,34 @@ public interface ApprovalService {
 	
 	List<DeptUsers> selectDeptInfo();
 	List<User> selectDeptUsers(DeptUsers du);
-	List<ApprDocType> selectApprDocList(int cPage, int numPerPage);
-	int selectApprDocListCount();
 	ApprDocType selectApprDocForm(int dNo);
-	int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, List<ApprAttachment> files) throws RuntimeException;
-	List<Approval> selectApprReqList(String userId);
 	ApprDoc selectApprDoc(int apprNo);
 	ApprDoc selectDoApproval(Approval approval);
+	
+	List<ApprDocType> selectApprDocList(int cPage, int numPerPage);
+	int selectApprDocListCount();
+	List<Approval> selectApprReqList(int cPage, int numPerPage, String userId);
+	int selectApprReqListCount(String userId);
+	List<Approval> selectApprTempList(int cPage, int numPerPage, String userId);
+	int selectApprTempListCount(String userId);
+	List<Approval> selectApprWaitList(int cPage, int numPerPage, String userId);
+	int selectApprWaitListCount(String userId);
+	List<Approval> selectMyDocList(int cPage, int numPerPage, String userId);
+	int selectMyDocListCount(String userId);
+	List<Approval> selectDeptDocList(int cPage, int numPerPage, String deptCode);
+	int selectDeptDocListCount(String deptCode);
+	List<ApprDoc> selectAttachAppredDoc(String deptCode);
+	List<Approval> selectRefferedDocList(int cPage, int numPerPage, String userId);
+	int selectRefferedDocListCount(String userId);
+	
+	int insertApproval(Approval appr, List<ApprLine> lines, List<AppredDoc> appred, 
+						List<ApprAttachment> files) throws RuntimeException;
 	int updateTemporary(int apprNo);
 	int deleteDoc(int apprNo);
-	List<Approval> selectApprTempList(String userId);
-	List<Approval> selectApprWaitList(String userId);
 	int updateAppr(ApprLine line);
-	List<ApprDoc> selectAttachAppredDoc(String deptCode);
 	int updateUserSign(String userId);
-	int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred, List<ApprAttachment> files,
-			List<ApprAttachment> delFiles) throws RuntimeException;
+	int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred, 
+							List<ApprAttachment> files,List<ApprAttachment> delFiles) throws RuntimeException;
 
 	
-	
-}
+}	

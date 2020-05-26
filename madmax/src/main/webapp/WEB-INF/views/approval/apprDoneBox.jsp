@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
-<jsp:include page="/WEB-INF/views/common/sidebar-appr.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
 <style>	
 	.list-container{
@@ -62,7 +62,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"><c:out value="${list.size()}"/> </span></p>
+		<p>전체 <span style="color:red"><c:out value="${totalData}"/> </span></p>
 	</div>
 	<div class="row draft-container text-center">
 		<div class="col">
@@ -74,11 +74,10 @@
 					<th>기안부서</th>
 					<th>기안일</th>
 					<th>결과</th>
-					<th>결과</th>
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 				<tr>
-					<td>${i.index+1}</td>
+					<td>${l.apprNo}</td>
 					<td><a href="javascript:void(0)" 
 							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
 							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
@@ -90,15 +89,15 @@
 						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
 						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
 					</td>
-					<td><a href="javascript:void(0)" 
-							onclick="window.open('${path}/appr/openApprDoneOpinion?apprNo=${l.apprNo }',
-							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-							${l.apprTitle }</a></td>
-					
 				</tr>
 				</c:forEach>
 			</table>
 		</div>
+	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
 	</div>
 </div>
 
