@@ -153,13 +153,8 @@ a:hover{
                       	<a class="p2" href="${pageContext.request.contextPath }/user/findIdPw">아이디/비밀번호 찾기</a>
                    	  </p>
                 </form>
-
-                
             </div>
-
         </div>
-
-
     </div>
 
 
