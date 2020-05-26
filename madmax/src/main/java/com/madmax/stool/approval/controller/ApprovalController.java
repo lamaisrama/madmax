@@ -251,10 +251,6 @@ public class ApprovalController {
 		return "approval/deptDocBox";
 	}
 
-	@RequestMapping("/appr/myStorageBox")
-	public String myStorageBox() {
-		return "approval/myStorageBox";
-	}
 	
 	@RequestMapping("/appr/openApprDoc")
 	public String openApproval(Model m, int apprNo) {
