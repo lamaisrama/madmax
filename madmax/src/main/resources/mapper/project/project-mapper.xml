@@ -31,4 +31,13 @@
   SELECT COUNT(*) FROM PROJECTTABLE P JOIN PROJECTMEMBER PM 
   	ON P.PROJECTNO=PM.PROJECTNO WHERE PM.USERID=#{id} AND P.PROJECTTYPE='Y'
   </select>
+  
+  <select id="selectFavorite" parameterType="string" resultType="com.madmax.stool.project.model.vo.Favorite">
+  	SELECT * FROM FAVORITE F JOIN PROJECTTABLE P USING (PROJECTNO) WHERE F.USERID=#{id}
+  </select>
+  
+  <select id="selectFavoriteCount" resultType="_int">
+  	SELECT COUNT(*) FROM FAVORITE WHERE USERID=#{id}
+  </select>
+  
 </mapper>

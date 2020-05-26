@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.madmax.stool.common.MyException;
 import com.madmax.stool.project.model.dao.ProjectDao;
+import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
 
 @Service
@@ -84,6 +85,20 @@ public class ProjectServiceImpl implements ProjectService {
 	public int selectComProjectCount(String id) {
 		// TODO Auto-generated method stub
 		return dao.selectComProjectCount(session,id);
+	}
+
+
+	@Override
+	public List<Favorite> selectFavorite(String id) {
+	
+		return dao.selectFavorite(session,id);
+	}
+
+
+	@Override
+	public int selectFavoriteCount(String id) {
+		
+		return dao.selectFavoriteCount(session,id);
 	}
 		
 		

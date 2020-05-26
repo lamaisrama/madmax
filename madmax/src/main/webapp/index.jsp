@@ -48,14 +48,7 @@ svg {
     height: 60%;
     margin: 0 auto;
 }
-/* 
-input .occ { 
-	border: none; 
-	border-bottom: solid 1px #FFE3E3; 
-	border-radius:0; 
-	background: #030321; 
-}
- */
+
 .text-copy {
     fill: none;
     stroke: white;
