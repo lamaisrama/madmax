@@ -89,7 +89,7 @@
 				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="selectTask(${p['projectNo'] });">${p['projectTitle'] }</a></li>
 				    </c:forEach>
 				     <c:if test="${fn:length(projects)>4}">
-				    	<li class="nav-item"><a class="nav-link">+더보기</a></li>
+				    	<li class="nav-item"><a class="nav-link" >+더보기</a></li>
 				    </c:if>
 				  </ul>
         <div  style="height:100%">
@@ -193,7 +193,7 @@
                         <strong class="mr-2">담당자</strong>
                         <!-- 담당자 프로필 for문 시작 -->
                         <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
-                            <div class='selectedWorker_imgDiv mr-2'>
+                            <div class='selectedWorker_imgDiv mr-2' id=""><!-- 이미지넣기 -->
                                 <img src='img/profile_img.png'/>
                             </div>
                             <span id="notiMember"></span>
@@ -327,7 +327,8 @@ function taskFilter(){
 						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
 						table+="<td style='width:20%'>"+tasks[i].taskStartDate+"</td>";
 						table+="</tr>";
-						table+="</td>";
+						table+="</td>"
+						table+="<br/>";
 				}
 				
 			}else{
@@ -364,6 +365,9 @@ function taskFilter(){
 			success:function(data){
 				var task=data.task;
 				console.log(task.taskTitle);
+				//업무작성자 프로필
+				var profile=task.profile;
+				$("#")
 				$("#taskTitleView").html(task.taskTitle);//업무제목
 				$("#taskUsername").html(task.userName);//업무작성자
 				$("#notiMember").html(data.notiMember);//담당자

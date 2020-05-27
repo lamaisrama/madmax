@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.attribute.HashAttributeSet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -124,7 +124,9 @@ public class TaskController {
 		  logger.debug("넘어온 글(총괄)번호:"+boardNo);
 		  
 		  ModelAndView mv=new ModelAndView();
+		  
 		  TaskPb tp=service.selectTaskView(boardNo);
+		  //담당자 이름 따로 가져옴
 		  String notiMember=service.selectTaskNoti(boardNo);
 		  
 		  mv.addObject("task",tp);
