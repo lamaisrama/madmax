@@ -94,5 +94,15 @@ public class ApprovalServiceImpl2 implements ApprovalService2 {
 		// TODO Auto-generated method stub
 		return dao2.selectSearchMyDocBox(session,search);
 	}
+	@Override
+	public List<Approval> selectSearchDeptDocBox(ApprSearch search) {
+		// TODO Auto-generated method stub
+		return dao2.selectSearchDeptDocBox(session,search);
+	}
+	@Override
+	public List<Approval> searchRefferedDocBox(ApprSearch search) {
+		// TODO Auto-generated method stub
+		return dao2.searchRefferedDocBox(session,search);
+	}
 	
 }

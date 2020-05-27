@@ -159,24 +159,56 @@
 			});
 		});
 		
+		
+		
  		$(document).ready(function() {
 
 			$("#go").click(function() { 
+				
+				
 				$.ajax({
-					url : '${path}/attd/checkGotime.do',
+					url:'${path}/attd/checkCometime.do',
 					type:"post",
 					data:$("#checkForm").serialize(),
-					success : function(data) { 
+					success : function(data) {
+						// 출근 시간이 있으면 true,없으면 false;
 						console.log(data);
-						// 있으면 true,없으면 false;
 						if(data){
-							alert("퇴근 했습니다.");
-							return ;
-						}else if(data==false){
-							stateRequest();
+							
+							$.ajax({
+								url : '${path}/attd/checkGotime.do',
+								type:"post",
+								data:$("#checkForm").serialize(),
+								success : function(data) { 
+									console.log(data);
+									// 있으면 true,없으면 false;
+									if(!data){
+										confirm("이미 퇴근시간이 찍혀있습니다. 수정하시겠습니까? ");
+										//return;
+										$("#checkForm").attr("action","${path}/attd/updateGoTime.do");
+										$("#checkForm").submit();	
+									}else{
+										alert("퇴근 시간이 입력되었습니다.");
+										stateRequest();
+									}
+								}
+							});
+							
+						}else{
+							
+							$.ajax({
+								
+								url:'${path}/attd/noComeTime.do',
+								type:"post",
+								data:$("#checkForm").serialize(),
+								success:function(date){
+									alert("출근시간이 입력되지 않아 지각처리 됩니다 !");
+								}
+							});
 						}
 					}
 				});
+				
 			});
 		}); 
 		

@@ -33,4 +33,6 @@ public interface AttendService {
 	
 	int updateRequestState(Attendance a);
 	
+	int insertNoCometime(Worktime w);
+	
 }
