@@ -271,7 +271,7 @@ img#cardProfileImg {
 										<td>
 											<button type="button" 
 											class="btn btn-sm btn-outline-dark"
-											onclick="fileDownload('${afl.writingoriname}','${afl.writingrename }')">
+											onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${afl.writingoriname}','${afl.writingrename }')">
 												<span class="material-icons" style="font-size: smaller;">
 													save_alt 
 												</span>

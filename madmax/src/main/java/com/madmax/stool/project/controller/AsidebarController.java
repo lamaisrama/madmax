@@ -61,51 +61,51 @@ public class AsidebarController {
 //	}
 	
 	//파일함에서 파일 다운로드
-	@RequestMapping("/selectedProject/fileDownload.do")
-	public void fileDownload(String ori,String rename,
-			HttpSession session,
-			@RequestHeader(value="user-agent") String header,
-			ServletOutputStream out, HttpServletResponse res) {
-		
-		//파일경로
-		String path=session.getServletContext().getRealPath("/resources/upload/selectedProject");
-		BufferedInputStream bis=null;
-		File f=new File(path+"/"+rename);
-		//파일과 연결된 스트림, 보낼 대상의 스트림 : servletoutputstream out
-		//클라이언트 브라우저에 따른 분기처리 originalFilename 보낼 때
-		try {
-			FileInputStream fis=new FileInputStream(f);
-			bis=new BufferedInputStream(new FileInputStream(f));
-			//분기처리
-			
-			boolean isMSIE=header.indexOf("MSIE")!=-1||
-					header.indexOf("Trigent")!=-1;
-			String oriName="";
-			if(isMSIE) {
-				oriName=URLEncoder.encode(ori,"UTF-8");
-				oriName=oriName.replace("\\+", "%20");
-			}else {
-				oriName=new String(ori.getBytes("UTF-8"),"ISO-8859-1");
-				
-			}
-			//응답 설정 세팅 (response 필요)
-			res.setContentType("application/otect-stream;charset=UTF-8");
-			res.addHeader("Content-Disposition","attachment;filename=\""+oriName+"\"");
-			int read=-1;
-			while((read=bis.read())!=-1) {
-				out.write(read);
-			}
-		
-		}catch(IOException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				bis.close();
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-	}
+//	@RequestMapping("/selectedProject/fileDownload.do")
+//	public void fileDownload(int pjNo,String ori,String rename,
+//			HttpSession session,
+//			@RequestHeader(value="user-agent") String header,
+//			ServletOutputStream out, HttpServletResponse res) {
+//		
+//		//파일경로
+//		String path=session.getServletContext().getRealPath("/resources/upload/selectedProject1");
+//		BufferedInputStream bis=null;
+//		File f=new File(path+"/"+rename);
+//		//파일과 연결된 스트림, 보낼 대상의 스트림 : servletoutputstream out
+//		//클라이언트 브라우저에 따른 분기처리 originalFilename 보낼 때
+//		try {
+//			FileInputStream fis=new FileInputStream(f);
+//			bis=new BufferedInputStream(new FileInputStream(f));
+//			//분기처리
+//			
+//			boolean isMSIE=header.indexOf("MSIE")!=-1||
+//					header.indexOf("Trigent")!=-1;
+//			String oriName="";
+//			if(isMSIE) {
+//				oriName=URLEncoder.encode(ori,"UTF-8");
+//				oriName=oriName.replace("\\+", "%20");
+//			}else {
+//				oriName=new String(ori.getBytes("UTF-8"),"ISO-8859-1");
+//				
+//			}
+//			//응답 설정 세팅 (response 필요)
+//			res.setContentType("application/otect-stream;charset=UTF-8");
+//			res.addHeader("Content-Disposition","attachment;filename=\""+oriName+"\"");
+//			int read=-1;
+//			while((read=bis.read())!=-1) {
+//				out.write(read);
+//			}
+//		
+//		}catch(IOException e) {
+//			e.printStackTrace();
+//		}finally {
+//			try {
+//				bis.close();
+//			}catch(IOException e){
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	
 }
