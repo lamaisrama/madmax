@@ -29,4 +29,23 @@
 		select scheduletitle from schedule where boardNo=#{boardNo}
 	</select>
 
+	<select id="selectUnreadNotificationCount" parameterType="string" resultType="_int">
+		select count(*) from notificationtable 
+		where notreadtime is null and receiveId=#{userId}
+	</select>
+	
+	<update id="updateAllNotiRead" parameterType="string" >
+		update notificationtable set notreadtime=sysdate 
+		where notreadtime is null and receiveId=#{userId}
+	</update>
+	
+	<select id="findNotification" parameterType="map" resultType="com.madmax.stool.notification.model.vo.Notification">
+				select * from notificationtable 
+		    join stooluser on(senderid=userId)
+		    join projectboard using(boardno)
+		    join projecttable using(projectno)
+		where receiveId=#{userId} and
+		(userName like '%'||#{keyword}||'%' or projecttitle  like '%'||#{keyword}||'%') 
+		order by nottime desc
+	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.madmax.stool.notification.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -38,5 +39,24 @@ public class NotificationDaoImpl implements NotificationDao {
 	public String selectScheduleTitle(SqlSessionTemplate session, int boardNo) {
 		return session.selectOne("notification.selectScheduleTitle", boardNo);
 	}
+
+	@Override
+	public int selectUnreadNotificationCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("notification.selectUnreadNotificationCount", userId);
+	}
+
+	@Override
+	public int updateAllNotiRead(SqlSessionTemplate session, String userId) {
+		return session.update("notification.updateAllNotiRead", userId);
+	}
+
+	@Override
+	public List<Notification> findNotification(SqlSessionTemplate session, Map<String, String> map) {
+		return session.selectList("notification.findNotification", map);
+	}
+	
+	
+	
+	
 	
 }

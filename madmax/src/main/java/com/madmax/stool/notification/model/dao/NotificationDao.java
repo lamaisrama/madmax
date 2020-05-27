@@ -1,6 +1,7 @@
 package com.madmax.stool.notification.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -19,6 +20,9 @@ public interface NotificationDao {
 //	String selectTaskComment(SqlSessionTemplate session,int taskNo);
 //	int selectScheduleNo(SqlSessionTemplate session,int boardNo);
 //	String selectScheduleComment(SqlSessionTemplate session,int scheduleNo);
+	int selectUnreadNotificationCount(SqlSessionTemplate session, String userId);
+	int updateAllNotiRead(SqlSessionTemplate session, String userId);
+	List<Notification> findNotification(SqlSessionTemplate session, Map<String, String> map);
 
 
 	
