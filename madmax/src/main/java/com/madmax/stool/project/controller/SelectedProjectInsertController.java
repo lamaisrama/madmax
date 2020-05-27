@@ -137,13 +137,13 @@ public class SelectedProjectInsertController {
 		}
 		//2-2) 언급
 		List<InsertNotification> notList = new ArrayList<InsertNotification>();
-		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);	
+//		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);	
 		if(!not.trim().equals("") && not != null) {
 			String[]  notArr = not.split(",");
 			for(String n : notArr) {	
-				for(ProjectMember m : projectMember) {
-					if(n.equals(m.getUserName())) n = m.getUserId();
-				}
+				/* for(ProjectMember m : projectMember) { if(n.equals(m.getUserName())) n =
+				 * m.getUserId(); }
+				 */
 				InsertNotification notification = new InsertNotification();
 				notification.setReceiveId(n);
 				notification.setSenderId(writer);

@@ -40,22 +40,21 @@
 	<insert id="insertComment" parameterType="map">
 		INSERT INTO
  		<choose>
-			<when test="postType.equals('W')">
+			<when test='postType eq "W"'>
 		  		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,
 		  	</when>
-			<when test="postType.equals('T')">
+			<when test='postType eq "T"'>
 		  		TASKCOMMENT VALUES(SEQ_TASKCOMMENTNO.NEXTVAL,
 		  	</when>
-			<when test="postType.equals('S')">
+			<when test='postType eq "S"'>
 		  		SCHEDULECOMMENT VALUES(SEQ_SCHEDULECOMMENTNO.NEXTVAL,
 		  	</when>
-		</choose>	
-		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,	
+		</choose>		
 		#{comment},DEFAULT,#{postNo},#{senderId})		 
 	</insert>
 	
 	<insert id="insertCommentNotification" parameterType="map">
-		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{receiveId}, #{senderId}, 'comment', DEFAULT, DEFAULT, #{boardNo})
+		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{receiveId}, #{senderId}, #{commentType}, DEFAULT, DEFAULT, #{boardNo})
 	</insert>	
 
 	<update id="updateComment-W" parameterType="map">		 

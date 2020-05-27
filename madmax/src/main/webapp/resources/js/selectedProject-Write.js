@@ -138,39 +138,42 @@ function fn_addWorkerModal(){
     $("#addWorkerModal").modal("show");
 }
 
-function fn_addWorker(e){
+function fn_addWorker(e, workerId){
     let selectName = $(e).siblings("div").children("p").text();
  
     //이미 선택되어 있는지 확인
     if($("#workerListStr").val() != undefined && $("#workerListStr").val()!=""){
         let slSplit = $("#workerListStr").val().split(",");
-        if($.inArray(selectName, slSplit) != -1){
+        if($.inArray(workerId, slSplit) != -1){
             alert("이미 선택되어 있습니다.");
             return;            
         }else{          
             let val = $("#workerListStr").val();  
-            let newVal = val+","+selectName;    
+            let newVal = val+","+workerId;    
             $("#workerListStr").val(newVal);                     
         }
     }else{      
-        $("#workerListStr").val(selectName);
+        $("#workerListStr").val(workerId);
     }    
+    
+    let strWorkerId = '"' + workerId + '"';
+    
     $("#workerList").prepend("<div class='d-flex justify-content-between align-items-center m-1 selectedWorker pl-2 pr-2'>"
                             +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/images/defaultProfile.png'/></div>"
                             +"<span>"+selectName+"</span>"
-                            +"<button type='button' onclick='fn_deleteWorker(this);' class='p-0 ml-2'>"
+                            +"<button type='button' onclick='fn_deleteWorker(this,"+ strWorkerId +")'; class='p-0 ml-2'>"
                             +"<i class='fas fa-minus-circle stoolPink'></i></button></div>");
     $("#addWorkerModal").modal("hide");
 
     console.log($("#workerListStr").val());
 }
 //담당자삭제 - (작성창)
-function fn_deleteWorker(e){
-    let removeName = $(e).siblings("span").text();
+function fn_deleteWorker(e, removeId){
+//    let removeName = $(e).siblings("span").text();
     if($("#workerListStr").val() != undefined){
         let slSplit = $("#workerListStr").val().split(",");
-        if($.inArray(removeName, slSplit) != -1){
-            slSplit.splice(slSplit.indexOf(removeName),1);      
+        if($.inArray(removeId, slSplit) != -1){
+            slSplit.splice(slSplit.indexOf(removeId),1);      
             let newVal = slSplit.join(",");    
             $("#workerListStr").val(newVal);
         }
@@ -531,38 +534,41 @@ function fn_addMentionModal(){
     $("#addMentionModal").modal("show");
 }
 
-function fn_addMention(e){
+function fn_addMention(e, mentionId){
     let selectName = $(e).siblings("div").children("p").text();
     //이미 선택되어 있는지 확인
     if($("#mentionListStr").val() != undefined && $("#mentionListStr").val()!=""){
         let slSplit = $("#mentionListStr").val().split(",");
-        if($.inArray(selectName, slSplit) != -1){
+        if($.inArray(mentionId, slSplit) != -1){
             alert("이미 선택되어 있습니다.");
             return;            
         }else{        
             let val = $("#mentionListStr").val();
-            let newVal = val+","+selectName;    
+            let newVal = val+","+mentionId;    
             $("#mentionListStr").val(newVal);                
         }        
     }else{      
-        $("#mentionListStr").val(selectName);
+        $("#mentionListStr").val(mentionId);
     }
+    
+    let strMentionId = '"' + mentionId + '"';
+    
     $("#mentionListBox").prepend("<div class='d-flex justify-content-between align-items-center m-1 selectedWorker pl-2 pr-2'>"
                             +"<div class='selectedWorker_imgDiv mr-2'><img src='http://localhost:9090/stool/resources/images/defaultProfile.png'/></div>"
                             +"<span>"+selectName+"</span>"
-                            +"<button type='button' onclick='fn_deleteMention(this);' class='p-0 ml-2'>"
+                            +"<button type='button' onclick='fn_deleteMention(this,"+ strMentionId +");' class='p-0 ml-2'>"
                             +"<i class='fas fa-minus-circle stoolPink'></i></button></div>");
     $("#addMentionModal").modal("hide");
     
     console.log($("#mentionListStr").val());
 }
 //언급 참여자 삭제 - (작성창)
-function fn_deleteMention(e){
+function fn_deleteMention(e, removeId){
     let removeName = $(e).siblings("span").text();
     if($("#mentionListStr").val() != undefined){
         let slSplit = $("#mentionListStr").val().split(",");
-        if($.inArray(removeName, slSplit) != -1){
-            slSplit.splice(slSplit.indexOf(removeName),1);      
+        if($.inArray(removeId, slSplit) != -1){
+            slSplit.splice(slSplit.indexOf(removeId),1);      
             let newVal = slSplit.join(",");    
             $("#mentionListStr").val(newVal);
         }

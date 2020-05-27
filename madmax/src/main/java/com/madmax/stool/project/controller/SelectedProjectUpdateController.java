@@ -226,6 +226,14 @@ public class SelectedProjectUpdateController {
 		String comment = map.get("comment");
 		int boardNo = Integer.parseInt(map.get("boardNo"));
 		int postNo = Integer.parseInt(map.get("postNo"));
+		String commentType = "";
+		if(postType.equals("W")) {
+			commentType = "writingcomment";
+		}else if(postType.equals("T")) {
+			commentType = "tastcomment";
+		}else if(postType.equals("S")) {
+			commentType = "schedulecomment";
+		}
 		
 		Map<String, Object> cMap = new HashMap();
 		cMap.put("postType",postType);
@@ -234,6 +242,7 @@ public class SelectedProjectUpdateController {
 		cMap.put("comment",comment);
 		cMap.put("boardNo",boardNo);
 		cMap.put("postNo",postNo);
+		cMap.put("commentType",commentType);
 		
 		int result = 0;
 		try {
