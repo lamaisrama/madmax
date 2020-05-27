@@ -73,10 +73,9 @@
                     
                     <div class="container p-5">
                       <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h5>                    
-						<div class="ml-4">총 ${total }건의 즐겨찾는 프로젝트가 있습니다.</div>
-						<br><br>
+						<br>
                       <div class="flex-row justify-content-around row-nw d-flex flex-wrap">
-							<c:forEach items="${list }" var="f" begin="0" end="4">
+							<c:forEach items="${list }" var="f" begin="0" end="3">
 	                            <div class="item p-3 bookmarkProject">
 	                            	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
 	                            		<c:out value="${f.projectTitle}"/>
