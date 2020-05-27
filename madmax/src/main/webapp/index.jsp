@@ -135,8 +135,7 @@ a:hover{
                       
                       <div class="row justify-content-center" style="color: #7b7b7b;">
 						<!-- <input type="checkbox" name="remember-me" id="remember-me">&nbsp;자동로그인 -->
-                      	<input type="checkbox" id="idSaveCheck">&nbsp;rememberId&nbsp;&nbsp;
-                      	<input type="checkbox" id="pwSaveCheck">&nbsp;rememberPw
+                      	<input type="checkbox" id="idSaveCheck">&nbsp;rememberId
                       </div>
                       
                        <br>
