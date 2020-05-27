@@ -83,7 +83,6 @@
                                 <c:if test="${projectInfo.USERID == loginUser.userId}">
                                 	<a class="dropdown-item" onclick="$('#pjGoOutManagerModal').modal('show');">프로젝트 나가기</a>
 	                                <a class="dropdown-item" onclick="$('#updateProjectModal').modal('show')">프로젝트 수정</a>
-	                                <a class="dropdown-item" onclick="fn_pjDelete()">프로젝트 삭제</a>
 	                            </c:if>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item d-flex flex-column">

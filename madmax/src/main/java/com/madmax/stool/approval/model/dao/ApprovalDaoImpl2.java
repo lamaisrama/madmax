@@ -84,5 +84,16 @@ public class ApprovalDaoImpl2 implements ApprovalDao2 {
 		return session.selectList("approval2.selectSearchMyDocBox",search);
 	}
 	
+	@Override
+	public List<Approval> selectSearchDeptDocBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.selectSearchDeptDocBox",search);
+	}
+	@Override
+	public List<Approval> searchRefferedDocBox(SqlSessionTemplate session, ApprSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval2.searchRefferedDocBox",search);
+	}
+	
 	
 }

@@ -32,10 +32,10 @@ $(document).ready(function() {
 
 
 /*파일함에서 파일다운로드 스크립트*/
-	function fileDownload(ori,rename){
-		ori=encodeURIComponent(ori);
-		location.href="${path}/selectedProject/fileDownload.do?ori="+ori+"&rename="+rename;
-	}
+//	function fileDownload(pjNo,ori,rename){
+//		ori=encodeURIComponent(ori);
+//		location.href="${path}selectedProject/fileDownload.do?pjNo="+pjNo+"&ori="+ori+"&rename="+rename;
+//	}
 	
 	
 /* 프로젝트 나가기 */

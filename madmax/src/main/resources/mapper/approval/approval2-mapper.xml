@@ -94,4 +94,26 @@
 		]]>
 	
 	</select>
+	
+	<select id="selectSearchDeptDocBox" parameterType="search" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+		JOIN STOOLUSER USING(USERID)
+		WHERE DEPTCODE=#{deptCode} AND APPRSTATUS IN (3,4) 
+		AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
+		<![CDATA[
+		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
+		]]>
+	
+	</select>
+	
+	<select id="searchRefferedDocBox" parameterType="search" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+		JOIN STOOLUSER USING(USERID)
+		WHERE APPRSTATUS IN (3,4)  AND RECEIVER=#{userId}
+		AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
+		<![CDATA[
+		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
+		]]>
+	
+	</select>
 </mapper>

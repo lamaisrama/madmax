@@ -84,12 +84,12 @@ public class AttendController {
 		//System.out.println(today);
 		
 		User u = (User)req.getSession().getAttribute("loginUser");
-		System.out.println(u);
+		//System.out.println(u);
 		
 		//today.
 		w.setToday(today);
 		w.setUserId(u.getUserId());
-		System.out.println(timeState);
+		//System.out.println(timeState);
 		
 		if(timeState.equals("출근")) {
 			
@@ -97,41 +97,45 @@ public class AttendController {
 			
 		}else if(timeState.equals("퇴근")){
 			
-			result=service.updateState(w);
+			if(service.selectCometime(w)!=null) {
+				
+				result=service.updateState(w);
+			
+			
 			
 			Worktime wt = service.selectWorktime(w);
 			
-			
-			Date go=wt.getGoTime(); 
-			// 출근 시간 가져오기
-			GregorianCalendar come=new GregorianCalendar();
-			come.setTime(wt.getComeTime());
-			
-			//퇴근 시간 가져오기
-			GregorianCalendar goHome=new GregorianCalendar();
-			goHome.setTime(wt.getGoTime());
-			
-			//Worktime wt=service.selectCometime(w);
-			
-			//Worktime go=service.selectGotime(w);
-			
-			//int hour=Integer.parseInt(wt.getComeTime().substring(0, wt.getComeTime().indexOf(":")));
-			  
-			//if(Integer.parseInt(wt.getComeTime())<9&&Integer.parseInt(go.getGoTime())>18) {
-			//	  service.insert
-			//  }
-			if(come.get(Calendar.HOUR)<9&&goHome.get(Calendar.HOUR)>16) {
+				Date go=wt.getGoTime(); 
+				// 출근 시간 가져오기
+				GregorianCalendar come=new GregorianCalendar();
+				come.setTime(wt.getComeTime());
 				
-				result=service.insertEmpManage(wt.getManagementNo());
-			}else if(come.get(Calendar.HOUR)>9){
-				// 지각
-				result=service.insertLate(wt.getManagementNo());
-			}else {
-				//결근
-				result=service.insertAbsence(wt.getManagementNo());
-			}
+				//퇴근 시간 가져오기
+				GregorianCalendar goHome=new GregorianCalendar();
+				goHome.setTime(wt.getGoTime());
+				
+				//Worktime wt=service.selectCometime(w);
+				
+				//Worktime go=service.selectGotime(w);
+				
+				//int hour=Integer.parseInt(wt.getComeTime().substring(0, wt.getComeTime().indexOf(":")));
+				  
+				//if(Integer.parseInt(wt.getComeTime())<9&&Integer.parseInt(go.getGoTime())>18) {
+				//	  service.insert
+				//  }
+				if(come.get(Calendar.HOUR)<9||goHome.get(Calendar.HOUR)>18) {
+					
+					result=service.insertEmpManage(wt.getManagementNo());
+				}else if(come.get(Calendar.HOUR)>9){
+					// 지각
+					result=service.insertLate(wt.getManagementNo());
+				}else {
+					//결근
+					result=service.insertAbsence(wt.getManagementNo());
+				}
 			
-			System.out.println(result);
+			}
+			//System.out.println(result);
 			
 		}
 		
@@ -154,7 +158,6 @@ public class AttendController {
 		
 		w.setToday(today);
 		w.setUserId(u.getUserId());
-		Worktime s=service.selectCometime(w);
 		
 		//System.out.println(s);
 		
@@ -181,11 +184,42 @@ public class AttendController {
 		
 		//System.out.println(s);
 		
-		// 출근 시간이 있으면 true,없으면 false;
-		if(service.selectGotime(w)!=null) return true;
-		else return false;
+		// 퇴근시간이 안찍혀 있으면 true,
+		return s!=null?true:false;
 		
 	}
 	
+	@RequestMapping("/attd/updateGoTime.do")
+	public String updateGoTime(HttpServletRequest req,Worktime w) {
+		
+		Calendar cal=new GregorianCalendar();
+		Date today=new Date(cal.getTimeInMillis());
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		w.setToday(today);
+		w.setUserId(userId);
+		int result=service.updateState(w);
+		
+		return "redirect:/attd/attendList.do"; 
+	}
+	
+	@RequestMapping("/attd/noComeTime.do")
+	@ResponseBody
+	public String noComeTime(HttpServletRequest req,Worktime w) {
+		
+		Calendar cal=new GregorianCalendar();
+		Date today=new Date(cal.getTimeInMillis());
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		w.setToday(today);
+		w.setUserId(userId);
+		
+		
+		int result=service.insertNoCometime(w);
+		
+		
+		return "redirect:/attd/attendList.do";
+		
+	}
 	
 }
