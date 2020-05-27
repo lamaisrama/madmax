@@ -1,13 +1,18 @@
 package com.madmax.stool.task.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.vo.Project;
@@ -59,7 +64,7 @@ public class TaskController {
 	
 	
 	  @RequestMapping("/task/selectTaskEach.do") 
-	  public ModelAndView selectTaskEach(int no,ModelAndView mv,HttpServletRequest req) { 
+	  public ModelAndView selectTaskEach (int no,ModelAndView mv,HttpServletRequest req,HttpServletResponse res)throws Exception { 
 		/*
 		 * logger.debug("번호:"+no); List<Task> tasks=service.selectTaskEach(no);
 		 * logger.debug("내용:"+tasks); model.addAttribute("tasks", tasks);
@@ -67,6 +72,12 @@ public class TaskController {
 		  List<TaskPb> tasks=service.selectTaskEach(no);
 		  
 		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		  if(id==null) {//로그인 되지 않음
+				req.setAttribute("msg", "세션 만료! 로그인 후 이용하세요");
+				req.setAttribute("loc", "/");
+				req.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(req, res);
+			
+			}
 		  List<Project> projects=service.selectProject(id);
 		
 			
@@ -76,24 +87,35 @@ public class TaskController {
 		  mv.setViewName("task/allTaskView");
 		  return mv; 
 	  }
+	  
+	  
 	  @RequestMapping("/task/selectTaskFilter.do")
-	  public ModelAndView selectTaskFilter(TaskFilter tf,HttpServletRequest req) {
+	  @ResponseBody
+	  public Map selectTaskFilter(TaskFilter tf,HttpServletRequest req,HttpServletResponse res) throws Exception {
 		  logger.debug("프로젝트번호:"+tf.getProjectNo());
 		  logger.debug("프로젝트상태:"+tf.getStatus());
 		
 		  ModelAndView mv=new ModelAndView();
+		  //세션 값 넣기
+		  
 		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		  if(id==null) {//로그인 되지 않음
+				req.setAttribute("msg", "세션 만료! 로그인 후 이용하세요");
+				req.setAttribute("loc", "/");
+				req.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(req, res);
+			
+			}
 		  List<Project> projects=service.selectProject(id);
 		  
 		  tf.setUserId(id);
 		  List<TaskPb> tasks=service.selectTaskFilter(tf);
-		 logger.debug("가져왔니?"+tasks);
+		  logger.debug("가져왔니?"+tasks);
 		
-		  
-		  mv.addObject("projects",projects);
-		  mv.addObject("tasks",tasks);
-		  mv.setViewName("jsonView");
-		  return mv;
+		  Map<String,Object> data=new HashMap<String, Object>();
+		  data.put("projects",projects);
+		  data.put("tasks",tasks);
+		  //mv.setViewName("jsonView");
+		  return data;
 	  }
 	  
 	  //업무번호로 task 1row 가져오기
@@ -102,7 +124,9 @@ public class TaskController {
 		  logger.debug("넘어온 글(총괄)번호:"+boardNo);
 		  
 		  ModelAndView mv=new ModelAndView();
+		  
 		  TaskPb tp=service.selectTaskView(boardNo);
+		  //담당자 이름 따로 가져옴
 		  String notiMember=service.selectTaskNoti(boardNo);
 		  
 		  mv.addObject("task",tp);

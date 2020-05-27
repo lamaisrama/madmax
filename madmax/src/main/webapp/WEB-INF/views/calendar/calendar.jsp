@@ -54,8 +54,8 @@
 			plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction',  'googleCalendar' ],
 			googleCalendarApiKey:'AIzaSyDL2TuMBMjldVwSFT5zvntlpQRrbndMhDk',
 			header: {//실행된 달력화면에서 
-				left: 'title',//현재 출력된 month에 대한 정보
-				center: 'agendaDay,agendaWeek,month',
+				left: 'agendaDay,agendaWeek,month',//현재 출력된 month에 대한 정보
+				center: 'title',
 				right: 'prev,next today'//이전달,다음달 ,오늘(이번달 )로 이동하는 기능
 			},
 			defaultDate: new Date(),
@@ -182,6 +182,11 @@
 	color:#FFFFFF;
 	background-color:#cc3333;
 	}
+	h5{
+	font-size:30px;
+	font-weight:bolder;
+	}
+	
 </style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

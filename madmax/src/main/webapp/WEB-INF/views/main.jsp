@@ -127,6 +127,7 @@
 		background-color:#cc3333;
 		border:1px solid #cc3333;
 		}
+	
    </style>
 
 <script>
@@ -135,6 +136,7 @@
       var calendarEl = document.getElementById('calendar');
   
       var calendar = new FullCalendar.Calendar(calendarEl, {
+    	contentHeight:430,
     	plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction',  'googleCalendar' ],
 		googleCalendarApiKey:'AIzaSyDL2TuMBMjldVwSFT5zvntlpQRrbndMhDk',
         header: {

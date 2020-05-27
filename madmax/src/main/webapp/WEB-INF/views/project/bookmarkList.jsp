@@ -2,13 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<div class="col col-sm-7">
+<div class="col col-sm-7 ">
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
@@ -22,7 +23,7 @@
             	</div>
             </c:if> 
             <c:forEach items="${List }" var="l"> 
-              <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
+              <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3 ">
                 <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
                 
             	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
@@ -42,7 +43,7 @@
 	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'T' }">
-	                                        <strong>${l.taskName }</strong>
+	                                        <strong>${l.TName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'S' }">
 	                                        <strong>${l.SName }</strong>
@@ -184,7 +185,7 @@
 	                            </div>
                             </c:if>
                             <!-- 3) 일정 끝 ------------------------------------------------------------------------------------------------------------------------>      
-
+							<a href="javascript:moreContent('',5);"></a>
 
 
                             <!--★ 하단공통 끝  --------------------------------------------------------------------------------------------------------------------->
@@ -205,10 +206,10 @@
                     <!--★☆★ 댓글지움 ------------------------------------------------------------------------------------------------------------------------->
                    
                 </div>
-               <%--  </c:if> --%>
-                <%-- </c:forEach> --%><!-- 프로젝트보드 닫기 -->
+               
+                <!-- 프로젝트보드 닫기 -->
 				</c:forEach>
-
+				<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
 
 	
 </div>	
@@ -217,10 +218,33 @@
 </div>
 
 <script>
+//url의 쿼리스트링 값 가져오는 함수
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+	function moreList(){
+		var pageNo ="";
+		console.log("페이지번호+"+pageNo);
+		if(pageNo==undefined || pageNo=="" ||pageNo==null){
+			pageNo=1;
+		}else{
+			pageNo = getParameterByName("pageNo");
+			pageNo=pageNo+1;
+		}
+		
+		location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
+		
+		
+	}
+
+
 	//일단. 지도를 출력해줄 위치가 여러곳.
 	//장소도 각각 다르다.
-	
-			var mapContainers = document.getElementsByClassName('map');// 지도를 표시할 div 
+	var mapContainers = document.getElementsByClassName('map');// 지도를 표시할 div 
 			
 			mapOption = {
 		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -265,24 +289,7 @@
 						map.setCenter(coords);
 					});
 				});		
-				//주소로 좌표를 검색
-				/* for(var i=0;i<$(".mAddress").length;i++){
-					console.log(maps);
-					geocoder.addressSearch(addArr[i],  function(result,status){
-					
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === kakao.maps.services.Status.OK) {
-				
-				        var coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
-						console.log("coords:"+coords);
-				
-				       	maps[i].setCenter(coords);
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        
-				    		}			     
-					});    
-				
-				}; */ 
+			
 		
 	
 	
