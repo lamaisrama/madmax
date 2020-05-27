@@ -10,7 +10,7 @@
 	</insert>
 	
 	<update id="updateState" parameterType="worktime">
-		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='출근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD')
+		UPDATE WORKTIMEMANAGEMENT SET GOTIME=SYSTIMESTAMP,TIMESTATE='출근' WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') =  TO_CHAR(#{today}, 'YYYYMMDD')
 	</update>
 	
 	<select id="selectWorktimeList" parameterType="string" resultType="worktime">
@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="selectGotime" resultType="worktime">
-		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD') AND GOTIME=NULL
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND TO_CHAR(CHECKDATE, 'YYYYMMDD') = TO_CHAR(#{today}, 'YYYYMMDD') AND GOTIME IS NULL
 	</select>
 	
 	<select id="selectWorktime" parameterType="worktime" resultType="worktime">
@@ -44,5 +44,9 @@
 	<update id="updateRequestState" parameterType="attend">
 		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestReason} WHERE MANAGEMENTNO=#{managementNo}
 	</update>
+	
+	<insert id="insertNoCometime" parameterType="worktime">
+		INSERT INTO WORKTIMEMANAGEMENT VALUES(SEQ_MANAGEMENTNO.NEXTVAL,NULL,SYSTIMESTAMP,#{timeState},#{userId},SYSDATE)
+	</insert>
 
 </mapper>

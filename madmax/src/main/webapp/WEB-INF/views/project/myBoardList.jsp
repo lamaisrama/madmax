@@ -41,7 +41,7 @@
 	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'T' }">
-	                                        <strong>${l.taskName }</strong>
+	                                        <strong>${l.TName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'S' }">
 	                                        <strong>${l.SName }</strong>

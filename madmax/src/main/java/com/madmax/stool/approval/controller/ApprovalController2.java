@@ -194,7 +194,7 @@ public class ApprovalController2 {
 	  }
 	  
 	  
-	 // 결재완료 기능 구현 아직 !
+	 // 결재완료 기능 
 	  @RequestMapping("/appr/searchApprDoneBox.do")
 	  public String searchApprDoneBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url,int apprStatus) {
 		  
@@ -234,6 +234,51 @@ public class ApprovalController2 {
 		  //System.out.println("search 확인 :"+search);
 		  
 		  List<Approval> list=service.selectSearchMyDocBox(search);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return url;
+	  }
+	  
+	  @RequestMapping("/appr/searchDeptDocBox.do")
+	  public String searchDeptDocBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
+		  
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  String userDept=((User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		  ApprSearch search=new ApprSearch();
+		  
+		  search.setDraftName(draftName);
+		  search.setStartDate(startDate);
+		  search.setEndDate(endDate);
+		  search.setUserId(userId);
+		  search.setDeptCode(userDept);
+		  
+		  //System.out.println("search 확인 :"+search);
+		  
+		  List<Approval> list=service.selectSearchDeptDocBox(search);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return url;
+	  }
+	  
+	  @RequestMapping("/appr/searchRefferedDocBox.do")
+	  public String searchRefferedBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url,int apprStatus) {
+		  
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  String userDept=((User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		  ApprSearch search=new ApprSearch();
+		  
+		  search.setDraftName(draftName);
+		  search.setStartDate(startDate);
+		  search.setEndDate(endDate);
+		  search.setUserId(userId);
+		  search.setDeptCode(userDept);
+		  search.setApprStatus(apprStatus);
+		  
+		  //System.out.println("search 확인 :"+search);
+		  
+		  List<Approval> list=service.searchRefferedDocBox(search);
 		  
 		  m.addAttribute("list",list);
 		  

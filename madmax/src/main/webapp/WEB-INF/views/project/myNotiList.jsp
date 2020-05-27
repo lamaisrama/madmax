@@ -40,7 +40,7 @@
 	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'T' }">
-	                                        <strong>${l.taskName }</strong>
+	                                        <strong>${l.TName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'S' }">
 	                                        <strong>${l.SName }</strong>
@@ -86,19 +86,19 @@
 	                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
 	                                    	<c:choose>
 								                  <c:when test="${l.taskState eq '요청' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								             		<c:when test="${l.taskState eq '진행' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '피드백' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '완료' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState eq '보류' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${l.taskState}</div></td>
 								                   </c:when>
 							            	</c:choose>
 	                                </div>                        

@@ -79,4 +79,12 @@ public class AttrendDaoImpl implements AttendDao {
 		return session.update("attend.updateRequestState", a);
 	}
 
+	@Override
+	public int insertNoCometime(SqlSessionTemplate session, Worktime w) {
+		// TODO Auto-generated method stub
+		return session.insert("attend.insertNoCometime",w);
+	}
+	
+	
+
 }

@@ -93,5 +93,12 @@ public class AttendServiceImpl implements AttendService {
 		return dao.updateRequestState(session, a);
 	}
 
+	@Override
+	public int insertNoCometime(Worktime w) {
+		// TODO Auto-generated method stub
+		return dao.insertNoCometime(session,w);
+	}
+
+	
 
 }
