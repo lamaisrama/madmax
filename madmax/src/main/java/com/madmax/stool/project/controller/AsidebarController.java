@@ -41,7 +41,7 @@ public class AsidebarController {
 		
 		mv.addObject("memberCount",memberCount);
 		mv.setViewName("selectedProject/asidebar");
-		logger.debug("멤버수 가져왔니 ㅠㅠ : "+memberCount);
+		System.out.println("멤버수:"+memberCount);
 		return mv; 
 	
 	}

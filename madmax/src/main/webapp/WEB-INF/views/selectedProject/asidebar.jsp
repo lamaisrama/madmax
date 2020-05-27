@@ -66,7 +66,7 @@
 		<!--전체참여자 확인박스-->
 		<div class="allMemberListBox bg-white border border-grey rounded" >
 			<div class="allMemberListCount">
-				<span>전체 참여자${memberCount}명</span> 
+				<span>전체 참여자&nbsp;${projectMember.size()}&nbsp;명</span> 
 					<a 
 					href="#" 
 					style="text-decoration: none;"
@@ -100,7 +100,7 @@
 									<c:otherwise>
 										<img 
 										id="profileImg"
-										src="${path}/resources/images${pm.profile}"
+										src="${path}/resources/upload/profile${pm.profile}"
 										alt="프로필사진">
 									</c:otherwise>
 								</c:choose>  
@@ -117,55 +117,75 @@
 				<hr>
 				<div class="memberList">
 					<p>참여자(
-					<c:out value="${projectMemberNo}-1"/>
+					<c:out value="${projectMember.size()-1}"/>
 					)
 					</p>
 					
 					<ul class="detailedList">
 						<c:forEach var="pm" items="${projectMember}">
-						<%-- <c:if test="${pm.USERID eq loginUser.USERID }"> --%> 
-						<li>
-							<div
-							class="member"
-							data-toggle="modal"
-							data-target="#member"
-							data-profile="${pm.profile }"
-							data-userName="${pm.userName }">
 							<c:choose>
-								<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
-									<img 
-									id="profileImg"
-									src="${path}/resources/images/defaultProfile.png"
-									alt="프로필사진">
+								<c:when test="${pm.userId eq projectInfo.USERID}">
+								<li style="display:none">
+									<div
+									class="member"
+									data-toggle="modal"
+									data-target="#member"
+									data-profile="${pm.profile }"
+									data-userName="${pm.userName }" 
+									>
+									<c:choose>
+										<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
+											<img 
+											id="profileImg"
+											src="${path}/resources/images/defaultProfile.png"
+											alt="프로필사진">
+										</c:when>
+										<c:otherwise>
+											<img 
+											id="profileImg"
+											src="${path}/resources/upload/profile${pm.profile}"
+											alt="프로필사진">
+										</c:otherwise>
+									</c:choose>
+										<span id="memberName"> 
+											<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
+										</span>
+									</div>
+								</li>
 								</c:when>
 								<c:otherwise>
-									<img 
-									id="profileImg"
-									src="${path}/resources/images${pm.profile}"
-									alt="프로필사진">
+									<li>
+									<div
+									class="member"
+									data-toggle="modal"
+									data-target="#member"
+									data-profile="${pm.profile }"
+									data-userName="${pm.userName }" 
+									>
+									<c:choose>
+										<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
+											<img 
+											id="profileImg"
+											src="${path}/resources/images/defaultProfile.png"
+											alt="프로필사진">
+										</c:when>
+										<c:otherwise>
+											<img 
+											id="profileImg"
+											src="${path}/resources/upload/profile${pm.profile}"
+											alt="프로필사진">
+										</c:otherwise>
+									</c:choose>
+										<span id="memberName"> 
+											<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
+										</span>
+									</div>
+								</li>
 								</c:otherwise>
-							</c:choose>
-								<span id="memberName"> 
-									<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
-								</span>
-							</div>
-						</li>
-						<%-- </c:if> --%>
+								</c:choose>
 						</c:forEach>
 					</ul>
-					<script>
-						var profile="";
-						var userName="";
-						
-						$(document).ready(function() {     
-					        $('#member').on('show.bs.modal', function(event) {          
-					            NOTIFYID = $(event.relatedTarget).data('notifyid');
-					            NONNOTIFYID = $(event.relatedTarget).data('nonnotifyid');
-					            NCONTENT = $(event.relatedTarget).data('ncontent');
-					        });
-					    });
-					    
-					</script>
+					
 				</div>
 				<!--참여자-->
 			</div>
@@ -335,7 +355,7 @@ img#cardProfileImg {
 									<c:otherwise>
 										<img 
 										id="profileImg"
-										src="${path}/resources/images${pm.profile}"
+										src="${path}/resources/upload/profile${pm.profile}"
 										alt="프로필사진">
 									</c:otherwise>
 								</c:choose>
@@ -388,11 +408,17 @@ img#cardProfileImg {
 					alt="cardProfileImg"
 					style="object-fit: cover; height: 400px; width: 398px;">
 			</div>
+			<script>
+				$(document).on("click",".member",function(){
+					var userName = $(this).data('userName');
+					$("#profileBox #userName").val(userName);
+				}));
+			</script>
 			
 			<div>
 				<div style="padding: 25px 40px;">
 					<div>
-						<span id="">이시은</span> <span>과장</span>
+						<span id="userName"></span> <span>과장</span>
 						<p>항공업무부</p>
 					</div>
 					<hr>
