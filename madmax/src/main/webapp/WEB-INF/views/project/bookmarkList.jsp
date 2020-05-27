@@ -209,8 +209,12 @@
                
                 <!-- 프로젝트보드 닫기 -->
 				</c:forEach>
+				<c:if test="${ empty msg }">
 				<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
-
+				</c:if>
+				<c:if test="${not empty msg }">
+				<div class="text-center">${msg }</div>
+				</c:if>
 	
 </div>	
 <div class="col col-sm-3">
@@ -224,19 +228,22 @@ function getParameterByName(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
 }
 
 	function moreList(){
-		var pageNo ="";
-		console.log("페이지번호+"+pageNo);
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
 		if(pageNo==undefined || pageNo=="" ||pageNo==null){
-			pageNo=1;
+			pageNo=2;
+			location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		}else{
-			pageNo = getParameterByName("pageNo");
-			pageNo=pageNo+1;
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		}
-		
-		location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		
 		
 	}

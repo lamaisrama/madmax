@@ -1,6 +1,7 @@
 package com.madmax.stool.project.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,20 +43,31 @@ public class BookmarkController {
 		//list index로 if 문 분기처리..
 		//넘어온 값이 1보다 크면 그거랑 10까지 보내주기
 		//처음엔 5개만 뿌려주고. 그담부턴 10개, 15개이런식으로 올라가게
-		
+		logger.debug("넘어온pageNo:"+pageNo);
 		int numPerPage=2;
 		int size= ((pageNo-1)/numPerPage)*numPerPage+1;
-	/*	if(cPage==1) {*/
-			for(int i=0;i<size+1;i++) {
-				viewList.add(list.get(i));
-				logger.debug("몇번 돔?"+i);
-			}
-			
-		/*}if(cPage>1) {
-			for(int i=0;i<((cPage-1)/numPerPage)*numPerPage+1;i++) {
+			if(pageNo==1) {
+				for(int i=0;i<numPerPage;i++) {
+					viewList.add(list.get(i));
+					logger.debug("몇번 돔?"+i);
+				}
+			}else if(pageNo>1) {
+				size=size*2;
+				logger.debug("돌 사이즈:"+size);
+					if(size<list.size()) {
+						for(int i=0;i<size*2;i++) {
+							viewList.add(list.get(i));
+							logger.debug("2번째 포문몇번 돔?"+i);
+								}
+					}else {
+						for(int i=0;i<list.size();i++) {
+							viewList.add(list.get(i));
+							mv.addObject("msg","마지막 글입니다");
+								}
+						
+					}
 				
 			}
-		}*/
 		logger.debug("화면에 보일값"+viewList);//여기에 담아서.
 		logger.debug("몇개?"+viewList.size());
 		//가져온글 정렬하기(내림차순)
