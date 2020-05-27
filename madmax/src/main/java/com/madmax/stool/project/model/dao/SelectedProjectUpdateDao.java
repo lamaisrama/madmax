@@ -12,4 +12,25 @@ public interface SelectedProjectUpdateDao {
 
 	int updateProjectColor(SqlSessionTemplate session, Map<String, Object> pjInfo);
 
+	int deleteProjectMember(SqlSessionTemplate session, Map<String, Object> pjInfo);
+
+	int updateProjectManager(SqlSessionTemplate session, Map<String, Object> pjInfo);
+
+	int updateSelectedProject(SqlSessionTemplate session, Map<String, Object> upMap);
+
+	int insertBookmark(SqlSessionTemplate session, Map<String, Object> bInfo);
+
+	int deleteBookmark(SqlSessionTemplate session, Map<String, Object> bInfo);
+
+	int updatePinPost(SqlSessionTemplate session, Map<String, Object> pjInfo);
+
+	int insertComment(SqlSessionTemplate session, Map<String, Object> cMap);
+
+	int insertCommentNotification(SqlSessionTemplate session, Map<String, Object> cMap);
+
+	int updateComment(SqlSessionTemplate session, Map<String, Object> cMap);
+
+	int deleteComment(SqlSessionTemplate session, Map<String, Object> cMap);
+
+
 }

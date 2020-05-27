@@ -3,12 +3,19 @@
 <mapper namespace="aside">
 
 	<!-- 전체 참여자 수(와 관리자) -->
-	<select id="selectProjectMemberNo" parameterType="map" resultType="map">
-		SELECT COUNT(USERID) FROM PROJECTMEMBER
+	<select id="selectMemberCount" resultType="_int">
+		SELECT COUNT(USERID) COUNT FROM PROJECTMEMBER WHERE PROJECTNO=#{pjNo}
 	</select>
   
 	<select id="selectStoolUser" parameterType="map" resultType="map">
 		SELECT USERID,USERNAME FROM STOOLUSER JOIN PROJECTTABLE USING (USERID) WHERE PROJECTNO=#{pjNo}
 	</select>
+	
+	<select id="allAttach" parameterType="_int" resultType="allAttach">
+		select a.*,p.BOARDTYPE from WRITINGATTACHMENT a join writing w on(a.writingno=w.writingno) join PROJECTBOARD p on (p.boardno=w.boardno) where projectno=#{pjNo}
+		union
+		select a.*,p.boardtype from TASKATTACHMENT a join task t on(a.taskno=t.taskno) join PROJECTBOARD p on (p.boardno=t.boardno) where projectno=#{pjNo}
+	</select>
+	
 
 </mapper>

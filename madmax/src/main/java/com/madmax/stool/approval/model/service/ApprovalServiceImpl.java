@@ -98,10 +98,6 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return 1;
 	}
 
-	@Override
-	public List<Approval> selectApprReqList(String userId) {
-		return dao.selectApprReqList(session, userId);
-	}
 
 	@Override
 	public ApprDoc selectApprDoc(int apprNo) {
@@ -116,8 +112,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		appr.setAppredDoc(dao.selectAppredDoc(session, apprNo));
 		//5. 첨부파일 가져오기
 		appr.setApprAttachment(dao.selectApprAttachment(session, apprNo));
+		
 		return appr;
 	}
+
 
 	@Override
 	public ApprDoc selectDoApproval(Approval approval) {
@@ -144,17 +142,39 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int deleteDoc(int apprNo) {
 		return dao.deleteDoc(session, apprNo);
 	}
-
+	
 	@Override
-	public List<Approval> selectApprTempList(String userId) {
-		return dao.selectApprTempList(session, userId);
+	public List<Approval> selectApprReqList(int cPage, int numPerPage, String userId) {
+		return dao.selectApprReqList(session, cPage, numPerPage, userId);
 	}
 
 	@Override
-	public List<Approval> selectApprWaitList(String userId) {
-		return dao.selectApprWaitList(session, userId);
+	public int selectApprReqListCount(String userId) {
+		return dao.selectApprReqListCount(session, userId);
+	}
+	
+
+	@Override
+	public List<Approval> selectApprTempList(int cPage, int numPerPage, String userId) {
+		return dao.selectApprTempList(session, cPage, numPerPage, userId);
+	}
+	
+	@Override
+	public int selectApprTempListCount(String userId) {
+		// TODO Auto-generated method stub
+		return dao.selectApprTempListCount(session, userId);
 	}
 
+	@Override
+	public List<Approval> selectApprWaitList(int cPage, int numPerPage, String userId) {
+		return dao.selectApprWaitList(session, cPage, numPerPage, userId);
+	}
+
+
+	@Override
+	public int selectApprWaitListCount(String userId) {
+		return dao.selectApprWaitListCount(session, userId);
+	}
 	@Override
 	@Transactional
 	public int updateAppr(ApprLine line) {
@@ -186,15 +206,18 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
+	@Transactional
 	public int updateTempApproval(Approval appr, List<ApprLine> apprLines, List<AppredDoc> appred,
-			List<ApprAttachment> files, List<ApprAttachment> delFiles) {
+			List<ApprAttachment> files, List<ApprAttachment> delFiles) throws RuntimeException{
 		
 		//1 Approval TBL에 업데이트
-		int result=0; // = dao.updateApproval(session, appr);			
+		int result = dao.updateApproval(session, appr);			
 		if(result==0) {
 			throw new RuntimeException("결재 문서 입력 오류");
 		}
-		//2 ApprLine TBL에 추가
+		//2-1 ApprLine TBL 삭제
+		dao.deleteApprLine(session, appr.getApprNo());
+		//2-2 ApprLine update
 		for(ApprLine al : apprLines) {
 			al.setApprNo(appr.getApprNo());
 			result=dao.insertApprLine(session, al);
@@ -202,24 +225,36 @@ public class ApprovalServiceImpl implements ApprovalService{
 				throw new RuntimeException("결재선 입력 오류");
 			}
 		}
-		// AppredDoc 추가
+		//3-1AppredDoc 삭제
+		dao.deleteAppredDoc(session, appr.getApprNo());
+		//3-2 AppredDoc 추가
 		if(!appred.isEmpty()) {
 			for(AppredDoc ad : appred) {
 				ad.setApprNo(appr.getApprNo());
 				result=dao.insertAppredDoc(session, ad);
 				if(result==0) {
-					throw new RuntimeException("결재선 입력 오류");
+					throw new RuntimeException("기결재 문서 입력 오류");
 				}
 			}
 		}
 		
-		//업로드파일 추가
+		//4-1 업로드파일 추가
 		if(!files.isEmpty()) {
 			for(ApprAttachment at : files) {
 				at.setApprNo(appr.getApprNo());
 				result=dao.insertApprAttachment(session, at);
 				if(result==0) {
-					throw new RuntimeException("결재선 입력 오류");
+					throw new RuntimeException("파일 업로드오류");
+				}
+			}
+		}
+		//4-2 삭제 파일 있을 시 DB에서 삭제
+		System.out.println("삭제파일 있어야되는데 없냐? 엠티니? 트루펄스?"+delFiles.isEmpty());
+		if(!delFiles.isEmpty()) {
+			for(ApprAttachment at : delFiles) {
+				result = dao.deleteApprAttachment(session, at.getDocFileNo());
+				if(result==0) {
+					throw new RuntimeException("파일 삭제 오류");
 				}
 			}
 		}
@@ -227,6 +262,39 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return 1;
 
 	}
+
+	@Override
+	public List<Approval> selectMyDocList(int cPage, int numPerPage, String userId) {
+		return dao.selectMyDocList(session, cPage, numPerPage, userId);
+	}
+	
+	@Override
+	public int selectMyDocListCount(String userId) {
+		return dao.selectMyDocListCount(session, userId);
+	}
+
+	@Override
+	public List<Approval> selectDeptDocList(int cPage, int numPerPage, String deptCode) {
+		return dao.selectDeptDocList(session, cPage, numPerPage, deptCode);
+	}
+
+	@Override
+	public int selectDeptDocListCount(String deptCode) {
+		return dao.selectDeptDocListCount(session, deptCode);
+	}
+
+	@Override
+	public List<Approval> selectRefferedDocList(int cPage, int numPerPage, String userId) {
+		return dao.selectRefferedDocList(session, cPage, numPerPage, userId);
+	}
+
+	@Override
+	public int selectRefferedDocListCount(String userId) {
+		// TODO Auto-generated method stub
+		return dao.selectRefferedDocListCount(session, userId);
+	}
+	
+	
 	
 
 	

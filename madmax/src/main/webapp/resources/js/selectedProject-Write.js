@@ -280,6 +280,14 @@ window.onload = function(){
     });    
 
     
+    //프로젝트 수정 모달
+    $("#projectState").change(function(){
+    	if($("#projectState").is(':checked')){
+    		$("#pjStateCk").html("프로젝트를 <b class='text-danger'>완료</b>상태로 변경하시면 <b>읽기전용 프로젝트</b>로 전환됩니다.")
+    	}else{
+    		$("#pjStateCk").html("");
+    	}
+    });
     
 
   //일정 - 지도

@@ -35,11 +35,9 @@
 		<input type="hidden" name="userId" value="${loginUser.userId }">
 		<div class="header">
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-			<button type="submit" class="btn btnPrimary">결재요청</button>
 			<button type="button" class="btn btnLight" style="width:7em" onclick="attachAppredDoc();">기결재첨부</button>
 			<button type="button" class="btn btnLight" onclick="">임시저장</button>
-			<button type="button" class="btn btnLight" onclick="closePag
-			e();">취소</button>
+			<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 		</div>
 		<h3 style="text-align:center; margin:30px auto;">${appr.typeTitle }</h3>
 		<div class="container-fluid line-container">
@@ -162,11 +160,11 @@
 	                 		onclick="fileDownload('${attachment.docOriFileName}', '${attachment.docRenamedFile }');"> 
 	                 		첨부파일 ${vs.count } - ${attachment.docOriFileName}
 	       			</button>
-	       			<button type="button" class="btn badge badge-dark" onclick="removeAttachment('${attachment.docRenamedFile}/${attahcment.docFileNo}');">
+	       			<button type="button" class="btn badge badge-dark" onclick="removeAttachment('${attachment.docRenamedFile}', '${attachment.docFileNo}');">
 	       			x</button>
 			</c:forEach> 
 		</div>
-		<div class="row-vh d-flex flex-row justify-content-end">
+		<div class="row-vh d-flex flex-row justify-content-end  m-3">
 			<button type="submit" class="btn btnPrimary">결재요청</button>
 		</div>
 		<br>
@@ -280,12 +278,15 @@
 			$(event.target).parent().remove();
 		}
 		
-		function removeAttachment(attachmentNo){
+		function removeAttachment(delRenamedFilename, attachmentNo){
 			console.log($(event.target));
 			console.log();
 			if(confirm('첨부된 파일을 지우시겠습니까?')){
+				//${attachment.docRenamedFile}
 				var input_delFile = '<input type="hidden" name="delFile" value="';
-					input_delFile+= attachmentNo+'"/>'
+					input_delFile+= delRenamedFilename+'/'+attachmentNo;
+					input_delFile+= '">'
+					console.log(input_delFile);
 				$(".fileUpload-container").append($(input_delFile));
 				$(event.target).prev().remove();
 				$(event.target).remove();
@@ -293,7 +294,10 @@
 			}
 		}
 		
-		
+		function fileDownload(ori, rename){
+			ori=encodeURIComponent(ori);
+			location.href="${path}/appr/fileDownload?ori="+ori+"&rename="+rename;
+		}
 		
 	</script>
 </body>

@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
-<jsp:include page="/WEB-INF/views/common/sidebar-appr.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
 <style>	
 	.list-container{
@@ -32,7 +32,7 @@
 	<br>
 	<!-- <p><i class="fas fa-search"></i> &nbsp;검색</p> -->
 	<div class="row searchBox" style="font-size:12px;">	
-		<form style="width:100%">
+		<form style="width:100%" action="${path}/appr/searchApprDoneBox.do">
 			<table class="table table-borderless">
 				<tr>
 					<th>결과</th>
@@ -49,10 +49,12 @@
 					
 				</tr>
 				<tr>
-					<th>기안자</th>
-					<td><input type="text" name="draftUserName"></td>
 					<th>문서제목</th>
-					<td><input type="text" name="draftTitle">
+					<td><input type="text" name="draftName"></td>
+					
+					<td>
+						<input type="hidden" name="url" value="approval/apprDoneBox">
+					</td>
 					<td>
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
 					</td>
@@ -62,7 +64,7 @@
 	</div>
 	<br>
 	<div class="row opt-container" style="margin-left:10px;">
-		<p>전체 <span style="color:red"> </span></p>
+		<p>전체 <span style="color:red"><c:out value="${totalData}"/> </span></p>
 	</div>
 	<div class="row draft-container text-center">
 		<div class="col">
@@ -77,7 +79,7 @@
 				</tr>
 				<c:forEach items="${list}" var="l" varStatus="i">
 				<tr>
-					<td>${i.index+1}</td>
+					<td>${l.apprNo}</td>
 					<td><a href="javascript:void(0)" 
 							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
 							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
@@ -93,6 +95,11 @@
 				</c:forEach>
 			</table>
 		</div>
+	</div>
+	<div id="pagebar-container">
+		<br>
+		${pageBar }
+		<br>
 	</div>
 </div>
 

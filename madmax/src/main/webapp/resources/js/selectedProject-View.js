@@ -94,3 +94,24 @@ function fn_displayHiddenComment(e){
     $(e).parent("div").siblings("table").find(".hiddenComment").toggleClass("d-none");
 }
 //댓글 더보기 ----------------------------------------------------------------------------<
+
+//댓글 수정 input 띄우기
+function fn_updateCommentInput(type, postNo){
+	let hiddenDiv = "#commentDiv"+type+postNo;
+	let visibleInput = "#updateCommentInput"+type+postNo;
+	
+	$(hiddenDiv).addClass("d-none");
+	$(visibleInput).removeClass("d-none");
+}
+
+//댓글 수정 input 닫기
+function fn_formClose(type, postNo){
+	let hiddenDiv = "#commentDiv"+type+postNo;
+	let visibleInput = "#updateCommentInput"+type+postNo;
+	let comment = "#commentInput"+type+postNo;
+	let commentDiv = "#commentDiv"+type+postNo;
+	
+	$(visibleInput).addClass("d-none");
+	$(hiddenDiv).removeClass("d-none");
+	$(comment).val($.trim($(commentDiv).text()));
+}

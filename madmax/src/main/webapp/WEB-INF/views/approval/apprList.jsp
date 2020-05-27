@@ -27,29 +27,6 @@
 	<c:if test="${loginUser.sign==null }">
 	<p style="color:red; font-weight:bolder;"> &nbsp; 기안을 작성하기 전에 F5를 눌러 전자서명을 등록해주세요.</p>
 	</c:if>
-<!-- 	<div class="row currList" >
-		<div class="col-sm-8">
-			<ul>
-				<li><strong><i class="fas fa-history"></i> &nbsp; &nbsp;기안문 검색</strong></li>
-				<li><a href="">휴가신청서</a></li>
-				<li><a href="">출장신청서</a></li>
-				<li><a href="">품의문</a></li>
-			</ul>		
-		</div>
-		<div class="col-sm-4 docForm">
-			<form action="#">
-				<div class="input-group mb-3 input-group-sm">
-					<div class="input-group-prepend">
-						<span class="input-group-text">양식명</span>
-					</div>
-					<input type="text" class="form-control" name="docForm">
-					<div class="input-group-append">
-					<button class="btn btn-secondary" type="submit">search</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>	  -->
 	
 	<div class="row draftList" style="clear:both;">
 		<div class="col">

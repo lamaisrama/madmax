@@ -46,9 +46,12 @@
                            	<c:out value="${projectInfo.PROJECTTITLE}"/>
                         </h4>
                         
-                     
+						<c:if test="${projectInfo.USERID == loginUser.userId}">
                         <div class="dropdown col-1" id="selectColorBox">
-                            
+                        </c:if>
+                        <c:if test="${projectInfo.USERID != loginUser.userId}">
+                        <div class="dropdown col-1 invisible" id="selectColorBox">
+                        </c:if>
                             <button type="button" class="btn dropdown-toggle justify-content-center align-items-center" data-toggle="dropdown">
                             	<i class="fas fa-paint-roller text-white"></i>
                             </button>
@@ -74,10 +77,12 @@
                                 <i class="fas fa-bars text-white"></i>
                             </button>
                             <div class="dropdown-menu">
+                                <c:if test="${projectInfo.USERID != loginUser.userId}">
                                 <a class="dropdown-item" onclick="fn_pjGoOut()">프로젝트 나가기</a>
+                                </c:if>
                                 <c:if test="${projectInfo.USERID == loginUser.userId}">
-	                                <a class="dropdown-item" onclick="fn_pjUpdate()">프로젝트 수정</a>
-	                                <a class="dropdown-item" onclick="fn_pjDelete()">프로젝트 삭제</a>
+                                	<a class="dropdown-item" onclick="$('#pjGoOutManagerModal').modal('show');">프로젝트 나가기</a>
+	                                <a class="dropdown-item" onclick="$('#updateProjectModal').modal('show')">프로젝트 수정</a>
 	                            </c:if>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item d-flex flex-column">
@@ -121,13 +126,12 @@
                         </div>
                 </div>
 
-
+				<c:if test="${projectInfo.PROJECTSTATE eq 'P'}">
                 <!-- 게시물 작성 -->
                 <form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
                 <!-- from 공통 hidden input모음 -->
 				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
-				    <%-- <input type="hidden" name="writer" value="${loginUser.userId}"/> --%>    
-				    <input type="hidden" name="writer" value="admin"/>    
+				    <input type="hidden" name="writer" value="${loginUser.userId}"/>
 				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
 				    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
                     <!-- 2) 글 타입 -->
@@ -354,7 +358,7 @@
 					</div>
                         
                 </form>
-                
+                </c:if>
             <!-- ☆★☆ 게시글List include -->
             <div class="mb-3"> <!-- 고정글 -->
 				<%-- <jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" /> --%>
@@ -363,12 +367,16 @@
 				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
             </div>
 
-            </div>
+            </div> <!-- col-sm-7닫는 div -->
 
                 
-            <!-- <div class="col-sm-3">
-			<div class="col col-sm-3"> -->
-			<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+            <div class="col-sm-3">
+
+				<jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" />
+
+				<%-- <jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" /> --%>
+
+			<div class="col col-sm-3">
 
 </div>
 
@@ -400,20 +408,20 @@
     <!-- 프로젝트 설정 [ 숨김 ] 끝 -->
     <!-- 프로젝트 설정 [ 나가기 ] -->
     <div class="modal fade" id="pjGoOutModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content pjSetModal">                
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content pjSetModal modal-center">                
                 <!-- Modal Header -->
                 <div class="modal-header p-2 pl-3 pr-3">
-                    <h4 class="modal-title">프로젝트 나가기</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">프로젝트 나가기</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>                
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <strong class="">[프로젝트이름]</strong>
+                    <strong class="">[${projectInfo.PROJECTTITLE}]</strong>
                     <p>프로젝트에서 나가시겠습니까?</p>
                     <div class="w-100 row flex m-0 justify-content-around">
                         <button type="button" class="btn btn-outline-dark col-5" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-info col-5" onclick="fn_pjGoOut(${projectInfo.PROJECTNO},'${loginUser.userId}')">
+                        <button type="button" class="btn btn-info col-5" onclick="fn_pjGoOutAjax(${projectInfo.PROJECTNO},'${loginUser.userId}')">
                             	나가기
                         </button>
                     </div>
@@ -421,10 +429,39 @@
             </div>
         </div>
     </div> 
-    <!-- 프로젝트 설정 [ 나가기 ] 끝 -->    
+    <!-- 프로젝트 설정 [ 나가기 ] 끝 -->
+        
+    <!-- 프로젝트 설정 [ 나가기 *관리자 ] -->
+    <div class="modal fade" id="pjGoOutManagerModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content pjSetModal modal-center">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title" id="exampleModalLabel">프로젝트 나가기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <strong class="">[${projectInfo.PROJECTTITLE}]</strong>
+                    	<p>
+                    		<strong>${loginUser.userName}님</strong>은 해당 프로젝트의 관리자입니다.<br>
+                    		프로젝트에서 나가시려면 관리자를 위임해 주세요.
+                    	</p>
+                    <div class="w-100 row flex m-0 justify-content-around">
+                        <button type="button" class="btn btn-outline-dark col-5" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-info col-5" data-dismiss="modal" onclick="$('#changePjManagerModal').modal('show')">
+                            	관리자 위임
+                        </button>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    </div> 
+    <!-- 프로젝트 설정 [ 나가기 *관리자  ] 끝 --> 
+           
     <!-- 프로젝트 설정 [ 삭제 ] -->
     <div class="modal fade" id="pjDeleteModal">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content pjSetModal">                
                 <!-- Modal Header -->
                 <div class="modal-header p-2 pl-3 pr-3">
@@ -449,7 +486,7 @@
 
     <!-- 게시글 작성 [ 업무 - 담당자 추가 ] -->
     <div class="modal fade" id="addWorkerModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content addWorkerModal">                
                 <!-- Modal Header -->
                 <div class="modal-header p-2 pl-3 pr-3">
@@ -462,7 +499,7 @@
                         <i class="fas fa-search mr-3 stoolGrey"></i>
                         <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100">
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
                         <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
@@ -489,7 +526,7 @@
     
     <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ] -->
     <div class="modal fade" id="addMentionModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content addWorkerModal">                
                 <!-- Modal Header -->
                 <div class="modal-header p-2 pl-3 pr-3">
@@ -502,7 +539,7 @@
                         <i class="fas fa-search mr-3 stoolGrey"></i>
                         <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100">
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
                         <c:forEach items="${projectMember}" var="pm">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
@@ -524,7 +561,103 @@
             </div>
         </div>
     </div> 
-    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ]  끝 --> 
+    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ]  끝 -->     
+    
+    <!-- 관리자 나가기 [ 위임할 관리자 선택 ] -->
+    <div class="modal fade" id="changePjManagerModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content addWorkerModal">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title">위임할 참여자 선택하기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
+                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                    </div>
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                        <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
+                        <c:if test="${pm.userId ne loginUser.userId}">
+                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="addWorker_profile_div mr-2">
+                                    <img src="${path}/resources/images/defaultProfile.png">
+                                </div>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                            </div>
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_changePjManager(${pm.projectNo},'${loginUser.userId}','${pm.userId}');">
+                                	선택
+                            </button>
+                        </div>
+                        </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                </div>            
+            </div>
+        </div>
+    </div> 
+    <!-- 관리자 나가기 [ 위임할 관리자 선택 ]  끝 -->   
+
+    <!-- 프로젝트 수정 ----------------------->       
+	<div class="modal" id="updateProjectModal">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #F1F0F5">
+                    <h6 class="modal-title">프로젝트 수정</h6>
+                    <button type="button"  class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!--Modal Body-->
+                <div class="modal-body d-block">
+                    <ul class="list-unstyled">
+                    	<form method="post" id="updateProjectForm">
+                    	<input type="hidden" name="pjNo" value="${projectInfo.PROJECTNO}"/>
+                        <li class="mb-2">
+                            <input type="text" class="form-control" name="projectTitle" value="${projectInfo.PROJECTTITLE}"
+                            style="font-size: 25px; font-weight: bolder;">
+                        </li>
+                        <hr>
+                        <li>
+                            <b>프로젝트 상태 변경</b>
+                        </li>
+                        <li class="d-flex mb-3 mt-3 algin-items-center">
+                           	<i class="fas fa-check-circle mr-3" style='font-size:24px'></i>
+                           	<label class="mr-1" for="projectState" style="cursor: pointer;">
+                           		프로젝트 완료
+                         	</label>
+                            <div class="ml-2 custom-control custom-switch">
+                            <c:if test="${projectInfo.PROJECTSTATE eq 'E' }">
+                                <input type="checkbox" class="custom-control-input"  name="projectState" id="projectState" checked>
+                            </c:if>
+                            <c:if test="${projectInfo.PROJECTSTATE eq 'P'}">
+                                <input type="checkbox" class="custom-control-input"  name="projectState" id="projectState">
+                            </c:if>
+                                <label class="custom-control-label" for="projectState"></label>
+                            </div>                            
+                        </li>
+                        <div id="pjStateCk">
+                        </div>
+                    </ul>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer d-flex justify-content-center">
+                	<button type="submit" onclick="fn_updateProjectSubmit();" class="btn m-2 stoolDarkBlue">
+                    	프로젝트 수정
+                   	</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>  
+    <!-- 프로젝트 수정  끝 -------------------->  
+    
 <!----------------------------------------------------------------------------------------------------------------------- 모달모음 끝 ------->    
  
 

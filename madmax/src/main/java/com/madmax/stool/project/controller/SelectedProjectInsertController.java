@@ -46,11 +46,10 @@ public class SelectedProjectInsertController {
 			MultipartHttpServletRequest mtfRequest, HttpSession session){
 
 		
-        // 방법 01 : entrySet()
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            System.out.println("[key]:" + entry.getKey() + ", [value]:" + entry.getValue());
-        }
-        //위쪽은 시도 후 지울거임
+        // entrySet()
+//        for (Map.Entry<String, String> entry : map.entrySet()) {
+//            System.out.println("[key]:" + entry.getKey() + ", [value]:" + entry.getValue());
+//        }
 		
 		//JSP에서 받아온 기본값들
 		String writer = map.get("writer"); //작성자

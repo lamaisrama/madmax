@@ -10,4 +10,22 @@ public interface SelectedProjectUpdateService {
 
 	int updateProjectColor(Map<String, Object> pjInfo);
 
+	int deleteProjectMember(Map<String, Object> pjInfo);
+
+	int updateProjectManager(Map<String, Object> pjInfo);
+
+	int updateSelectedProject(Map<String, Object> upMap);
+
+	int insertBookmark(Map<String, Object> bInfo);
+
+	int deleteBookmark(Map<String, Object> bInfo);
+
+	int updatePinPost(Map<String, Object> pjInfo);
+
+	int insertComment(Map<String, Object> cMap);
+
+	int updateComment(Map<String, Object> cMap);
+
+	int deleteComment(Map<String, Object> cMap);
+
 }

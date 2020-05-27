@@ -4,7 +4,8 @@
 
 	<select id="selectProjectBoard" parameterType="map" resultType="map">
 		 <![CDATA[
-			 SELECT * FROM (SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO ORDER BY BOARDNO DESC) 
+			 SELECT * FROM 
+			 (SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO WHERE PB.STATUS = 'V' ORDER BY BOARDNO DESC) 
 			 WHERE ROWNUM <=5
 		 ]]>
 	</select>
@@ -56,15 +57,15 @@
 	
 	<!-- 글,업무,일정 댓글 가져오기 -->
 	<select id="selectWritingComment" parameterType="map" resultType="map">
-		SELECT * FROM WRITINGCOMMENT
+		SELECT * FROM WRITINGCOMMENT ORDER BY WRITINGCOMMENTTIME
 	</select>
 	
 	<select id="selectTaskComment" parameterType="map" resultType="map">
-		SELECT * FROM TASKCOMMENT
+		SELECT * FROM TASKCOMMENT ORDER BY TASKCOMMENTTIME
 	</select>
 	
 	<select id="selectScheduleComment" parameterType="map" resultType="map">
-		SELECT * FROM SCHEDULECOMMENT
+		SELECT * FROM SCHEDULECOMMENT ORDER BY SCHEDULECOMMENTTIME
 	</select>
 	
 	<!--  asidebar-mapper로 이동
@@ -74,14 +75,18 @@
 	</select> -->
 	
 	<!-- 프로젝트의 파일 가져오기 -->
-	<select id="selectAllFileList" parameterType="map" resultType="map">
-		SELECT PF.PJFILENO, PF.PJFILEORINAME, PF.PJFILERENAMEDNAME, W.WRITINGTIME, WRITINGNO, 
-		W.WRITINGID, U.USERNAME, BOARDNO, PROJECTNO FROM PROJECTFILE PF 
-		JOIN PROJECTTABLE PT USING (PROJECTNO) 
-		JOIN PROJECTBOARD PB USING (PROJECTNO) 
-		JOIN WRITING W USING (BOARDNO) 
-		JOIN WRITINGATTACHMENT WA USING (WRITINGNO)
-		JOIN STOOLUSER U USING (USERID) WHERE PROJECTNO=#{pjNo}
+	<select id="allAttach" parameterType="_int" resultType="allAttach">
+		select a.*,p.BOARDTYPE,s.username,w.writingtime
+	    from WRITINGATTACHMENT a join writing w on(a.writingno=w.writingno) 
+	    join PROJECTBOARD p on (p.boardno=w.boardno)
+	    left join STOOLUSER s on(userid=writingid) 
+	    where projectno=#{pjNo}
+	union
+	select a.*,p.boardtype,s.username,t.tasktime
+	    from TASKATTACHMENT a join task t on(a.taskno=t.taskno)
+	    join PROJECTBOARD p on (p.boardno=t.boardno)
+	    left join STOOLUSER s on(userid=taskid)
+	    where projectno=#{pjNo}
 	</select>
 	
 	
@@ -111,4 +116,10 @@
 		WHERE PJ.PROJECTNO = #{pjNo} AND F.USERID = #{loginId}
 	</select>
 	
+	<select resultType="map" parameterType="map" id="selectBookmarkList">
+		SELECT PB.*, B.USERID
+		FROM PROJECTBOARD PB JOIN BOOKMARK B ON PB.BOARDNO = B.BOARDNO
+		WHERE B.USERID = #{loginId} AND PB.PROJECTNO = #{pjNo}
+	</select>
+
 </mapper>

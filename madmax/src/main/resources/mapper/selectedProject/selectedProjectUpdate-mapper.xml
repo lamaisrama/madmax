@@ -12,4 +12,74 @@
 	<update id="updateProjectColor" parameterType="map">
 		UPDATE PROJECTTABLE SET PROJECTCOLOR = #{color} WHERE PROJECTNO = #{pjNo}
 	</update>
+	
+	<delete id="deleteProjectMember" parameterType="map">
+		DELETE PROJECTMEMBER WHERE PROJECTNO = #{pjNo} AND USERID = #{loginId}
+	</delete>
+	
+	<update id="updateProjectManager" parameterType="map">
+		UPDATE PROJECTTABLE SET USERID = #{newManagerId} WHERE PROJECTNO = #{pjNo}
+	</update>
+	
+	<update id="updateSelectedProject" parameterType="map">
+		UPDATE PROJECTTABLE SET PROJECTTITLE= #{title}, PROJECTSTATE= #{projectState} WHERE PROJECTNO = #{pjNo}
+	</update>	
+	
+	<insert id="insertBookmark" parameterType="map">
+		INSERT INTO BOOKMARK VALUES(#{loginId},#{bNo})
+	</insert>
+	
+	<delete id="deleteBookmark" parameterType="map">
+		DELETE BOOKMARK WHERE BOARDNO = #{bNo} AND USERID = #{loginId}
+	</delete>
+	
+	<update id="updatePinPost" parameterType="map">
+		UPDATE PROJECTBOARD SET PINPOST = #{check} WHERE PROJECTNO = #{pjNo} AND BOARDNO = #{bNo}
+	</update>
+	
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO
+ 		<choose>
+			<when test="postType.equals('W')">
+		  		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,
+		  	</when>
+			<when test="postType.equals('T')">
+		  		TASKCOMMENT VALUES(SEQ_TASKCOMMENTNO.NEXTVAL,
+		  	</when>
+			<when test="postType.equals('S')">
+		  		SCHEDULECOMMENT VALUES(SEQ_SCHEDULECOMMENTNO.NEXTVAL,
+		  	</when>
+		</choose>	
+		WRITINGCOMMENT VALUES(SEQ_WRITINGCOMMENTNO.NEXTVAL,	
+		#{comment},DEFAULT,#{postNo},#{senderId})		 
+	</insert>
+	
+	<insert id="insertCommentNotification" parameterType="map">
+		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{receiveId}, #{senderId}, 'comment', DEFAULT, DEFAULT, #{boardNo})
+	</insert>	
+
+	<update id="updateComment-W" parameterType="map">		 
+		UPDATE WRITINGCOMMENT SET WRITINGCOMMENT = #{comment} WHERE WRITINGCOMMENTNO = #{commentNo}
+	</update>		
+
+	<update id="updateComment-T" parameterType="map">		 
+		UPDATE TASKCOMMENT SET TASKCOMMENT = #{comment} WHERETASKCOMMENTNO = #{commentNo}
+	</update>		
+
+	<update id="updateComment-S" parameterType="map">		 
+		UPDATE SCHEDULECOMMENT SET SCHEDULECOMMENT = #{comment} WHERE SCHEDULECOMMENTNO = #{commentNo}
+	</update>		
+	
+	<delete id="deleteComment-W" parameterType="map">
+		DELETE WRITINGCOMMENT WHERE WRITINGCOMMENTNO = #{cNo}
+	</delete>
+	
+	<delete id="deleteComment-T" parameterType="map">
+		DELETE TASKCOMMENT WHERE TASKCOMMENT = #{cNo}
+	</delete>
+	
+	<delete id="deleteComment-S" parameterType="map">
+		DELETE SCHEDULECOMMENT WHERE SCHEDULECOMMENT = #{cNo}
+	</delete>
+	
 </mapper>

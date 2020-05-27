@@ -66,8 +66,8 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
-	public List<Approval> selectApprReqList(SqlSessionTemplate session, String userId) {
-		return session.selectList("approval.selectApprReqList", userId);
+	public List<Approval> selectApprReqList(SqlSessionTemplate session, int cPage, int numPerPage, String userId) {
+		return session.selectList("approval.selectApprReqList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
 	}
 
 	@Override
@@ -113,13 +113,13 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
-	public List<Approval> selectApprTempList(SqlSessionTemplate session, String userId) {
-		return session.selectList("approval.selectApprTempList", userId);
+	public List<Approval> selectApprTempList(SqlSessionTemplate session, int cPage, int numPerPage, String userId) {
+		return session.selectList("approval.selectApprTempList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
 	}
 
 	@Override
-	public List<Approval> selectApprWaitList(SqlSessionTemplate session, String userId) {
-		return session.selectList("approval.selectApprWaitList", userId);
+	public List<Approval> selectApprWaitList(SqlSessionTemplate session, int cPage, int numPerPage, String userId) {
+		return session.selectList("approval.selectApprWaitList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
 	}
 
 	@Override
@@ -148,9 +148,73 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int updateUserSign(SqlSessionTemplate session, String userId) {
 		return session.update("approval.updateUserSign", userId);
+	}
+
+	@Override
+	public int updateApproval(SqlSessionTemplate session, Approval appr) {
+		return session.update("approval.updateApproval", appr);
+	}
+
+	@Override
+	public void deleteApprLine(SqlSessionTemplate session, int apprNo) {
+		session.delete("approval.deleteApprLine", apprNo);
+	}
+
+	@Override
+	public void deleteAppredDoc(SqlSessionTemplate session, int apprNo) {
+		session.delete("approval.deleteAppredDoc", apprNo);
+	}
+
+	@Override
+	public int deleteApprAttachment(SqlSessionTemplate session, int docFileNo) {
+		return session.delete("approval.deleteApprAttachment", docFileNo);
+	}
+
+	@Override
+	public int selectApprTempListCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectApprTempListCount", userId);
+	}
+
+	@Override
+	public int selectApprWaitListCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectApprWaitListCount", userId);
+	}
+
+	@Override
+	public int selectApprReqListCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectApprReqListCount", userId);
+	}
+
+	@Override
+	public List<Approval> selectMyDocList(SqlSessionTemplate session, int cPage, int numPerPage, String userId) {
+		return session.selectList("approval.selectMyDocList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
+	}
+
+	@Override
+	public int selectMyDocListCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectMyDocListCount", userId);
+	}
+
+	@Override
+	public List<Approval> selectDeptDocList(SqlSessionTemplate session, int cPage, int numPerPage, String deptCode) {
+		return session.selectList("approval.selectDeptDocList", deptCode, new RowBounds((cPage-1)*numPerPage, numPerPage));
+	}
+
+	@Override
+	public int selectDeptDocListCount(SqlSessionTemplate session, String deptCode) {
+		return session.selectOne("approval.selectDeptDocListCount", deptCode);
+	}
+
+	@Override
+	public List<Approval> selectRefferedDocList(SqlSessionTemplate session, int cPage, int numPerPage, String userId) {
+		return session.selectList("approval.selectRefferedDocList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
+	}
+
+	@Override
+	public int selectRefferedDocListCount(SqlSessionTemplate session, String userId) {
+		return session.selectOne("approval.selectRefferedDocListCount", userId);
 	}	
-	
-	
+		
 	
 
 	

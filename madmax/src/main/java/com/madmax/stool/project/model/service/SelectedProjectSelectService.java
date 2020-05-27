@@ -3,6 +3,7 @@ package com.madmax.stool.project.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
 public interface SelectedProjectSelectService {
@@ -22,12 +23,13 @@ public interface SelectedProjectSelectService {
 	List<Map<String, Object>> selectTaskComment();
 	List<Map<String, Object>> selectScheduleComment();
 //	Map<String, Object> selectProjectMemberNo();
-	List<Map<String, Object>> selectAllFileList();
+	//List<Map<String, Object>> selectAllFileList(int pjNo);
+	List<AllAttachment> selectAllProjectFiles(int pjNo);
 //	List<Map<String, Object>> selectUser();
 	Map<String, Object> selectProjectTB(int pjNo);
 	int selectFavorit(Map<String, Object> pjInfo);
 	List<ProjectMember> selectProjectMemberList(int pjNo);
-
+	List<Map<String, Object>> selectBookmarkList(Map<String, Object> pjInfo);
 
 
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
+import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Controller
@@ -32,6 +33,7 @@ public class SelectedProjectSelectController {
 		pjInfo.put("loginId", loginId);
 		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
 		int favorite=service.selectFavorit(pjInfo);
+		List<Map<String,Object>> bookmarkList=service.selectBookmarkList(pjInfo);
 		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
 		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		
@@ -64,7 +66,9 @@ public class SelectedProjectSelectController {
 //		Map<String,Object> projectMemberNo=service.selectProjectMemberNo();
 		
 		//한 프로젝트의 파일함의 파일 가져오기
-		List<Map<String,Object>> allFileList=service.selectAllFileList();
+		//List<Map<String,Object>> allFileList=service.selectAllFileList(pjNo);
+		List<AllAttachment> attachments=service.selectAllProjectFiles(pjNo);
+		
 		
 		//오른쪽 사이드바 프로젝트 참여자 가져오기
 //		List<Map<String,Object>> projectMember=service.selectProjectMember();
@@ -74,7 +78,8 @@ public class SelectedProjectSelectController {
 		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
-		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
+		if(bookmarkList.size()>0) mv.addObject("bookmarkList",bookmarkList);
+		if(projectMember.size()>0) mv.addObject("projectMember",projectMember);
 		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
 		
 		if(writingList.size()>0) mv.addObject("writingList",writingList);
@@ -97,7 +102,8 @@ public class SelectedProjectSelectController {
 //		if(projectMember.size()>0)mv.addObject("projectMember",projectMember);
 		
 //		mv.addObject("projectMemberNo",projectMemberNo);
-		if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
+		//if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
+		if(attachments.size()>0)mv.addObject("allFileList",attachments);
 //		mv.addObject("user",user);
 		
 		

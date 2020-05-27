@@ -38,7 +38,7 @@
     	width:30px; 
     }
 	.joinBtn {
-		margin: 100px 0 100px 10px; 
+		margin: 80px 0 100px 10px; 
 		width:270px;
 		font-size : 17px;
 		font-weight : 600;
@@ -82,7 +82,7 @@
    		color:green;
  	}
    div#userId-container span.error{
-   		color:red;
+   		color: #FFE3E3;
    } 
    
 </style>

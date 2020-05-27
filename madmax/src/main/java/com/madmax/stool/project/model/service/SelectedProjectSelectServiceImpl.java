@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.madmax.stool.project.model.dao.SelectedProjectSelectDao;
+import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
 
 @Service
@@ -72,7 +73,15 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 		// TODO Auto-generated method stub
 //		return dao.selectProjectMember(session);
 //	}
-
+	
+	@Override
+	public List<AllAttachment> selectAllProjectFiles(int pjNo) {
+	
+		List<AllAttachment> allAttach=dao.selectAllAttach(session,pjNo);
+		
+		return allAttach;
+	}
+	
 	@Override
 	public List<Map<String, Object>> selectWritingAttachment() {
 		// TODO Auto-generated method stub
@@ -109,11 +118,11 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 //		return dao.selectProjectMemberNo(session);
 //	}
 
-	@Override
-	public List<Map<String, Object>> selectAllFileList() {
-		// TODO Auto-generated method stub
-		return dao.selectAllFileList(session);
-	}
+//	@Override
+//	public List<Map<String, Object>> selectAllFileList(int pjNo) {
+//		// TODO Auto-generated method stub
+//		return dao.selectAllFileList(session,pjNo);
+//	}
 
 	@Override
 	public Map<String, Object> selectProjectTB(int pjNo) {
@@ -129,6 +138,12 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	public List<ProjectMember> selectProjectMemberList(int pjNo) {
 		return dao.selectProjectMemberList(session,pjNo);
 	}
+
+	@Override
+	public List<Map<String,Object>> selectBookmarkList(Map<String, Object> pjInfo) {
+		return dao.selectBookmarkList(session,pjInfo);
+	}
+
 
 //	@Override
 //	public List<Map<String, Object>> selectUser() {

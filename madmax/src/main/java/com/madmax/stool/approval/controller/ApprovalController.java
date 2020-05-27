@@ -48,14 +48,16 @@ public class ApprovalController {
 		List<ApprDocType> list = service.selectApprDocList(cPage, numPerPage);
 		int totalData = service.selectApprDocListCount();
 		mv.addObject("list", list);
+		mv.addObject("totalData", totalData);
 		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/approval.do"));
 		mv.setViewName("approval/apprList");
 		return mv;
 	}
 
 	@RequestMapping("/appr/draftForm.do")
-	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required = false, defaultValue = "3") int dNo) {
+	public ModelAndView selectDraftForm(ModelAndView mv, @RequestParam(required = false, defaultValue = "1") int dNo) {
 		mv.addObject("type", service.selectApprDocForm(dNo));
+		mv.addObject("apprDocTypeNo", dNo);
 		mv.setViewName("/approval/apprDocWrite");
 		return mv;
 	}
@@ -206,54 +208,84 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("/appr/apprReqBox.do")
-	//public String appovalRequestBox(@SessionAttribute("loginUser") User user) {
-	public String approvalRequestBox(HttpServletRequest req, Model m) {
+	public String approvalRequestBox(HttpServletRequest req, Model m,
+				@RequestParam(required = false, defaultValue = "1") int cPage,
+				@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list = service.selectApprReqList(userId);
+		List<Approval> list = service.selectApprReqList(cPage, numPerPage, userId);
+		int totalData = service.selectApprReqListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprReqBox.do"));
 		return "approval/apprReqBox";
 	}
 	
 	@RequestMapping("/appr/apprTempBox.do")
-	public String approvalTempBox(HttpServletRequest req, Model m) {
+	public String approvalTempBox(HttpServletRequest req, Model m,
+				@RequestParam(required = false, defaultValue = "1") int cPage,
+				@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list = service.selectApprTempList(userId);
+		List<Approval> list = service.selectApprTempList(cPage, numPerPage, userId);
+		int totalData = service.selectApprTempListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprTempBox.do"));
 		return "approval/apprTempBox";
 	}
 
 	@RequestMapping("/appr/apprWaitBox.do")
-	public String approvalWaitBox(HttpServletRequest req, Model m) {
+	public String approvalWaitBox(HttpServletRequest req, Model m,
+							@RequestParam(required = false, defaultValue = "1") int cPage,
+							@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
-		List<Approval> list  = service.selectApprWaitList(userId);
+		List<Approval> list  = service.selectApprWaitList(cPage, numPerPage, userId);
+		int totalData = service.selectApprWaitListCount(userId);
 		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprWaitBox.do"));
 		return "approval/apprWaitBox";
 	}
 
-	/*
-	 * @RequestMapping("/appr/apprProgBox.do") public String approvalProgBox() {
-	 * return "approval/apprProgBox"; }
-	 */
-
-	/*
-	 * @RequestMapping("/appr/apprDoneBox.do") public String approvalDoneBox() {
-	 * return "approval/apprDoneBox"; }
-	 */
-
 	@RequestMapping("/appr/myDocBox")
-	public String myDocBox() {
+	public String myDocBox(HttpServletRequest req, Model m, 
+							@RequestParam(required = false, defaultValue = "1") int cPage,
+							@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<Approval> list = service.selectMyDocList(cPage, numPerPage, userId);
+		int totalData = service.selectMyDocListCount(userId);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/myDocBox"));
 		return "/approval/myDocBox";
 	}
 
 	@RequestMapping("/appr/deptDocBox")
-	public String deptDocBox() {
+	public String deptDocBox(HttpServletRequest req, Model m, 
+			@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userDept = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		List<Approval> list = service.selectDeptDocList(cPage, numPerPage, userDept);
+		int totalData = service.selectDeptDocListCount(userDept);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
 		return "approval/deptDocBox";
 	}
-
-	@RequestMapping("/appr/myStorageBox")
-	public String myStorageBox() {
-		return "approval/myStorageBox";
+	
+	@RequestMapping("/appr/referredDocBox")
+	public String referredDocBox(HttpServletRequest req, Model m, 
+			@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
+		String userId = ((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		List<Approval> list = service.selectRefferedDocList(cPage, numPerPage, userId);
+		int totalData = service.selectRefferedDocListCount(userId);
+		m.addAttribute("list", list);
+		m.addAttribute("totalData", totalData);
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
+		return "approval/refferedDocBox";
 	}
+
 	
 	@RequestMapping("/appr/openApprDoc")
 	public String openApproval(Model m, int apprNo) {
@@ -390,18 +422,20 @@ public class ApprovalController {
 			}
 		}
 		//파일업로드
-		
-		//새로 올라온 파일 있는지 확인
+		//1)새로 올라온 파일 있는지 확인
 		String path = session.getServletContext().getRealPath("/resources/upload/approval");
 		File f=new File(path);
 		if(!f.exists()) f.mkdirs();
 		List<ApprAttachment> files=new ArrayList();
 		for(MultipartFile mf : upFile) {
+			
 			if(!mf.isEmpty()) {
 				String ori = mf.getOriginalFilename();
+				System.out.println(ori);
 				String rename = RenameFactory.getRenamedFileName(ori);
 				try {
 					mf.transferTo(new File(path+"/"+rename));
+					System.out.println("트랜스퍼 두번 함");
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
@@ -412,41 +446,50 @@ public class ApprovalController {
 			}
 		}
 		
-		//삭제할 파일 있는지 확인
+		//2)삭제할 파일 있는지 확인
 		List<ApprAttachment> delFiles= new ArrayList();
+
 		if(delFile!=null) {
 			for(String s : delFile) {
 				ApprAttachment delAttachment = new ApprAttachment();
 				String[] delFileInfo=s.split("/");
-				//delFileInfo[0] - renamed filename
 				//delFileInfo[1] - docFileNo
-				//1. 파일 삭제
-				File delF = new File(path+"/"+delFileInfo[0]);
-				if(delF.exists()) delF.delete();
-				//2. 삭제할 파일번호 list에 담기
+				//삭제할 파일번호 list에 담기
 				delAttachment.setDocFileNo(Integer.parseInt(delFileInfo[1]));
+				System.out.println("잘 담겼는지 확인 : "+delAttachment.getDocFileNo());
 				delFiles.add(delAttachment);
 			}
 		}
 		
 		//update 메소드 실행
 		int result=0;
-		try{
-		result =service.updateTempApproval(appr, apprLines, appred, files, delFiles);
-		}catch(RuntimeException e) {
-			e.printStackTrace(); 
-		}
 		String msg = "", loc ="";
-		if(result>0) {
-			msg ="결재문서 작성 완료";
-			loc = "";
-		}else{
-			msg = "결재 문서 작성 실패";
-			loc = "";
+		try{
+			result =service.updateTempApproval(appr, apprLines, appred, files, delFiles);
+			if(delFile!=null) {
+				for(String s : delFile) {
+					String[] delFileInfo=s.split("/");
+					//delFileInfo[0] - renamed filename
+					//파일 삭제
+					File delF = new File(path+"/"+delFileInfo[0]);
+					if(delF.exists()) delF.delete();
+					msg ="결재문서 작성 완료";
+					loc = "";
+				}
+			}
+		}catch(RuntimeException e) {
+			for(ApprAttachment a : files) {
+				File delF=new File(path+"/"+a.getDocRenamedFile());
+				if(delF.exists()) delF.delete();
+				e.printStackTrace();
+				msg = "결재 문서 작성 실패 : "+e.getMessage();
+				loc = "";
+				
+			}
 		}
-			m.addAttribute("loc", loc);
-			m.addAttribute("msg", msg);
-			m.addAttribute("script", "window.close();");
+		m.addAttribute("loc", loc);
+		m.addAttribute("msg", msg);
+		m.addAttribute("script", "window.close();");
 			
 		return "common/msg";
 	}
