@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notification">
+	<select id="selectUnreadNotification" parameterType="string" resultType="com.madmax.stool.notification.model.vo.Notification">
+		select * from notificationtable 
+		    join stooluser on(senderid=userId)
+		    join projectboard using(boardno)
+		    join projecttable using(projectno)
+		where notreadtime is null and receiveId=#{userId} order by nottime desc
+	</select>
+	
+	<select id="selectReadNotification" parameterType="string" resultType="com.madmax.stool.notification.model.vo.Notification">
+		select * from notificationtable 
+		    join stooluser on(senderid=userId)
+		    join projectboard using(boardno)
+		    join projecttable using(projectno)
+		where notreadtime is not null and receiveId=#{userId} order by nottime desc
+	</select>
+	
+	<select id="selectWritingTitle" parameterType="_int" resultType="string">
+		select writingtitle from writing where boardNo=#{boardNo}
+	</select>
+	
+	<select id="selectTaskTitle" parameterType="_int" resultType="string">
+		select tasktitle from task where boardNo=#{boardNo}
+	</select>
+	
+	<select id="selectScheduleTitle" parameterType="_int" resultType="string">
+		select scheduletitle from schedule where boardNo=#{boardNo}
+	</select>
+
+</mapper>

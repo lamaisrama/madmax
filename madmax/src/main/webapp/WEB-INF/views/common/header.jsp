@@ -108,15 +108,17 @@
 				    </div>
 				  </div>
 				
-				
-				
+				    <!-- Notification 모달창 -->
+				    <!-- The Modal -->
+				    <div class="modal fade" id="notificationModal">
+					</div><!-- Notification 모달 창 끝 -->
 				
 				
 				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
-				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
+				<button class="btn my-2 my-sm-0" type="button" onclick="openNotification('${loginUser.userId}');">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;
-				<button class="btn  my-2 my-sm-0"  type="button" data-toggle="modal" data-target="#">
+				<button class="btn  my-2 my-sm-0"  type="button" >
 					<i class="far fa-comment-alt"></i>
 				</button>&nbsp;&nbsp;
 				<c:if test="${loginMember==null }">
@@ -210,7 +212,17 @@
                 })
             }) 
 		
-		
+			function openNotification(userId){
+	        	$.ajax({
+	        		url:"${path}/noti/notification.do?userId="+userId,
+	        		dataType:"html",
+	        		success:(data)=>{
+	        			$("#notificationModal").html(data);
+	        			$("#notificationModal").modal('show');
+	        		}
+	        	});
+
+	        }
 		</script>	
 		
 		
