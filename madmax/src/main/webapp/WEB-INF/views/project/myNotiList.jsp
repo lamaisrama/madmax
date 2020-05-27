@@ -199,13 +199,97 @@
                    
                 </div>
 				</c:forEach>
-
+				<c:if test="${ empty msg }">
+				<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+				</c:if>
+				<c:if test="${not empty msg }">
+				<div class="text-center">${msg }</div>
+				</c:if>
 
 	
 </div>	
 <div class="col col-sm-3">
 
 </div>
+<script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
+}
 
+	function moreList(){
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
+		if(pageNo==undefined || pageNo=="" ||pageNo==null){
+			pageNo=2;
+			location.href="${path}/project/myNoti.do?pageNo="+pageNo;
+		}else{
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/myNoti.do?pageNo="+pageNo;
+		}
+		
+		
+	}
+
+
+	//일단. 지도를 출력해줄 위치가 여러곳.
+	//장소도 각각 다르다.
+	var mapContainers = document.getElementsByClassName('map');// 지도를 표시할 div 
+			
+			mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+			
+			//지도를 객체 배열로 생성하기
+			var maps=[];
+			for(var i=0;i<mapContainers.length;i++){
+				maps.push(new kakao.maps.Map(mapContainers[i], mapOption)); 
+			}
+			console.log(maps[0]);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			//검색할 주소를 가져옴
+			var addArr=[];
+			var addr=document.getElementsByClassName('mAddress').innerHTML;
+			for(var i=0;i<$(".mAddress").length;i++){
+				addArr.push($(".mAddress").eq(i).html()); 
+			}
+			console.log(addArr);
+			
+	
+				$.each(maps,function(i,map){
+					console.log(map);
+					var coords;
+					var marker;
+					geocoder.addressSearch(addArr[i],  function(result,status){
+						
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+					        coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
+					        marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+						}
+						console.log(coords);
+						map.setCenter(coords);
+					});
+				});		
+			
+		
+	
+	
+	
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

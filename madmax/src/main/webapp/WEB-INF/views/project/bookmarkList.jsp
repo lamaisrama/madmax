@@ -9,7 +9,7 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<div class="col col-sm-7 ">
+<div class="col col-sm-7 " id="divTest" onscroll="SetDivPosition()">
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
@@ -222,6 +222,41 @@
 </div>
 
 <script>
+$(window).scroll(function () { 
+	var scrollValue = $(document).scrollTop(); 
+	console.log(scrollValue);
+	var strCook=document.cookie;
+	strCook=scrollValue;
+	console.log(strPos);
+	});
+
+
+
+
+/*  window.onload=function(){
+	var strCook=document.cookie;
+	if(strCook.indexOf("!~")!=0) { 
+		var intS = strCook.indexOf("!~"); 
+		var intE = strCook.indexOf("~!"); 
+		var strPos = strCook.substring(intS+2,intE);
+		
+		document.getElementById("divTest").scrollTop = strPos; 
+		console.log("스크롤값:"+strPos);
+		}
+	} 
+	
+function SetDivPosition(){ 
+	var intY = document.getElementById("divTest").scrollTop;
+	document.title = intY; 
+	document.cookie = "yPos=!~" + intY + "~!"; 
+	}
+
+		 */
+ 
+
+
+
+
 //url의 쿼리스트링 값 가져오는 함수
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
