@@ -79,9 +79,10 @@
 			<!--기본은 스크롤 안보이게하고 마우스 오버시 스크롤바 생기게 해야하는데 실패함.., 스크롤바 ui 찾아보기, -->
 			<div class="memberListbox">
 				<div class="adminList">
-					<p>관리자(1)</p>
+					<p>관리자</p>
 					<ul class="detailedList">
-					<%-- <c:forEach var="pm" items="${projectMember}"> --%>
+					<c:forEach var="pm" items="${projectMember}">
+					<c:if test="${pm.userId eq projectInfo.USERID }">
 						<li>
 							<div
 							class="member"
@@ -107,8 +108,9 @@
 									<c:out value="${pm.userName}"/> <!-- 플젝 생성자 이름 -->
 								</span>
 							</div>
-						
 						</li>
+						</c:if>
+						</c:forEach>
 					</ul>
 				</div>
 				<!--관리자-->

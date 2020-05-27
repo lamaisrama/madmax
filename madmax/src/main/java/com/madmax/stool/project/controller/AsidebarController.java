@@ -34,7 +34,7 @@ public class AsidebarController {
 	
 	//오른쪽 사이드바 프로젝트 전체 멤버 리스트 + 프로젝트 참여 인원수 보여주기
 	@RequestMapping
-	public ModelAndView selectMemberCount(ModelAndView mv,int pjNo) {
+	public ModelAndView MemberCount(ModelAndView mv,int pjNo) {
 		
 		//프로젝트 참여자 수 
 		int memberCount=service.selectMemberCount(pjNo);
