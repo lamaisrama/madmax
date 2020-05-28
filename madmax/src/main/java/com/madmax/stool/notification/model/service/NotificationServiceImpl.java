@@ -115,6 +115,14 @@ public class NotificationServiceImpl implements NotificationService{
 		}
 		return find;
 	}
+
+
+	@Override
+	public int selectUnreadNotificationCount(String sender) {
+		return dao.selectUnreadNotificationCount(session, sender);
+	}
+	
+	
 	
 	
 }
