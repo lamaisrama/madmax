@@ -340,4 +340,10 @@ function fn_viewPostDelete(pjNo, bNo){
 	});	
 }
 
+
+
+//파일 수정
+
+
+
 </script>

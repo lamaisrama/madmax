@@ -21,7 +21,10 @@
 					<c:if test="${pb.BOARDTYPE eq 'W'}">
                     <c:forEach items="${writingList }" var="w">
                     <c:if test='${pb.BOARDNO==w.BOARDNO}'>
-                    <div class="pjViewBox w-100 p-3">                              
+                    
+                    <div id="viewBoxDiv${pb.BOARDNO}">
+                    
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
@@ -76,7 +79,7 @@
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate(${pb.BOARDNO})" style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
@@ -417,9 +420,207 @@
                         </form>  
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
+                    </div>
+                    
                     
                     <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
                     <!-- 수정할 때 추가 -->
+                <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
+	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
+	                <!-- from 공통 hidden input모음 -->
+					    <!-- 1) 프로젝트 번호 저장 -->
+					    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
+	                    <!-- 2) 글 타입 -->
+	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
+	                    <!-- 3) 파일 -->                
+	                    <input type="file" name="oriFiles" id="oriFiles" multiple style="display: none;"/>
+	                    <input type="file" name="newFiles" id="newFiles" multiple style="display: none;"/>
+	                    <!-- 4) 이미지파일 -->
+	                    <input type="file" name="oriImgFiles" id="oriImgFiles" multiple style="display: none;" accept="image/*"/>
+	                    <input type="file" name="newImgFiles" id="newImgFiles" multiple style="display: none;" accept="image/*"/>
+	                    <!-- 5) 태그 -->
+	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr"/>
+	                    <input type="hidden" name="newTagListStr" id="newTagListStr"/>
+	                    <!-- 6) 언급 -->
+	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr"/>
+	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr"/>
+	                <!-- from 공통 hidden input모음 끝 -->
+	
+	                    <div id="pjUpdateWriteBox" class="w-100">
+	
+	                        <!-- 작성 카테고리별 div -->
+	                            <!-- 1) 글 작성 -->
+	                            <div id="writeCategory-board" class="row w-100 m-0">
+	                                <div id="boardContainer" class="w-100 p-3">
+	                                    <div id="boardTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-2">
+	                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+	                                            type="text" value="${w.WRITINGTITLE}" maxlength="100" autocomplete="off" style="overflow:visible;">
+	                                    </div>
+	                                    <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
+	                                        <div id="boardContentAreaDiv" class="w-100">
+	                                            <textarea id="boardContentArea" name="writingContent" 
+	                                            	class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" >${w.WRITINGCONTENT}</textarea>
+	                                        </div>
+	                                    </div>                                                                 
+	                                </div>
+	                        	</div>     
+	
+	                        <!-- 공통 하단 -->                        
+	                        <div class="w-100 p-3">
+	                            <!-- 공통) 태그 & 언급 -->
+	                            <!-- 태그 입력 -->
+	                            <div class="col-12 addTagListBox mb-2">
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-2">태그</strong>
+	                                    <div class="w-100 d-flex flex-wrap align-items-center addTagList_update">
+	                                    
+	                                    <c:forEach items="${hashTag}" var="ht">
+											<c:if test="${w.BOARDNO==ht.BOARDNO}">
+											<input type="hidden" name="oriTags${ht.BOARDNO}" value="${ht.HASHTAGTEXT}"/>
+                                                <p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>
+													<span style='color:#25558F;'>#</span>
+													<span class='tagText'>${ht.HASHTAGTEXT}</span>
+													<i class='fas fa-minus-circle stoolGrey ml-2' onclick='fn_deleteTag_update(this,${ht.BOARDNO},${ht.HASHTAGNO})'></i>
+												</p>
+		                                    </c:if>
+	                                    </c:forEach>		                                    
+                                    
+	                                        <div class="d-flex addTagInputDiv pl-2 pr-2 ml-2">
+	                                            # <input type="text" onkeyup="fn_addTag_update(this,${w.BOARDNO})" placeholder="태그입력"/>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 태그문자열 -->
+	                            	<input type="hidden" id="checkTagStr${w.BOARDNO}" value=""/>
+	                            	
+	                                <hr class="w-100">
+	                            </div>  <!-- 태그 입력 끝 -->     
+	                            
+	                            
+	                            <!-- 언급 입력 -->
+	                            <div class="col-12 addMentionListBox mb-2">                             
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-1">언급할 참여자 추가</strong>
+	                                    <div id="" class="w-100 d-flex flex-wrap align-items-center addMentionList_update">
+	                                        <c:forEach items="${notification}" var="n">
+											<c:if test="${ (w.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'writing')}">
+											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
+                                                <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/images/defaultProfile.png">
+                                                    </div>
+                                                    <c:forEach items="${projectMember}" var="pm">
+                        							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <span><c:out value="${pm.userName}"/></span>
+                                                    <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
+                            							<i class='fas fa-minus-circle stoolPink'></i>
+                            						</button>
+                                                    </c:if>
+                                                    </c:forEach>
+                                                </div>
+											</c:if>
+											</c:forEach>
+	                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="$('#addMentionModal_update${pb.BOARDNO}').modal('show');">언급 추가</button>                       
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 언급문자열 -->
+	                            	<input type="hidden" id="checkMentionStr${w.BOARDNO}" value=""/>
+	                            		                                
+	                                <hr class="w-100">
+	                            </div>  <!-- 언급 입력 끝 -->    
+	
+	                            <!-- 공통) 파일 미리보기 -->
+	                            <div id="updateUploadFilesPreview" class="col-12 mb-2">
+	                                <strong class="mb-2">업로드 파일</strong>
+	                                <div class="col-12 d-flex flex-column mb-2">
+	                                    <p id="imgFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
+	                                        <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
+	                                        	첨부이미지
+	                                    </p>
+	                                    <div class="w-100 d-flex justify-content-center">
+	                                        <div id="updateImgFileBox" class="w-100 row">
+                                                <c:forEach var="wai" items="${writingAttachment}">
+                                    			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
+                                    			<c:set var="attachmentCk" value="Y" />
+                                    			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
+                                    			<c:if test="${splitText[0] eq 'img'}">
+                                                <div class='col-2 p-1' style='height: 150px;'>
+                                                    <div class='imgPreview h-100' onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${wai.WRITINGORINAME}','${wai.WRITINGRENAME}');">
+                                                        <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${wai.WRITINGRENAME}'/> 
+                                                    </div> 
+                                                </div>                            
+                                                </c:if>                                
+                                                </c:if>                                
+                                    			</c:forEach>                                                    
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="col-12 d-flex flex-column">
+	                                    <p id="updateFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
+	                                        <i class="fas fa-file-upload stoolGrey" style="font-size: 20px;"></i>
+	                                       	 첨부파일
+	                                    </p>
+	                                    <div class="w-100 d-flex justify-content-center">
+	                                        <div id="oriFileBox" class="w-100 row">
+                                                <c:forEach var="waf" items="${writingAttachment}">
+                                       			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
+                                       			<c:set var="attachmentCk" value="Y" />
+                                       			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
+                                       			<c:if test="${splitText[0] eq 'file'}">
+                                                   <div class='col-4 p-1 w-100' style='height: 46px;'>
+                                                       <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' 
+                                                       	onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${waf.WRITINGORINAME}','${waf.WRITINGRENAME}');">
+                                                           <div class='d-flex align-items-center'>
+                                                               <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
+                                                               <span>
+                                                               	<c:out value="${waf.WRITINGORINAME}"/>
+                                                               </span>
+                                                           </div>
+                                                           <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
+                                                       </div>
+                                                   </div>
+												</c:if>                                
+                                                   </c:if>                                
+                                       			</c:forEach>
+	                                        </div>
+	                                    </div>
+	                                </div>                                
+	                            </div>
+	                        </div>
+	
+	
+	                        <!-- 공통) 하단 버튼 -->
+	                        <div id="writeCategory-bordBtns" class="row w-100 border-top border-light m-0 justify-content-between align-items-center">
+	                            <div class="col-5 w-100 d-flex align-items-center"> 
+	                                <div id="fileUploadBtns" class="">
+	                                    <div class="d-flex align-items-center">
+	                                        <!-- 파일 업로드 -->                                      
+	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn">
+	                                            <i class="fas fa-file-upload stoolGrey" style="font-size: 25px;"></i>
+	                                        </button>
+	                                        <!-- 이미지파일 업로드 -->                                    
+	                                        <button type="button" class="btn" id="updateImgFilesBtn">
+	                                            <i class="fas fa-images stoolGrey" style="font-size: 25px;"></i>
+	                                        </button>
+	                                    </div>
+	                                </div>                                                                          
+	                            </div>      
+	                            <div class="col-7 w-100 d-flex align-items-center justify-content-end">                              
+	                                <button type="button" onclick="fn_updateFormCancel(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	취소
+	                                </button>                             
+	                                <button type="submit" onclick="fn_updateSubmit();" class="btn m-2 stoolDarkBlue">
+	                                    	수정완료
+	                                </button>    
+	                            </div>                                                              
+	                        </div>
+						</div>
+	                        
+	                </form>                    
+                </div>
                     <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->                    
                     
                     
@@ -434,7 +635,7 @@
 					<c:if test="${pb.BOARDTYPE eq 'T'}">
 					<c:forEach items="${taskList}" var="t">
 					<c:if test="${pb.BOARDNO==t.BOARDNO }">
-                    <div class="pjViewBox w-100 p-3">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
@@ -944,7 +1145,7 @@
 					<c:if test="${pb.BOARDTYPE eq 'S'}">
 					<c:forEach items="${scheduleList }" var="s">
 					<c:if test="${pb.BOARDNO == s.BOARDNO}">
-                    <div class="pjViewBox w-100 p-3">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                               
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
@@ -1356,16 +1557,57 @@
                 	</c:if>   <!-- 타입별로 forEach 닫기 -->                	                	
                 	
                 	
-                </div>	<!-- greyBorder -->      
-			</c:forEach>
+                </div>	<!-- greyBorder -->   
+                
+                
+<!-- 모달모음 -------------------------------------------------------------------------------------------------------------------------------> 
+    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ] -->
+    <div class="modal fade" id="addMentionModal_update${pb.BOARDNO}">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content addWorkerModal">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title">언급할 참여자 추가하기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
+                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                    </div>
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                        <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
+                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="addWorker_profile_div mr-2">
+                                    <img src="${path}/resources/images/defaultProfile.png">
+                                </div>
+                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                            </div>
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention_update(this,${pb.BOARDNO},'${pm.userId}','${pm.userName}');">
+                                	선택
+                            </button>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                </div>            
+            </div>
+        </div>
+    </div> 
+    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ]  끝 -->                      
+            
+<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                 
+                
+                   
+			</c:forEach><!-- pb forEach문 끝 -->
                 
                 
                 
                 
                 
 
-<!-- 모달모음 ------------------------------------------------------------------------------------------------------------------------------->   
-        
-                    
-            
-<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                  
+                 
