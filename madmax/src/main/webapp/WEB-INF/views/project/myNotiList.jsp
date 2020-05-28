@@ -22,7 +22,7 @@
             </c:if> 
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
-                <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
+                <div class="projectTitle w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
             	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              
@@ -297,6 +297,10 @@ function getParameterByName(name) {
 .pjViewBody-schedule{
     background-color: #f6f7f8;
     border: 1px solid #E8E8EB;
+}
+.projectTitle{
+	
+	color:#25558F ;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
