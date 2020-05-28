@@ -32,7 +32,7 @@ public class AsidebarController {
 	private AsidebarService service;
 	
 	
-	//오른쪽 사이드바 프로젝트 전체 멤버 리스트 + 프로젝트 참여 인원수 보여주기
+	//오른쪽 사이드바 프로젝트 전체 멤버 리스트 + 프로젝트 참여 인원수 보여주기 (실패..한 로직이지만 해결됨 ㅠㅠ)
 	@RequestMapping
 	public ModelAndView MemberCount(ModelAndView mv,int pjNo) {
 		
@@ -41,7 +41,7 @@ public class AsidebarController {
 		
 		mv.addObject("memberCount",memberCount);
 		mv.setViewName("selectedProject/asidebar");
-		logger.debug("멤버수 가져왔니 ㅠㅠ : "+memberCount);
+		System.out.println("멤버수:"+memberCount);
 		return mv; 
 	
 	}
