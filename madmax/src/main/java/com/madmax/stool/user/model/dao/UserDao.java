@@ -23,6 +23,8 @@ public interface UserDao {
 
 	int updatePw(SqlSessionTemplate session, Map param);
 
+	int updateUser(SqlSessionTemplate session, Map param);
+
 
 
 }

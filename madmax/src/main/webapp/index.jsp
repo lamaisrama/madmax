@@ -142,7 +142,7 @@ a:hover{
                       <div class="justify-content-center p-1 ml-3">
                       	<button type="submit" id="loginbtn" class="btn btn-outline-secondary mb-2" style="width:270px; border-radius:0; ">로그인</button>&nbsp;&nbsp;&nbsp;
                       	<br>
-                      	<button type="button" class="btn btn-outline-secondary" style="width:270px; border-radius:0; " onclick="location.replace('${path}/user/joinUser.do');">회원가입</button>
+                      	<button type="button" class="btn btn-outline-secondary" style="width:270px; border-radius:0;" onclick="location.replace('${path}/user/joinUser.do');">회원가입</button>
                       </div>
                       <br>
                       <p class="text-center">

@@ -53,6 +53,10 @@ public class NotificationController {
 		m.addAttribute("find", find);
 		return "common/noti-find";
 	}
+
+	public int selectUnreadNotificationCount(String sender) {
+		return service.selectUnreadNotificationCount(sender);
+	}
 	
 	
 }
