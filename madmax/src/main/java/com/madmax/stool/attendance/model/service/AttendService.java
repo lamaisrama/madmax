@@ -15,7 +15,7 @@ public interface AttendService {
 	
 	int updateState(Worktime w);
 	
-	List<Worktime> selectWorktimeList(String userId);
+	List<Worktime> selectWorktimeList(String userId,int cPage, int numPerPage);
 	
 	int insertEmpManage(int no);
 	
@@ -36,5 +36,7 @@ public interface AttendService {
 	int insertNoCometime(Worktime w);
 	
 	List<Worktime> selectSearchAttd(AttdSearch search);
+	
+	int selectAttdList(String userId);
 	
 }
