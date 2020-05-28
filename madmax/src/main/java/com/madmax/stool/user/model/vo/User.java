@@ -18,6 +18,7 @@ public class User {
 	private String profile;
 	private String status;
 	private String sign;
+	private String email;
 	private Date birthday;
 	private String deptCode;
 	private String jobCode;

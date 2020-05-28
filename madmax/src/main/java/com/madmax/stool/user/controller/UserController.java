@@ -323,8 +323,58 @@ public class UserController {
 		return page;
 	}
 
-
-	
+	@RequestMapping("/user/userInfo")
+	public String userInfo() {
+		return "user/userInfo";
+	}
+	@RequestMapping("/user/userUpdate")
+	public String updateuser() {
+		return "user/login/updateUser";
+	}
+	@RequestMapping("/user/userUpdate.do")
+	public ModelAndView updateUser(ModelAndView mv, @RequestParam Map param, MultipartFile upFile, HttpServletRequest req, HttpSession session) {
+		
+		User u = (User)req.getSession().getAttribute("loginUser");
+		String pw = (String)param.get("password");
+		String email = (String)param.get("email");
+		String phone = (String)param.get("phone");
+		
+		pw = encoder.encode(pw);
+		
+		param.put("id", u.getUserId());
+		param.put("pw", pw);
+		param.put("email", email);
+		param.put("phone", phone);
+		
+		String path = session.getServletContext().getRealPath("/resources/upload/profile");
+		
+		File f = new File(path);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+		
+		String rename ="";
+		
+		if(!upFile.isEmpty()) {
+			String ori=upFile.getOriginalFilename();
+			String ext = ori.substring(ori.lastIndexOf("."));
+			rename=getRenamedFileName(ori);
+			try {
+				upFile.transferTo(new File(path+"/"+rename));
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			param.put("profile", rename);
+		}
+		
+		u.setProfile(rename);
+		int result = service.updateUser(param);
+		
+		mv.addObject("loginUser", u);
+		mv.setViewName("user/userInfo");
+		
+		return mv;
+	}
 	
 
 	
