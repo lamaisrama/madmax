@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 
@@ -83,6 +84,12 @@ public class AttrendDaoImpl implements AttendDao {
 	public int insertNoCometime(SqlSessionTemplate session, Worktime w) {
 		// TODO Auto-generated method stub
 		return session.insert("attend.insertNoCometime",w);
+	}
+
+	@Override
+	public List<Worktime> selectSearchAttd(SqlSessionTemplate session, AttdSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("attend.selectSearchAttd");
 	}
 	
 	

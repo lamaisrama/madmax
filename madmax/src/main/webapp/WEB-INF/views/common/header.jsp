@@ -99,9 +99,7 @@
 						        </div>
 							</div>
 				        	<!-- Modal footer -->
-					        <div class="modal-footer">
-					            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" >요청완료</button>
+					        <div class="modal-footer" style="height:50px;">
 					        </div>
 				        </form>
 				      </div>
@@ -145,7 +143,7 @@
 						console.log(data);
 						if(data){
 							alert("출근 시간이 이미 입력되었습니다.");
-							//$('#checkState').modal("hide");
+							$('#checkState').modal("hide");
 						}else if(data==false) {
 							// 출근 시간이 있으면 true,없으면 false;
 							
@@ -203,6 +201,7 @@
 								data:$("#checkForm").serialize(),
 								success:function(date){
 									alert("출근시간이 입력되지 않아 지각처리 됩니다 !");
+									$('#checkState').modal("hide");
 								}
 							});
 						}

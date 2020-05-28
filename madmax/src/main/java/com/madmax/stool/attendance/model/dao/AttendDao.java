@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 
@@ -35,4 +36,7 @@ public interface AttendDao {
 	int updateRequestState(SqlSessionTemplate session,Attendance a);
 
 	int insertNoCometime(SqlSessionTemplate session,Worktime w);
+	
+	List<Worktime> selectSearchAttd(SqlSessionTemplate session,AttdSearch search);
+	
 }

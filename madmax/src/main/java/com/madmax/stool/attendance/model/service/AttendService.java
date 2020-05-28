@@ -1,8 +1,8 @@
 package com.madmax.stool.attendance.model.service;
 
-import java.sql.Date;
 import java.util.List;
 
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 
@@ -34,5 +34,7 @@ public interface AttendService {
 	int updateRequestState(Attendance a);
 	
 	int insertNoCometime(Worktime w);
+	
+	List<Worktime> selectSearchAttd(AttdSearch search);
 	
 }

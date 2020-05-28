@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.attendance.model.service.AttendService;
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 import com.madmax.stool.user.model.vo.User;
@@ -101,9 +102,7 @@ public class AttendController {
 				
 				result=service.updateState(w);
 			
-			
-			
-			Worktime wt = service.selectWorktime(w);
+				Worktime wt = service.selectWorktime(w);
 			
 				Date go=wt.getGoTime(); 
 				// 출근 시간 가져오기
@@ -205,7 +204,7 @@ public class AttendController {
 	
 	@RequestMapping("/attd/noComeTime.do")
 	@ResponseBody
-	public String noComeTime(HttpServletRequest req,Worktime w) {
+	public String noComeTime(HttpServletRequest req,Worktime w,String timeState) {
 		
 		Calendar cal=new GregorianCalendar();
 		Date today=new Date(cal.getTimeInMillis());
@@ -213,13 +212,37 @@ public class AttendController {
 
 		w.setToday(today);
 		w.setUserId(userId);
+		w.setTimeState(timeState);
 		
 		
 		int result=service.insertNoCometime(w);
 		
+		//System.out.println("된거야 만거야1"+result);
+		
+		Worktime wt = service.selectWorktime(w);
+		
+		result=service.insertLate(wt.getManagementNo());
+		
+		//System.out.println("된거야 만거야2"+result);
 		
 		return "redirect:/attd/attendList.do";
 		
+	}
+	
+	@RequestMapping("/attd/searchAttendance.do")
+	public String searchAttendance(HttpServletRequest req,Model m,String startDate,String endDate) {
+		
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		AttdSearch search=new AttdSearch();
+		search.setUserId(userId);
+		search.setStartDate(startDate);
+		search.setEndDate(endDate);
+		
+		List<Worktime> list=service.selectSearchAttd(search);
+		m.addAttribute("list",list);
+		
+		return "attendance/attendanceList";
 	}
 	
 }

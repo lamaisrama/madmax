@@ -46,7 +46,13 @@
 	</update>
 	
 	<insert id="insertNoCometime" parameterType="worktime">
-		INSERT INTO WORKTIMEMANAGEMENT VALUES(SEQ_MANAGEMENTNO.NEXTVAL,NULL,SYSTIMESTAMP,#{timeState},#{userId},SYSDATE)
+		INSERT INTO WORKTIMEMANAGEMENT VALUES(SEQ_MANAGEMENTNO.NEXTVAL,TO_DATE('20161010 09:10:11','YYYYMMDD HH24:MI:SS'),SYSTIMESTAMP,#{timeState},#{userId},SYSDATE)
 	</insert>
+	<select id="selectSearchAttd" parameterType="attdSearch" resultType="worktime">
+		SELECT * FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId} AND
+		<![CDATA[
+		(CHECKDATE >=TO_DATE(#{startDate}) OR CHECKDATE <=TO_DATE(#{endDate}))  ORDER BY CHECKDATE DESC
+		]]>
+	</select>
 
 </mapper>
