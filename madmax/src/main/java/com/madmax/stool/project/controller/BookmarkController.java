@@ -43,43 +43,49 @@ public class BookmarkController {
 		//list index로 if 문 분기처리..
 		//넘어온 값이 1보다 크면 그거랑 10까지 보내주기
 		//처음엔 5개만 뿌려주고. 그담부턴 10개, 15개이런식으로 올라가게
+		int numPerPage=2;
+		int size=(int)(((double)(pageNo-1)/numPerPage)*numPerPage+1);
 		if(list.size()>0) {
-				logger.debug("넘어온pageNo:"+pageNo);
-				int numPerPage=2;
-				int size= ((pageNo-1)/numPerPage)*numPerPage+1;
-					if(pageNo==1) {
-						for(int i=0;i<numPerPage;i++) {
-							viewList.add(list.get(i));
-							logger.debug("몇번 돔?"+i);
-						}
-					}else if(pageNo>1) {
-						size=size*2;
-						logger.debug("돌 사이즈:"+size);
-							if(size<list.size()) {
-								for(int i=0;i<size*2;i++) {
+			
+				if(pageNo==1) {
+						if(list.size()==1) {
+							//글이 하나일때
+								viewList.add(list.get(0));
+							}else {
+							//글이 하나이상일때는 numPerpage보여줘
+								for(int i=0;i<numPerPage;i++) {
 									viewList.add(list.get(i));
-									logger.debug("2번째 포문몇번 돔?"+i);
-										}
+									logger.debug("몇번 돔?"+i);
+									}
+								}
+				}else if(pageNo>1) {
+					int length=size*2;
+					logger.debug("돌 사이즈:"+length);
+						if(length<list.size()) {
+							for(int i=0;i<length;i++) {
+								viewList.add(list.get(i));
+								logger.debug("2번째 포문몇번 돔?"+i);
+									}
 							}else {
 								for(int i=0;i<list.size();i++) {
-									viewList.add(list.get(i));
-									mv.addObject("msg","마지막 글입니다");
-										}
-								
+								viewList.add(list.get(i));
+								mv.addObject("msg","마지막 글입니다");
+									}
+							
 							}
-						
 					}
 				logger.debug("화면에 보일값"+viewList);//여기에 담아서.
 				logger.debug("몇개?"+viewList.size());
 				//가져온글 정렬하기(내림차순)
 				Collections.sort(viewList);
+				mv.addObject("List", viewList);
+			}else {
+				mv.addObject("pBoard",pb);
+				mv.addObject("List",list);
+				
 			}
-		mv.addObject("pBoard",pb);
-		mv.addObject("List",viewList);
+		
 		mv.setViewName("project/bookmarkList");
-		
-		
-		
 		return mv;
 	}
 	
@@ -96,19 +102,26 @@ public class BookmarkController {
 		//list index로 if 문 분기처리..
 		//넘어온 값이 1보다 크면 그거랑 10까지 보내주기
 		//처음엔 5개만 뿌려주고. 그담부턴 10개, 15개이런식으로 올라가게
+		int numPerPage=2;
+		int size=(int)(((double)(pageNo-1)/numPerPage)*numPerPage+1);
 		if(notilist.size()>0) {
-			int numPerPage=2;
-			int size= ((pageNo-1)/numPerPage)*numPerPage+1;
+			
 				if(pageNo==1) {
-					for(int i=0;i<numPerPage;i++) {
-						viewList.add(notilist.get(i));
-						logger.debug("몇번 돔?"+i);
-					}
+						if(notilist.size()==1) {
+							//글이 하나일때
+								viewList.add(notilist.get(0));
+							}else {
+							//글이 하나이상일때는 numPerpage보여줘
+								for(int i=0;i<numPerPage;i++) {
+									viewList.add(notilist.get(i));
+									logger.debug("몇번 돔?"+i);
+									}
+								}
 				}else if(pageNo>1) {
-					size=size*2;
-					logger.debug("돌 사이즈:"+size);
-						if(size<notilist.size()) {
-							for(int i=0;i<size*2;i++) {
+					int length=size*2;
+					logger.debug("돌 사이즈:"+length);
+						if(length<notilist.size()) {
+							for(int i=0;i<length;i++) {
 								viewList.add(notilist.get(i));
 								logger.debug("2번째 포문몇번 돔?"+i);
 									}
@@ -125,12 +138,14 @@ public class BookmarkController {
 			logger.debug("몇개?"+viewList.size());
 			//가져온글 정렬하기(내림차순)
 			Collections.sort(viewList);
+			mv.addObject("List", viewList);
+			}else {
+			
+			mv.addObject("List", notilist);
+
 			}
 		
-		mv.addObject("List",viewList);
 		mv.setViewName("project/myNotiList");
-		
-		
 		return mv;
 	}
 	//내가 쓴 게시물 가져오기
@@ -146,43 +161,54 @@ public class BookmarkController {
 		//list index로 if 문 분기처리..
 		//넘어온 값이 1보다 크면 그거랑 10까지 보내주기
 		//처음엔 5개만 뿌려주고. 그담부턴 10개, 15개이런식으로 올라가게
-		if(boardlist.size()>1) {
+		int numPerPage=2;
+		logger.debug("pageNo:"+pageNo);
+		logger.debug("괄호안:"+((double)(pageNo-1)/numPerPage));
+		int size=(int)(((double)(pageNo-1)/numPerPage)*numPerPage+1);
+		logger.debug("사이즈몇인데"+size);
+			if(boardlist.size()>0) {
 			
-			
-			int numPerPage=2;
-			int size= ((pageNo-1)/numPerPage)*numPerPage+1;
-				if(pageNo==1) {
-					for(int i=0;i<numPerPage;i++) {
-						viewList.add(boardlist.get(i));
-						logger.debug("몇번 돔?"+i);
+					if(pageNo==1) {
+							if(boardlist.size()==1) {
+								//글이 하나일때
+									viewList.add(boardlist.get(0));
+								}else {
+								//글이 하나이상일때는 numPerpage보여줘
+									for(int i=0;i<numPerPage;i++) {
+										viewList.add(boardlist.get(i));
+										logger.debug("몇번 돔?"+i);
+										}
+									}
+					}else if(pageNo>1) {
+						int two=2;
+						int length=size*two;
+						logger.debug("돌 사이즈:"+length);
+							if(length<boardlist.size()) {
+								for(int i=0;i<length;i++) {
+									viewList.add(boardlist.get(i));
+									logger.debug("2번째 포문몇번 돔?"+i);
+										}
+								}else {
+									for(int i=0;i<boardlist.size();i++) {
+									viewList.add(boardlist.get(i));
+									mv.addObject("msg","마지막 글입니다");
+										}
+								
+							}
+						
 					}
-				}else if(pageNo>1) {
-					size=size*2;
-					logger.debug("돌 사이즈:"+size);
-						if(size<boardlist.size()) {
-							for(int i=0;i<size*2;i++) {
-								viewList.add(boardlist.get(i));
-								logger.debug("2번째 포문몇번 돔?"+i);
-									}
-							}else {
-								for(int i=0;i<boardlist.size();i++) {
-								viewList.add(boardlist.get(i));
-								mv.addObject("msg","마지막 글입니다");
-									}
-							
-						}
-					
-				}
-			logger.debug("화면에 보일값"+viewList);//여기에 담아서.
-			logger.debug("몇개?"+viewList.size());
-			//가져온글 정렬하기(내림차순)
-			Collections.sort(viewList);
-			mv.addObject("List", viewList);
-		}
+				logger.debug("화면에 보일값"+viewList);//여기에 담아서.
+				logger.debug("몇개?"+viewList.size());
+				//가져온글 정렬하기(내림차순)
+				Collections.sort(viewList);
+				mv.addObject("List", viewList);
+					}else {
 		
-		mv.addObject("List", boardlist);
-		mv.setViewName("project/myBoardList");
-		return mv;
+						mv.addObject("List", boardlist);
+											
+					}
+			mv.setViewName("project/myBoardList");
+			return mv;
 	}
 	
 }
