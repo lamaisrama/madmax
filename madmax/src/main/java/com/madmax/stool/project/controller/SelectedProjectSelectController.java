@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
@@ -24,7 +25,8 @@ public class SelectedProjectSelectController {
 	private SelectedProjectSelectService service;
 	
 	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId,
+												@RequestParam(required = false, defaultValue="1") int boardNo) {
 		
 	
 		//프로젝트관련 정보

@@ -24,7 +24,7 @@
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
                 <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
-            	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
+            	<span>프로젝트 제목</span>	<a href="${path}/selectedProject/selectedProject.do?pjNo=${l.projectNo}&loginId=${loginUser.userId}&boardNo=${l.boardNo}">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">

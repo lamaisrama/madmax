@@ -21,11 +21,11 @@
 					<c:if test="${pb.BOARDTYPE eq 'W'}">
                     <c:forEach items="${writingList }" var="w">
                     <c:if test='${pb.BOARDNO==w.BOARDNO}'>
-                    <div class="pjViewBox w-100 p-3">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
-                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
+                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5" ><!-- 여기에 아이디값 넣쟈! -->
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
                                         <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
@@ -435,11 +435,11 @@
 					<c:if test="${pb.BOARDTYPE eq 'T'}">
 					<c:forEach items="${taskList}" var="t">
 					<c:if test="${pb.BOARDNO==t.BOARDNO }">
-                    <div class="pjViewBox w-100 p-3">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
-                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
+                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5" >
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
                                         <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
@@ -930,11 +930,11 @@
 					<c:if test="${pb.BOARDTYPE eq 'S'}">
 					<c:forEach items="${scheduleList }" var="s">
 					<c:if test="${pb.BOARDNO == s.BOARDNO}">
-                    <div class="pjViewBox w-100 p-3">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
-                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
+                            <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5" >
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
                                         <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
@@ -1292,4 +1292,41 @@
         
                     
             
-<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                  
+<!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->   
+<script>
+ $(document).ready(function(){
+	var url=window.location.href;
+	//console.log(typeof url);
+	//console.log(loction.search.substr(location.search.lastIndex))
+	var page_id=url.substring(url.lastIndexOf('=')+1);
+ 	//alert(page_id);
+	var p='p';
+	page_id=p.concat(page_id);
+	//alert(page_id);
+	var boardNo=[];
+	boardNo=document.getElementsByClassName('pjViewBox');
+	console.log(boardNo);
+	var result=[];
+	for(var i=0;i<boardNo.length;i++){
+		var val=(boardNo[i].getAttribute('value'));
+		result[i]=val;
+	}
+	console.log(result);
+	for(var i=0;i<boardNo.length;i++){
+		if(page_id==result[i]){		
+				//var sharp="#";
+				//page_id=sharp.concat(page_id);
+				//console.log(page_id);
+				var offset=$("div[value="+page_id+"]").offset();
+				console.log("좌표값:"+offset.top);
+				$('html,body').animate({scrollTop:(offset.top-1000)},200);
+				console.log("실행됨");
+				$("div[value="+page_id+"]").css("border","5px solid navy");
+				
+			}
+	}
+	
+ })
+</script>
+
+               
