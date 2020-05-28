@@ -18,7 +18,8 @@
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/asidebar.css"/>
 <!-- aside.jsp에 대한 js -->
 <script type="text/javascript" src="${path}/resources/js/asidebar.js"></script>
-
+<script type="text/javascript" src="${path}/resources/js/asidebar.js"></script>
+<jsp:include page="/resources/js/selectedProject-Ajax.jsp" />
 
 
 <div class="col-sm-3">
@@ -45,11 +46,17 @@
 		<%-- <c:choose>
 			<c:when test=${pm.userId eq loginUser.userId}> --%>
 				<div>
-					<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="">
+					<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="fn_inviteModal();">
 						<span>초대하기</span>
 					</button>
 				</div>
 				<p></p>
+				<script>
+				//담당자 추가
+					function fn_inviteModal(){
+				    	$("#inviteModal").modal("show");
+					}
+				</script>
 			<%-- </c:when>
 			<c:otherwise>
 				<div style="display:none">
@@ -63,6 +70,13 @@
 	<!-- </div> -->
 	<!--row-->
 	
+	
+	<script>
+		$('.member').onclick(function(){
+			$('.member').hide();
+		});
+	</script>
+		
 		<!--전체참여자 확인박스-->
 		<div class="allMemberListBox bg-white border border-grey rounded" >
 			<div class="allMemberListCount">
@@ -366,19 +380,7 @@ img#cardProfileImg {
 									<b>|</b> 
 									<span>관리자</span>
 								</c:if>
-								<c:if test="${pm.userId eq loginUser.userId }">
-									<button 
-									class="btn" 
-									id="exitBtn" 
-									onclick="exitFunction()"
-									data-toggle="tooltip" 
-									data-placement="bottom" 
-									title="나가기">
-										<span class="material-icons" style="font-size: 24pt;">
-											exit_to_app 
-										</span>
-									</button>
-								</c:if>
+							
 								<hr>
 							</div>
 							</c:forEach>
@@ -408,13 +410,7 @@ img#cardProfileImg {
 					alt="cardProfileImg"
 					style="object-fit: cover; height: 400px; width: 398px;">
 			</div>
-			<script>
-				$(document).on("click",".member",function(){
-					var userName = $(this).data('userName');
-					$("#profileBox #userName").val(userName);
-				}));
-			</script>
-			
+		
 			<div>
 				<div style="padding: 25px 40px;">
 					<div>
@@ -445,4 +441,57 @@ img#cardProfileImg {
 	<!-- modal-dialog 끝 -->
 </div>
 <!-- 카드 모달 도전 끝 -->
+
+<!-- 초대하기 모달 -->
+
+    <div class="modal fade" id="inviteModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center">
+            <div class="modal-content addWorkerModal">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title">프로젝트 참여자 추가하기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
+                        <input type="text" name="addWorker_search" placeholder="초대할 멤버 이름 검색" class="w-100 addWorker_search"/>
+                    </div>
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                        <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${user}" var="u">
+                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="addWorker_profile_div mr-2">
+                                    <c:choose>
+									<c:when test="${u.PROFILE eq null}"> <!-- 프로필이 널이면 -->
+										<img 
+										id="profileImg"
+										src="${path}/resources/images/defaultProfile.png"
+										alt="프로필사진">
+									</c:when>
+									<c:otherwise>
+										<img 
+										id="profileImg"
+										src="${path}/resources/upload/profile${u.PROFILE}"
+										alt="프로필사진">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     진">
+									</c:otherwise>
+								</c:choose>
+                                </div>
+                                <p class="m-0"><c:out value="${u.USERNAME}"></c:out></p>
+                            </div>
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="(this);">
+                                	선택
+                            </button>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                </div>            
+            </div>
+        </div>
+    </div> 
+      
 
