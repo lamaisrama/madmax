@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.madmax.stool.calendar.controller.CalendarController;
 import com.madmax.stool.calendar.model.dao.CalendarDao;
+import com.madmax.stool.calendar.model.vo.Calendar;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -19,7 +20,7 @@ public class CalendarServiceImpl implements CalendarService {
 	private SqlSessionTemplate session;
 
 	@Override
-	public List<CalendarController> selectSchedule(String id) {
+	public List<Calendar> selectSchedule(String id) {
 		// TODO Auto-generated method stub
 		return dao.selectSchedule(session,id);
 	}
