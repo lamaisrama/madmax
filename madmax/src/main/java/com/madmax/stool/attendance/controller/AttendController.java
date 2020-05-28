@@ -20,6 +20,7 @@ import com.madmax.stool.attendance.model.service.AttendService;
 import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
+import com.madmax.stool.common.PagingFactory;
 import com.madmax.stool.user.model.vo.User;
 
 @Controller
@@ -29,7 +30,8 @@ public class AttendController {
 	AttendService service;
 	
 	@RequestMapping("/attd/attendList.do")
-	public String attendList(HttpServletRequest req,Model m) {
+	public ModelAndView attendList(HttpServletRequest req,ModelAndView mv,@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		
 		
 		
@@ -37,14 +39,18 @@ public class AttendController {
 		
 		//System.out.println(u);
 		
-		List<Worktime> list=service.selectWorktimeList(u.getUserId());
-		
+		List<Worktime> list=service.selectWorktimeList(u.getUserId(),cPage, numPerPage);
+		int totalData = service.selectAttdList(u.getUserId());
 		//System.out.println(list);
 		
 		
-		m.addAttribute("list",list);
+		mv.addObject("list",list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/attd/attendList.do"));
+		mv.setViewName("attendance/attendanceList");
 		
-		return "attendance/attendanceList";
+		
+		return mv;
 		
 	}
 	

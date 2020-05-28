@@ -44,9 +44,9 @@ public class AttendServiceImpl implements AttendService {
 	}
 
 	@Override
-	public List<Worktime> selectWorktimeList(String userId) {
+	public List<Worktime> selectWorktimeList(String userId,int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectWorktimeList(session, userId);
+		return dao.selectWorktimeList(session, userId,cPage, numPerPage);
 	}
 
 
@@ -104,6 +104,12 @@ public class AttendServiceImpl implements AttendService {
 	public List<Worktime> selectSearchAttd(AttdSearch search) {
 		// TODO Auto-generated method stub
 		return dao.selectSearchAttd(session,search);
+	}
+
+	@Override
+	public int selectAttdList(String userId) {
+		// TODO Auto-generated method stub
+		return dao.selectAttdList(session,userId);
 	}
 
 	

@@ -54,5 +54,8 @@
 		(CHECKDATE >=TO_DATE(#{startDate}) OR CHECKDATE <=TO_DATE(#{endDate}))  ORDER BY CHECKDATE DESC
 		]]>
 	</select>
+	<select id="selectAttdList" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM WORKTIMEMANAGEMENT WHERE USERID=#{userId}
+	</select>
 
 </mapper>
