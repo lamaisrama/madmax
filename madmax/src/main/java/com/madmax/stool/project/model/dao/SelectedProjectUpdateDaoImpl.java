@@ -87,5 +87,10 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return result;
 	}
 
+	@Override
+	public int updateProjectBoardStatus(SqlSessionTemplate session, Map<String, Object> pbMap) {
+		return session.update("SelectedProjectUpdate.updateProjectBoardStatus", pbMap);
+	}
+
 
 }

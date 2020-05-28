@@ -344,6 +344,27 @@ public class SelectedProjectUpdateController {
 	}
 	
 	
+	@RequestMapping("/selectedProject/updateProjectBoardStatus.do")
+	@ResponseBody
+	public int updateProjectBoardStatus(@RequestParam Map<String, String> map) {
+		//값 받기
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		int bNo = Integer.parseInt(map.get("bNo"));
+		
+		Map<String, Object> pbMap = new HashMap();
+		pbMap.put("pjNo",pjNo);
+		pbMap.put("bNo",bNo);
+		
+		int result = 0;
+		try {
+			result = service.updateProjectBoardStatus(pbMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+		
 	
 	
 	

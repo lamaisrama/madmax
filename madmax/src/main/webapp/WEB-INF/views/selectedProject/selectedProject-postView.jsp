@@ -77,7 +77,7 @@
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
                                     </c:if>
@@ -490,7 +490,7 @@
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
                                     </c:if>
@@ -1001,7 +1001,7 @@
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
                                             <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete()" style="cursor: pointer;">삭제</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
                                     </c:if>

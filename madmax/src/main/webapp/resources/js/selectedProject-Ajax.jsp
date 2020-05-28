@@ -324,4 +324,20 @@ function fn_fileDownload(pjNo,ori,rename){
 	location.href="${path}/selectedProject/fileDownload.do?pjNo="+pjNo+"&ori="+ori+"&rename="+rename;
 }
 
+//게시글 삭제
+function fn_viewPostDelete(pjNo, bNo){
+	$.ajax({
+		url:"${path}/selectedProject/updateProjectBoardStatus.do",
+		data:{pjNo:pjNo,
+			  bNo:bNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("게시글 삭제에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});	
+}
+
 </script>

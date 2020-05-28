@@ -79,6 +79,9 @@
 	
 	<delete id="deleteComment-S" parameterType="map">
 		DELETE SCHEDULECOMMENT WHERE SCHEDULECOMMENT = #{cNo}
-	</delete>
-	
+	</delete>	
+
+	<update id="updateProjectBoardStatus" parameterType="map">		 
+		UPDATE PROJECTBOARD SET STATUS = 'D' WHERE PROJECTNO = #{pjNo} AND BOARDNO = #{bNo}
+	</update>		
 </mapper>
