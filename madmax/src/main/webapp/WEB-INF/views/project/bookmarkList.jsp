@@ -9,7 +9,7 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<div class="col col-sm-7 ">
+<div class="col col-sm-7 " id="divTest" onscroll="SetDivPosition()">
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
@@ -209,34 +209,77 @@
                
                 <!-- 프로젝트보드 닫기 -->
 				</c:forEach>
-				<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
-
-	
+				<c:if test="${not empty List }">
+					<c:if test="${ empty msg }">
+						<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+					</c:if>
+					<c:if test="${not empty msg }">
+						<div class="text-center">${msg }</div>
+					</c:if>
+				</c:if>
 </div>	
 <div class="col col-sm-3">
 
 </div>
 
 <script>
+$(window).scroll(function () { 
+	var scrollValue = $(document).scrollTop(); 
+	console.log(scrollValue);
+	var strCook=document.cookie;
+	strCook=scrollValue;
+	console.log(strPos);
+	});
+
+
+
+
+/*  window.onload=function(){
+	var strCook=document.cookie;
+	if(strCook.indexOf("!~")!=0) { 
+		var intS = strCook.indexOf("!~"); 
+		var intE = strCook.indexOf("~!"); 
+		var strPos = strCook.substring(intS+2,intE);
+		
+		document.getElementById("divTest").scrollTop = strPos; 
+		console.log("스크롤값:"+strPos);
+		}
+	} 
+	
+function SetDivPosition(){ 
+	var intY = document.getElementById("divTest").scrollTop;
+	document.title = intY; 
+	document.cookie = "yPos=!~" + intY + "~!"; 
+	}
+
+		 */
+ 
+
+
+
+
 //url의 쿼리스트링 값 가져오는 함수
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
 }
 
 	function moreList(){
-		var pageNo ="";
-		console.log("페이지번호+"+pageNo);
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
 		if(pageNo==undefined || pageNo=="" ||pageNo==null){
-			pageNo=1;
+			pageNo=2;
+			location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		}else{
-			pageNo = getParameterByName("pageNo");
-			pageNo=pageNo+1;
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		}
-		
-		location.href="${path}/project/bookmarkList.do?pageNo="+pageNo;
 		
 		
 	}
@@ -296,6 +339,11 @@ function getParameterByName(name) {
 	
 	
 </script>
-
+<style>
+.pjViewBody-schedule{
+    background-color: #f6f7f8;
+    border: 1px solid #E8E8EB;
+}
+</style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -30,5 +30,8 @@ public interface ApprovalDao2 {
 	List<Approval> selectSearchApprDoneBox(SqlSessionTemplate session,ApprSearch search);
 	
 	List<Approval> selectSearchMyDocBox(SqlSessionTemplate session,ApprSearch search);
+	
+	List<Approval> selectSearchDeptDocBox(SqlSessionTemplate session,ApprSearch search);
+	List<Approval> searchRefferedDocBox(SqlSessionTemplate session,ApprSearch search);
 
 }

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,7 +121,7 @@ a:hover{
 
             <div class="item mx-auto align-self-center">
                
-                <form action="${pageContext.request.contextPath }/user/userLogin.do" method="post">
+                <form name="fform" action="${pageContext.request.contextPath }/user/userLogin.do" method="post">
 
                       <div class="input-group mb-3">
                         <input style="color: white;  border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #030321;" 
@@ -130,26 +132,83 @@ a:hover{
                         <input  style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #030321;"
                         	type="password" class="form-control" name="password" placeholder="비밀번호" size="30" required>
                       </div>
-                      <!-- 
+                      
                       <div class="row justify-content-center" style="color: #7b7b7b;">
-                      	<lable><input type="checkbox" value="자동로그인">&nbsp;자동로그인</lable>
+						<!-- <input type="checkbox" name="remember-me" id="remember-me">&nbsp;자동로그인 -->
+                      	<input type="checkbox" id="idSaveCheck">&nbsp;rememberId
                       </div>
-                       -->
+                      
                        <br>
                       <div class="justify-content-center p-1 ml-3">
-                      	<button type="submit" class="btn btn-outline-secondary mb-2" style="width:270px; border-radius:0; ">로그인</button>&nbsp;&nbsp;&nbsp;
+                      	<button type="submit" id="loginbtn" class="btn btn-outline-secondary mb-2" style="width:270px; border-radius:0; ">로그인</button>&nbsp;&nbsp;&nbsp;
                       	<br>
-                      	<button type="button" class="btn btn-outline-secondary" style="width:270px; border-radius:0; " onclick="location.replace('${pageContext.request.contextPath}/user/joinUser.do');">회원가입</button>
+                      	<button type="button" class="btn btn-outline-secondary" style="width:270px; border-radius:0; " onclick="location.replace('${path}/user/joinUser.do');">회원가입</button>
                       </div>
                       <br>
                       <p class="text-center">
-                      	<a class="p2" href="${pageContext.request.contextPath }/user/findIdPw">아이디/비밀번호 찾기</a>
+                      	<a class="p2" href="${path }/user/findIdPw">아이디/비밀번호 찾기</a>
                    	  </p>
                 </form>
             </div>
         </div>
     </div>
 
+<script>
+	$(document).ready(function(){
+	    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+	    var userInputId = getCookie("userInputId");
+	    $("input[name='userId']").val(userInputId); 
+	    
+	    if($("input[name='userId']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+	        $("#idSaveCheck").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+	    }
+
+	    $("#idSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
+	        if($("#idSaveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
+	            var userInputId = $("input[name='userId']").val();
+	            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
+	        }else{ // ID 저장하기 체크 해제 시,
+	            deleteCookie("userInputId");
+	        }
+	    });
+	     
+	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+	    $("input[name='userId']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+	        if($("#idSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+	            var userInputId = $("input[name='userId']").val();
+	            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
+	        }
+	    });
+	    
+	});
+	 
+	function setCookie(cookieName, value, exdays){
+	    var exdate = new Date();
+	    exdate.setDate(exdate.getDate() + exdays);
+	    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+	    document.cookie = cookieName + "=" + cookieValue;
+	}
+	 
+	function deleteCookie(cookieName){
+	    var expireDate = new Date();
+	    expireDate.setDate(expireDate.getDate() - 1);
+	    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	}
+	 
+	function getCookie(cookieName) {
+	    cookieName = cookieName + '=';
+	    var cookieData = document.cookie;
+	    var start = cookieData.indexOf(cookieName);
+	    var cookieValue = '';
+	    if(start != -1){
+	        start += cookieName.length;
+	        var end = cookieData.indexOf(';', start);
+	        if(end == -1)end = cookieData.length;
+	        cookieValue = cookieData.substring(start, end);
+	    }
+	    return unescape(cookieValue);
+	}
+</script>
 
     
     

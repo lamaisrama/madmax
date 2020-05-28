@@ -21,10 +21,7 @@
 		width: 70px;
 		height: 70px;
 	}
-/* 	
-	.menu a{cursor:pointer;}
-    .menu .hide{display:none;}
-  */   
+   
     .icon {
     	text-align:center;
     	width:35px; 
@@ -129,14 +126,6 @@
             justify-content: center;
         }
         
-    .img2{
-            /* width: 100px;
-            height: 100px;
-            border: 1px solid #233C61;
-            border-radius: 500px; */
-            /* background-size: cover; */
-        }    
-        
 </style>
 
 <div class="col col-sm-2">
@@ -150,6 +139,7 @@
 		                	<img src="${path }/resources/upload/profile/${loginUser.profile }" 
 		                		style="border: 3px solid #233C61; 
 					            border-radius: 500px; width:130px; height:130px; overflow:hidden;">
+				            <br>
             			</div> 
 			        </div>   
 					<br>
@@ -246,51 +236,7 @@
 			
 		</ul>
 	</nav>
-	<!-- 
-	<div>
-        <ul>
-            <li class="menu">
-                <a>메뉴1</a>
-                <ul class="hide">
-                    <li>메뉴1-1</li>
-                    <li>메뉴1-2</li>
-                    <li>메뉴1-3</li>
-                    <li>메뉴1-4</li>
-                    <li>메뉴1-5</li>
-                    <li>메뉴1-6</li>
-                </ul>
-            </li>
-     
-            <li class="menu">
-                <a>메뉴2</a>
-                <ul class="hide">
-                    <li>메뉴2-1</li>
-                    <li>메뉴2-2</li>
-                    <li>메뉴2-3</li>
-                    <li>메뉴2-4</li>
-                    <li>메뉴2-5</li>
-                    <li>메뉴2-6</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-	<script>
-		/* html dom이 다 로딩된 후 실행 */
-		$(document).ready(function(){
-		    // menu 클래스 바로 아래 a 태그를 클릭했을때
-		    $(".menu>a").click(function(){
-		        var submenu = $(this).next("ul");
-		
-		        // submenu 부드럽게
-		        if(submenu.is(":visible") ){
-		            submenu.slideUp();
-		        }else{
-		            submenu.slideDown();
-		        }
-		    });
-		});
-	</script>
- -->
+	
 <!-- 새프로젝트 만들기 -->
 <div class="modal" id="myModal">
         <div class="modal-dialog">

@@ -88,7 +88,6 @@ public class UserController {
 		
 		String path=session.getServletContext().getRealPath("/resources/upload/profile");
 		
-		
 		File f = new File(path);
 		if(!f.exists()) {
 			f.mkdirs();
@@ -120,8 +119,9 @@ public class UserController {
 		return page;
 	}
 	
+	
 	@RequestMapping("/user/userLogin.do")
-	public String login(String userId, String password, Model m, HttpSession session,HttpServletRequest req) {
+	public String login(String userId, String password, Model m, HttpSession session, HttpServletRequest req) {
 		
 		User login = service.selectUser(userId);
 //		logger.debug(login.toString());

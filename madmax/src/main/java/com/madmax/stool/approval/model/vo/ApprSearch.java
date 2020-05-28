@@ -17,5 +17,6 @@ public class ApprSearch {
 	private String endDate;
 	private String userId;
 	private int apprStatus;
+	private String deptCode;
 
 }

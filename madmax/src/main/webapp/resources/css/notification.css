@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+        #notificationModal {
+            font-size: 12px;
+
+        }
+
+        .modal-reposition {
+            position: absolute;
+            width: 30%;
+            height: 80%;
+            top:10%;
+            right:10%;
+
+        }
+        .noti-li{
+        	margin:10px 0;
+        	padding:5px 0;
+        }
+        .noti-li:hover{
+        	background-color:lightgrey;
+        }
+
+        .noti-info {
+            display: flex;
+            width:100%;
+            clear: both;
+        }
+
+        .noti-info div {
+            margin-left: 15px;
+        }
+
+        .notification-container ul {
+            list-style: none;
+            padding-left: 0px;
+        }
+		.noti-profile{
+			display:table;
+			height:80px;
+		}
+		.noti-profile p{
+			display:table-cell;
+        	text-align:center;
+        	vertical-align:middle;
+		}
+        .noti-profile img {
+            width: 50px;
+            border-radius: 50%;
+        }
+		.noti-text{
+			width:100%;
+		}
+        .noti-text .projectName {
+            font-size: 12px;
+            font-weight: bolder;
+        }
+
+        .noti-text .notiDate{
+            float: right;
+            font-size: 10px;
+            font-weight: normal;
+            color: grey;
+        }
+
+        .noti-text .senderName {
+            clear: both;
+            font-size: 11px;
+            color: darkblue;
+            font-weight: bolder;
+        }
+
+        .noti-text .sendMessage {
+            font-size: 11px;
+            color:black;
+        }
+        .noti-text b{
+        	color:red;
+        }
+        .notification-container .read, .find{
+            display: none;
+        }

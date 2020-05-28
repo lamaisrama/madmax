@@ -34,5 +34,5 @@ public interface AttendDao {
 	
 	int updateRequestState(SqlSessionTemplate session,Attendance a);
 
-	
+	int insertNoCometime(SqlSessionTemplate session,Worktime w);
 }
