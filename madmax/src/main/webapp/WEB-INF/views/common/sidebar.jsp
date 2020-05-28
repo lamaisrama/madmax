@@ -122,9 +122,30 @@
 	}
 	
 	.imgbox{
-            display: flex;
-            justify-content: center;
-        }
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+    .imgbox img {
+		width: 100%; height:auto;
+		vertical-align: middle;
+	}    
+    .edit{
+    	opacity : 0;
+    	/* display:none; */
+    }    
+    .edit:hover {
+		padding: 0px 0px; margin:0;
+		background-color: rgba(35, 60, 97, 0.5);  
+		color : #EBDACE;
+		text-align: center;
+		position: absolute;
+		top: 90%; left: 50%;
+		transform: translate( -50%, -50% );
+		opacity : 1;
+		/* display: block; */
+	}    
+        
         
 </style>
 
@@ -135,12 +156,14 @@
 			<li>
 				<div class="user-container text-center">
 					<div class="imgbox">
-		                <div class="img2">
-		                	<img src="${path }/resources/upload/profile/${loginUser.profile }" 
+	               	<a href="${path}/user/userInfo">
+		                
+		                	<img src="${path}/resources/upload/profile/${loginUser.profile }" 
 		                		style="border: 3px solid #233C61; 
 					            border-radius: 500px; width:130px; height:130px; overflow:hidden;">
-				            <br>
-            			</div> 
+            				<!-- <span class="edit"><p>edit</p></span> -->
+            			
+       				</a>
 			        </div>   
 					<br>
 					<c:if test="${loginUser!=null}">

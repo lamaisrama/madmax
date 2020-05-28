@@ -14,17 +14,19 @@
 
 
 
-<div class="col col-sm-10">	
+	<div class="col col-sm-10">	
 		<h4><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
 		<hr>
 	 	<br>
 	 	<!-- Search -->
         기간검색&nbsp;
-        <input type="date" class="dateInput" />&nbsp;~&nbsp;<input type="date" class="dateInput" />
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
-        검색
-        </button>
-        <br><br>
+        <form action="${path}/attd/searchAttendance.do">
+	        <input type="date" class="dateInput" name="startDate" />&nbsp;~&nbsp;<input type="date" class="dateInput" name="endDate" />
+	        <button type="submit" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
+	        검색
+	        </button>
+	        <br><br>
+        </form>
         <!-- AttendanceList -->
         <table class="table text-center">
             <thead style="background-color: #233C61; color:#F1F0F5;">
@@ -40,25 +42,25 @@
             <tbody>
 			
 			<c:if test="${not empty list}">
-            <c:forEach items="${list}" var="wt" varStatus="vs">
-            <tr>
-                <th scope="row" style="vertical-align: middle;"></th>
-                <!-- <th scope="row">5</th> -->
-                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['checkDate']}" type="both" pattern="yyyy-MM-dd" /></td>
-                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['comeTime']}" type="both" pattern="HH:mm" /></td>
-                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['goTime']}" type="both" pattern="HH:mm"/></td>
-                <td style="vertical-align: middle;">${wt['employeeState']}</td>
-                <td>
-                <input type="hidden"  id="managementNo"  value="${wt['managementNo']}"/>
-                
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
-                        수정요청
-                    </button>
-                    
-                   
-                </td>
-            </tr>
-            </c:forEach>
+	            <c:forEach items="${list}" var="wt" varStatus="vs">
+	            <tr>
+	                <th scope="row" style="vertical-align: middle;"></th>
+	                <!-- <th scope="row">5</th> -->
+	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['checkDate']}" type="both" pattern="yyyy-MM-dd" /></td>
+	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['comeTime']}" type="both" pattern="HH:mm" /></td>
+	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['goTime']}" type="both" pattern="HH:mm"/></td>
+	                <td style="vertical-align: middle;">${wt['employeeState']}</td>
+	                <td>
+	                <input type="hidden"  id="managementNo"  value="${wt['managementNo']}"/>
+	                
+	                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+	                        수정요청
+	                    </button>
+	                    
+	                   
+	                </td>
+	            </tr>
+	            </c:forEach>
             </c:if>
  
             </tbody>
@@ -105,7 +107,7 @@
                         </div>
                         </form>
                     </div>
-</div>	
+				</div>	
 
 <script>
 

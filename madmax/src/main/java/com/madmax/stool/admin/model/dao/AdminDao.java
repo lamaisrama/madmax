@@ -15,7 +15,7 @@ public interface AdminDao {
 	
 	int updateEmployeeManagement(SqlSessionTemplate session,AdminAttendManagement am);
 	
-	List<AdminUserManage> selectAignupApproval(SqlSessionTemplate session);
+	List<AdminUserManage> selectSignupApproval(SqlSessionTemplate session);
 	
 	int updateUserState(SqlSessionTemplate session,String userId);
 	

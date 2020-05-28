@@ -93,12 +93,12 @@
 	<!--
 	<select id="selectProjectMember" parameterType="map" resultType="map">
 		SELECT * FROM PROJECTMEMBER
-	</select>
+	</select> -->
 	
 	<select id="selectUser" parameterType="map" resultType="map">
 		SELECT * FROM STOOLUSER
 	</select> 
-	-->
+	
 	
 	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
 		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
