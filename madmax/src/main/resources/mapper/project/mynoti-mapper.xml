@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noti">
+  <select id="selectNotiList" resultType="com.madmax.stool.project.model.vo.Notification">
+	SELECT *FROM NOTIFICATIONTABLE WHERE RECEIVEID=#{id} ORDER BY NOTNO DESC
+  </select>
+  <!-- 글 테이블일때 -->
+  <select id="noti.selectNotiW" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+    SELECT W.*,P.*,S.USERNAME AS WNAME,SO.USERNAME AS NOTINAME  
+    FROM WRITING W 
+    JOIN NOTIFICATIONTABLE N ON W.BOARDNO=N.BOARDNO 
+    JOIN PROJECTBOARD P ON W.BOARDNO=P.BOARDNO
+  	JOIN STOOLUSER S ON S.USERID=W.WRITINGID
+  	JOIN STOOLUSER SO ON SO.USERID=N.RECEIVEID
+ 	WHERE N.RECEIVEID=#{userId} AND W.BOARDNO=#{boardNo}
+  </select>
+  <!-- 업쿠테이블일때 -->
+  <select id="noti.selectNotiT" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+  SELECT T.*,P.*,S.USERNAME AS TNAME,SU.USERNAME AS TMNAME,SO.USERNAME AS NOTINAME 
+  FROM TASK T 
+  JOIN TASKMANAGER TM ON T.TASKNO=TM.TASKNO 
+  JOIN NOTIFICATIONTABLE N ON T.BOARDNO=N.BOARDNO
+  JOIN PROJECTBOARD P ON T.BOARDNO=P.BOARDNO 
+  JOIN STOOLUSER S ON S.USERID=T.TASKID 
+  JOIN STOOLUSER SU ON SU.USERID=TM.TASKMANAGERID 
+  JOIN STOOLUSER SO ON SO.USERID=N.RECEIVEID 
+  WHERE N.RECEIVEID=#{userId} AND T.BOARDNO=#{boardNo}
+  </select>
+  <!-- 일정테이블일때 -->
+  <select id="noti.selectNotiS" resultType="com.madmax.stool.project.model.vo.BookmarkAll">
+  SELECT S.*,P.*,ST.USERNAME AS SNAME,SO.USERNAME AS NOTINAME  
+    FROM SCHEDULE S
+    JOIN NOTIFICATIONTABLE N ON S.BOARDNO=N.BOARDNO 
+    JOIN PROJECTBOARD P ON S.BOARDNO=P.BOARDNO
+  	JOIN STOOLUSER ST ON ST.USERID=S.SCHEDULEID
+  	JOIN STOOLUSER SO ON SO.USERID=N.RECEIVEID
+ 	WHERE N.RECEIVEID=#{userId} AND S.BOARDNO=#{boardNo}
+  
+  </select>
+  
+  
+</mapper>

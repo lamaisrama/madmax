@@ -74,7 +74,7 @@ public class SelectedProjectSelectController {
 //		List<Map<String,Object>> projectMember=service.selectProjectMember();
 		
 		//스툴유저 테이블 가져오기
-//		List<Map<String,Object>> user=service.selectUser();
+		List<Map<String,Object>> user=service.selectUser();
 		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
@@ -104,7 +104,7 @@ public class SelectedProjectSelectController {
 //		mv.addObject("projectMemberNo",projectMemberNo);
 		//if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
 		if(attachments.size()>0)mv.addObject("allFileList",attachments);
-//		mv.addObject("user",user);
+		mv.addObject("user",user);
 		
 		
 		

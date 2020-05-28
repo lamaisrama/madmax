@@ -145,11 +145,10 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	}
 
 
-//	@Override
-//	public List<Map<String, Object>> selectUser() {
-		// TODO Auto-generated method stub
-//		return dao.selectUser(session);
-//	}
+	@Override
+	public List<Map<String, Object>> selectUser() {
+		return dao.selectUser(session);
+	}
 	
 	
 	

@@ -216,7 +216,7 @@
         			$(this).next(".custom-file-label").html(fileName);
         		});
         	});
-            
+    		
             function fn_validate(){
     			//현재 text에 입력되어 있는 값
     			var userId = $("#userId_").val();

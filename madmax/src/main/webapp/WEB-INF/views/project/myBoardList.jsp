@@ -205,7 +205,14 @@
                    
                 </div>
 				</c:forEach>
-
+				<c:if test="${not empty List }">
+					<c:if test="${ empty msg }">
+					<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+					</c:if>
+					<c:if test="${not empty msg }">
+					<div class="text-center">${msg }</div>
+					</c:if>
+				</c:if>
 
 	
 </div>	
@@ -213,6 +220,30 @@
 
 </div>
 <script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
+}
+
+	function moreList(){
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
+		if(pageNo==undefined || pageNo=="" ||pageNo==null){
+			pageNo=2;
+			location.href="${path}/project/myBoard.do?pageNo="+pageNo;
+		}else{
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/myBoard.do?pageNo="+pageNo;
+		}
+		
+		
+	}
 	//일단. 지도를 출력해줄 위치가 여러곳.
 	//장소도 각각 다르다.
 	
@@ -267,5 +298,11 @@
 	
 	
 </script>
+<style>
+.pjViewBody-schedule{
+    background-color: #f6f7f8;
+    border: 1px solid #E8E8EB;
+}
+</style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
