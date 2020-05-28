@@ -112,7 +112,7 @@
 	socket.onopen=function(){
 		console.log('info : connection opend');
 		sendLoginMessage();
-		sendTest();
+		//sendTest();
 	}
 
 	socket.onmessage=function(data){
