@@ -24,34 +24,22 @@
 <!-- 카카오지도 api&services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services,clusterer,drawing"></script>
 <style>	
-	.navBtn{
-		font-weight:bolder; font-size:13px; color: white; 
-		width: 6em; height:3em; border-radius: 30px; 
-		background-color: #25558F; margin-right:1em;
-	}
-	.navBtn:hover{ background-color: #233C61; color: white; font-weight:bolder; }	
-	
-	
-	.checkBtn{
-	 	width:90px;
-		font-size : 17px;
+	.headerBtn {
+		width: 6em; 
+		height: 3em; 
+		font-size : 13px;
 		font-weight : 600;
-		color : #233C61; 
-		border: 3px solid #233C61; 
+		color :white; 
+		border: 2px solid #233C61; 
 		border-radius:50px;
-		margin-right:12px;
+		background-color: #233C61;
 	}
-	.changeBtn{
-		width:90px;
-		font-size : 17px;
-		font-weight : 600;
-		background-color:#233C61;
-		border: 3px solid #233C61; 
-		border-radius:50px;
-		color:white;
-		margin-right:12px;
-	
-	}
+    .headerBtn:hover {
+    	/* background-color: #FFE3E3; */
+    	background-color: transparent; 
+    	color : #233C61;
+    }
+		
 </style>
 </head>
 <body>
@@ -71,7 +59,7 @@
 				<c:if test="${loginUser.userId=='admin'}">
 					<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/admin/adminIndex.do')">관리자 페이지</button>
 				</c:if>
-				<button type="button" class="btn checkBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
+				<button type="button" class="headerBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
 				<!-- 모달창 -->
 				
 				 <div class="modal fade" id="checkState">
@@ -108,21 +96,18 @@
 				    </div>
 				  </div>
 				
-				
-				
-				
-				
-				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
-				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
+
+				    <!-- Notification 모달창 -->
+				    <!-- The Modal -->
+				    <div class="modal fade" id="notificationModal">
+					</div><!-- Notification 모달 창 끝 -->
+
+				<%-- <button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button> --%>
+				&nbsp;&nbsp;<button class="headerBtn" type="button" onclick="openNotification('${loginUser.userId}');">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;
-				<button class="btn  my-2 my-sm-0"  type="button" data-toggle="modal" data-target="#">
-					<i class="far fa-comment-alt"></i>
-				</button>&nbsp;&nbsp;
-				<c:if test="${loginMember==null }">
-					<button class="btn  my-2 my-sm-0"  type="button" onclick="location.replace('${path}/user/logout.do');">
-						<i class="fas fa-running"></i><!-- <i class="fas fa-door-open"></i><i class="fas fa-sign-out-alt"></i><i class="fas fa-person-booth"></i> -->
-					</button>
+				<c:if test="${loginUser!=null}">
+					<button class="headerBtn" type="button" onclick="location.replace('${path}/user/logout.do');">로그아웃</button>
 				</c:if>
 			</div>
 		</nav>
@@ -159,24 +144,56 @@
 			});
 		});
 		
+		
+		
  		$(document).ready(function() {
 
 			$("#go").click(function() { 
+				
+				
 				$.ajax({
-					url : '${path}/attd/checkGotime.do',
+					url:'${path}/attd/checkCometime.do',
 					type:"post",
 					data:$("#checkForm").serialize(),
-					success : function(data) { 
+					success : function(data) {
+						// 출근 시간이 있으면 true,없으면 false;
 						console.log(data);
-						// 있으면 true,없으면 false;
 						if(data){
-							alert("퇴근 했습니다.");
-							return ;
-						}else if(data==false){
-							stateRequest();
+							
+							$.ajax({
+								url : '${path}/attd/checkGotime.do',
+								type:"post",
+								data:$("#checkForm").serialize(),
+								success : function(data) { 
+									console.log(data);
+									// 있으면 true,없으면 false;
+									if(!data){
+										confirm("이미 퇴근시간이 찍혀있습니다. 수정하시겠습니까? ");
+										//return;
+										$("#checkForm").attr("action","${path}/attd/updateGoTime.do");
+										$("#checkForm").submit();	
+									}else{
+										alert("퇴근 시간이 입력되었습니다.");
+										stateRequest();
+									}
+								}
+							});
+							
+						}else{
+							
+							$.ajax({
+								
+								url:'${path}/attd/noComeTime.do',
+								type:"post",
+								data:$("#checkForm").serialize(),
+								success:function(date){
+									alert("출근시간이 입력되지 않아 지각처리 됩니다 !");
+								}
+							});
 						}
 					}
 				});
+				
 			});
 		}); 
 		
@@ -210,7 +227,17 @@
                 })
             }) 
 		
-		
+			function openNotification(userId){
+	        	$.ajax({
+	        		url:"${path}/noti/notification.do?userId="+userId,
+	        		dataType:"html",
+	        		success:(data)=>{
+	        			$("#notificationModal").html(data);
+	        			$("#notificationModal").modal('show');
+	        		}
+	        	});
+
+	        }
 		</script>	
 		
 		

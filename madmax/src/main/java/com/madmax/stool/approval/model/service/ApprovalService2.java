@@ -30,4 +30,6 @@ public interface ApprovalService2 {
 	List<Approval> selectSearchApprDoneBox(ApprSearch search);
 	
 	List<Approval> selectSearchMyDocBox(ApprSearch search);
+	List<Approval> selectSearchDeptDocBox(ApprSearch search);
+	List<Approval> searchRefferedDocBox(ApprSearch search);
 }

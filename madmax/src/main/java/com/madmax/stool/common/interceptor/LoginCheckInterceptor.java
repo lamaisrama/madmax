@@ -13,9 +13,12 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		HttpSession session=request.getSession();
+
 		User u = (User)session.getAttribute("loginUser");
-		if(u==null) {//로그인 되지 않음
+		
+		if(u==null) { // 로그인 되지 않음
 			request.setAttribute("msg", "로그인 후 이용하세요");
 			request.setAttribute("loc", "/");
 			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
@@ -23,6 +26,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		}else {
 			return super.preHandle(request, response, handler);			
 		}
+		
 	}
+	
+	
+	
 	
 }

@@ -42,7 +42,7 @@
 			<c:if test="${not empty list}">
             <c:forEach items="${list}" var="wt" varStatus="vs">
             <tr>
-                <th scope="row" style="vertical-align: middle;">${vs.index+1}</th>
+                <th scope="row" style="vertical-align: middle;"></th>
                 <!-- <th scope="row">5</th> -->
                 <td style="vertical-align: middle;"><fmt:formatDate value="${wt['checkDate']}" type="both" pattern="yyyy-MM-dd" /></td>
                 <td style="vertical-align: middle;"><fmt:formatDate value="${wt['comeTime']}" type="both" pattern="HH:mm" /></td>
