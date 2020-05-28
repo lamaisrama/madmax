@@ -77,7 +77,7 @@
             </div>    
     </div>
     <!-- 전체업무 센터 -->
-    <div class="taskCenter col col-sm-7 bg-light"   >
+    <div class="taskCenter col col-sm-9 bg-light"   >
     	<div>
         	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무</p> 
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
@@ -161,7 +161,7 @@
                 <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                     <div class=" w-100 d-flex align-items-center">
                         <div class="profileImgDiv">
-                            <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
+                            <%-- <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/> --%>
                         </div>
                         <div class="d-flex flex-column ml-2">
                             <strong id="taskUsername">정집집</strong>
@@ -193,8 +193,8 @@
                         <strong class="mr-2">담당자</strong>
                         <!-- 담당자 프로필 for문 시작 -->
                         <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
-                            <div class='selectedWorker_imgDiv mr-2' id=""><!-- 이미지넣기 -->
-                                <img src='img/profile_img.png'/>
+                            <div class='selectedWorker_imgDiv mr-2' id="selectedWorker"><!-- 이미지넣기 -->
+                                <!-- <img src='img/profile_img.png'/> -->
                             </div>
                             <span id="notiMember"></span>
                         </div>                                    
@@ -228,11 +228,9 @@
 
 
         </div><!-- viewBox 닫는 태그 -->
-        
+ <div class="col col-sm-1">
+ </div>       
 
-<div class="col col-sm-3">
-
-</div>
 
 <script>
 function selectTask(pNo){
@@ -367,7 +365,7 @@ function taskFilter(){
 				console.log(task.taskTitle);
 				//업무작성자 프로필
 				var profile=task.profile;
-				$("#")
+				$("#profileImgDiv").html("<img src='${path}/img/"+profile+"/>");
 				$("#taskTitleView").html(task.taskTitle);//업무제목
 				$("#taskUsername").html(task.userName);//업무작성자
 				$("#notiMember").html(data.notiMember);//담당자

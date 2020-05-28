@@ -199,11 +199,13 @@
                    
                 </div>
 				</c:forEach>
-				<c:if test="${ empty msg }">
-				<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
-				</c:if>
-				<c:if test="${not empty msg }">
-				<div class="text-center">${msg }</div>
+				<c:if test="${not empty List }">
+					<c:if test="${ empty msg }">
+					<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+					</c:if>
+					<c:if test="${not empty msg }">
+					<div class="text-center">${msg }</div>
+					</c:if>
 				</c:if>
 
 	
@@ -291,5 +293,10 @@ function getParameterByName(name) {
 	
 	
 </script>
-
+<style>
+.pjViewBody-schedule{
+    background-color: #f6f7f8;
+    border: 1px solid #E8E8EB;
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
