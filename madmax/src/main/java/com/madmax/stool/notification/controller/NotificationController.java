@@ -1,16 +1,14 @@
 package com.madmax.stool.notification.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.ServletOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.madmax.stool.notification.model.service.NotificationService;
 import com.madmax.stool.notification.model.vo.Notification;
@@ -56,6 +54,15 @@ public class NotificationController {
 
 	public int selectUnreadNotificationCount(String sender) {
 		return service.selectUnreadNotificationCount(sender);
+	}
+	
+	@RequestMapping("/noti/updateUnreadNotification")
+	@ResponseBody
+	public boolean updateunUnreadNotification(int notNo) {
+		int result= service.updateUnreadNotification(notNo);
+		if(result>0) return true;
+		else return false;
+		
 	}
 	
 	

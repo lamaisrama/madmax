@@ -54,6 +54,11 @@ public class NotificationDaoImpl implements NotificationDao {
 	public List<Notification> findNotification(SqlSessionTemplate session, Map<String, String> map) {
 		return session.selectList("notification.findNotification", map);
 	}
+
+	@Override
+	public int updateUnreadNotification(SqlSessionTemplate session, int notNo) {
+		return session.update("notification.updateUnreadNotification", notNo);
+	}
 	
 	
 	
