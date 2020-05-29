@@ -31,9 +31,9 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<AdminUserManage> selectAignupApproval(SqlSessionTemplate session) {
+	public List<AdminUserManage> selectSignupApproval(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectList("admin.selectAignupApproval");
+		return session.selectList("admin.selectSignupApproval");
 	}
 
 	@Override

@@ -18,5 +18,7 @@ public class Calendar {
 	private Date scheduleEndDate;
 	private String schedulePlace;
 	private String scheduleMemo;
+	private int projectNo;
+	private int boardNo;
 	
 }

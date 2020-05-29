@@ -13,7 +13,7 @@ public interface AdminService {
 	
 	int updateEmployeeManagement(AdminAttendManagement am);
 	
-	List<AdminUserManage> selectAignupApproval();
+	List<AdminUserManage> selectSignupApproval();
 	
 	int updateUserState(String userId);
 	

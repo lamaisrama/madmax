@@ -24,7 +24,7 @@
                     
                     <div id="viewBoxDiv${pb.BOARDNO}">
                     
-                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
+                    <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                             
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      

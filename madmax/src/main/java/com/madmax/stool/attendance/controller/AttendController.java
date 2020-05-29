@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.attendance.model.service.AttendService;
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
+import com.madmax.stool.common.PagingFactory;
 import com.madmax.stool.user.model.vo.User;
 
 @Controller
@@ -28,7 +30,8 @@ public class AttendController {
 	AttendService service;
 	
 	@RequestMapping("/attd/attendList.do")
-	public String attendList(HttpServletRequest req,Model m) {
+	public ModelAndView attendList(HttpServletRequest req,ModelAndView mv,@RequestParam(required = false, defaultValue = "1") int cPage,
+			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
 		
 		
 		
@@ -36,14 +39,18 @@ public class AttendController {
 		
 		//System.out.println(u);
 		
-		List<Worktime> list=service.selectWorktimeList(u.getUserId());
-		
+		List<Worktime> list=service.selectWorktimeList(u.getUserId(),cPage, numPerPage);
+		int totalData = service.selectAttdList(u.getUserId());
 		//System.out.println(list);
 		
 		
-		m.addAttribute("list",list);
+		mv.addObject("list",list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/attd/attendList.do"));
+		mv.setViewName("attendance/attendanceList");
 		
-		return "attendance/attendanceList";
+		
+		return mv;
 		
 	}
 	
@@ -84,12 +91,12 @@ public class AttendController {
 		//System.out.println(today);
 		
 		User u = (User)req.getSession().getAttribute("loginUser");
-		System.out.println(u);
+		//System.out.println(u);
 		
 		//today.
 		w.setToday(today);
 		w.setUserId(u.getUserId());
-		System.out.println(timeState);
+		//System.out.println(timeState);
 		
 		if(timeState.equals("출근")) {
 			
@@ -97,41 +104,43 @@ public class AttendController {
 			
 		}else if(timeState.equals("퇴근")){
 			
-			result=service.updateState(w);
-			
-			Worktime wt = service.selectWorktime(w);
-			
-			
-			Date go=wt.getGoTime(); 
-			// 출근 시간 가져오기
-			GregorianCalendar come=new GregorianCalendar();
-			come.setTime(wt.getComeTime());
-			
-			//퇴근 시간 가져오기
-			GregorianCalendar goHome=new GregorianCalendar();
-			goHome.setTime(wt.getGoTime());
-			
-			//Worktime wt=service.selectCometime(w);
-			
-			//Worktime go=service.selectGotime(w);
-			
-			//int hour=Integer.parseInt(wt.getComeTime().substring(0, wt.getComeTime().indexOf(":")));
-			  
-			//if(Integer.parseInt(wt.getComeTime())<9&&Integer.parseInt(go.getGoTime())>18) {
-			//	  service.insert
-			//  }
-			if(come.get(Calendar.HOUR)<9&&goHome.get(Calendar.HOUR)>16) {
+			if(service.selectCometime(w)!=null) {
 				
-				result=service.insertEmpManage(wt.getManagementNo());
-			}else if(come.get(Calendar.HOUR)>9){
-				// 지각
-				result=service.insertLate(wt.getManagementNo());
-			}else {
-				//결근
-				result=service.insertAbsence(wt.getManagementNo());
-			}
+				result=service.updateState(w);
 			
-			System.out.println(result);
+				Worktime wt = service.selectWorktime(w);
+			
+				Date go=wt.getGoTime(); 
+				// 출근 시간 가져오기
+				GregorianCalendar come=new GregorianCalendar();
+				come.setTime(wt.getComeTime());
+				
+				//퇴근 시간 가져오기
+				GregorianCalendar goHome=new GregorianCalendar();
+				goHome.setTime(wt.getGoTime());
+				
+				//Worktime wt=service.selectCometime(w);
+				
+				//Worktime go=service.selectGotime(w);
+				
+				//int hour=Integer.parseInt(wt.getComeTime().substring(0, wt.getComeTime().indexOf(":")));
+				  
+				//if(Integer.parseInt(wt.getComeTime())<9&&Integer.parseInt(go.getGoTime())>18) {
+				//	  service.insert
+				//  }
+				if(come.get(Calendar.HOUR)<9||goHome.get(Calendar.HOUR)>18) {
+					
+					result=service.insertEmpManage(wt.getManagementNo());
+				}else if(come.get(Calendar.HOUR)>9){
+					// 지각
+					result=service.insertLate(wt.getManagementNo());
+				}else {
+					//결근
+					result=service.insertAbsence(wt.getManagementNo());
+				}
+			
+			}
+			//System.out.println(result);
 			
 		}
 		
@@ -154,7 +163,6 @@ public class AttendController {
 		
 		w.setToday(today);
 		w.setUserId(u.getUserId());
-		Worktime s=service.selectCometime(w);
 		
 		//System.out.println(s);
 		
@@ -181,11 +189,66 @@ public class AttendController {
 		
 		//System.out.println(s);
 		
-		// 출근 시간이 있으면 true,없으면 false;
-		if(service.selectGotime(w)!=null) return true;
-		else return false;
+		// 퇴근시간이 안찍혀 있으면 true,
+		return s!=null?true:false;
 		
 	}
 	
+	@RequestMapping("/attd/updateGoTime.do")
+	public String updateGoTime(HttpServletRequest req,Worktime w) {
+		
+		Calendar cal=new GregorianCalendar();
+		Date today=new Date(cal.getTimeInMillis());
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		w.setToday(today);
+		w.setUserId(userId);
+		int result=service.updateState(w);
+		
+		return "redirect:/attd/attendList.do"; 
+	}
+	
+	@RequestMapping("/attd/noComeTime.do")
+	@ResponseBody
+	public String noComeTime(HttpServletRequest req,Worktime w,String timeState) {
+		
+		Calendar cal=new GregorianCalendar();
+		Date today=new Date(cal.getTimeInMillis());
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		w.setToday(today);
+		w.setUserId(userId);
+		w.setTimeState(timeState);
+		
+		
+		int result=service.insertNoCometime(w);
+		
+		//System.out.println("된거야 만거야1"+result);
+		
+		Worktime wt = service.selectWorktime(w);
+		
+		result=service.insertLate(wt.getManagementNo());
+		
+		//System.out.println("된거야 만거야2"+result);
+		
+		return "redirect:/attd/attendList.do";
+		
+	}
+	
+	@RequestMapping("/attd/searchAttendance.do")
+	public String searchAttendance(HttpServletRequest req,Model m,String startDate,String endDate) {
+		
+		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+
+		AttdSearch search=new AttdSearch();
+		search.setUserId(userId);
+		search.setStartDate(startDate);
+		search.setEndDate(endDate);
+		
+		List<Worktime> list=service.selectSearchAttd(search);
+		m.addAttribute("list",list);
+		
+		return "attendance/attendanceList";
+	}
 	
 }

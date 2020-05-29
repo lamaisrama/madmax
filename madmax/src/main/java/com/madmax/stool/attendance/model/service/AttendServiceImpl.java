@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.madmax.stool.attendance.model.dao.AttendDao;
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 
@@ -43,9 +44,9 @@ public class AttendServiceImpl implements AttendService {
 	}
 
 	@Override
-	public List<Worktime> selectWorktimeList(String userId) {
+	public List<Worktime> selectWorktimeList(String userId,int cPage, int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectWorktimeList(session, userId);
+		return dao.selectWorktimeList(session, userId,cPage, numPerPage);
 	}
 
 
@@ -93,5 +94,24 @@ public class AttendServiceImpl implements AttendService {
 		return dao.updateRequestState(session, a);
 	}
 
+	@Override
+	public int insertNoCometime(Worktime w) {
+		// TODO Auto-generated method stub
+		return dao.insertNoCometime(session,w);
+	}
+
+	@Override
+	public List<Worktime> selectSearchAttd(AttdSearch search) {
+		// TODO Auto-generated method stub
+		return dao.selectSearchAttd(session,search);
+	}
+
+	@Override
+	public int selectAttdList(String userId) {
+		// TODO Auto-generated method stub
+		return dao.selectAttdList(session,userId);
+	}
+
+	
 
 }

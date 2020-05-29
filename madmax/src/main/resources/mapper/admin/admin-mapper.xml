@@ -12,7 +12,7 @@
 		UPDATE EMPLOYEEMANAGEMENT SET EMPLOYEESTATE=#{requestCategory} WHERE WORKSTATENO=#{workStateNo}
 	</update>
 	
-	<select id="selectAignupApproval" resultType="adminUserManage">
+	<select id="selectSignupApproval" resultType="adminUserManage">
 		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) WHERE STATUS='W'
 	</select>
 	
@@ -21,7 +21,7 @@
 	</update>
 	
 	<select id="selectAllUser" resultType="adminUserManage">
-		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) JOIN JOBTABLE USING(JOBCODE)
+		SELECT * FROM STOOLUSER JOIN DEPT USING(DEPTCODE) LEFT JOIN JOBTABLE USING(JOBCODE)
 	</select>
 	
 	<select id="selectUserCount" resultType="_int">

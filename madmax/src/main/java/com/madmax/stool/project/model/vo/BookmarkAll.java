@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookmarkAll {
+public class BookmarkAll implements Comparable<BookmarkAll>{
 	private String userId;
-	private int boardNo;
+	private int boardNo;//이걸 기준으로 정렬
 	private int projectNo;
 	private String boardType;
 	private String pinpost;
@@ -41,11 +41,35 @@ public class BookmarkAll {
 	private String scheduleId;
 	private Date scheduleTime;
 	//각각의 이름
-	private String taskName;//업무글 작성자 이름
+	private String tName;//업무글 작성자 이름
 	private String tmName;//업무담당자 이름
 	private String bmName;//북마크한사람(로그인 유저이름)
 	private String wName;//글 작성자 이름
 	private String sName;//일정 작성자 이름
-	private String notiName; 
+	private String notiName;
+	
+	//추가된것
+	
+	private String projectTitle;//프로젝트명
+	//각각의 프로필
+	private String tProfile;
+	private String tmProfile;
+	private String bmProfile;
+	private String wProfile;
+	private String sProfile;
+	
+	
+	
+	
+	//가져온글 정렬하기(내림차순)
+	@Override
+	public int compareTo(BookmarkAll bk) {
+		if(this.boardNo<bk.getBoardNo()) {
+			return 1;
+		}else if(this.boardNo>bk.getBoardNo()) {
+			return -1;
+		}
+		return 0;
+	} 
 	
 }

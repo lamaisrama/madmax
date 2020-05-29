@@ -25,7 +25,7 @@ public interface SelectedProjectSelectService {
 //	Map<String, Object> selectProjectMemberNo();
 	//List<Map<String, Object>> selectAllFileList(int pjNo);
 	List<AllAttachment> selectAllProjectFiles(int pjNo);
-//	List<Map<String, Object>> selectUser();
+	List<Map<String, Object>> selectUser();
 	Map<String, Object> selectProjectTB(int pjNo);
 	int selectFavorit(Map<String, Object> pjInfo);
 	List<ProjectMember> selectProjectMemberList(int pjNo);

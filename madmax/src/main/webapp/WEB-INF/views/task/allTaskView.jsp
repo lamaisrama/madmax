@@ -77,7 +77,7 @@
             </div>    
     </div>
     <!-- 전체업무 센터 -->
-    <div class="taskCenter col col-sm-7 bg-light"   >
+    <div class="taskCenter col col-sm-9 bg-light"   >
     	<div>
         	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무</p> 
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
@@ -89,7 +89,7 @@
 				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="selectTask(${p['projectNo'] });">${p['projectTitle'] }</a></li>
 				    </c:forEach>
 				     <c:if test="${fn:length(projects)>4}">
-				    	<li class="nav-item"><a class="nav-link">+더보기</a></li>
+				    	<li class="nav-item"><a class="nav-link" >+더보기</a></li>
 				    </c:if>
 				  </ul>
         <div  style="height:100%">
@@ -111,35 +111,37 @@
  				 <c:if test="${tasks!=null}">
  	           <c:forEach items="${tasks }" var="t">
  	           
-	           <table class="tasks" style="width:100%;height:100%; "  >
-	               <tr class="text-sm-center">
-	                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
-						<c:choose>
-	                  <c:when test="${t.taskState eq '요청' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	             		<c:when test="${t.taskState eq '진행' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState  eq '피드백' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState  eq '완료' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	                     <c:when test="${t.taskState eq '보류' }">
-	                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
-	                   </c:when>
-	            		</c:choose>
-	                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
-	                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
-	                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
-	                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
-	                   <td id="taskStartDate" style="width:20%">${t['taskStartDate'] }</td>
-	               </tr>
+	          		 <table class="tasks" style="width:100%;height:100%; "  >
+		               <tr class="text-sm-center">
+		                   <td id="boardNo" style="width:10%">${t['taskNo'] }</td>
+							<c:choose>
+		                  <c:when test="${t.taskState eq '요청' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		             		<c:when test="${t.taskState eq '진행' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState  eq '피드백' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState  eq '완료' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		                     <c:when test="${t.taskState eq '보류' }">
+		                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+		                   </c:when>
+		            		</c:choose>
+		                   <td id="taskProiority" style="width:10%">${t['taskProiority'] }</td>
+		                   <!-- 제목 a태그를 클릭시 div창으로 내용이 뜨게 설정한다. no값을넘겨서 창에 뿌려줄것. -->
+		                   <td id="taskTitle" style="width:40%"><a href="#" onclick="taskView(${t['boardNo']});" style="color:black; text-decoration:none">${t['taskTitle'] }</a></td>
+		                   <td id="taskId" style="width:10%">${t['taskId'] }</td>
+		                  	<td id="taskStartDate" style="width:20%">
+		                    <c:set var="string" value="${t['taskStartDate'] }"/>
+								${fn:substring(string,0,10)}
+							</td>
+		               </tr>
 	               </table>
-	               
-	           <br/>
+	               <br/>
 	           </c:forEach> 
 	           </c:if>
  				
@@ -159,7 +161,7 @@
                 <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                     <div class=" w-100 d-flex align-items-center">
                         <div class="profileImgDiv">
-                            <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
+                            <%-- <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/> --%>
                         </div>
                         <div class="d-flex flex-column ml-2">
                             <strong id="taskUsername">정집집</strong>
@@ -191,8 +193,8 @@
                         <strong class="mr-2">담당자</strong>
                         <!-- 담당자 프로필 for문 시작 -->
                         <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
-                            <div class='selectedWorker_imgDiv mr-2'>
-                                <img src='img/profile_img.png'/>
+                            <div class='selectedWorker_imgDiv mr-2' id="selectedWorker"><!-- 이미지넣기 -->
+                                <!-- <img src='img/profile_img.png'/> -->
                             </div>
                             <span id="notiMember"></span>
                         </div>                                    
@@ -226,11 +228,9 @@
 
 
         </div><!-- viewBox 닫는 태그 -->
-        
+ <div class="col col-sm-1">
+ </div>       
 
-<div class="col col-sm-3">
-
-</div>
 
 <script>
 function selectTask(pNo){
@@ -323,9 +323,10 @@ function taskFilter(){
 						table+="<td  style='width:10%'>"+tasks[i].taskProiority+"</td>";
 						table+="<td id='taskTitle' style='width:40%''><a href='#' onclick='taskView("+tasks[i].boardNo+");' style='color:black; text-decoration:none'>"+tasks[i].taskTitle+"</a></td>";
 						table+="<td style='width:10%'>"+tasks[i].taskId+"</td>";
-						/* table+="<td style='width:20%'>""</td>"; */
+						table+="<td style='width:20%'>"+tasks[i].taskStartDate+"</td>";
 						table+="</tr>";
-						table+="</td>";
+						table+="</td>"
+						table+="<br/>";
 				}
 				
 			}else{
@@ -362,6 +363,9 @@ function taskFilter(){
 			success:function(data){
 				var task=data.task;
 				console.log(task.taskTitle);
+				//업무작성자 프로필
+				var profile=task.profile;
+				$("#profileImgDiv").html("<img src='${path}/img/"+profile+"/>");
 				$("#taskTitleView").html(task.taskTitle);//업무제목
 				$("#taskUsername").html(task.userName);//업무작성자
 				$("#notiMember").html(data.notiMember);//담당자

@@ -36,10 +36,13 @@
 								<td>${l.phone}</td>
 								<td>${l.deptName}</td>
 								<td><fmt:formatDate value="${l.hireDate}" type="both" pattern="yyyy-MM-dd" /></td>
-								<td><button type="button" class="btn btn-outline-primary" onclick="btn();">가입 승인</button>
-									<input type="hidden" id="userId" name="userId" value="${l.userId}" /></td>
+								<td>
+								<input type="hidden" value="${l.userId}" />
+								<button type="button" class="btn btn-outline-primary" onclick="btn(this);">가입 승인</button>
+								</td>
 							</tr>
 						</c:forEach>
+						<input type="hidden" id="userId" name="userId">
 					</form>
 				</c:if>
 			</table>
@@ -49,17 +52,17 @@
 
 
 <script>
-	function btn(){
-		console.log($("#userId").val());
-		var userId=$("#userId").val();
-	if (
+	function btn(e){
+		console.log($(e).prev().val());
+		$("#userId").val($(e).prev().val());
+	 if (
 		confirm(" 승인하시겠습니까 ?") == true){    //확인
 		$("#form").attr("action","${path}/admin/updateUserState.do");
 		$("#form").submit();
 		
 		}else{   //취소
 		    return;
-		}
+		} 
 	}
 
 

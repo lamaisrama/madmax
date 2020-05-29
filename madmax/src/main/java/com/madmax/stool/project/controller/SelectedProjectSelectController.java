@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
@@ -24,7 +25,8 @@ public class SelectedProjectSelectController {
 	private SelectedProjectSelectService service;
 	
 	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId) {
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId,
+												@RequestParam(required = false, defaultValue="1") int boardNo) {
 		
 	
 		//프로젝트관련 정보
@@ -74,7 +76,7 @@ public class SelectedProjectSelectController {
 //		List<Map<String,Object>> projectMember=service.selectProjectMember();
 		
 		//스툴유저 테이블 가져오기
-//		List<Map<String,Object>> user=service.selectUser();
+		List<Map<String,Object>> user=service.selectUser();
 		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
@@ -104,7 +106,7 @@ public class SelectedProjectSelectController {
 //		mv.addObject("projectMemberNo",projectMemberNo);
 		//if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
 		if(attachments.size()>0)mv.addObject("allFileList",attachments);
-//		mv.addObject("user",user);
+		mv.addObject("user",user);
 		
 		
 		

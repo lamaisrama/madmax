@@ -32,8 +32,8 @@
 	<br>
 	<!-- <p><i class="fas fa-search"></i> &nbsp;검색</p> -->
 	<div class="row searchBox" style="font-size:12px;">	
-		<form style="width:100%">
-			<table class="table table-borderless">
+		<form style="width:100%" action="${path}/appr/searchRefferedDocBox.do">
+			<table class="table table-borderless" >
 				<tr>
 					<th>결과</th>
 					<td><input type="radio" name="apprStatus" value="3" id="status3">
@@ -49,11 +49,11 @@
 					
 				</tr>
 				<tr>
-					<th>기안자</th>
-					<td><input type="text" name="draftUserName"></td>
+					
 					<th>문서제목</th>
-					<td><input type="text" name="draftTitle">
+					<td><input type="text" name="draftName">
 					<td>
+						<input type="hidden" name="url" value="approval/refferedDocBox">
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
 					</td>
 				</tr>
@@ -75,22 +75,24 @@
 					<th>기안일</th>
 					<th>결과</th>
 				</tr>
-				<c:forEach items="${list}" var="l" varStatus="i">
-				<tr>
-					<td>${l.apprNo }</td>
-					<td><a href="javascript:void(0)" 
-							onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
-							'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
-							${l.apprTitle }</a></td>
-					<td>${l.userName}</td>
-					<td>${l.deptName }</td>
-					<td><fmt:formatDate value="${l.writeDate }" dateStyle="short" type="date"/></td>
-					<td>
-						<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
-						<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
-					</td>
-				</tr>
-				</c:forEach>
+				<c:if test="${not empty list }">
+					<c:forEach items="${list}" var="l" varStatus="i">
+					<tr>
+						<td>${l.apprNo }</td>
+						<td><a href="javascript:void(0)" 
+								onclick="window.open('${path}/appr/openApprDoc?apprNo=${l.apprNo }',
+								'_blank','width = 1000, height = 600, top = 120px, left = 400px')">
+								${l.apprTitle }</a></td>
+						<td>${l.userName}</td>
+						<td>${l.deptName }</td>
+						<td><fmt:formatDate value="${l.writeDate }" dateStyle="short" type="date"/></td>
+						<td>
+							<c:if test="${l.apprStatus==3 }"><span class="badge badge-success badge-pill">승인</span></c:if>
+							<c:if test="${l.apprStatus==4 }"><span class="badge badge-danger badge-pill">반려</span></c:if>
+						</td>
+					</tr>
+					</c:forEach>
+				</c:if>
 			</table>
 		</div>
 	</div>

@@ -4,7 +4,7 @@
 	<select id="selectApprProgList" parameterType="string" resultType="approval">
 		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) JOIN DEPT USING(DEPTCODE) 
-			JOIN APPRLINE USING(APPRNO) WHERE APPRSTEP=2 AND APPRRESULT=1 AND APPRUSER=#{userId}
+			JOIN APPRLINE USING(APPRNO) WHERE APPRSTATUS=2 AND APPRRESULT=1 AND APPRUSER=#{userId}
 			ORDER BY WRITEDATE DESC
 	</select>
 	<select id="selectApprDoneList" parameterType="string" resultType="approval">
@@ -44,54 +44,126 @@
 	
 	<select id="selectSearchApprReqBox" parameterType="search" resultType="approval">
 		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
-		WHERE USERID=#{userId} AND APPRSTATUS=0 AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+		WHERE USERID=#{userId} AND APPRSTATUS IN (1,2)
+		<if test='draftName!=""'>
+			AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+		</if>
+		<if test='startDate!="" and endDate!=""'>
+			AND <![CDATA[
+			(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+			]]>
+		</if>
+		ORDER BY WRITEDATE DESC
 	</select>
 	
 	<select id="selectSearchApprTempBox" parameterType="search" resultType="approval">
 		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
-		WHERE USERID=#{userId} AND APPRSTATUS IN (1,2) AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+		WHERE USERID=#{userId} AND APPRSTATUS = 0 
+		<if test='draftName!=""'>
+			AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+		</if>
+		<if test='startDate!="" and endDate!=""'>
+			AND <![CDATA[
+			(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+			]]>
+		</if>
+		ORDER BY WRITEDATE DESC
 	</select>
 	
 	<select id="selectSearchApprWaitBox" parameterType="search" resultType="approval">
 			SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) LEFT JOIN DEPT USING(DEPTCODE) 
-			JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId} AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+			JOIN APPRLINE USING(APPRNO) WHERE CURRAPPRSTEP+1=APPRSTEP AND APPRUSER=#{userId} 
+		<if test='draftName!=""'>
+			AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+		</if>
+		<if test='startDate!="" and endDate!=""'>
+			AND <![CDATA[
+			(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+			]]>
+		</if>
+		ORDER BY WRITEDATE DESC
 	</select>
 	<select id="selectSearchApprProgBox" parameterType="search" resultType="approval">
 			SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) LEFT JOIN DEPT USING(DEPTCODE) 
-			JOIN APPRLINE USING(APPRNO) WHERE APPRSTEP=2 AND APPRRESULT=1 AND APPRUSER=#{userId} AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+			JOIN APPRLINE USING(APPRNO) WHERE APPRSTEP=2 AND APPRRESULT=1 AND APPRUSER=#{userId} 
+			<if test='draftName!=""'>
+				AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+			</if>
+			<if test='startDate!="" and endDate!=""'>
+				AND <![CDATA[
+				(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+				]]>
+			</if>
+			ORDER BY WRITEDATE DESC
 	</select>
 	
 	<select id="selectSearchApprDoneBox" parameterType="search" resultType="approval">
 			SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
 			JOIN STOOLUSER USING(USERID) LEFT JOIN DEPT USING(DEPTCODE) 
-			JOIN APPRLINE USING(APPRNO) WHERE (APPRSTATUS=3 OR APPRSTATUS=4) AND APPRUSER=#{userId} AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-			APPRSTATUS=#{apprStatus} AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+			JOIN APPRLINE USING(APPRNO) WHERE (APPRSTATUS=3 OR APPRSTATUS=4) AND APPRUSER=#{userId}
+			<if test='draftName!=""'>
+				AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+			</if>
+			<if test='startDate!="" and endDate!=""'>
+				AND <![CDATA[
+				(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+				]]>
+			</if>
+			<if test='apprStatus!=""'>
+				AND APPRSTATUS=#{apprStatus} 
+			</if>
+			ORDER BY WRITEDATE DESC
 	</select>
 	
 	
 	<select id="selectSearchMyDocBox" parameterType="search" resultType="approval">
-		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) WHERE USERID=#{userId} AND APPRSTATUS IN (3,4) 
-		AND APPRTITLE LIKE '%'||#{draftName}||'%' AND
-		<![CDATA[
-		(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  ORDER BY WRITEDATE DESC
-		]]>
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+		WHERE USERID=#{userId} AND APPRSTATUS IN (3,4) 
+		<if test='draftName!=""'>
+			AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+		</if>
+		<if test='startDate!="" and endDate!=""'>
+			AND <![CDATA[
+			(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+			]]>
+		</if>
+		ORDER BY WRITEDATE DESC
 	
+	</select>
+	
+	<select id="selectSearchDeptDocBox" parameterType="search" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+		JOIN STOOLUSER USING(USERID)
+		WHERE DEPTCODE=#{deptCode} AND APPRSTATUS IN (3,4) 
+		<if test='draftName!=""'>
+			AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+		</if>
+		<if test='startDate!="" and endDate!=""'>
+			AND <![CDATA[
+			(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+			]]>
+		</if>
+		ORDER BY WRITEDATE DESC
+	
+	</select>
+	
+	<select id="searchRefferedDocBox" parameterType="search" resultType="approval">
+		SELECT * FROM APPROVAL JOIN APPRDOCTYPE USING(APPRDOCTYPENO) 
+			JOIN STOOLUSER USING(USERID)
+			WHERE APPRSTATUS IN (3,4)  AND RECEIVER=#{userId}
+			<if test='draftName!=""'>
+				AND UPPER(APPRTITLE) LIKE '%'||UPPER(#{draftName})||'%' 
+			</if>
+			<if test='startDate!="" and endDate!=""'>
+				AND <![CDATA[
+				(WRITEDATE >=TO_DATE(#{startDate}) OR WRITEDATE <=TO_DATE(#{endDate}))  
+				]]>
+			</if>
+			<if test='apprStatus!=""'>
+				AND APPRSTATUS=#{apprStatus} 
+			</if>
+			ORDER BY WRITEDATE DESC
 	</select>
 </mapper>

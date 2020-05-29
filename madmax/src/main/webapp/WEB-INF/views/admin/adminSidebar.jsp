@@ -182,10 +182,12 @@
                                 </div>
                                 <div id="collapseOne" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
-                                        <ul>
-                                        	<li><a href="${path}/admin/signupApproval.do"><i class="fas fa-user-plus"> 가입 승인</i></a></li>
-                                        	<li><a href="${path}/admin/userManagement.do"><i class="fas fa-user-times"> 회원 관리</i></a></li>
-                                        </ul>
+                                    	<div class="p-2">
+	                                        <ul>
+	                                        	<li><a href="${path}/admin/signupApproval.do"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;가입 승인</a></li>
+	                                        	<li><a href="${path}/admin/userManagement.do"><i class="fas fa-user-times"></i>&nbsp;&nbsp;회원 관리</a></li>
+	                                        </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +200,7 @@
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                     <div class="card-content">
 	                                        <div class="p-2">
-										      <span class="p-3"><a href="${path}/admin/adminAttendManagement.do">근태관리</a></span><br>
+										      <span class="p-3"><a href="${path}/admin/adminAttendManagement.do"><i class="far fa-clock"></i>&nbsp;&nbsp;근태관리</a></span><br>
 										    </div>
                                     </div>
                                 </div>
@@ -218,7 +220,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
+                           <!--  <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseFour">
                                         전자결재관리
@@ -232,7 +234,7 @@
 									    </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 	                </div>
 			</li>

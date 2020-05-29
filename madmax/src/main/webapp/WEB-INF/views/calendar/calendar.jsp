@@ -54,8 +54,8 @@
 			plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction',  'googleCalendar' ],
 			googleCalendarApiKey:'AIzaSyDL2TuMBMjldVwSFT5zvntlpQRrbndMhDk',
 			header: {//실행된 달력화면에서 
-				left: 'title',//현재 출력된 month에 대한 정보
-				center: 'agendaDay,agendaWeek,month',
+				left: 'agendaDay,agendaWeek,month',//현재 출력된 month에 대한 정보
+				center: 'title',
 				right: 'prev,next today'//이전달,다음달 ,오늘(이번달 )로 이동하는 기능
 			},
 			defaultDate: new Date(),
@@ -81,13 +81,15 @@
 				var title = open('','_blank','width=500,height=300');
 				var js = '<script>';
 				js+='function viewScd(){';
-				js+='location.href="//.do?no="';
+				js+="opener.parent.location='${path}/selectedProject/selectedProject.do?pjNo="+info.event.extendedProps.projectNo+'&loginId=';
+				js+='${loginUser.userId}&boardNo='+info.event.extendedProps.boardNo+"';";
+				js+='window.close();';
 				js+='}';
 				js+='</';
 				js+='script>';
 				var content = '<html>';
 				content+='<head>';
-				content+='<script ';
+				content+='<script';
 				content+="src='https://kit.fontawesome.com/b5f4d53f14.js'";
 				content+="crossorigin='anonymous'>";
 				content+='</';
@@ -100,7 +102,7 @@
 				content+='<hr>';
 				content+='<h4><i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>&nbsp;'+info.event.extendedProps.scheduleMemo+'</h4>';
 				content+='<h4>주소:'+info.event.extendedProps.schedulePlace+'</h4>';
-				content+='<button onclick="viewScd();">상세보러가기</button>';
+				content+="<a href='javascript:viewScd();' class='btn btn-primary'>상세보러가기</a>";
 				content+='</div>'
 				content+=js+'</body>';
 				content+='</html>';
@@ -119,6 +121,8 @@
 					,"className":'info'
 					,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
 					,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
+					,"projectNo":'<c:out value="${s.projectNo}"/>'
+					,"boardNo":	'<c:out value="${s.boardNo}"/>'
 					},
 				
 			</c:forEach>  	
@@ -182,6 +186,11 @@
 	color:#FFFFFF;
 	background-color:#cc3333;
 	}
+	h5{
+	font-size:30px;
+	font-weight:bolder;
+	}
+	
 </style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -3,6 +3,6 @@
 <mapper namespace="calendar">
 <select id="selectSchedule" resultType="com.madmax.stool.calendar.model.vo.Calendar">
 SELECT * FROM SCHEDULE S JOIN PROJECTBOARD P ON S.BOARDNO=P.BOARDNO 
-JOIN PROJECTMEMBER PM ON P.PROJECTNO=PM.PROJECTNO WHERE PM.USERID=#{id}
+JOIN PROJECTMEMBER PM ON P.PROJECTNO=PM.PROJECTNO WHERE PM.USERID=#{id} AND STATUS='V'
 </select>
 </mapper>
