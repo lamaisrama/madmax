@@ -23,6 +23,7 @@
 
 <!-- 카카오지도 api&services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services,clusterer,drawing"></script>
+<!-- header CSS -->
 <link rel="stylesheet" href="${path }/resources/css/header.css">
 </head>
 <body>
@@ -86,8 +87,8 @@
 				<%-- <button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button> --%>
 				&nbsp;&nbsp;
 				<!-- data-badge 안에 안 읽은 알람 추가 -->
-				<button class="headerBtn badge1" type="button" id="btnNoti"
-						data-badge="" onclick="openNotification('${loginUser.userId}');">
+				<button class="headerBtn" type="button" id="btnNoti"
+						 onclick="openNotification('${loginUser.userId}');">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;
 				<c:if test="${loginUser!=null}">
@@ -99,7 +100,7 @@
 	</div>
 	
 	<!-- 알림 메시지 표시 구역 -->
-	<div id="snackbar"></div>	
+	<div id="snackbar" ></div>	
 	
 	<div class="container-fluid">
 		<div class="row">	
@@ -117,27 +118,41 @@
 
 	socket.onmessage=function(data){
 		const msg = JSON.parse(data.data);
-		if(msg.type=="count"){
-			$("#btnNoti").addClass("badge1").attr("data-badge", msg.msg);
-		}else{
-			//새로 알림이 추가이 됬으니까 개수 변경여부 업데이트
-			getUnreadNotificationCount();
-			//sanckbar로 알림 내용 보여주기
-			$("#snackbar").html(msg.msg);
-			showSnackbar();
-		}  		
+		if(msg.type=="count") countMessageHandler(msg);
+		else notiMessageHandler(msg);
+		  		
 	}
 	
-	function sendLoginMessage(){
-		
-		var loginMsg=new SocketMessage('login', '${loginUser.userId}', '${loginUser.userId}', '');
-		socket.send(JSON.stringify(loginMsg));
-		
+	function countMessageHandler(msg){
+		if(msg.msg=="0"){
+			$("#btnNoti").removeClass("badge1").attr("data-badge", "");
+		}else{				
+			$("#btnNoti").addClass("badge1").attr("data-badge", msg.msg);
+		}
+	}
+	
+	function notiMessageHandler(el){
+		//새로 알림이 추가이 됬으니까 개수 변경여부 업데이트
+		console.log(el);
+		getUnreadNotificationCount();
+		//sanckbar로 알림 내용 보여주기
+		$("#snackbar").html(el.msg);
+		showSnackbar();
 	}
 	
 	function getUnreadNotificationCount(){
 		var countMsg = new SocketMessage('count', '${loginUser.userId}', '${loginUser.userId}', '');
 		socket.send(JSON.stringify(countMsg));
+	}
+
+	function sendNotiMessage(receiver, msg){
+		var notiMsg = new SocketMessage('newNoti', '${loginUser.userId}', receiver, msg);
+		socket.send(JSON.stringify(notiMsg));
+	}
+	
+	function sendLoginMessage(){
+		var loginMsg=new SocketMessage('login', '${loginUser.userId}', '${loginUser.userId}', '');
+		socket.send(JSON.stringify(loginMsg));
 	}
 
 	
@@ -171,11 +186,13 @@
        		dataType:"html",
        		success:(data)=>{
        			$("#notificationModal").html(data);
+       			$("#btnNoti").attr("data-backdrop", "false");
        			$("#notificationModal").modal('show');
        		}	
        	});
 
     }
+
 	
 	
 $(document).ready(function() {

@@ -41,6 +41,7 @@ public class NotificationServer extends TextWebSocketHandler{
 			//System.out.println(message.getPayload());
 		//받아온 Msg를 자바객체화 ("type", "sender", "receiver", "msg")
 		NotificationMsg msg = getMessage(message.getPayload());
+		System.out.println("메세지 받음 : "+ msg);
 		switch(msg.getType()) {
 		case "login" : addLoginUser(msg, session); break;
 		case "count" : sendMessage(countUnreadNoti(msg), session); break;
