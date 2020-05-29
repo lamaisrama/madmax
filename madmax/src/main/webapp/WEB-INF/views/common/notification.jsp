@@ -25,7 +25,7 @@
                     <c:if test="${unread!=null }">
                     	<c:forEach items="${unread }" var="r">
                         <li class="noti-li">
-                            <div class="noti-info">
+                            <div class="noti-info" id="${r.notNo}/${r.projectNo}/${r.boardNo}" onclick="readNewNoti(this);">
                                 <div class="noti-profile">
                                     <p><img src="${path }/resources/upload/profile/${r.profile }"></p>
                                 </div>
@@ -40,19 +40,20 @@
                                         	<c:if test="${r.notType eq 'writing' }">
 												글 '<b>${r.writingTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
-											<c:if test="${r.notType eq'writingcomment' }">
-											글 '<b>${r.writingTitle }</b>' 의 댓글에서 회원님을 언급했습니다.</c:if>
+											<c:if test="${r.notType eq 'writingcomment' }">
+											글 '<b>${r.writingTitle }</b>' 에 댓글을 달았습니다. 
+											</c:if>
 											<c:if test="${r.notType eq 'task'}">
 												업무 '<b>${r.taskTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'taskcomment'}">
-												업무 업무 '<b>${r.taskTitle }</b>'의 댓글
+												업무 '<b>${r.taskTitle }</b>'에 댓글을 달았습니다. 
 											</c:if>
 											<c:if test="${r.notType eq 'schedule'}">
 												일정 '<b>${r.scheduleTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'schedulecomment'}">
-												일정 '<b>${r.scheduleTitle }</b>'의 댓글 에서 회원님을 언급했습니다.
+												일정 '<b>${r.scheduleTitle }</b>'에 댓글을 달았습니다. 
 											</c:if>
 											</span>
                                         </li>
@@ -73,13 +74,12 @@
                     <c:if test="${read!=null }">
                     	<c:forEach items="${read }" var="r">
                         <li class="noti-li">
-                            <div class="noti-info">
+                            <div class="noti-info" id="${r.notNo}/${r.projectNo}/${r.boardNo}" onclick="readNoti(this);">
                                 <div class="noti-profile">
                                     <p><img src="${path }/resources/upload/profile/${r.profile }"></p>
                                 </div>
                                 <div class="noti-text">
                                     <ul>
-                                    	<li>${r.notType }</li>
                                         <li class="projectName">${r.projectTitle } </li>
                                         <li class="notiDate">
 											<fmt:formatDate value="${r.notTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -90,18 +90,18 @@
 												글 '<b>${r.writingTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq'writingcomment' }">
-											글 '<b>${r.writingTitle }</b>' 의 댓글에서 회원님을 언급했습니다.</c:if>
+											글 '<b>${r.writingTitle }</b>'에 댓글을 달았습니다. </c:if>
 											<c:if test="${r.notType eq 'task'}">
 												업무 '<b>${r.taskTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'taskcomment'}">
-												업무 업무 '<b>${r.taskTitle }</b>'의 댓글
+												업무 '<b>${r.taskTitle }</b>'에 댓글을 달았습니다. 
 											</c:if>
 											<c:if test="${r.notType eq 'schedule'}">
 												일정 '<b>${r.scheduleTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'schedulecomment'}">
-												일정 '<b>${r.scheduleTitle }</b>'의 댓글 에서 회원님을 언급했습니다.
+												일정 '<b>${r.scheduleTitle }</b>'에 댓글을 달았습니다. 
 											</c:if>
 											</span>
                                         </li>
@@ -191,6 +191,26 @@
 	    		}
 	    	});
     	 }
+    }
+    
+    function readNewNoti(e){
+    	//console.log(e.id);    // notNo/projectNo/boardNo 순으로 들어옴
+    	var nNo=e.id.split('/')[0];
+    	var pNo=e.id.split('/')[1];
+    	var bNo=e.id.split('/')[2];
+      	$.ajax({
+    		url:"${path}/noti/updateUnreadNotification?notNo="+nNo,
+    		success:(data)=>{
+    			location.assign('${path}/selectedProject/selectedProject.do?pjNo='+pNo+'&loginId=${loginUser.userId}&boardNo='+bNo);
+    		}
+    	})  
+    }
+    
+    function readNoti(e){
+    	var nNo=e.id.split('/')[0];
+    	var pNo=e.id.split('/')[1];
+    	var bNo=e.id.split('/')[2];
+    	location.assign('${path}/selectedProject/selectedProject.do?pjNo='+pNo+'&loginId=${loginUser.userId}&boardNo='+bNo);
     }
 
 </script>

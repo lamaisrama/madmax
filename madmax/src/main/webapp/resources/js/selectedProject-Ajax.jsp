@@ -27,6 +27,32 @@ function fn_writeSubmit(){
         success: function (data) {        	
         	if(data>0){
         		alert("게시글이 등록되었습니다.");
+        		if($("#mentionListStr").val()!=""){
+        			var mentionListStr = $("#mentionListStr").val().split(',');
+        			$.each(mentionListStr, function(i, e){
+        				var receiver = e;
+        				var boardType=$("#boardType").val();
+        				var title; var type;
+        				switch(boardType){
+        				case "writing" : {
+        						type='글';
+        						title=$("#writingTitle").val(); break;
+        					}
+        				case "task" : {
+        						type = '업무';
+        						title=$("#taskTitle").val(); break;
+        					}
+        				case "schedule" : {
+        						type='일정'; 
+        						title=$("#scheduleTitle").val(); break;
+        					}
+        				}
+        				var msg = '[${projectInfo.PROJECTTITLE}] ${loginUser.userName}님이 <br>'
+        				msg += type+'<b> \"'+title+'\"</b>에서 <br>'
+        				msg += '회원님을 언급했습니다.';
+        				sendNotiMessage(receiver, msg);
+        			})
+        		}
         		location.reload(true);
         	}else{
         		alert("게시글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
@@ -259,7 +285,13 @@ function fn_insertCommentSubmit(bNo){
         cache: false,
         success: function (data) {        	
         	if(data>0){
+        		var receiver = $(form[name="receiveId"]).val();
+        		var msg = '[${projectInfo.PROJECTTITLE}] ${loginUser.userName}님이 댓글을 남겼습니다.<br>';
+        		msg += "\""+$(form[name="comment"]).val()+"\"";
+        		sendNotiMessage(receiver, msg);
         		location.reload(true);
+        		
+        		
         	}else{
         		alert("댓글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
         	}
@@ -323,5 +355,27 @@ function fn_fileDownload(pjNo,ori,rename){
 	ori=encodeURIComponent(ori);
 	location.href="${path}/selectedProject/fileDownload.do?pjNo="+pjNo+"&ori="+ori+"&rename="+rename;
 }
+
+//게시글 삭제
+function fn_viewPostDelete(pjNo, bNo){
+	$.ajax({
+		url:"${path}/selectedProject/updateProjectBoardStatus.do",
+		data:{pjNo:pjNo,
+			  bNo:bNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("게시글 삭제에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});	
+}
+
+
+
+//파일 수정
+
+
 
 </script>

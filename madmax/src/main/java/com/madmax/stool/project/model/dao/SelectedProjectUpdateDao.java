@@ -32,5 +32,7 @@ public interface SelectedProjectUpdateDao {
 
 	int deleteComment(SqlSessionTemplate session, Map<String, Object> cMap);
 
+	int updateProjectBoardStatus(SqlSessionTemplate session, Map<String, Object> pbMap);
+
 
 }

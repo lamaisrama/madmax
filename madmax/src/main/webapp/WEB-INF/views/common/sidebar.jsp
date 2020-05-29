@@ -64,6 +64,7 @@
 	}
 	
 	.accordin-elem .card .card-content a:link{
+		color: #7b7b7b; 
 		text-decoration: none;
 	}
 	.accordin-elem .card .card-content a:visited{
@@ -120,33 +121,52 @@
 		border: 3px solid #233C61; 
 		border-radius:50px;
 	}
-	
+	.user-container{
+		/* border : 1px solid red;
+		justify-content: center; */
+	}
 	.imgbox{
-        display: flex;
-        justify-content: center;
+		border: 3px solid #233C61; 
+       	display:inline-block;
+        text-align:center;
+        border-radius: 500px; 
+        width:130px; height:130px; 
+        overflow:hidden;
+        /* display: flex; */
+        /* justify-content: center; */
         position: relative;
     }
     .imgbox img {
 		width: 100%; height:auto;
 		vertical-align: middle;
-	}    
-    .edit{
-    	opacity : 0;
-    	/* display:none; */
-    }    
-    .edit:hover {
-		padding: 0px 0px; margin:0;
-		background-color: rgba(35, 60, 97, 0.5);  
-		color : #EBDACE;
-		text-align: center;
-		position: absolute;
-		top: 90%; left: 50%;
-		transform: translate( -50%, -50% );
-		opacity : 1;
-		/* display: block; */
-	}    
-        
-        
+	}  
+	.shadow {
+		position: absolute ; 
+		top: -5px; 
+		text-align:center; 
+		background-color: rgba(0, 0, 0, .3); 
+		width: 130px; height: 130px; 
+		margin:0; transition: 0.5s;
+	}
+	.shadow span {
+		font-size: 12pt; 
+		text-align:center; 
+		display: block;
+	}
+	.detail {
+		display: none; 
+		color: #EBDACE; 
+		font-weight: 600;
+		margin: a auto; 
+		padding: 90px 20px 0 20px;
+	}
+	.detail p {text-align:center; text-shadow: 1px 1px #233C61;}
+	.detail img {clear: both;}
+	
+	.imgbox:hover {cursor: pointer;}
+	.imgbox:hover .shadow {top: 0px;}
+	.imgbox:hover span {display: none;}
+	.imgbox:hover .detail {display: block;}  
 </style>
 
 <div class="col col-sm-2">
@@ -155,14 +175,12 @@
 		<ul class="menu">
 			<li>
 				<div class="user-container text-center">
-					<div class="imgbox">
+					<div class="imgbox mb-4">
 	               	<a href="${path}/user/userInfo">
-		                
-		                	<img src="${path}/resources/upload/profile/${loginUser.profile }" 
-		                		style="border: 3px solid #233C61; 
-					            border-radius: 500px; width:130px; height:130px; overflow:hidden;">
-            				<!-- <span class="edit"><p>edit</p></span> -->
-            			
+		                <div class="detail shadow">
+		                	<p>사원 정보</p>
+		                </div>
+                		<img src="${path}/resources/upload/profile/${loginUser.profile }"/>
        				</a>
 			        </div>   
 					<br>

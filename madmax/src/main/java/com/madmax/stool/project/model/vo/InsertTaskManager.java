@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InsertTaskManager {
-	private String taskManagerName; 
+	private String taskManagerId; 
 	private int taskNo;
 }

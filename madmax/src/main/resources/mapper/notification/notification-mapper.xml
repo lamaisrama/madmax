@@ -48,4 +48,8 @@
 		(userName like '%'||#{keyword}||'%' or projecttitle  like '%'||#{keyword}||'%') 
 		order by nottime desc
 	</select>
+	
+	<update id="updateUnreadNotification" parameterType="_int">
+		update notificationtable set notreadtime=sysdate where notno=#{notNo}
+	</update>
 </mapper>

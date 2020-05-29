@@ -45,7 +45,7 @@
 	</insert>
 	
 	<insert id="insertTaskManagerTB" parameterType="insertTaskManager">
-		INSERT INTO TASKMANAGER VALUES(#{taskManagerName},#{taskNo})
+		INSERT INTO TASKMANAGER VALUES(#{taskManagerId},#{taskNo})
 	</insert>
 	
 	<!-- 3) 일정  -->
