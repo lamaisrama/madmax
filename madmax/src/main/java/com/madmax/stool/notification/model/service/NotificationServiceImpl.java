@@ -121,7 +121,12 @@ public class NotificationServiceImpl implements NotificationService{
 	public int selectUnreadNotificationCount(String sender) {
 		return dao.selectUnreadNotificationCount(session, sender);
 	}
-	
+
+
+	@Override
+	public int updateUnreadNotification(int notNo) {
+		return dao.updateUnreadNotification(session, notNo);
+	}
 	
 	
 	
