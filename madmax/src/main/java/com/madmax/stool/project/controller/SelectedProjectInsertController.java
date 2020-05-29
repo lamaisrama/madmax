@@ -200,13 +200,13 @@ public class SelectedProjectInsertController {
         	task.setTaskContent(map.get("taskContent"));
         	task.setTaskId(writer);
         	
-        	String tmNames = map.get("taskManagerName");
+        	String tmIds = map.get("taskManagerId");
     		List<InsertTaskManager> tmList = new ArrayList<InsertTaskManager>();
-    		if(!tmNames.trim().equals("") && tmNames != null) {
-    			String[] tmNameArr = tmNames.split(",");
-    			for(String name : tmNameArr) {
+    		if(!tmIds.trim().equals("") && tmIds != null) {
+    			String[] tmIdsArr = tmIds.split(",");
+    			for(String id : tmIdsArr) {
     				InsertTaskManager itm = new InsertTaskManager();
-    				itm.setTaskManagerName(name);
+    				itm.setTaskManagerId(id);
     				tmList.add(itm);
     			}
     		}
