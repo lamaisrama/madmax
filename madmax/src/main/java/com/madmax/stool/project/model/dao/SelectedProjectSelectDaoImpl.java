@@ -135,11 +135,10 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	}
 
 
-//	@Override
-//	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
-		// TODO Auto-generated method stub
-//		return session.selectList("selectedProjectSelect.selectUser");
-//	}
+	@Override
+	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
+		return session.selectList("selectedProjectSelect.selectUser");
+	}
 	
 	
 	

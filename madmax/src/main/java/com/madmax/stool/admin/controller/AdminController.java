@@ -63,7 +63,7 @@ public class AdminController {
 	@RequestMapping("/admin/signupApproval.do")
 	public String signupApproval(Model m) {
 		
-		List<AdminUserManage> list=service.selectAignupApproval();
+		List<AdminUserManage> list=service.selectSignupApproval();
 		
 		m.addAttribute("list",list);
 		
@@ -73,10 +73,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/updateUserState.do")
-	public String updateUserState(Model m,HttpServletRequest req,@RequestParam String userId) {
+	public String updateUserState(Model m,HttpServletRequest req,String userId) {
 		//String userId=aum.getUserId();
 		
-		
+		System.out.println(userId);
 		int result=service.updateUserState(userId);
 		
 		return "redirect:/admin/signupApproval.do";

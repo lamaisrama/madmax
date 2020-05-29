@@ -30,4 +30,9 @@
 	<update id="updatePw" parameterType="map">
 		UPDATE STOOLUSER SET PASSWORD=#{newPwd} WHERE USERID=#{id}	
 	</update>
+	
+	<!-- user수정 -->
+	<update id="updateUser" parameterType="map">
+		UPDATE STOOLUSER SET PASSWORD=#{pw}, EMAIL=#{email}, PHONE=#{phone}, PROFILE=#{profile} WHERE USERID=#{id}
+	</update>
 </mapper>

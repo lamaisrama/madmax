@@ -22,8 +22,8 @@
             </c:if> 
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
-                <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
-            	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
+                <div class="projectTitle w-100 h-25  border-bottom border-grey d-flex justify-content-around overflow-hidden">
+            	<span>${l.projectTitle }</span>	<a href="${path}/selectedProject/selectedProject.do?pjNo=${l.projectNo}&loginId=${loginUser.userId}&boardNo=${l.boardNo}">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
@@ -32,7 +32,17 @@
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
+                                        <c:choose>
+                                    	<c:when test="${l.boardType eq 'W' }">
+	                                        <img src="${path}/resources/upload/profile/${l.WProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'T' }">
+	                                        <img src="${path}/resources/upload/profile/${l.TProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'S' }">
+	                                        <img src="${path}/resources/upload/profile/${l.SProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+                                    	</c:choose>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <c:choose>
@@ -40,7 +50,7 @@
 	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'T' }">
-	                                        <strong>${l.taskName }</strong>
+	                                        <strong>${l.TName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'S' }">
 	                                        <strong>${l.SName }</strong>
@@ -86,19 +96,19 @@
 	                                    <strong class="mr-2">진행상태</strong> <!-- 업무 진행상태 -->
 	                                    	<c:choose>
 								                  <c:when test="${l.taskState eq '요청' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#0275d8; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								             		<c:when test="${l.taskState eq '진행' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5cb85c; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '피드백' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#d9534f; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState  eq '완료' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:#5bc0de; color:white">${l.taskState}</div></td>
 								                   </c:when>
 								                     <c:when test="${l.taskState eq '보류' }">
-								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${t['taskState']}</div></td>
+								                   <td id="taskState" style="width:10%"><div style="background-color:grey; color:white">${l.taskState}</div></td>
 								                   </c:when>
 							            	</c:choose>
 	                                </div>                        
@@ -199,13 +209,115 @@
                    
                 </div>
 				</c:forEach>
-
+				<c:if test="${not empty List }">
+					<c:if test="${ empty msg }">
+					<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+					</c:if>
+					<c:if test="${not empty msg }">
+					<div class="text-center">${msg }</div>
+					</c:if>
+				</c:if>
 
 	
 </div>	
 <div class="col col-sm-3">
 
 </div>
+<script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
+}
+
+	function moreList(){
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
+		if(pageNo==undefined || pageNo=="" ||pageNo==null){
+			pageNo=2;
+			location.href="${path}/project/myNoti.do?pageNo="+pageNo;
+		}else{
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/myNoti.do?pageNo="+pageNo;
+		}
+		
+		
+	}
 
 
+	//일단. 지도를 출력해줄 위치가 여러곳.
+	//장소도 각각 다르다.
+	var mapContainers = document.getElementsByClassName('map');// 지도를 표시할 div 
+			
+			mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+			
+			//지도를 객체 배열로 생성하기
+			var maps=[];
+			for(var i=0;i<mapContainers.length;i++){
+				maps.push(new kakao.maps.Map(mapContainers[i], mapOption)); 
+			}
+			console.log(maps[0]);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			//검색할 주소를 가져옴
+			var addArr=[];
+			var addr=document.getElementsByClassName('mAddress').innerHTML;
+			for(var i=0;i<$(".mAddress").length;i++){
+				addArr.push($(".mAddress").eq(i).html()); 
+			}
+			console.log(addArr);
+			
+	
+				$.each(maps,function(i,map){
+					console.log(map);
+					var coords;
+					var marker;
+					geocoder.addressSearch(addArr[i],  function(result,status){
+						
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+					        coords= new kakao.maps.LatLng(result[0].y, result[0].x);//좌표값
+					        marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+						}
+						console.log(coords);
+						map.setCenter(coords);
+					});
+				});		
+			
+		
+	
+	
+	
+</script>
+<style>
+.pjViewBody-schedule{
+    background-color: #f6f7f8;
+    border: 1px solid #E8E8EB;
+}
+.projectTitle {
+	background-color:#25558F;
+	color:white;
+}
+a{
+	color:white;
+}
+a:hover{
+	color:white;
+	font-weight:bolder;
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

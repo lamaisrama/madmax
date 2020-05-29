@@ -16,7 +16,7 @@
 
 
 
-<div class="col col-sm-10">	
+<div class="col col-sm-9">	
 		<h4><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
 		<hr>
 	 	<br>
@@ -59,7 +59,7 @@
                 <input type="hidden"  id="managementNo"  value="${a['managementNo']}"/>
                 <input type="hidden"  id="requestNo"  value="${a['requestNo']}"/>
                 <input type="hidden"  id="workStateNo"  value="${a['workStateNo']}"/>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="arrayValue(this);">
                        	 수정
                     </button>
                 </td>
@@ -105,8 +105,8 @@
 
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" onclick="modifyEnd();">수정완료</button>
+	                            <button type="button"  class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" onclick="modifyEnd();">수정완료</button>
                             </div>
                          
                         </div>
@@ -118,23 +118,34 @@
 
 <script>
 
-	$('#exampleModalCenter').on('show.bs.modal',function(e){
+	/* $('#exampleModalCenter').on('show.bs.modal',function(e){
 		
-		var mNo=$('#managementNo').val();
-		$('#mNo').val(mNo);
-		//console.log($('#mNo').val());
-		var rNo=$('#requestNo').val();
-		$('#rNo').val(rNo);
+		//var mNo=$('#managementNo').val();
+		//$('#mNo').val();
+		console.log($('#managementNo').val());
+		//var rNo=$('#requestNo').val();
+		//$('#rNo').val(rNo);
 		
-		var wsNo=$('#workStateNo').val();
-		$('#wsNo').val(wsNo);
+		//var wsNo=$('#workStateNo').val();
+		//$('#wsNo').val(wsNo);
 		
 		
-	});
+	}); */
+	
+	
+	function arrayValue(e){
+		//console.log($(e).prev().val());
+		//console.log($(e).prev().prev().val());
+		//console.log($(e).prev().prev().prev().val());
+		
+		$("#wsNo").val($(e).prev().val());
+		$("#rNo").val($(e).prev().prev().val());
+		$("#mNo").val($(e).prev().prev().prev().val());
+	}
 
+	
 
-
-	function modifyEnd(){
+	function modifyEnd(e){
 		
 		var otn = document.getElementsByName("requestCategory");
 

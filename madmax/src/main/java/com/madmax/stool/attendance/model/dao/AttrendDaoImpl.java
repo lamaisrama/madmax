@@ -2,9 +2,11 @@ package com.madmax.stool.attendance.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.madmax.stool.attendance.model.vo.AttdSearch;
 import com.madmax.stool.attendance.model.vo.Attendance;
 import com.madmax.stool.attendance.model.vo.Worktime;
 
@@ -33,8 +35,8 @@ public class AttrendDaoImpl implements AttendDao {
 	}
 
 	@Override
-	public List<Worktime> selectWorktimeList(SqlSessionTemplate session, String userId) {
-		return session.selectList("attend.selectWorktimeList", userId);
+	public List<Worktime> selectWorktimeList(SqlSessionTemplate session, String userId, int cPage, int numPerPage) {
+		return session.selectList("attend.selectWorktimeList", userId, new RowBounds((cPage-1)*numPerPage, numPerPage));
 	}
 
 	@Override
@@ -78,5 +80,25 @@ public class AttrendDaoImpl implements AttendDao {
 		// TODO Auto-generated method stub
 		return session.update("attend.updateRequestState", a);
 	}
+
+	@Override
+	public int insertNoCometime(SqlSessionTemplate session, Worktime w) {
+		// TODO Auto-generated method stub
+		return session.insert("attend.insertNoCometime",w);
+	}
+
+	@Override
+	public List<Worktime> selectSearchAttd(SqlSessionTemplate session, AttdSearch search) {
+		// TODO Auto-generated method stub
+		return session.selectList("attend.selectSearchAttd");
+	}
+
+	@Override
+	public int selectAttdList(SqlSessionTemplate session, String userId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("attend.selectAttdList",userId);
+	}
+	
+	
 
 }

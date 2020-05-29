@@ -38,9 +38,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<AdminUserManage> selectAignupApproval() {
+	public List<AdminUserManage> selectSignupApproval() {
 		// TODO Auto-generated method stub
-		return dao.selectAignupApproval(session);
+		return dao.selectSignupApproval(session);
 	}
 
 	@Override

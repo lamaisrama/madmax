@@ -23,36 +23,7 @@
 
 <!-- 카카오지도 api&services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services,clusterer,drawing"></script>
-<style>	
-	.navBtn{
-		font-weight:bolder; font-size:13px; color: white; 
-		width: 6em; height:3em; border-radius: 30px; 
-		background-color: #25558F; margin-right:1em;
-	}
-	.navBtn:hover{ background-color: #233C61; color: white; font-weight:bolder; }	
-	
-	
-	.checkBtn{
-	 	width:90px;
-		font-size : 17px;
-		font-weight : 600;
-		color : #233C61; 
-		border: 3px solid #233C61; 
-		border-radius:50px;
-		margin-right:12px;
-	}
-	.changeBtn{
-		width:90px;
-		font-size : 17px;
-		font-weight : 600;
-		background-color:#233C61;
-		border: 3px solid #233C61; 
-		border-radius:50px;
-		color:white;
-		margin-right:12px;
-	
-	}
-</style>
+<link rel="stylesheet" href="${path }/resources/css/header.css">
 </head>
 <body>
 	<div class="header-container">
@@ -69,9 +40,9 @@
 					<li class="nav-item active"></li>
 				</ul>
 				<c:if test="${loginUser.userId=='admin'}">
-					<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/admin/adminIndex.do')">관리자 페이지</button>
+					<button type="button" class="btn headerBtn" onclick="location.replace('${path}/admin/adminIndex.do')">관리자</button>
 				</c:if>
-				<button type="button" class="btn checkBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
+				<button type="button" class="headerBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
 				<!-- 모달창 -->
 				
 				 <div class="modal fade" id="checkState">
@@ -99,119 +70,226 @@
 						        </div>
 							</div>
 				        	<!-- Modal footer -->
-					        <div class="modal-footer">
-					            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	                            <button  type="button" class="btn btn-primary" style="background-color: #233C61; border-color: #233C61;" >요청완료</button>
+					        <div class="modal-footer" style="height:50px;">
 					        </div>
 				        </form>
 				      </div>
 				    </div>
 				  </div>
 				
-				
-				
-				
-				
-				<button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button>
-				<button class="btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#">
+
+				    <!-- Notification 모달창 -->
+				    <!-- The Modal -->
+				    <div class="modal fade" id="notificationModal">
+					</div><!-- Notification 모달 창 끝 -->
+
+				<%-- <button type="button" class="btn navBtn" onclick="location.replace('${path}/attd/attendList.do')">근태현황</button> --%>
+				&nbsp;&nbsp;
+				<!-- data-badge 안에 안 읽은 알람 추가 -->
+				<button class="headerBtn badge1" type="button" id="btnNoti"
+						data-badge="" onclick="openNotification('${loginUser.userId}');">
 					<i class="far fa-bell"></i>
 				</button>&nbsp;&nbsp;
-				<button class="btn  my-2 my-sm-0"  type="button" data-toggle="modal" data-target="#">
-					<i class="far fa-comment-alt"></i>
-				</button>&nbsp;&nbsp;
-				<c:if test="${loginMember==null }">
-					<button class="btn  my-2 my-sm-0"  type="button" onclick="location.replace('${path}/user/logout.do');">
-						<i class="fas fa-running"></i><!-- <i class="fas fa-door-open"></i><i class="fas fa-sign-out-alt"></i><i class="fas fa-person-booth"></i> -->
-					</button>
+				<c:if test="${loginUser!=null}">
+					<button class="headerBtn" type="button" onclick="location.replace('${path}/user/logout.do');">로그아웃</button>
 				</c:if>
 			</div>
 		</nav>
 		</header>
-	</div>	
+	</div>
+	
+	<!-- 알림 메시지 표시 구역 -->
+	<div id="snackbar"></div>	
+	
 	<div class="container-fluid">
 		<div class="row">	
 		
 		
-		<script>
-		$(document).ready(function() {
+<script>
+	//소켓 서버와 연결
+	var socket = new WebSocket('ws://localhost:9090/${path}/notification');
+	
+	socket.onopen=function(){
+		console.log('info : connection opend');
+		sendLoginMessage();
+		//sendTest();
+	}
 
-			$("#come").click(function() { 
-				//console.log("!!!");
-				$.ajax({
-					url : '${path}/attd/checkCometime.do',
-					type:"post",
-					data:$("#checkForm").serialize(),
-					success : function(data) { 
-						console.log(data);
-						if(data){
-							alert("출근 시간이 이미 입력되었습니다.");
-							//$('#checkState').modal("hide");
-						}else if(data==false) {
-							// 출근 시간이 있으면 true,없으면 false;
-							
-							
-							//console.log(stateRequest());
-							//$('#checkState').modal("hide");
-							stateRequest();
+	socket.onmessage=function(data){
+		const msg = JSON.parse(data.data);
+		if(msg.type=="count"){
+			$("#btnNoti").addClass("badge1").attr("data-badge", msg.msg);
+		}else{
+			//새로 알림이 추가이 됬으니까 개수 변경여부 업데이트
+			getUnreadNotificationCount();
+			//sanckbar로 알림 내용 보여주기
+			$("#snackbar").html(msg.msg);
+			showSnackbar();
+		}  		
+	}
+	
+	function sendLoginMessage(){
+		
+		var loginMsg=new SocketMessage('login', '${loginUser.userId}', '${loginUser.userId}', '');
+		socket.send(JSON.stringify(loginMsg));
+		
+	}
+	
+	function getUnreadNotificationCount(){
+		var countMsg = new SocketMessage('count', '${loginUser.userId}', '${loginUser.userId}', '');
+		socket.send(JSON.stringify(countMsg));
+	}
+
+	
+	function sendTest(){
+		var title='테스트에용'
+		socket.send(JSON.stringify(new SocketMessage('newNoti','${loginUser.userId}','user5',
+				'글'+title+'에서 ${loginUser.userName}님이 회원님을 언급했습니다.' )));
+	}
+
+    function showSnackbar() {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }  
+	 
+	function SocketMessage(type, sender, receiver, msg){
+		this.type=type; // 'login', 'writing', 'task', 'schedule', 'comment'
+		this.sender=sender;
+		this.receiver=receiver;
+		this.msg=msg;
+	}
+
+	function openNotification(userId){
+       	$.ajax({
+       		url:"${path}/noti/notification.do?userId="+userId,
+       		dataType:"html",
+       		success:(data)=>{
+       			$("#notificationModal").html(data);
+       			$("#notificationModal").modal('show');
+       		}	
+       	});
+
+    }
+	
+	
+$(document).ready(function() {
+
+	$("#come").click(function() { 
+		//console.log("!!!");
+		$.ajax({
+			url : '${path}/attd/checkCometime.do',
+			type:"post",
+			data:$("#checkForm").serialize(),
+			success : function(data) { 
+				console.log(data);
+				if(data){
+					alert("출근 시간이 이미 입력되었습니다.");
+					$('#checkState').modal("hide");
+				}else if(data==false) {
+					// 출근 시간이 있으면 true,없으면 false;
+					
+					
+					//console.log(stateRequest());
+					//$('#checkState').modal("hide");
+					stateRequest();
+				}
+			}
+		});
+	});
+});
+
+
+
+$(document).ready(function() {
+
+	$("#go").click(function() { 
+		
+		
+		$.ajax({
+			url:'${path}/attd/checkCometime.do',
+			type:"post",
+			data:$("#checkForm").serialize(),
+			success : function(data) {
+				// 출근 시간이 있으면 true,없으면 false;
+				console.log(data);
+				if(data){
+					
+					$.ajax({
+						url : '${path}/attd/checkGotime.do',
+						type:"post",
+						data:$("#checkForm").serialize(),
+						success : function(data) { 
+							console.log(data);
+							// 있으면 true,없으면 false;
+							if(!data){
+								confirm("이미 퇴근시간이 찍혀있습니다. 수정하시겠습니까? ");
+								//return;
+								$("#checkForm").attr("action","${path}/attd/updateGoTime.do");
+								$("#checkForm").submit();	
+							}else{
+								alert("퇴근 시간이 입력되었습니다.");
+								stateRequest();
+							}
 						}
-					}
-				});
-			});
+					});
+					
+				}else{
+					
+					$.ajax({
+						
+						url:'${path}/attd/noComeTime.do',
+						type:"post",
+						data:$("#checkForm").serialize(),
+						success:function(date){
+							alert("출근시간이 입력되지 않아 지각처리 됩니다 !");
+							$('#checkState').modal("hide");
+						}
+					});
+				}
+			}
 		});
 		
- 		$(document).ready(function() {
+	});
+}); 
 
-			$("#go").click(function() { 
-				$.ajax({
-					url : '${path}/attd/checkGotime.do',
-					type:"post",
-					data:$("#checkForm").serialize(),
-					success : function(data) { 
-						console.log(data);
-						// 있으면 true,없으면 false;
-						if(data){
-							alert("퇴근 했습니다.");
-							return ;
-						}else if(data==false){
-							stateRequest();
-						}
-					}
-				});
-			});
-		}); 
-		
-		
-		
 
- 		 	function stateRequest(){
-				
-				alert("요청 완료됐습니다.");
-		
-				
-				$('#checkState').modal("hide");
-				
-				$("#checkForm").attr("action","${path}/attd/stateRequest.do");
-				$("#checkForm").submit();	
 
-			} 
-		 	
-		 	
-	        $(function(){
-	        	
-                $(".checkBtn").click(function(){
-                    
-                    // 클래스 제거 
-                    $('.checkBtn').removeClass("changeBtn");
-                    $(".checkBtn").addClass("checkBtn");
-                    $(this).removeClass("checkBtn");
-                    //클래스 추가
-                    $(this).addClass("changeBtn");
-                    
-                })
-            }) 
+
+	 	function stateRequest(){
 		
+		alert("요청 완료됐습니다.");
+
 		
-		</script>	
+		$('#checkState').modal("hide");
+		
+		$("#checkForm").attr("action","${path}/attd/stateRequest.do");
+		$("#checkForm").submit();	
+
+	} 
+ 	
+ 	
+      $(function(){
+      	
+             $(".checkBtn").click(function(){
+                 
+                 // 클래스 제거 
+                 $('.checkBtn').removeClass("changeBtn");
+                 $(".checkBtn").addClass("checkBtn");
+                 $(this).removeClass("checkBtn");
+                 //클래스 추가
+                 $(this).addClass("changeBtn");
+                 
+             })
+         }) 
+
+
+</script>	
 		
 		
 		

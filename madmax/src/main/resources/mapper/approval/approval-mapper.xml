@@ -158,7 +158,7 @@
 	</update>
 	
 	<update id="updateApprovalStatusIng" parameterType="apprLine">
-		UPDATE APPROVAL SET CURRAPPRSTEP = #{apprStep}  WHERE APPRNO=#{apprNo}
+		UPDATE APPROVAL SET CURRAPPRSTEP = #{apprStep}, APPRSTATUS=2  WHERE APPRNO=#{apprNo}
 	</update>
 	
 	<select id="selectAttachAppredDoc" parameterType="string" resultType="approval">

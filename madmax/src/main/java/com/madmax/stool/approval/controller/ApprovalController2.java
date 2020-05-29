@@ -112,19 +112,10 @@ public class ApprovalController2 {
 	  }
 	  
 	  @RequestMapping("/appr/searchApprReqBox.do")
-	  public String searchApprReqBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
-		  
+	  public String searchApprReqBox(HttpServletRequest req,Model m, ApprSearch search, String url) {  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
-		  
-		  //System.out.println("search 확인 :"+search);
-		  
+		  System.out.println(search);
 		  List<Approval> list=service.selectSearchApprReqBox(search);
 		  
 		  m.addAttribute("list",list);
@@ -133,15 +124,9 @@ public class ApprovalController2 {
 	  }
 	  
 	  @RequestMapping("/appr/searchApprTempBox.do")
-	  public String searchApprTempBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
+	  public String searchApprTempBox(HttpServletRequest req,Model m,ApprSearch search,String url) {
 		  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
 		  
 		  //System.out.println("search 확인 :"+search);
@@ -153,35 +138,22 @@ public class ApprovalController2 {
 		  return url;
 	  }
 	  @RequestMapping("/appr/searchApprWaitBox.do")
-	  public String searchApprWaitBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
+	  public String searchApprWaitBox(HttpServletRequest req,Model m, ApprSearch search,String url) {
 		  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
 		  
 		  //System.out.println("search 확인 :"+search);
 		  
 		  List<Approval> list=service.selectSearchApprWaitBox(search);
-		  
 		  m.addAttribute("list",list);
 		  
 		  return url;
 	  }
 	  @RequestMapping("/appr/searchApprProgBox.do")
-	  public String searchApprProgBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
+	  public String searchApprProgBox(HttpServletRequest req,Model m, ApprSearch search, String url) {
 		  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
 		  
 		  //System.out.println("search 확인 :"+search);
@@ -194,24 +166,14 @@ public class ApprovalController2 {
 	  }
 	  
 	  
-	 // 결재완료 기능 구현 아직 !
+	 // 결재완료 기능 
 	  @RequestMapping("/appr/searchApprDoneBox.do")
-	  public String searchApprDoneBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url,int apprStatus) {
+	  public String searchApprDoneBox(HttpServletRequest req,Model m, ApprSearch search,String url) {
 		  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
-		  search.setApprStatus(apprStatus);
-		  
-		  //System.out.println("search 확인 :"+search);
-		  System.out.println("결재 완료 ?"+search);
+		  System.out.println(search);
 		  List<Approval> list=service.selectSearchApprDoneBox(search);
-		  
 		  m.addAttribute("list",list);
 		  
 		  return url;
@@ -220,20 +182,48 @@ public class ApprovalController2 {
 	  
 	  
 	  @RequestMapping("/appr/searchMyDocBox.do")
-	  public String searchMyDocBox(HttpServletRequest req,Model m,String draftName,String startDate,String endDate,String url) {
+	  public String searchMyDocBox(HttpServletRequest req,Model m, ApprSearch search,String url) {
 		  
 		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
-		  
-		  ApprSearch search=new ApprSearch();
-		  
-		  search.setDraftName(draftName);
-		  search.setStartDate(startDate);
-		  search.setEndDate(endDate);
 		  search.setUserId(userId);
 		  
 		  //System.out.println("search 확인 :"+search);
 		  
 		  List<Approval> list=service.selectSearchMyDocBox(search);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return url;
+	  }
+	  
+	  @RequestMapping("/appr/searchDeptDocBox.do")
+	  public String searchDeptDocBox(HttpServletRequest req,Model m,ApprSearch search,String url) {
+		  
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  String userDept=((User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		  search.setUserId(userId);
+		  search.setDeptCode(userDept);
+		  
+		  System.out.println("search 확인 :"+search);
+		  
+		  List<Approval> list=service.selectSearchDeptDocBox(search);
+		  
+		  m.addAttribute("list",list);
+		  
+		  return url;
+	  }
+	  
+	  @RequestMapping("/appr/searchRefferedDocBox.do")
+	  public String searchRefferedBox(HttpServletRequest req,Model m,ApprSearch search, String url) {
+		  
+		  String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
+		  String userDept=((User)req.getSession().getAttribute("loginUser")).getDeptCode();
+		  search.setUserId(userId);
+		  search.setDeptCode(userDept);
+		  
+		  System.out.println("search 확인 :"+search);
+		  
+		  List<Approval> list=service.searchRefferedDocBox(search);
 		  
 		  m.addAttribute("list",list);
 		  

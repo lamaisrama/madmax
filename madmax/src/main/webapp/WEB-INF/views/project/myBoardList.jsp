@@ -23,8 +23,8 @@
             </c:if> 
             <c:forEach items="${List }" var="l">
                <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3">
-                <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
-            	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
+                <div class="projectTitle w-100 h-25  border-bottom border-grey d-flex justify-content-around overflow-hidden">
+            	<span>${l.projectTitle }</span>	<a href="${path}/selectedProject/selectedProject.do?pjNo=${l.projectNo}&loginId=${loginUser.userId}&boardNo=${l.boardNo}">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
@@ -33,7 +33,17 @@
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
+                                    	<c:choose>
+                                    	<c:when test="${l.boardType eq 'W' }">
+	                                        <img src="${path}/resources/upload/profile/${l.WProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'T' }">
+	                                        <img src="${path}/resources/upload/profile/${l.TProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'S' }">
+	                                        <img src="${path}/resources/upload/profile/${l.SProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+                                    	</c:choose>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <c:choose>
@@ -41,7 +51,7 @@
 	                                        <strong>${l.WName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'T' }">
-	                                        <strong>${l.taskName }</strong>
+	                                        <strong>${l.TName }</strong>
 	                                        </c:when>
 	                                         <c:when test="${l.boardType eq 'S' }">
 	                                        <strong>${l.SName }</strong>
@@ -205,7 +215,14 @@
                    
                 </div>
 				</c:forEach>
-
+				<c:if test="${not empty List }">
+					<c:if test="${ empty msg }">
+					<div class="text-center"><a href="javascript:moreList();" class="btn btn-primary">더보기</a></div>
+					</c:if>
+					<c:if test="${not empty msg }">
+					<div class="text-center">${msg }</div>
+					</c:if>
+				</c:if>
 
 	
 </div>	
@@ -213,6 +230,30 @@
 
 </div>
 <script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    console.log(results);
+}
+
+	function moreList(){
+		var pageNo=getParameterByName("pageNo");
+	
+		console.log("페이지번호:"+pageNo);
+		if(pageNo==undefined || pageNo=="" ||pageNo==null){
+			pageNo=2;
+			location.href="${path}/project/myBoard.do?pageNo="+pageNo;
+		}else{
+			
+			pageNo=Number(pageNo)+Number(1);
+			console.log("마지막:"+pageNo);
+			location.href="${path}/project/myBoard.do?pageNo="+pageNo;
+		}
+		
+		
+	}
 	//일단. 지도를 출력해줄 위치가 여러곳.
 	//장소도 각각 다르다.
 	
@@ -267,5 +308,22 @@
 	
 	
 </script>
+<style>
+.pjViewBody-schedule{
+    background-color: #f6f7f8;
+    border: 1px solid #E8E8EB;
+}
+.projectTitle {
+	background-color:#25558F;
+	color:white;
+}
+a{
+	color:white;
+}
+a:hover{
+	color:white;
+	font-weight:bolder;
+}
+</style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
