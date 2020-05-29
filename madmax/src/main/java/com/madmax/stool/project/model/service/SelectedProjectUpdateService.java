@@ -28,4 +28,6 @@ public interface SelectedProjectUpdateService {
 
 	int deleteComment(Map<String, Object> cMap);
 
+	int updateProjectBoardStatus(Map<String, Object> pbMap);
+
 }

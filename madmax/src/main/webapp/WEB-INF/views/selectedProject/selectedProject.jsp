@@ -510,7 +510,7 @@
                                 <p class="m-0"><c:out value="${pm.userName}"/></p>
                                 <span class="d-none"><c:out value="${pm.userId}"/></span>
                             </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this,'${pm.userId}');">
                                 	선택
                             </button>
                         </div>
@@ -549,7 +549,7 @@
                                 </div>
                                 <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
                             </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this);">
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this,'${pm.userId}');">
                                 	선택
                             </button>
                         </div>

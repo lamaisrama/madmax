@@ -226,6 +226,14 @@ public class SelectedProjectUpdateController {
 		String comment = map.get("comment");
 		int boardNo = Integer.parseInt(map.get("boardNo"));
 		int postNo = Integer.parseInt(map.get("postNo"));
+		String commentType = "";
+		if(postType.equals("W")) {
+			commentType = "writingcomment";
+		}else if(postType.equals("T")) {
+			commentType = "tastcomment";
+		}else if(postType.equals("S")) {
+			commentType = "schedulecomment";
+		}
 		
 		Map<String, Object> cMap = new HashMap();
 		cMap.put("postType",postType);
@@ -234,6 +242,7 @@ public class SelectedProjectUpdateController {
 		cMap.put("comment",comment);
 		cMap.put("boardNo",boardNo);
 		cMap.put("postNo",postNo);
+		cMap.put("commentType",commentType);
 		
 		int result = 0;
 		try {
@@ -335,6 +344,27 @@ public class SelectedProjectUpdateController {
 	}
 	
 	
+	@RequestMapping("/selectedProject/updateProjectBoardStatus.do")
+	@ResponseBody
+	public int updateProjectBoardStatus(@RequestParam Map<String, String> map) {
+		//값 받기
+		int pjNo = Integer.parseInt(map.get("pjNo"));
+		int bNo = Integer.parseInt(map.get("bNo"));
+		
+		Map<String, Object> pbMap = new HashMap();
+		pbMap.put("pjNo",pjNo);
+		pbMap.put("bNo",bNo);
+		
+		int result = 0;
+		try {
+			result = service.updateProjectBoardStatus(pbMap);
+		}catch(RuntimeException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+		
 	
 	
 	
