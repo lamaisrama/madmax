@@ -96,6 +96,11 @@
                         <input type="text" class="modify" value="${loginUser.deptName }" readonly>
                       </div>
                       <br>
+                      <h6><i class="icon far fa-address-card"></i>&nbsp;직급</h6>
+                      <div class="input-group mb-3">
+                        <input type="text" class="modify" value="${loginUser.jobName }" readonly>
+                      </div>
+                      <br>
                       <h6><i class="icon fas fa-camera"></i>&nbsp;사진변경</h6>
                       <div class="input-group">
 						  <div class="custom-file">

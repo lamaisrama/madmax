@@ -35,9 +35,21 @@
 		color : #233C61;
 	}
    .joinBtn:hover{
-   	background-color: #FFE3E3;
-   	color : #233C61;
+	   	background-color: #FFE3E3;
+	   	color : #233C61;
    }
+   .profile{
+		border: 3px solid #233C61; 
+		margin-left : 15%;
+        width:200px; height:200px;
+        overflow:hidden;
+        margin: 0 0 20% 15%;
+        position: relative;
+    }
+    .profile img {
+		width: 100%; height:auto;
+		vertical-align: middle;
+	}  
 </style>
 
 
@@ -49,11 +61,9 @@
             <div class="mx-auto">
                 <br>
                 <h1 class="display-4 text-center pt-4 mb-4">사원정보</h1>
-				<img src="${path}/resources/upload/profile/${loginUser.profile }" 
-		                		style="border: 3px solid #233C61; margin: 0 0 20% 15%;
-					            width:200px; height:200px; overflow:hidden;">
-                
-					<br>
+				<div class="profile">
+				<img src="${path}/resources/upload/profile/${loginUser.profile }">
+                </div>
                     <h6>
                     	<i class="icon fas fa-user"></i>&nbsp;아이디
                     </h6>
@@ -79,12 +89,17 @@
                       <br>
                       <h6><i class="icon fas fa-birthday-cake"></i>&nbsp;생년월일</h6>
                       <div class="input-group mb-3 modify">
-                        <fmt:formatDate pattern="yyyy-MM-dd" value="${loginUser.birthday }"/>
+                        <fmt:formatDate pattern="yyyy년 MM월 dd일" value="${loginUser.birthday }"/>
                       </div>
                       <br>
                       <h6><i class="icon fas fa-briefcase"></i>&nbsp;부서</h6>
                       <div class="input-group mb-3">
                         <input type="text" class="modify" value="${loginUser.deptName }" readonly>
+                      </div>
+                      <br>
+                      <h6><i class="icon far fa-address-card"></i>&nbsp;직급</h6>
+                      <div class="input-group mb-3">
+                        <input type="text" class="modify" value="${loginUser.jobName }" readonly>
                       </div>
                       <br>
                       <div class="row justify-content-center p-1">
