@@ -35,5 +35,6 @@ public class TaskPb {
 	private String pinpost;
 	private String userName;
 	private String profile;
+	private String taskTime;
 	
 }
