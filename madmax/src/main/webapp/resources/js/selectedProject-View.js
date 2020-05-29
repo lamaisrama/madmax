@@ -396,3 +396,91 @@ function fn_deleteMentionListStr(e, bNo,removeId){
     $(e) .parents(".selectedWorker").remove();
     console.log($("#checkMentionStr"+bNo).val());
 }
+
+
+//3. 파일
+//파일 업로드
+let sel_imgFiles = [];
+$(document).ready(function(){
+  $("#imgFiles").on("change", fn_handleImgsFilesSelect);
+  $("#imgFiles").on("change", function(){
+      if($("#files").val() != "" || $("#imgFiles").val() != ""){
+          $("#uploadFilesPreview").removeClass("d-none");
+          if($("#imgFiles").val() != ""){
+              $("#imgFilesPreviewTitle").removeClass("d-none");
+          }
+      }
+  });
+  $("#files").on("change", fn_handleFilesSelect);
+  $("#files").on("change", function(){
+      if($("#files").val() != "" || $("#imgFiles").val() != ""){
+          $("#uploadFilesPreview").removeClass("d-none");
+          if($("#files").val() != ""){
+              $("#filesPreviewTitle").removeClass("d-none");
+          } 
+      }
+  });    
+});
+
+function fn_handleImgsFilesSelect(e){
+  let imgFiles = e.target.files;
+  let imgFilesArr = Array.prototype.slice.call(imgFiles);
+
+  imgFilesArr.forEach(function(f){
+      if(!f.type.match("image.*")){
+          alert("이미지파일만 가능합니다.");
+          return;
+      }
+      sel_imgFiles.push(f);
+      let reader = new FileReader();
+      reader.onload = function(e){
+          let img_html = "<div class='col-2 p-1' style='height: 150px;'><div class='imgPreview h-100'><img src=\'"+e.target.result+"\'/></div></div>";
+          $("#imgFileBox").append(img_html);
+      }
+      reader.readAsDataURL(f);
+  });
+}
+function fn_handleFilesSelect(){
+  var files=$('#files')[0].files;
+
+  for(var i= 0; i<files.length; i++){
+      //확장자 별 이미지주기
+      let name = files[i].name;
+      let ext = name.substr(name.indexOf(".")+1, name.length);
+      let iconStr = "";
+
+      switch(ext){
+          case "jpg" : iconStr = "fas fa-file-image text-success"; 
+          case "png" : iconStr = "fas fa-file-image text-success";
+          case "jpeg" : iconStr = "fas fa-file-image text-success"; break;
+          case "jsp": iconStr = "fas fa-file-code text-muted";
+          case "java" : iconStr = "fas fa-file-code text-muted";
+          case "css" : iconStr = "fas fa-file-code text-muted";
+          case "html" : iconStr = "fas fa-file-code text-muted"; break;
+          case "hwp" : iconStr = "fas fa-file-word text-primary";
+          case "txt" : iconStr = "fas fa-file-word text-primary";
+          case "ppt" : iconStr = "fas fa-file-word text-primary";
+          case "dox" : iconStr = "fas fa-file-word text-primary";
+          case "xls" : iconStr = "fas fa-file-word text-primary"; break;
+          case "mp3" : iconStr = "fas fa-file-audio text-info";
+          case "aac" : iconStr = "fas fa-file-audio text-info"; break;
+          case "wav" : iconStr = "fas fa-file-audio text-info"; break;
+          case "pdf" : iconStr = "fas fa-file-pdf text-danger"; break;
+          case "mp4" : iconStr = "fas fa-file-video text-info";
+          case "avi" : iconStr = "fas fa-file-video text-info";
+          case "flv" : iconStr = "fas fa-file-video text-info";
+          case "mov" : iconStr = "fas fa-file-video text-info";
+          case "avi" : iconStr = "fas fa-file-video text-info"; break;
+          case "zip" || "apk" || "rar" || "tar" : iconStr = "fas fa-file-archive text-primary";
+          case "apk" : iconStr = "fas fa-file-archive text-primary";
+          case "rar" : iconStr = "fas fa-file-archive text-primary";
+          case "tar" : iconStr = "fas fa-file-archive text-primary"; break;
+          default : iconStr = "fas fa-file text-info";
+      }
+
+      let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'>"
+      					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'></i><span>"
+                          +files[i].name+"</span></div></div>";
+      $("#fileBox").append(fileDiv_html);
+  }
+}
