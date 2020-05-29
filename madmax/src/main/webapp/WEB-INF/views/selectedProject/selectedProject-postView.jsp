@@ -433,11 +433,10 @@
 	                    <!-- 2) 글 타입 -->
 	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
 	                    <!-- 3) 파일 -->                
-	                    <input type="file" name="oriFiles" id="oriFiles" multiple style="display: none;"/>
 	                    <input type="file" name="newFiles" id="newFiles" multiple style="display: none;"/>
 	                    <!-- 4) 이미지파일 -->
-	                    <input type="file" name="oriImgFiles" id="oriImgFiles" multiple style="display: none;" accept="image/*"/>
-	                    <input type="file" name="newImgFiles" id="newImgFiles" multiple style="display: none;" accept="image/*"/>
+	                    <input type="file" name="newImgFiles" id="newImgFiles" 
+	                    	onchange="fn_newImgFilesChange(${pb.BOARDNO});fn_handleImgsFilesSelect_update(this,${pb.BOARDNO});" multiple style="display: none;" accept="image/*"/>
 	                    <!-- 5) 태그 -->
 	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr"/>
 	                    <input type="hidden" name="newTagListStr" id="newTagListStr"/>
@@ -533,20 +532,23 @@
 	                            </div>  <!-- 언급 입력 끝 -->    
 	
 	                            <!-- 공통) 파일 미리보기 -->
-	                            <div id="updateUploadFilesPreview" class="col-12 mb-2">
+	                            <div id="" class="col-12 mb-2">
 	                                <strong class="mb-2">업로드 파일</strong>
 	                                <div class="col-12 d-flex flex-column mb-2">
 	                                    <p id="imgFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
 	                                        <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
 	                                        	첨부이미지
 	                                    </p>
-	                                    <div class="w-100 d-flex justify-content-center">
+	                                    <div id="oriImgFilesPreview_update${pb.BOARDNO}" class="w-100 d-flex justify-content-center">
 	                                        <div id="updateImgFileBox" class="w-100 row">
                                                 <c:forEach var="wai" items="${writingAttachment}">
                                     			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
                                     			<c:set var="attachmentCk" value="Y" />
                                     			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
                                     			<c:if test="${splitText[0] eq 'img'}">
+                                    			
+	                    						<input type="hidden" name="oriImgFiles" value="${wai.WRITINGRENAME}"/>
+                                    			
                                                 <div class='col-2 p-1' style='height: 150px;'>
                                                     <div class='imgPreview h-100' onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${wai.WRITINGORINAME}','${wai.WRITINGRENAME}');">
                                                         <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${wai.WRITINGRENAME}'/> 
@@ -558,18 +560,28 @@
 	                                        </div>
 	                                    </div>
 	                                </div>
+	                                <!-- new 이미지 첨부파일 -->
+                                    <div id="imgFilesPreview_update${pb.BOARDNO}" class="w-100 d-none justify-content-center">
+                                        <div id="imgFileBox_update${pb.BOARDNO}" class="w-100 row">
+
+                                        </div>
+                                    </div>
+	                                
 	                                <div class="col-12 d-flex flex-column">
 	                                    <p id="updateFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
 	                                        <i class="fas fa-file-upload stoolGrey" style="font-size: 20px;"></i>
 	                                       	 첨부파일
 	                                    </p>
-	                                    <div class="w-100 d-flex justify-content-center">
+	                                    <div id="oriFilesPreview_update" class="w-100 d-flex justify-content-center">
 	                                        <div id="oriFileBox" class="w-100 row">
                                                 <c:forEach var="waf" items="${writingAttachment}">
                                        			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
                                        			<c:set var="attachmentCk" value="Y" />
                                        			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
                                        			<c:if test="${splitText[0] eq 'file'}">
+                                       			
+                                       			<input type="hidden" name="oriFiles" value="${waf.WRITINGRENAM}"/>
+                                       			
                                                    <div class='col-4 p-1 w-100' style='height: 46px;'>
                                                        <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' 
                                                        	onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${waf.WRITINGORINAME}','${waf.WRITINGRENAME}');">
@@ -587,7 +599,14 @@
                                        			</c:forEach>
 	                                        </div>
 	                                    </div>
-	                                </div>                                
+	                                </div>  
+	                                <!-- new 첨부파일 -->
+                                    <div id="filesPreview_update" class="w-100 d-none justify-content-center">
+                                        <div id="fileBox_update" class="w-100 row">
+
+                                        </div>
+                                    </div>
+	                                                              
 	                            </div>
 	                        </div>
 	
@@ -598,11 +617,11 @@
 	                                <div id="fileUploadBtns" class="">
 	                                    <div class="d-flex align-items-center">
 	                                        <!-- 파일 업로드 -->                                      
-	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn">
+	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn" onclick="$('#newFiles').click();">
 	                                            <i class="fas fa-file-upload stoolGrey" style="font-size: 25px;"></i>
 	                                        </button>
 	                                        <!-- 이미지파일 업로드 -->                                    
-	                                        <button type="button" class="btn" id="updateImgFilesBtn">
+	                                        <button type="button" class="btn" id="updateImgFilesBtn" onclick="$('#newImgFiles').click();">
 	                                            <i class="fas fa-images stoolGrey" style="font-size: 25px;"></i>
 	                                        </button>
 	                                    </div>

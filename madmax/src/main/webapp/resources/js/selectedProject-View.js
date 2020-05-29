@@ -1,4 +1,4 @@
-//업무 작성 관련 스크립트 ---------------------------------------->
+//업무 작성 관련 스크립트 ----------------------------------------
 //진행상태 버튼
 function fn_viewPost_progressState(e, id){
     if(id=="request"){
@@ -55,7 +55,7 @@ function fn_viewPost_progressState(e, id){
 }
 
 
-//추가항목보기 버튼 클릭 이벤트 ----------------------------------------------------------->
+//추가항목보기 버튼 클릭 이벤트 -----------------------------------------------------------
 function addBtniconChange(e){
     if($(e).children("i").hasClass("fa-plus")){
         $(e).children("i").removeClass("fa-plus");
@@ -65,9 +65,9 @@ function addBtniconChange(e){
         $(e).children("i").addClass("fa-plus");
     }
 }
-//추가항목보기 버튼 클릭 이벤트 -----------------------------------------------------------<
+//추가항목보기 버튼 클릭 이벤트 -----------------------------------------------------------
 
-//pinPost Ajax --------------------------------------------------------------------------->
+//pinPost Ajax ---------------------------------------------------------------------------
 function fn_selectPin(e){
     if($(e).children(".selectPinIcon").hasClass("stoolGrey")){
         $(e).children(".selectPinIcon").removeClass("stoolGrey");
@@ -82,9 +82,9 @@ function fn_selectPin(e){
 
     //여기에 Ajax코드넣기
 }
-//pinPost Ajax ---------------------------------------------------------------------------<
+//pinPost Ajax ---------------------------------------------------------------------------
 
-//댓글 더보기 ---------------------------------------------------------------------------->
+//댓글 더보기 ----------------------------------------------------------------------------
 function fn_displayHiddenComment(e){
     if($(e).parent("div").siblings("table").find(".hiddenComment").hasClass("d-none")){
         $(e).text("댓글 숨기기");
@@ -93,7 +93,7 @@ function fn_displayHiddenComment(e){
     }
     $(e).parent("div").siblings("table").find(".hiddenComment").toggleClass("d-none");
 }
-//댓글 더보기 ----------------------------------------------------------------------------<
+//댓글 더보기 ----------------------------------------------------------------------------
 
 //댓글 수정 input 띄우기
 function fn_updateCommentInput(type, postNo){
@@ -148,7 +148,7 @@ $(document).ready(function(){
 	            
 	         }
 	   }
-	   
+	   	   
 });
 
 
@@ -400,48 +400,47 @@ function fn_deleteMentionListStr(e, bNo,removeId){
 
 //3. 파일
 //파일 업로드
-let sel_imgFiles = [];
+let sel_imgFiles_update = [];
 $(document).ready(function(){
-  $("#imgFiles").on("change", fn_handleImgsFilesSelect);
-  $("#imgFiles").on("change", function(){
-      if($("#files").val() != "" || $("#imgFiles").val() != ""){
-          $("#uploadFilesPreview").removeClass("d-none");
-          if($("#imgFiles").val() != ""){
-              $("#imgFilesPreviewTitle").removeClass("d-none");
-          }
-      }
-  });
-  $("#files").on("change", fn_handleFilesSelect);
-  $("#files").on("change", function(){
-      if($("#files").val() != "" || $("#imgFiles").val() != ""){
-          $("#uploadFilesPreview").removeClass("d-none");
-          if($("#files").val() != ""){
-              $("#filesPreviewTitle").removeClass("d-none");
-          } 
-      }
+//  $("#newImgFiles").on("change", fn_handleImgsFilesSelect_update);
+
+  
+  $("#newFiles").on("change", fn_handleFilesSelect_update);
+  $("#newFiles").on("change", function(){
+      $("#filesPreview_update").removeClass("d-none");      
+      $("#oriFilesPreview_update").addClass("d-none");      
   });    
 });
 
-function fn_handleImgsFilesSelect(e){
-  let imgFiles = e.target.files;
-  let imgFilesArr = Array.prototype.slice.call(imgFiles);
+function fn_newImgFilesChange(bNo){
+	  alert("dfjaskdfjlksadjfklj");
+	  $("#imgFilesPreview_update"+bNo).addClass("d-flex"); 
+    $("#imgFilesPreview_update"+bNo).removeClass("d-none");      
+    $("#oriImgFilesPreview_update"+bNo).removeClass("d-flex");      
+    $("#oriImgFilesPreview_update"+bNo).addClass("d-none"); 
+} 
 
-  imgFilesArr.forEach(function(f){
-      if(!f.type.match("image.*")){
-          alert("이미지파일만 가능합니다.");
-          return;
-      }
-      sel_imgFiles.push(f);
-      let reader = new FileReader();
-      reader.onload = function(e){
-          let img_html = "<div class='col-2 p-1' style='height: 150px;'><div class='imgPreview h-100'><img src=\'"+e.target.result+"\'/></div></div>";
-          $("#imgFileBox").append(img_html);
-      }
-      reader.readAsDataURL(f);
-  });
+function fn_handleImgsFilesSelect_update(e,bNo){
+    let imgFiles = e.target.files;
+    let imgFilesArr = Array.prototype.slice.call(imgFiles);
+
+    
+    imgFilesArr.forEach(function(f){
+        if(!f.type.match("image.*")){
+            alert("이미지파일만 가능합니다.");
+            return;
+        }
+        sel_imgFiles_update.push(f);
+        let reader = new FileReader();
+        reader.onload = function(e){
+            let img_html = "<div class='col-2 p-1' style='height: 150px;'><div class='imgPreview h-100'><img src=\'"+e.target.result+"\'/></div></div>";
+            $("#imgFileBox_update"+bNo).append(img_html);
+        }
+        reader.readAsDataURL(f);
+    });
 }
-function fn_handleFilesSelect(){
-  var files=$('#files')[0].files;
+function fn_handleFilesSelect_update(){
+  var files=$('#newFiles')[0].files;
 
   for(var i= 0; i<files.length; i++){
       //확장자 별 이미지주기
@@ -481,6 +480,6 @@ function fn_handleFilesSelect(){
       let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'>"
       					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'></i><span>"
                           +files[i].name+"</span></div></div>";
-      $("#fileBox").append(fileDiv_html);
+      $("#fileBox_update").append(fileDiv_html);
   }
 }
