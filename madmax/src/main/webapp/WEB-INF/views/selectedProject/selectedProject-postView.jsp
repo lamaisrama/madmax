@@ -1293,40 +1293,6 @@
                     
             
 <!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->   
-<script>
- $(document).ready(function(){
-	var url=window.location.href;
-	//console.log(typeof url);
-	//console.log(loction.search.substr(location.search.lastIndex))
-	var page_id=url.substring(url.lastIndexOf('=')+1);
- 	//alert(page_id);
-	var p='p';
-	page_id=p.concat(page_id);
-	//alert(page_id);
-	var boardNo=[];
-	boardNo=document.getElementsByClassName('pjViewBox');
-	console.log(boardNo);
-	var result=[];
-	for(var i=0;i<boardNo.length;i++){
-		var val=(boardNo[i].getAttribute('value'));
-		result[i]=val;
-	}
-	console.log(result);
-	for(var i=0;i<boardNo.length;i++){
-		if(page_id==result[i]){		
-				//var sharp="#";
-				//page_id=sharp.concat(page_id);
-				//console.log(page_id);
-				var offset=$("div[value="+page_id+"]").offset();
-				console.log("좌표값:"+offset.top);
-				$('html,body').animate({scrollTop:(offset.top-1000)},200);
-				console.log("실행됨");
-				$("div[value="+page_id+"]").css("border","5px solid navy");
-				
-			}
-	}
-	
- })
-</script>
+
 
                
