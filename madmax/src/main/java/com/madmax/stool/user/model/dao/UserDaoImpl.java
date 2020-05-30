@@ -54,6 +54,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 
+	@Override
+	public int updateUser(SqlSessionTemplate session, Map param) {
+		
+		return session.update("user.updateUser", param);
+	}
+
+
 
 
 	

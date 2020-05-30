@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.madmax.stool.project.model.vo.Project;
+import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
 
@@ -20,6 +21,6 @@ public interface TaskDao {
 
 	TaskPb selectTaskView(SqlSessionTemplate session, int boardNo);
 
-	String selectTaskNoti(SqlSessionTemplate session, int boardNo);
+	List<NotiMember> selectTaskNoti(SqlSessionTemplate session, int boardNo);
 
 }

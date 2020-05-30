@@ -24,9 +24,9 @@
             </c:if> 
             <c:forEach items="${List }" var="l"> 
               <div class="w-100  bg-white border border-grey rounded overflow-hidden  mb-3 ">
-                <div class="w-100 h-25 bg-white border-bottom border-grey d-flex justify-content-around overflow-hidden">
+                <div class="projectTitle w-100 h-30  border-bottom border-grey d-flex justify-content-around overflow-hidden">
                 
-            	<span>프로젝트 제목</span>	<a href="">글 바로보기 &gt;&gt;</a> 
+            	<span>${l.projectTitle }</span>	<a href="${path}/selectedProject/selectedProject.do?pjNo=${l.projectNo}&loginId=${loginUser.userId}&boardNo=${l.boardNo}">글 바로보기 &gt;&gt;</a> 
            		 </div>
                     <div class="pjViewBox w-100 p-3">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
@@ -35,7 +35,17 @@
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/>
+                                    	<c:choose>
+                                    	<c:when test="${l.boardType eq 'W' }">
+	                                        <img src="${path}/resources/upload/profile/${l.WProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'T' }">
+	                                        <img src="${path}/resources/upload/profile/${l.TProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+	                                    	<c:when test="${l.boardType eq 'S' }">
+	                                        <img src="${path}/resources/upload/profile/${l.SProfile}" width="50px" height="50px" alt="프로필사진"/>
+	                                    	</c:when>
+                                    	</c:choose>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <c:choose>
@@ -113,7 +123,7 @@
 	                                    <!-- 담당자 프로필 for문 시작 -->
 	                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
 	                                        <div class='selectedWorker_imgDiv mr-2'>
-	                                            <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px">
+	                                            <img src="${path}/resources/upload/profile/${l.tmProfile}" width="50px" height="50px">
 	                                        </div>
 	                                        <span>${l.tmName }</span>
 	                                    </div>                                    
@@ -223,37 +233,6 @@
 </div>
 
 <script>
-$(window).scroll(function () { 
-	var scrollValue = $(document).scrollTop(); 
-	console.log(scrollValue);
-	var strCook=document.cookie;
-	strCook=scrollValue;
-	console.log(strPos);
-	});
-
-
-
-
-/*  window.onload=function(){
-	var strCook=document.cookie;
-	if(strCook.indexOf("!~")!=0) { 
-		var intS = strCook.indexOf("!~"); 
-		var intE = strCook.indexOf("~!"); 
-		var strPos = strCook.substring(intS+2,intE);
-		
-		document.getElementById("divTest").scrollTop = strPos; 
-		console.log("스크롤값:"+strPos);
-		}
-	} 
-	
-function SetDivPosition(){ 
-	var intY = document.getElementById("divTest").scrollTop;
-	document.title = intY; 
-	document.cookie = "yPos=!~" + intY + "~!"; 
-	}
-
-		 */
- 
 
 
 
@@ -343,6 +322,17 @@ function getParameterByName(name) {
 .pjViewBody-schedule{
     background-color: #f6f7f8;
     border: 1px solid #E8E8EB;
+}
+.projectTitle {
+	background-color:#25558F;
+	color:white;
+}
+a{
+	color:white;
+}
+a:hover{
+	color:white;
+	font-weight:bolder;
 }
 </style>
 

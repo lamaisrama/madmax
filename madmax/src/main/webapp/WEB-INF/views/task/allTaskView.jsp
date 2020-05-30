@@ -79,19 +79,21 @@
     <!-- 전체업무 센터 -->
     <div class="taskCenter col col-sm-9 bg-light"   >
     	<div>
-        	<span class="d-flex justify-content-between mb-3" ><p class="mt-4" style="font-size:20px">전체업무</p> 
+        	<span class="d-flex justify-content-between mb-3 " >
+        	<h4 class="pt-4 pl-2"><i class="icon far fa-calendar-check"></i>&nbsp;전체업무</h4>
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
-        	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/project/favList.do'">닫기&times;</button></span>
+        	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/project/favList.do'">닫기&times;</button>
+        	</span>
         </div>
-         <div class="container" >   
-				  <ul class="nav nav-tabs">
-				  	<c:forEach items="${projects}" var="p"  begin="0" end="4">
+         <div class="container box w-100 h-20 " >   
+         	<div id="tab">
+				  <ul class="nav nav-tabs" id="projects">
+				  	<c:forEach items="${projects}" var="p" >
 				    	<li class="nav-item"><a class="nav-link" data-toggle="tab"  href="${p['projectNo'] }" onclick="selectTask(${p['projectNo'] });">${p['projectTitle'] }</a></li>
 				    </c:forEach>
-				     <c:if test="${fn:length(projects)>4}">
-				    	<li class="nav-item"><a class="nav-link" >+더보기</a></li>
-				    </c:if>
 				  </ul>
+			</div>
+		</div>		  
         <div  style="height:100%">
 	       <div class="pl-2 pr-2 pt-2 " style="position:relative"  >
 	           <table  class="bWhite" style="width:100%;height:100%; border-bottom:1px solid black" >
@@ -150,8 +152,8 @@
 	          <!--요기까지 포문-->
 	       </div>
        </div>
-       <!-- 제목 클릭했을때 나오는 div--------------------------------------------- -->
-       <div id="showTask" style="display:none; border:1px solid grey; border-style:rounded; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:100%">
+       <!-- 제목 클릭했을때 나오는 div-********-------------------------------------------- -->
+       <div id="showTask" style="display:none; border:1px solid grey; border-style:rounded; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:70%">
        		<button type="button" class="close ml-2" >&times;</button>
      		 <!-- <div class="w-100 bg-white border overflow-hidden mb-3">-->
         <div class="pjViewBox w-100 p-3">                              
@@ -160,14 +162,16 @@
                 <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
                 <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                     <div class=" w-100 d-flex align-items-center">
-                        <div class="profileImgDiv">
-                            <%-- <img src="${path }/resources/images/defaultProfile.png" width="50px" height="50px" alt="프로필사진"/> --%>
+                        <div class="d-flex " id='profileImgDiv'>
+                            <!-- 업무 글쓴이 -->
                         </div>
                         <div class="d-flex flex-column ml-2">
-                            <strong id="taskUsername">정집집</strong>
-                            <p class="m-0" style="font-size: small;">
-                                2020-05-09
-                                <span>00:53</span>
+                            <strong id="taskUsername">
+                            <!-- 업무 글쓴이 -->
+                            </strong>
+                            <p class="m-0" style="font-size: small;" id="taskTime">
+                                <!-- 업무쓴 날짜 -->
+                                
                             </p>
                         </div>                        
                     </div>
@@ -193,10 +197,9 @@
                         <strong class="mr-2">담당자</strong>
                         <!-- 담당자 프로필 for문 시작 -->
                         <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
-                            <div class='selectedWorker_imgDiv mr-2' id="selectedWorker"><!-- 이미지넣기 -->
+                            <div class='d-flex selectedWorker_imgDiv mr-2' id="selectedWorker"><!-- 이미지넣기 -->
                                 <!-- <img src='img/profile_img.png'/> -->
                             </div>
-                            <span id="notiMember"></span>
                         </div>                                    
                         <!-- 담당자 프로필 for문 끝 -->
                     </div>
@@ -219,6 +222,10 @@
                     <div id="taskContentView" class="w-100"> <!-- 업무 글 내용 -->
               
                     </div>
+                    <br/>
+                    <div>
+                    <button class="btn btn-outline-primary" id="taskDetailView"><a>이곳을 클릭하여 해당 글로 이동할 수 있습니다.<a></button>
+                    </div>
                 </div>       
                 <!-- 2) 업무 끝 ------------------------------------------------------------------------------------------------------------------------>
 
@@ -228,6 +235,8 @@
 
 
         </div><!-- viewBox 닫는 태그 -->
+  	</div>
+  </div><!-- taskCenter -->
  <div class="col col-sm-1">
  </div>       
 
@@ -361,18 +370,33 @@ function taskFilter(){
 			dataType:"json",
 			data:{boardNo:boardNo},
 			success:function(data){
+				//TASK 따로,NOTIMEMBER따로 받음 !
+				
 				var task=data.task;
-				console.log(task.taskTitle);
+				var notiMember=data.notiMember;
+				var tmMembers='';
+				console.log(data);
+				var profile="<img src='${path}/resources/upload/profile/"+task.profile+"' width='50px' height='50px'/>";
 				//업무작성자 프로필
-				var profile=task.profile;
-				$("#profileImgDiv").html("<img src='${path}/img/"+profile+"/>");
+				$("#profileImgDiv").html(profile);
 				$("#taskTitleView").html(task.taskTitle);//업무제목
 				$("#taskUsername").html(task.userName);//업무작성자
-				$("#notiMember").html(data.notiMember);//담당자
+				$("#taskTime").html(task.taskTime);//업무작성일
+				$("#notiMember").html(notiMember.tmName);//담당자
 				$("#taskStartDateView").html(task.taskStartDate);//업무시작일
 				$("#taskEndDateView").html(task.taskEndDate);//업무마감일
 				$("#taskProiorityView").html(task.taskProiority);//업무 우선순위
 				$("#taskContentView").html(task.taskContent);//업무내용
+				$("#taskDetailView").html("<a href='${path}/selectedProject/selectedProject.do?pjNo="+task.projectNo+"&loginId=${loginUser.userId}&boardNo="+task.boardNo+"'>이곳을 클릭하여 해당 글로 이동할 수 있습니다.</a>")
+				//담당자는 따로 !
+				for(var i=0;i<notiMember.length;i++){
+					tmMembers+="<div><img src='${path}/resources/upload/profile/"+notiMember[i].tmProfile+"' width='30px' height='30px'/></div>";
+					tmMembers+="<div><p>"+notiMember[i].tmName+"</p></div>&nbsp;";
+					
+				}
+				$("#selectedWorker").html(tmMembers);
+				
+				
 				$("#showTask").show();
 				console.log(task.taskState);
 				switch(task.taskState){
@@ -400,5 +424,17 @@ function taskFilter(){
 
 
 </script>
+<style>
+
+.taskCenter ul{list-style:none;}
+
+.box{width:100%; height:10%; margin:0 auto;}
+
+#projects{overflow-x:scroll;
+     white-space:nowrap; text-align:center}
+
+/* #tab ul li{display:inline-block;} */
+
+</style>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

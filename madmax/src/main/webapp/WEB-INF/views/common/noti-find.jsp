@@ -14,7 +14,7 @@
                     <c:if test="${find!=null }">
                     	<c:forEach items="${find }" var="r">
                         <li class="noti-li">
-                            <div class="noti-info">
+                            <div class="noti-info" id="${r.notNo}/${r.projectNo}/${r.boardNo}" onclick="readNoti(this);">
                                 <div class="noti-profile">
                                     <p><img src="${path }/resources/upload/profile/${r.profile }"></p>
                                 </div>
@@ -31,18 +31,19 @@
 												글 '<b>${r.writingTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq'writingcomment' }">
-											글 '<b>${r.writingTitle }</b>' 의 댓글에서 회원님을 언급했습니다.</c:if>
+												글 '<b>${r.writingTitle }</b>' 에 댓글을 달았습니다. 
+											</c:if>
 											<c:if test="${r.notType eq 'task'}">
 												업무 '<b>${r.taskTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'taskcomment'}">
-												업무 업무 '<b>${r.taskTitle }</b>'의 댓글
+												업무 '<b>${r.taskTitle }</b>' 에 댓글을 달았습니다. 
 											</c:if>
 											<c:if test="${r.notType eq 'schedule'}">
 												일정 '<b>${r.scheduleTitle }</b>' 에서 회원님을 언급했습니다.
 											</c:if>
 											<c:if test="${r.notType eq 'schedulecomment'}">
-												일정 '<b>${r.scheduleTitle }</b>'의 댓글 에서 회원님을 언급했습니다.
+												일정 '<b>${r.scheduleTitle }</b>' 에 댓글을 달았습니다. 
 											</c:if>
 											</span>
                                         </li>

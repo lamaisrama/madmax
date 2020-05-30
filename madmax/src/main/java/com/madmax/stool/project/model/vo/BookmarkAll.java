@@ -48,6 +48,19 @@ public class BookmarkAll implements Comparable<BookmarkAll>{
 	private String sName;//일정 작성자 이름
 	private String notiName;
 	
+	//추가된것
+	
+	private String projectTitle;//프로젝트명
+	//각각의 프로필
+	private String tProfile;
+	private String tmProfile;
+	private String bmProfile;
+	private String wProfile;
+	private String sProfile;
+	
+	
+	
+	
 	//가져온글 정렬하기(내림차순)
 	@Override
 	public int compareTo(BookmarkAll bk) {

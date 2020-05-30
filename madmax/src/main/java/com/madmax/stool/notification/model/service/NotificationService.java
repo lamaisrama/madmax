@@ -11,5 +11,7 @@ public interface NotificationService {
 	List<Notification> selectReadNotification(String userId);
 	void updateAllNotiRead(String userId);
 	List<Notification> findNotification(Map<String, String> map);
+	int selectUnreadNotificationCount(String sender);
+	int updateUnreadNotification(int notNo);
 
 }

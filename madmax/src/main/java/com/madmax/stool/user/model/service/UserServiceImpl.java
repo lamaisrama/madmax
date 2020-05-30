@@ -58,6 +58,12 @@ public class UserServiceImpl implements UserService {
 		return dao.updatePw(session, param);
 	}
 
+	@Override
+	public int updateUser(Map param) {
+		
+		return dao.updateUser(session, param);
+	}
+
 	
 	
 	

@@ -23,6 +23,7 @@ public interface NotificationDao {
 	int selectUnreadNotificationCount(SqlSessionTemplate session, String userId);
 	int updateAllNotiRead(SqlSessionTemplate session, String userId);
 	List<Notification> findNotification(SqlSessionTemplate session, Map<String, String> map);
+	int updateUnreadNotification(SqlSessionTemplate session, int notNo);
 
 
 	

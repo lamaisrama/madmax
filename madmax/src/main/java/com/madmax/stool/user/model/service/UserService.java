@@ -27,6 +27,8 @@ public interface UserService {
 	
 	// pw수정
 	int updatePw(Map param);
+	 
+	int updateUser(Map param);
 
 	
 	

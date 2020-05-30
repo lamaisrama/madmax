@@ -36,22 +36,22 @@
 			<table class="table table-borderless" >
 				<tr>
 					<th>결과</th>
-					<td><input type="radio" name="apprStatus" value="3" id="status3" required>
+					<td><input type="radio" name="apprStatus" value="3" id="status3">
 						<label for="status3">승인</label> 
 						<input type="radio" name="apprStatus" value="4" id="status4">
 						<label for="status4">반려</label>
 						</td>
 					<th>기안일</th>
 					<td>
-						<input type="date" name="startDate" required> ~
-						<input type="date"  name="endDate" required>
+						<input type="date" name="startDate"> ~
+						<input type="date"  name="endDate">
 					</td>
 					
 				</tr>
 				<tr>
 					
 					<th>문서제목</th>
-					<td><input type="text" name="draftName" required>
+					<td><input type="text" name="draftName">
 					<td>
 						<input type="hidden" name="url" value="approval/refferedDocBox">
 						<button type="submit" class="btn btn-sm btn-secondary">search</button>
