@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.madmax.stool.project.model.dao.AsidebarDao;
 import com.madmax.stool.project.model.vo.AllAttachment;
+import com.madmax.stool.project.model.vo.InsertProjectMember;
 
 
 @Service
@@ -25,6 +26,22 @@ public class AsidebarServiceImpl implements AsidebarService {
 		return dao.selectMemberCount(session,pjNo);
 	}
 
+	@Override
+	public int insertProjectMember(Map<String, Object> map) {
+		
+		int result=dao.checkPjMember(session,map);
+		
+		if(result==0) {
+			return dao.insertProjectMember(session, map);
+			
+		}else {
+			return -1;
+		}
+		
+	}
+
+	
+	
 //	@Override
 //	public List<AllAttachment> selectAllProjectFiles(int pjNo) {
 //	

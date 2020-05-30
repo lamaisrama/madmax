@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.madmax.stool.project.model.vo.Project;
 import com.madmax.stool.task.model.service.TaskService;
+import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
 
@@ -127,10 +127,10 @@ public class TaskController {
 		  
 		  TaskPb tp=service.selectTaskView(boardNo);
 		  //담당자 이름 따로 가져옴
-		  String notiMember=service.selectTaskNoti(boardNo);
+		  List<NotiMember> nm=service.selectTaskNoti(boardNo);
 		  
 		  mv.addObject("task",tp);
-		  mv.addObject("notiMember",notiMember);//이건 업무 담당자임..
+		  mv.addObject("notiMember",nm);//이건 업무 담당자임..
 		  mv.setViewName("jsonView");
 		  return mv;
 		  

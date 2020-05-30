@@ -107,7 +107,7 @@ public class SelectedProjectSelectController {
 		//if(allFileList.size()>0)mv.addObject("allFileList",allFileList);
 		if(attachments.size()>0)mv.addObject("allFileList",attachments);
 		mv.addObject("user",user);
-		
+		System.out.println("유저확인"+user);
 		
 		
 		
