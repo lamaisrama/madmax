@@ -394,6 +394,10 @@ img#cardProfileImg {
 </div>
 <!-- 전체보기 리스트 모달창 끝-->
 
+<script>
+	
+</script>
+
 
 
 
@@ -429,10 +433,10 @@ img#cardProfileImg {
 						<br> 
 						<!-- <span id="officeNO">02-567-8901</span> -->
 					</div>
-					<div style="padding-top: 15px;" align="center">
+					<!-- <div style="padding-top: 15px;" align="center">
 						<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
 						프로필 수정하기</button>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -456,10 +460,12 @@ img#cardProfileImg {
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
-                        <input type="text" name="addWorker_search" placeholder="초대할 멤버 이름 검색" class="w-100 addWorker_search"/>
+                        <input type="text" id="invitationSearch" name="addWorker_search" placeholder="초대할 멤버 이름 검색" class="w-100 addWorker_search"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                    <div id="invitationMember" class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
+                        
+                        
                         <c:forEach items="${user}" var="u">
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
@@ -480,13 +486,59 @@ img#cardProfileImg {
 								</c:choose>
                                 </div>
                                 <p class="m-0"><c:out value="${u.USERNAME}"></c:out></p>
-                            </div>
-                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="(this);">
-                                	선택
-                            </button>
+                              <%--   <p class="m-0"><c:out value="${u.USERID}"></c:out></p> --%>
+                            </div> 
+                           
+                                <input type="hidden" name="userid" id="userid" value="${u.USERID}"/> <!-- 아이디 -->
+                               	<input type="hidden" name="pjno" id="pjno" value="${projectInfo.PROJECTNO }"  /><!-- 프로젝트 넘버 -->
+                            	
+                            	<div>
+                            	<c:if test="${projectInfo.projectNo ne projectMember.projectNo }">
+	                            <button type="button" id="choose" class="btn stoolDarkBlue-outline pull-right" onclick="insertPjMember(this);">
+	                            	선택
+	                            </button>
+	                           </c:if>
+	                           <c:if test="${projectInfo.projectNo eq projectMember.projectNo}">
+	                           <button type="button" id="delete" class="btn stoolDarkBlue-outline pull-right" onclick="deletePjMember(this);">
+	                           	내보내기
+	                           </button>
+	                           </c:if>
+	                            </div>
                         </div>
                         </c:forEach>
+					                           
                     </div>
+                    
+                    
+                    <script>
+	                    function insertPjMember(e){
+	                    	//console.log($("#userid").val());
+	                    	//console.log(e);
+	                    	//console.log($(e).("#pjno").val());
+	                    	//console.log($(e).prevAll().val());
+	                    	console.log($(e).prevAll().val());
+	                    	//$("#pjno").val();
+	                    	//var pjno=document.getElementsByName('pjno').value;
+	                    	//console.log($("userid").val());
+	                    	//console.log(pjno);
+	                    	
+	                    	$.ajax({
+	                    		url:"${path}/aside/insertProjectMember.do",
+	                    		data: {userid:$(e).prev().prev().val(),
+	                    			pjno:$(e).prev().val()},
+	                    		type: "post",
+	                    		success : function(data){
+	                    			console.log(data);
+	                    			if(data>0){
+	                    				alert("프로젝트 초대 성공!");	
+	                    			} else{
+	                    				alert("초대하기에 실패하였습니다. 관리자에게 문의해주세요.");
+	                    			}
+	                    		}
+	                    	});
+	                    }
+
+                    </script>
                 </div>
                 <div class="modal-footer border-0">
                 </div>            

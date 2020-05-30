@@ -96,7 +96,7 @@
 	</select> -->
 	
 	<select id="selectUser" parameterType="map" resultType="map">
-		SELECT * FROM STOOLUSER
+		SELECT * FROM STOOLUSER LEFT JOIN PROJECTMEMBER USING(USERID)
 	</select> 
 	
 	
