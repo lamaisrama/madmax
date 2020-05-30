@@ -126,6 +126,10 @@ public class UserController {
 		User login = service.selectUser(userId);
 //		logger.debug(login.toString());
 		
+		/* 세션 생성 */
+	    session = req.getSession();
+	    session.setAttribute("loginUser", login);
+	    
 		String id=login.getUserId();
 		
 		List<Favorite> list = proService.selectFavorite(id);
@@ -154,9 +158,11 @@ public class UserController {
 	
 	@RequestMapping("/user/logout.do")
 	public String logout(SessionStatus status, HttpSession session) {
+		
 		if(!status.isComplete()) {
 			status.setComplete();
 		}
+		
 		return "redirect:/";
 	}
 	
