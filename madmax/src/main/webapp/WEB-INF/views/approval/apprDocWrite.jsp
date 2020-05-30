@@ -28,12 +28,14 @@
 </head>
 
 <body>
-	<form action="${path }/appr/draftFormEnd" method="post"  enctype="multipart/form-data" onsubmit="return beforeSubmit();">
+	<form action="${path }/appr/draftFormEnd" method="post"  enctype="multipart/form-data" id="submitDoc" onsubmit="return beforeSubmit();">
 		<input type="hidden" name="apprDocTypeNo" value="${apprDocTypeNo }">
+		<input type="hidden" name="temp" id="isTemp" value="normal">
 		<div class="header">
+			<button type="button" class="btn btnSecondary" style="width:8em" onclick="attachAppredDoc();">기결재첨부</button>
+			<button type="button" class="btn btnSecondary" onclick="saveAsTemp();">임시저장</button>
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-			<button type="button" class="btn btnLight" style="width:7em" onclick="attachAppredDoc();">기결재첨부</button>
-			<button type="button" class="btn btnLight" onclick="saveAsTemp();">임시저장</button>
+			<button type="submit" class="btn btnPrimary ">결재요청</button>
 			<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 		</div>
 		<h3 style="text-align:center; margin:30px auto;">${draftName }</h3>
@@ -89,7 +91,7 @@
 					<th>기안 제목</th>
 					<td colspan="3">
 						<div class="form-group my-1 mr-3">
-							<input type="text" class="form-control" name="apprTitle">
+							<input type="text" class="form-control" name="apprTitle" id="apprTitle">
 						</div>
 					</td>
 				</tr>
@@ -180,7 +182,10 @@
 				alert('최소 한 사람 이상의 결재선을 등록해주세요');
 				return false;
 			}
-
+			if(document.querySelector("#apprTitle").value=="" || document.querySelector("#apprTitle").value==null){
+				alert('제목을 입력해주세요');
+				return false;
+			}
 			if (document.querySelector("#doc-form-table") != null) {
 				const content = document.querySelector("#doc-form-table").innerHTML;
 				const apprContent = $("<input>").attr("type", "hidden").attr("id", "apprContent").attr("name", "apprContent").attr("value", content);
@@ -214,26 +219,11 @@
 			$(event.target).remove();
 		}
 		
-/* 		function saveAsTemp(){
-			if (document.querySelector("#doc-form-table") != null) {
-				const content = document.querySelector("#doc-form-table").innerHTML;
-				const apprContent = $("<input>").attr("type", "hidden").attr("id", "apprContent").attr("name", "apprContent").attr("value", content);
-				$(".content-container").append(apprContent);
-			}
-			if (document.querySelector("#editor") != null) {
-				const apprText = $("<input>").attr("type", "hidden").attr("name", "apprText").attr("value", editor.getHtml());
-				$(".content-container").append(apprText);
-			}
-			
-			$.ajax({
-				url:"${path}/appr/saveAsTemp",
-				data:$("input").serialize(),
-				success:function(data){
-					console.log(data);
-				}
-			})
-			
-		} */
+ 		function saveAsTemp(){
+			$("#isTemp").val("temp");
+			console.log($("#isTemp").val());
+			$("#submitDoc").submit();
+		}
 
 
 	</script>
