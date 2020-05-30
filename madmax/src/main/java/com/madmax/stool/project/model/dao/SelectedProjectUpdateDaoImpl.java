@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectFile;
 
@@ -147,6 +149,31 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 	@Override
 	public int insertProjectFileTB(SqlSessionTemplate session, ProjectFile pf) {
 		return session.insert("SelectedProjectInsert.insertProjectFileTB", pf);
+	}
+
+	@Override
+	public int updateTask(SqlSessionTemplate session, InsertTask task) {
+		return session.update("SelectedProjectUpdate.updateTask",task);
+	}
+
+	@Override
+	public int deleteTaskManager(SqlSessionTemplate session, InsertTaskManager tm) {
+		return session.delete("SelectedProjectUpdate.deleteTaskManager", tm);
+	}
+
+	@Override
+	public int insertTaskManager(SqlSessionTemplate session, InsertTaskManager tm) {
+		return session.insert("SelectedProjectInsert.insertTaskManagerTB", tm);
+	}
+
+	@Override
+	public int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.insert("SelectedProjectInsert.insertTaskAttachmentTB", a);
+	}
+
+	@Override
+	public int deleteTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.delete("SelectedProjectUpdate.deleteTaskAttachmentTB", a);
 	}
 
 

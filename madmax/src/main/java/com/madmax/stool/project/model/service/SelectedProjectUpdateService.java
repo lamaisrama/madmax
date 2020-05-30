@@ -7,6 +7,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 
 public interface SelectedProjectUpdateService {
@@ -42,5 +44,10 @@ public interface SelectedProjectUpdateService {
 	int updateWriting(InsertWriting writing, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
 			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
 			List<Attachment> oriFiles, List<Attachment> newFiles, Map<String, Object> pInfo);
+
+	int updateTask(InsertTask task, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
+			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
+			List<Attachment> oriFiles, List<Attachment> newFiles, Map<String, Object> pInfo,
+			List<InsertTaskManager> deleteTMList, List<InsertTaskManager> newTMList);
 
 }

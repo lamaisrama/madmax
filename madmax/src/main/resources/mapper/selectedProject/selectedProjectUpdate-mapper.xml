@@ -116,11 +116,31 @@
 	</delete>
 	
 	<delete id="deleteWritingAttachmentTB" parameterType="attachment">
-		DELETE WRITINGATTACHMENT WHERE WRITINGNO = #{writingNo} AND WRITINGORINAME = #{writingOriname} AND RENAMEDFILENAME = #{renamedFilename}
+		DELETE WRITINGATTACHMENT WHERE WRITINGNO = #{no} AND WRITINGORINAME = #{originalFilename} AND WRITINGRENAME = #{renamedFilename}
 	</delete>
 
 	<delete id="deleteProjectFile" parameterType="map">
 		DELETE PROJECTFILE WHERE PROJECTNO = #{pjNo} AND PJFILEORINAME = #{oriName} AND PJFILERENAMEDNAME = #{reName}
+	</delete>
+	
+	<!-- 업무수정 -->
+	<update id="updateTask" parameterType="task">
+		UPDATE TASK SET TASKTITLE = #{taskTitle}, TASKCONTENT = #{taskContent}, TASKSTATE = #{taskState}, TASKPROIORITY = #{taskProiority}
+		<if test="taskStartdate!=null and !taskStartdate.equals('')">
+			,TASKSTARTDATE = #{taskStartdate}
+		</if>
+		<if test="taskEnddate!=null and !taskEnddate.equals('')">
+			,TASKENDDATE = #{taskEnddate}
+		</if>
+		    WHERE TASKNO = #{taskNo} AND BOARDNO = #{boardNo}
+	</update>
+	
+	<delete id="deleteTaskManager" parameterType="insertTaskManager">
+		DELETE TASKMANAGER WHERE TASKNO = #{taskNo} AND TASKMANAGERID = #{taskManagerId}
+	</delete>
+	
+	<delete id="deleteTaskAttachmentTB" parameterType="attachment">
+		DELETE TASKATTACHMENT WHERE TASKNO = #{no} AND TASKORINAME = #{originalFilename} AND TASKRENAME = #{renamedFilename}
 	</delete>
 	
 </mapper>

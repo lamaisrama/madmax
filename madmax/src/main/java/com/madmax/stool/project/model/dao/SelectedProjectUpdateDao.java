@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectFile;
 
@@ -60,6 +62,16 @@ public interface SelectedProjectUpdateDao {
 	int deleteProjectFile(SqlSessionTemplate session, Map<String, Object> pjFileMap);
 
 	int insertProjectFileTB(SqlSessionTemplate session, ProjectFile pj);
+
+	int updateTask(SqlSessionTemplate session, InsertTask task);
+
+	int deleteTaskManager(SqlSessionTemplate session, InsertTaskManager tm);
+
+	int insertTaskManager(SqlSessionTemplate session, InsertTaskManager tm);
+
+	int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a);
+
+	int deleteTaskAttachmentTB(SqlSessionTemplate session, Attachment a);
 
 
 }

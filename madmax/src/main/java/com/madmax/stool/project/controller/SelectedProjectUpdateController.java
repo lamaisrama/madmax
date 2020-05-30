@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 
 @Controller
@@ -434,19 +438,15 @@ public class SelectedProjectUpdateController {
 				fa.setOriginalFilename(ori);
 				fa.setRenamedFilename(rename);
 				newFiles.add(fa);
-			}
 			
-			if(!oriFiles.isEmpty()) {
-				for(Attachment a : oriFiles) {
-					try {
+			//수정파일이 있을때만 삭제
+				if(!oriFiles.isEmpty()) {
+					for(Attachment a : oriFiles) {
 						File delFile = new File(path +"/"+ a.getRenamedFilename());
 						deleteFlag = delFile.delete();
-					}catch (Exception e) {
-						e.printStackTrace();
 					}
 				}
-			}
-			
+			}			
 		}
 		//⑵ImgFileAttachment - 파일리네임 구성하기
 		for(MultipartFile mf : newImgFileList) {
@@ -469,19 +469,14 @@ public class SelectedProjectUpdateController {
 				ifa.setRenamedFilename(rename);
 				newFiles.add(ifa);
 			
-			}
-			
-			
-			if( !oriFiles.isEmpty() && deleteFlag==false ) {
-				for(Attachment a : oriFiles) {
-					try {
+			//수정파일이 있을때만 삭제				
+				if( !oriFiles.isEmpty() && deleteFlag==false ) {
+					for(Attachment a : oriFiles) {
 						File delFile = new File(path +"/"+ a.getRenamedFilename());
 						deleteFlag = delFile.delete();
-					}catch (Exception e) {
-						e.printStackTrace();
 					}
-				}
-			}			
+				}					
+			}		
 		}        
 
 		
@@ -579,7 +574,74 @@ public class SelectedProjectUpdateController {
     			}
     		}
         	
-        } 		
+        }else if(boardType.equals("T")) {
+        	/* 2) 업무 */
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	pb.setBoardType("T");
+        	InsertTask task = new InsertTask();
+        	task.setTaskNo(postNo);
+        	task.setBoardNo(bNo);
+        	task.setTaskId(writer);
+
+        	task.setTaskTitle(map.get("taskTitle"));
+        	task.setTaskState(map.get("taskState"));
+        	task.setTaskProiority(map.get("taskProiority"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				if(!map.get("taskStartdate").equals("")) {
+					startDate = dateFormat.parse(map.get("taskStartdate"));
+				}
+				if(!map.get("taskEnddate").equals("")) {
+					endDate = dateFormat.parse(map.get("taskEnddate"));
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}        	
+			if(startDate != null) task.setTaskStartdate(new java.sql.Date(startDate.getTime()));
+			if(endDate != null)  task.setTaskEnddate(new java.sql.Date(endDate.getTime()));
+        	task.setTaskContent(map.get("taskContent"));
+        	
+        	//삭제할 업무 담당자
+        	String deleteTMIds = map.get("deleteTMListStr");
+    		List<InsertTaskManager> deleteTMList = new ArrayList<InsertTaskManager>();
+    		if(!deleteTMIds.trim().equals("") && deleteTMIds != null) {
+    			String[] dTMIdsArr = deleteTMIds.split(",");
+    			for(String id : dTMIdsArr) {
+    				InsertTaskManager dTM = new InsertTaskManager();
+    				dTM.setTaskNo(postNo);
+    				dTM.setTaskManagerId(id);
+    				deleteTMList.add(dTM);
+    			}
+    		}
+    		
+    		//추가된 업무 담당자
+        	String tmIds = map.get("newTMListStr");
+    		List<InsertTaskManager> newTMList = new ArrayList<InsertTaskManager>();
+    		if(!tmIds.trim().equals("") && tmIds != null) {
+    			String[] tmIdsArr = tmIds.split(",");
+    			for(String id : tmIdsArr) {
+    				InsertTaskManager itm = new InsertTaskManager();
+    				itm.setTaskNo(postNo);
+    				itm.setTaskManagerId(id);
+    				newTMList.add(itm);
+    			}
+    		}
+    		
+    		try {
+            	result = service.updateTask(task, pb, deleteNotList, newNotList, deleteTagList, newTagList, 
+            				oriFiles, newFiles, pInfo, deleteTMList, newTMList);
+    		}catch(RuntimeException e){
+    			e.printStackTrace();
+    			for(Attachment a : newFiles) {
+    				File delF=new File(path+"/"+a.getRenamedFilename());
+    				if(delF.exists()) {
+    					delF.delete();
+    				}
+    			}
+    		}    	
+        	
+        }
 		
 		return result;
 	}

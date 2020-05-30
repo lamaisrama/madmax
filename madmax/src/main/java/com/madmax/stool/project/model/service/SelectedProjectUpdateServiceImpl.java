@@ -15,6 +15,8 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
 import com.madmax.stool.project.model.vo.ProjectFile;
 
@@ -223,6 +225,132 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 				result = dao.deleteWritingAttachmentTB(session, a);			
 				if(result==0) {
 					throw new MyException("deleteAttachment 에러!");
+				}
+			}
+			
+		}		
+		
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int updateTask(InsertTask task, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
+			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
+			List<Attachment> oriFiles, List<Attachment> newFiles, Map<String, Object> pInfo,
+			List<InsertTaskManager> deleteTMList, List<InsertTaskManager> newTMList) {
+
+		//1. 업무 수정
+		int result = dao.updateTask(session, task);
+		if(result == 0) {
+			throw new MyException("updateTask 에러!");
+		}
+		
+		//1-2. 업무 담당자 수정
+		//3-1) 언급 삭제
+		if(!deleteTMList.isEmpty()){
+			for(InsertTaskManager tm : deleteTMList) {
+				result = dao.deleteTaskManager(session, tm);
+				if(result==0) {
+					throw new MyException("deleteTaskManager 에러!");
+				}
+			}
+		}		
+		//3-2) 언급 등록 (추가)
+		if(!newTMList.isEmpty()){
+			for(InsertTaskManager tm : newTMList) {
+				result = dao.insertTaskManager(session, tm);
+				if(result==0) {
+					throw new MyException("insertTaskManager 에러!");
+				}
+			}
+		}			
+		
+		//2. 해시태그
+		//2-1) 해시태그 삭제
+		if(!deleteTagList.isEmpty()){
+			for(InsertHashTag t : deleteTagList) {
+				result = dao.deleteHashTag(session, t);
+				if(result==0) {
+					throw new MyException("deleteHashTag 에러!");
+				}
+			}
+		}
+		//2-2) 해시태그 등록
+		if(!newTagList.isEmpty()){
+			for(InsertHashTag t : newTagList) {
+				result = dao.insertHashTag(session, t);
+				if(result==0) {
+					throw new MyException("insertHashTag 에러!");
+				}
+			}
+		}
+		
+		//3. 언급
+		//3-1) 언급 삭제
+		if(!deleteNotList.isEmpty()){
+			for(InsertNotification n : deleteNotList) {
+				result = dao.deleteNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("deleteNotification 에러!");
+				}
+			}
+		}		
+		//3-2) 언급 등록 (추가)
+		if(!newNotList.isEmpty()){
+			for(InsertNotification n : newNotList) {
+				result = dao.insertNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("insertNotification 에러!");
+				}
+			}
+		}		
+		
+		
+		//4.파일		
+		//newFiles가 있어야지만 추가&삭제
+		int postNo = (int) pInfo.get("postNo");
+		int pjNo = (int) pInfo.get("pjNo");
+		if(!newFiles.isEmpty()) {
+			//4-1. 새로운파일 추가 - ProjectFile
+			for(Attachment a : newFiles) {
+				ProjectFile pj = new ProjectFile();
+				pj.setProjectNo(pjNo);
+				pj.setPjFileOriname(a.getOriginalFilename());
+				pj.setPjFileRenamedname(a.getRenamedFilename());
+				
+				result = dao.insertProjectFileTB(session, pj);				
+				if(result==0) {
+					throw new MyException("insertWritingAttachment 에러!");
+				}
+			}
+			//4-2. 새로운파일 추가 - Attachmet
+			for(Attachment a : newFiles) {
+				a.setNo(postNo);
+				result = dao.insertTaskAttachmentTB(session, a);				
+				if(result==0) {
+					throw new MyException("insertTaskAttachment 에러!");
+				}
+			}
+			
+			//4-3. 원래파일 삭제 - ProjectFile
+			for(Attachment a : oriFiles) {
+				Map<String, Object> pjFileMap = new HashMap();
+				pjFileMap.put("pjNo", pInfo.get("pjNo"));
+				pjFileMap.put("oriName", a.getOriginalFilename());
+				pjFileMap.put("reName", a.getRenamedFilename());				
+				
+				result = dao.deleteProjectFile(session, pjFileMap);				
+				if(result==0) {
+					throw new MyException("deleteProjectFile 에러!");
+				}
+			}
+			
+			//4-4. 원래파일 삭제 - Attachmet
+			for(Attachment a : oriFiles) {		
+				result = dao.deleteTaskAttachmentTB(session, a);			
+				if(result==0) {
+					throw new MyException("deleteTaskAttachment 에러!");
 				}
 			}
 			
