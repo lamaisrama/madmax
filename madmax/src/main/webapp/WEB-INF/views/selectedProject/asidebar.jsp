@@ -493,16 +493,11 @@ img#cardProfileImg {
                                	<input type="hidden" name="pjno" id="pjno" value="${projectInfo.PROJECTNO }"  /><!-- 프로젝트 넘버 -->
                             	
                             	<div>
-                            	<c:if test="${projectInfo.projectNo ne projectMember.projectNo }">
+                            	
 	                            <button type="button" id="choose" class="btn stoolDarkBlue-outline pull-right" onclick="insertPjMember(this);">
 	                            	선택
 	                            </button>
-	                           </c:if>
-	                           <c:if test="${projectInfo.projectNo eq projectMember.projectNo}">
-	                           <button type="button" id="delete" class="btn stoolDarkBlue-outline pull-right" onclick="deletePjMember(this);">
-	                           	내보내기
-	                           </button>
-	                           </c:if>
+	                           
 	                            </div>
                         </div>
                         </c:forEach>
@@ -529,7 +524,9 @@ img#cardProfileImg {
 	                    		type: "post",
 	                    		success : function(data){
 	                    			console.log(data);
-	                    			if(data>0){
+	                    			if(data == -1){
+	                    				alert("이미 초대된 멤버입니다.")
+	                    			}else if(data > 0){
 	                    				alert("프로젝트 초대 성공!");	
 	                    			} else{
 	                    				alert("초대하기에 실패하였습니다. 관리자에게 문의해주세요.");

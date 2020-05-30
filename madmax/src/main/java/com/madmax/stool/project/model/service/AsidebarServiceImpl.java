@@ -28,8 +28,16 @@ public class AsidebarServiceImpl implements AsidebarService {
 
 	@Override
 	public int insertProjectMember(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return dao.insertProjectMember(session, map);
+		
+		int result=dao.checkPjMember(session,map);
+		
+		if(result==0) {
+			return dao.insertProjectMember(session, map);
+			
+		}else {
+			return -1;
+		}
+		
 	}
 
 	
