@@ -95,7 +95,19 @@ input:focus, textarea:focus {
     max-width: 100%; 
     height: auto;
 }
-
+.filePreview_view{
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.filePreview_view span{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 24px;
+}
 .fileDownPreview{
     border: 1px solid #dadada;
     border-radius: 5px;

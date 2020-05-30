@@ -1,5 +1,7 @@
 package com.madmax.stool.project.model.service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.madmax.stool.common.MyException;
 import com.madmax.stool.project.model.dao.SelectedProjectUpdateDao;
+import com.madmax.stool.project.model.vo.Attachment;
+import com.madmax.stool.project.model.vo.InsertHashTag;
+import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertWriting;
+import com.madmax.stool.project.model.vo.ProjectFile;
 
 
 @Service
@@ -111,6 +119,116 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 	@Override
 	public int updateProjectBoardStatus(Map<String, Object> pbMap) {
 		return dao.updateProjectBoardStatus(session, pbMap);
+	}
+
+	@Override
+	public List<Attachment> selectOrifiles(Map<String, Object> pInfo) {
+		return dao.selectOrifiles(session, pInfo);
+	}
+
+	@Override
+	@Transactional
+	public int updateWriting(InsertWriting writing, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
+			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
+			List<Attachment> oriFiles, List<Attachment> newFiles, Map<String, Object> pInfo) throws MyException {
+		
+		//1. 글 수정
+		int result = dao.updateWriting(session, writing);
+		if(result == 0) {
+			throw new MyException("updateWriting 에러!");
+		}
+		
+		//2. 해시태그
+		//2-1) 해시태그 삭제
+		if(!deleteTagList.isEmpty()){
+			for(InsertHashTag t : deleteTagList) {
+				result = dao.deleteHashTag(session, t);
+				if(result==0) {
+					throw new MyException("deleteHashTag 에러!");
+				}
+			}
+		}
+		//2-2) 해시태그 등록
+		if(!newTagList.isEmpty()){
+			for(InsertHashTag t : newTagList) {
+				result = dao.insertHashTag(session, t);
+				if(result==0) {
+					throw new MyException("insertHashTag 에러!");
+				}
+			}
+		}
+		
+		//3. 언급
+		//3-1) 언급 삭제
+		if(!deleteNotList.isEmpty()){
+			for(InsertNotification n : deleteNotList) {
+				result = dao.deleteNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("deleteNotification 에러!");
+				}
+			}
+		}		
+		//3-2) 언급 등록 (추가)
+		if(!newNotList.isEmpty()){
+			for(InsertNotification n : newNotList) {
+				result = dao.insertNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("insertNotification 에러!");
+				}
+			}
+		}		
+		
+		
+		//4.파일		
+		//newFiles가 있어야지만 추가&삭제
+		int postNo = (int) pInfo.get("postNo");
+		int pjNo = (int) pInfo.get("pjNo");
+		if(!newFiles.isEmpty()) {
+			//4-1. 새로운파일 추가 - ProjectFile
+			for(Attachment a : newFiles) {
+				ProjectFile pj = new ProjectFile();
+				pj.setProjectNo(pjNo);
+				pj.setPjFileOriname(a.getOriginalFilename());
+				pj.setPjFileRenamedname(a.getRenamedFilename());
+				
+				result = dao.insertProjectFileTB(session, pj);				
+				if(result==0) {
+					throw new MyException("insertWritingAttachment 에러!");
+				}
+			}
+			//4-2. 새로운파일 추가 - Attachmet
+			for(Attachment a : newFiles) {
+				a.setNo(postNo);
+				result = dao.insertWritingAttachmentTB(session, a);				
+				if(result==0) {
+					throw new MyException("insertWritingAttachment 에러!");
+				}
+			}
+			
+			//4-3. 원래파일 삭제 - ProjectFile
+			for(Attachment a : oriFiles) {
+				Map<String, Object> pjFileMap = new HashMap();
+				pjFileMap.put("pjNo", pInfo.get("pjNo"));
+				pjFileMap.put("oriName", a.getOriginalFilename());
+				pjFileMap.put("reName", a.getRenamedFilename());				
+				
+				result = dao.deleteProjectFile(session, pjFileMap);				
+				if(result==0) {
+					throw new MyException("deleteProjectFile 에러!");
+				}
+			}
+			
+			//4-4. 원래파일 삭제 - Attachmet
+			for(Attachment a : oriFiles) {		
+				result = dao.deleteWritingAttachmentTB(session, a);			
+				if(result==0) {
+					throw new MyException("deleteAttachment 에러!");
+				}
+			}
+			
+		}		
+		
+		return result;
 	}
 	
 

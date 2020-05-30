@@ -84,4 +84,43 @@
 	<update id="updateProjectBoardStatus" parameterType="map">		 
 		UPDATE PROJECTBOARD SET STATUS = 'D' WHERE PROJECTNO = #{pjNo} AND BOARDNO = #{bNo}
 	</update>		
+	
+	<select id="selectOrifiles" parameterType="map" resultMap="attachmentMap">
+		 <choose>
+			<when test='boardType eq "W"'>
+		  		SELECT WRITINGNO "NO", WRITINGORINAME "ORI", WRITINGRENAME "RE" FROM WRITINGATTACHMENT WHERE WRITINGNO = #{postNo}
+		  	</when>
+			<when test='boardType eq "T"'>
+		  		SELECT TASKNO "NO", TASKORINAME "ORI", TASKRENAME "RE" FROM TASKATTACHMENT WHERE TASKNO = #{postNo}
+		  	</when>
+		</choose>	
+	</select>
+	<resultMap type="Attachment" id="attachmentMap">
+		<result column="no" property="no"/>
+		<result column="ori" property="originalFilename"/>
+		<result column="re" property="renamedFilename"/>
+	</resultMap>
+	
+	
+	<update id="updateWriting" parameterType="writing">
+		UPDATE WRITING SET WRITINGTITLE = #{writingTitle}, WRITINGCONTENT = #{writingContent} WHERE WRITINGNO = #{writingNo}
+	</update>
+	
+	<delete id="deleteHashTag" parameterType="hashTag">
+		DELETE HASHTAG WHERE HASHTAGNO = #{hashtagNo}
+	</delete>
+	
+	<delete id="deleteNotificationTB" parameterType="notification">
+		DELETE NOTIFICATIONTABLE WHERE BOARDNO = #{boardNo} AND SENDERID = #{senderId}
+			AND RECEIVEID = #{receiveId} AND NOTTYPE = #{notType}
+	</delete>
+	
+	<delete id="deleteWritingAttachmentTB" parameterType="attachment">
+		DELETE WRITINGATTACHMENT WHERE WRITINGNO = #{writingNo} AND WRITINGORINAME = #{writingOriname} AND RENAMEDFILENAME = #{renamedFilename}
+	</delete>
+
+	<delete id="deleteProjectFile" parameterType="map">
+		DELETE PROJECTFILE WHERE PROJECTNO = #{pjNo} AND PJFILEORINAME = #{oriName} AND PJFILERENAMEDNAME = #{reName}
+	</delete>
+	
 </mapper>

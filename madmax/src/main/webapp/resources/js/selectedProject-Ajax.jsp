@@ -374,8 +374,37 @@ function fn_viewPostDelete(pjNo, bNo){
 
 
 
-//파일 수정
+//글 수정
+function fn_updateSubmit(bNo){
+    // Get form
+    var form = $('#postUpdateForm'+bNo)[0];
 
+    // Create an FormData object 
+    var data = new FormData(form);
+
+
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "${path}/selectedProject/updateSelectedProjectPost.do",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {        	
+        	if(data>0){
+        		alert("게시글이 수정되었습니다.");
+        		location.reload(true);
+        	}else{
+        		alert("게시글이 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
+        	}
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            alert("fail");
+        }
+    });
+}
 
 
 </script>

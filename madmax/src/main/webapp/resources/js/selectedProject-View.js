@@ -114,6 +114,7 @@ function fn_formClose(type, postNo){
 	$(visibleInput).addClass("d-none");
 	$(hiddenDiv).removeClass("d-none");
 	$(comment).val($.trim($(commentDiv).text()));
+	
 }
 
 //글 체크 border효과 js
@@ -184,12 +185,21 @@ function fn_updateFormCancel(bNo){
 	$("#viewBoxDiv"+bNo).removeClass("d-none");
 	$("#postUpdateFormDiv"+bNo).addClass("d-none");
 	$("#postUpdateForm"+bNo)[0].reset();
+	
+	//수정 파일 미리보기 초기화
+	$(".update_oriImgFileBox").removeClass("d-none");
+	$(".update_newImgFileBox").addClass("d-none");
+	$(".update_newImgFileBox").html("");
+
+	$(".update_oriFileBox").removeClass("d-none");
+	$(".update_newFileBox").addClass("d-none");
+	$(".update_newFileBox").html("");
 }
 
 //1.수정 공통 - 태그
 //1) 태그입력시 화면에 출력 + hidden input에 값 넣기(ex: 태그1,태그2)
-let newTagListStr = $("#newTagListStr").val();
-let deleteTagListStr = $("#deleteTagListStr").val();
+/*let newTagListStr = $("#newTagListStr").val();
+let deleteTagListStr = $("#deleteTagListStr").val();*/
 
 function fn_addTag_update(e, bNo){
     let keycode = event.keyCode;
@@ -209,29 +219,33 @@ function fn_addTag_update(e, bNo){
             	checkTagStr = checkTagStr+","+addStr;
                 $("#checkTagStr"+bNo).val(checkTagStr);
                 
+                let newTagListStr = $("#newTagListStr"+bNo).val();
+                
                 if(newTagListStr!=undefined  && newTagListStr!=""){
                 	newTagListStr = newTagListStr+","+addStr;  
-                	$("#newTagListStr").val(newTagListStr);
+                	$("#newTagListStr"+bNo).val(newTagListStr);
                 }else{
                 	newTagListStr = addStr;
-                    $("#newTagListStr").val(newTagListStr);
+                    $("#newTagListStr"+bNo).val(newTagListStr);
                 }                	
             }
         }else{     
         	checkTagStr = addStr;
         	$("#checkTagStr"+bNo).val(checkTagStr);
         	
+            let newTagListStr = $("#newTagListStr"+bNo).val();
+        	
             if(newTagListStr!=undefined  && newTagListStr!=""){
             	newTagListStr = newTagListStr+","+addStr;  
-            	$("#newTagListStr").val(newTagListStr);
+            	$("#newTagListStr"+bNo).val(newTagListStr);
             }else{
             	newTagListStr = addStr;
-                $("#newTagListStr").val(newTagListStr);
+                $("#newTagListStr"+bNo).val(newTagListStr);
             }        	
         }
         
         
-        console.log(newTagListStr);
+        console.log("왜왜왜왜왜오: "+$(e).val());
         $(".addTagList_update").prepend("<p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>"
                                 +"<span style='color:#25558F;'>#</span>"
                                 +"<span class='tagText'>"+$(e).val()+"</span>"
@@ -253,12 +267,12 @@ function fn_deleteNewTag(e,bNo){
         }
     }   
     
-    if($("#newTagListStr").val() != undefined){
-        let tsSplit = $("#newTagListStr").val().split(",");
+    if($("#newTagListStr"+bNo).val() != undefined){
+        let tsSplit = $("#newTagListStr"+bNo).val().split(",");
         if($.inArray(removeTag, tsSplit) != -1){
             tsSplit.splice(tsSplit.indexOf(removeTag),1);      
             let newVal = tsSplit.join(",");         
-            $("#newTagListStr").val(newVal);
+            $("#newTagListStr"+bNo).val(newVal);
         }
     }
     
@@ -278,14 +292,14 @@ function fn_deleteTag_update(e, bNo, tagNo){
 		}
 	}   
 	
-	var deleteTagList = $("#deleteTagListStr").val();
+	var deleteTagList = $("#deleteTagListStr"+bNo).val();
     
     if(deleteTagList!=undefined  && deleteTagList!=""){               
     	deleteTagList = deleteTagList+","+tagNo;  
-        $("#deleteTagListStr").val(deleteTagList);
+        $("#deleteTagListStr"+bNo).val(deleteTagList);
     }else{      
     	deleteTagList = tagNo;
-        $("#deleteTagListStr").val(deleteTagList);
+        $("#deleteTagListStr"+bNo).val(deleteTagList);
     }
 	
 	$(e).parents(".selectedTag").remove();
@@ -295,8 +309,8 @@ function fn_deleteTag_update(e, bNo, tagNo){
 
 //2. 수정공통 - 언급
 //1) 언급 추가
-let newMentionListStr = $("#newMentionListStr").val();
-let deleteMentionListStr = $("#deleteMentionListStr").val();
+//let newMentionListStr = $("#newMentionListStr").val();
+//let deleteMentionListStr = $("#deleteMentionListStr").val();
 
 function fn_addMention_update(e, bNo, mentionId, mName){
 	
@@ -313,25 +327,29 @@ function fn_addMention_update(e, bNo, mentionId, mName){
             
             $("#checkMentionStr"+bNo).val(newVal);    
             
+            let newMentionListStr = $("#newMentionListStr"+bNo).val();
+            
             if(newMentionListStr!=undefined  && newMentionListStr!=""){
-            	newMentionListStr = newMentionListStr+","+mentionId;  
-            	$("#newMentionListStr").val(newMentionListStr);
+            	newMentionListStr = $("#newMentionListStr"+bNo).val()+","+mentionId;  
+            	$("#newMentionListStr"+bNo).val(newMentionListStr);
             }else{
             	newMentionListStr = mentionId;
-            	$("#newMentionListStr").val(newMentionListStr);
+            	$("#newMentionListStr"+bNo).val(newMentionListStr);
             }  
             
         }        
     }else{      
         $("#checkMentionStr"+bNo).val(mentionId);
 
+        let newMentionListStr = $("#newMentionListStr"+bNo).val();
+        
         if(newMentionListStr!=undefined  && newMentionListStr!=""){
-        	newMentionListStr = newMentionListStr+","+mentionId;  
-        	$("#newMentionListStr").val(newMentionListStr);
+        	newMentionListStr = $("#newMentionListStr"+bNo).val()+","+mentionId;  
+        	$("#newMentionListStr"+bNo).val(newMentionListStr);
         }else{
         	newMentionListStr = mentionId;
-        	$("#newMentionListStr").val(newMentionListStr);
-        }          
+        	$("#newMentionListStr"+bNo).val(newMentionListStr);
+        }           
         
     }
     
@@ -359,12 +377,12 @@ function fn_deleteNewMention(e, bNo, mentionId){
         }
     }   
     
-    if($("#newMentionListStr").val() != undefined){
-        let tsSplit = $("#newMentionListStr").val().split(",");
+    if($("#newMentionListStr"+bNo).val() != undefined){
+        let tsSplit = $("#newMentionListStr"+bNo).val().split(",");
         if($.inArray(mentionId, tsSplit) != -1){
             tsSplit.splice(tsSplit.indexOf(mentionId),1);      
             let newVal = tsSplit.join(",");         
-            $("#newMentionListStr").val(newVal);
+            $("#newMentionListStr"+bNo).val(newVal);
         }
     }
     
@@ -383,14 +401,14 @@ function fn_deleteMentionListStr(e, bNo,removeId){
         }
     }    
     
-    let deleteMentionListStr = $("#deleteMentionListStr").val();
+    let deleteMentionListStr = $("#deleteMentionListStr"+bNo).val();
     
     if(deleteMentionListStr!=undefined  && deleteMentionListStr!=""){               
     	deleteMentionListStr = deleteMentionListStr+","+removeId;  
-        $("#deleteMentionListStr").val(deleteMentionListStr);
+        $("#deleteMentionListStr"+bNo).val(deleteMentionListStr);
     }else{      
     	deleteMentionListStr = removeId;
-        $("#deleteMentionListStr").val(deleteMentionListStr);
+        $("#deleteMentionListStr"+bNo).val(deleteMentionListStr);
     }    
     
     $(e) .parents(".selectedWorker").remove();
@@ -400,86 +418,78 @@ function fn_deleteMentionListStr(e, bNo,removeId){
 
 //3. 파일
 //파일 업로드
-let sel_imgFiles_update = [];
 $(document).ready(function(){
-//  $("#newImgFiles").on("change", fn_handleImgsFilesSelect_update);
-
-  
-  $("#newFiles").on("change", fn_handleFilesSelect_update);
-  $("#newFiles").on("change", function(){
-      $("#filesPreview_update").removeClass("d-none");      
-      $("#oriFilesPreview_update").addClass("d-none");      
-  });    
+    $(".newImgFiles").on("change", fn_handleImgsFilesSelect_update);
+    $(".newImgFiles").on("change", function(){
+    	$(".update_oriImgFileBox").addClass("d-none");
+    	$(".update_newImgFileBox").removeClass("d-none");
+    });
+//    $(".newFiles").on("change", fn_handleFilesSelect_update);
+    $(".newFiles").on("change", function(){
+    	$(".update_oriFileBox").addClass("d-none");
+    	$(".update_newFileBox").removeClass("d-none");
+    });    
 });
 
-function fn_newImgFilesChange(bNo){
-	  alert("dfjaskdfjlksadjfklj");
-	  $("#imgFilesPreview_update"+bNo).addClass("d-flex"); 
-    $("#imgFilesPreview_update"+bNo).removeClass("d-none");      
-    $("#oriImgFilesPreview_update"+bNo).removeClass("d-flex");      
-    $("#oriImgFilesPreview_update"+bNo).addClass("d-none"); 
-} 
-
-function fn_handleImgsFilesSelect_update(e,bNo){
+function fn_handleImgsFilesSelect_update(e){
     let imgFiles = e.target.files;
     let imgFilesArr = Array.prototype.slice.call(imgFiles);
 
-    
     imgFilesArr.forEach(function(f){
         if(!f.type.match("image.*")){
             alert("이미지파일만 가능합니다.");
             return;
         }
-        sel_imgFiles_update.push(f);
+        
         let reader = new FileReader();
         reader.onload = function(e){
             let img_html = "<div class='col-2 p-1' style='height: 150px;'><div class='imgPreview h-100'><img src=\'"+e.target.result+"\'/></div></div>";
-            $("#imgFileBox_update"+bNo).append(img_html);
+            $(".update_newImgFileBox").append(img_html);
         }
         reader.readAsDataURL(f);
     });
 }
-function fn_handleFilesSelect_update(){
-  var files=$('#newFiles')[0].files;
+function fn_handleFilesSelect_update(bNo){
+    var files=$('#newFiles'+bNo)[0].files;
 
-  for(var i= 0; i<files.length; i++){
-      //확장자 별 이미지주기
-      let name = files[i].name;
-      let ext = name.substr(name.indexOf(".")+1, name.length);
-      let iconStr = "";
+    for(var i= 0; i<files.length; i++){
+        //확장자 별 이미지주기
+        let name = files[i].name;
+        let ext = name.substr(name.indexOf(".")+1, name.length);
+        let iconStr = "";
 
-      switch(ext){
-          case "jpg" : iconStr = "fas fa-file-image text-success"; 
-          case "png" : iconStr = "fas fa-file-image text-success";
-          case "jpeg" : iconStr = "fas fa-file-image text-success"; break;
-          case "jsp": iconStr = "fas fa-file-code text-muted";
-          case "java" : iconStr = "fas fa-file-code text-muted";
-          case "css" : iconStr = "fas fa-file-code text-muted";
-          case "html" : iconStr = "fas fa-file-code text-muted"; break;
-          case "hwp" : iconStr = "fas fa-file-word text-primary";
-          case "txt" : iconStr = "fas fa-file-word text-primary";
-          case "ppt" : iconStr = "fas fa-file-word text-primary";
-          case "dox" : iconStr = "fas fa-file-word text-primary";
-          case "xls" : iconStr = "fas fa-file-word text-primary"; break;
-          case "mp3" : iconStr = "fas fa-file-audio text-info";
-          case "aac" : iconStr = "fas fa-file-audio text-info"; break;
-          case "wav" : iconStr = "fas fa-file-audio text-info"; break;
-          case "pdf" : iconStr = "fas fa-file-pdf text-danger"; break;
-          case "mp4" : iconStr = "fas fa-file-video text-info";
-          case "avi" : iconStr = "fas fa-file-video text-info";
-          case "flv" : iconStr = "fas fa-file-video text-info";
-          case "mov" : iconStr = "fas fa-file-video text-info";
-          case "avi" : iconStr = "fas fa-file-video text-info"; break;
-          case "zip" || "apk" || "rar" || "tar" : iconStr = "fas fa-file-archive text-primary";
-          case "apk" : iconStr = "fas fa-file-archive text-primary";
-          case "rar" : iconStr = "fas fa-file-archive text-primary";
-          case "tar" : iconStr = "fas fa-file-archive text-primary"; break;
-          default : iconStr = "fas fa-file text-info";
-      }
+        switch(ext){
+            case "jpg" : iconStr = "fas fa-file-image text-success"; 
+            case "png" : iconStr = "fas fa-file-image text-success";
+            case "jpeg" : iconStr = "fas fa-file-image text-success"; break;
+            case "jsp": iconStr = "fas fa-file-code text-muted";
+            case "java" : iconStr = "fas fa-file-code text-muted";
+            case "css" : iconStr = "fas fa-file-code text-muted";
+            case "html" : iconStr = "fas fa-file-code text-muted"; break;
+            case "hwp" : iconStr = "fas fa-file-word text-primary";
+            case "txt" : iconStr = "fas fa-file-word text-primary";
+            case "ppt" : iconStr = "fas fa-file-word text-primary";
+            case "dox" : iconStr = "fas fa-file-word text-primary";
+            case "xls" : iconStr = "fas fa-file-word text-primary"; break;
+            case "mp3" : iconStr = "fas fa-file-audio text-info";
+            case "aac" : iconStr = "fas fa-file-audio text-info"; break;
+            case "wav" : iconStr = "fas fa-file-audio text-info"; break;
+            case "pdf" : iconStr = "fas fa-file-pdf text-danger"; break;
+            case "mp4" : iconStr = "fas fa-file-video text-info";
+            case "avi" : iconStr = "fas fa-file-video text-info";
+            case "flv" : iconStr = "fas fa-file-video text-info";
+            case "mov" : iconStr = "fas fa-file-video text-info";
+            case "avi" : iconStr = "fas fa-file-video text-info"; break;
+            case "zip" || "apk" || "rar" || "tar" : iconStr = "fas fa-file-archive text-primary";
+            case "apk" : iconStr = "fas fa-file-archive text-primary";
+            case "rar" : iconStr = "fas fa-file-archive text-primary";
+            case "tar" : iconStr = "fas fa-file-archive text-primary"; break;
+            default : iconStr = "fas fa-file text-info";
+        }
 
-      let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview h-100 pl-3 pr-3'>"
-      					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'></i><span>"
-                          +files[i].name+"</span></div></div>";
-      $("#fileBox_update").append(fileDiv_html);
-  }
+        let fileDiv_html = "<div class='col-4 p-1 w-100' style='height: 46px;'><div class='filePreview_view h-100 pl-3 pr-3'>"
+        					+"<i class='"+iconStr+" mr-2' style='font-size: 25px; color: #D0D0D4;'></i><span>"
+                            +files[i].name+"</span></div></div>";
+        $(".update_newFileBox").append(fileDiv_html);
+    }
 }

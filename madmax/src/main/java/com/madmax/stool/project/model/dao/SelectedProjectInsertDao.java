@@ -25,7 +25,7 @@ public interface SelectedProjectInsertDao {
 
 	int insertHashTagTB(SqlSessionTemplate session, InsertHashTag hashTag);
 
-	int InsertNotificationTB(SqlSessionTemplate session, InsertNotification notification);
+	int insertNotificationTB(SqlSessionTemplate session, InsertNotification notification);
 
 	int insertWritingAttachmentTB(SqlSessionTemplate session, Attachment a);
 
