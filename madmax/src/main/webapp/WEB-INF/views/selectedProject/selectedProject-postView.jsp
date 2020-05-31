@@ -30,13 +30,13 @@
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
+                                   	<c:forEach items="${projectMember}" var="pm">
+                                   	<c:if test="${w.WRITINGID==pm.userId}">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" alt="프로필사진"/>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-                                        	<c:forEach items="${projectMember}" var="pm">
-                                        	<c:if test="${w.WRITINGID==pm.userId}">
                                         		<c:out value="${pm.userName}"/>
                                         	</c:if>
                                         	</c:forEach>
@@ -148,11 +148,11 @@
 											<c:if test="${ (w.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'writing')}">
 											<c:set var="notificationCk" value="Y" />
                                                 <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
                                                     <c:forEach items="${projectMember}" var="pm">
                         							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
+                                                    </div>
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     </c:if>
                                                     </c:forEach>
@@ -280,7 +280,7 @@
                         	<c:if test="${pm.userId eq wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -336,7 +336,7 @@
                         	<c:if test="${pm.userId eq wc.WRITINGCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -407,11 +407,15 @@
                         	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
                         	
 	                        <div class="d-flex mt-1">
-	                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-	                                <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
-	                            </div>
+	                            <c:forEach items="${projectMember}" var="pm">
+	                            <c:if test="${loginUser.userId eq pm.userId}">
+		                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+		                                <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
+		                            </div>
+                                </c:if>
+                                </c:forEach>
 	                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
-	                                <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" size="100px"/>
+	                                <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" size="100px;"/>
 	                                <button type="submit" onclick="fn_insertCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
 	                                    <i class='fas fa-edit' style='font-size:28px'></i>
 	                                </button>
@@ -512,11 +516,11 @@
 											<c:if test="${ (w.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'writing')}">
 											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
                                                 <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
                                                     <c:forEach items="${projectMember}" var="pm">
                         							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
+                                                    </div>
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
                             							<i class='fas fa-minus-circle stoolPink'></i>
@@ -662,17 +666,17 @@
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
+                               	<c:forEach items="${projectMember}" var="pm">
+                                 	<c:if test="${t.TASKID==pm.userId}">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" alt="프로필사진"/>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-	                                      	<c:forEach items="${projectMember}" var="pm">
-	                                        	<c:if test="${t.TASKID==pm.userId}">
-	                                        		<c:out value="${pm.userName}"/>
-	                                        	</c:if>
-	                                        </c:forEach>
+	                                        <c:out value="${pm.userName}"/>
                                         </strong>
+                                  	</c:if>
+                                  </c:forEach>
                                         <p class="m-0" style="font-size: small;">
                                             <fmt:formatDate value="${t.TASKTIME}" pattern="yyyy-MM-dd KK:mm:ss"/>
                                         </p>
@@ -781,7 +785,7 @@
                                    	<c:if test="${tm.TASKMANAGERID==pm.userId}">
                                     <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 mr-2'>
                                         <div class='selectedWorker_imgDiv mr-2'>
-                                            <img src="${path}/resources/images/defaultProfile.png"><!-- 여기서 해당 프로필 파일 어떻게 가져오는지? -->
+                                            <img src="${path}/resources/upload/profile/${pm.profile}"><!-- 여기서 해당 프로필 파일 어떻게 가져오는지? -->
                                         </div>
                                       	<sapn>
                                     		<c:out value="${pm.userName}"/>
@@ -882,16 +886,16 @@
                                             <c:forEach items="${notification}" var="n">
 											<c:if test="${ (t.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'task')}">
 											<c:set var="notificationCk" value="Y" />
+	                                            <c:forEach items="${projectMember}" var="pm">
+	                							<c:if test="${pm.userId eq n.RECEIVEID}">
                                                 <div id="mentionListBox" class="d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2">
                                                     <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
                                                     </div>
-                                                    <c:forEach items="${projectMember}" var="pm">
-                        							<c:if test="${pm.userId eq n.RECEIVEID}">
                                                     <span><c:out value="${pm.userName}"/></span>
-                                                    </c:if>
-                                                    </c:forEach>
                                                 </div>
+	                                           </c:if>
+	                                           </c:forEach>
 											</c:if>
 											</c:forEach>
 											<c:if test="${notificationCk eq 'N'}">
@@ -1006,7 +1010,7 @@
                         	<c:if test="${pm.userId eq tc.TASKCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -1062,7 +1066,7 @@
                         	<c:if test="${pm.userId eq tc.TASKCOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -1135,7 +1139,13 @@
                         	
 	                        <div class="d-flex mt-1">
 	                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-	                                <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+	                            <c:forEach items="${projectMember}" var="pm">
+	                            <c:if test="${loginUser.userId eq pm.userId}">
+	                                <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+		                                <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
+		                            </div>
+                                </c:if>
+                                </c:forEach>
 	                            </div>
 	                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
 	                                <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" size="100px"/>
@@ -1259,7 +1269,7 @@
                                    	
                                     <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 mr-2'>
                                         <div class='selectedWorker_imgDiv mr-2'>
-                                            <img src="${path}/resources/images/defaultProfile.png">
+                                            <img src="${path}/resources/upload/profile/${pm.profile}"/>
                                         </div>
                                       	<sapn>
                                     		<c:out value="${pm.userName}"/>
@@ -1362,11 +1372,11 @@
 											<c:if test="${ (t.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'task')}">
 											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
                                                 <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
                                                     <c:forEach items="${projectMember}" var="pm">
                         							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
+                                                    </div>
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
                             							<i class='fas fa-minus-circle stoolPink'></i>
@@ -1513,17 +1523,17 @@
                             <!--★ 상단공통  ----------------------------------------------------------------------------------------------------------------------->      
                             <div class="pjViewBox-header w-100 d-flex justify-content-between mb-5">
                                 <div class=" w-100 d-flex align-items-center">
+                               		<c:forEach items="${projectMember}" var="pm">
+                                	<c:if test="${s.SCHEDULEID==pm.userId}">
                                     <div class="profileImgDiv">
-                                        <img src="${path}/resources/images/defaultProfile.png" alt="프로필사진"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" alt="프로필사진"/>
                                     </div>
                                     <div class="d-flex flex-column ml-2">
                                         <strong>
-                                        	<c:forEach items="${projectMember}" var="pm">
-	                                        	<c:if test="${s.SCHEDULEID==pm.userId}">
-	                                        		<c:out value="${pm.userName}"/>
-	                                        	</c:if>
-                                        	</c:forEach>
+	                                        <c:out value="${pm.userName}"/>
                                         </strong>
+                                   	</c:if>
+                                  	</c:forEach>
                                         <p class="m-0" style="font-size: small;">
                                             <fmt:formatDate value="${s.SCHEDULETIME}" pattern="yyyy-MM-dd KK:mm:ss"/>
                                         </p>
@@ -1707,11 +1717,11 @@
 											<c:if test="${ (s.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'schedule')}">
 											<c:set var="notificationCk" value="Y" />
                                                 <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
                                                     <c:forEach items="${projectMember}" var="pm">
                         							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
+                                                    </div>
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     </c:if>
                                                     </c:forEach>
@@ -1769,7 +1779,7 @@
                         	<c:if test="${pm.userId eq sc.SCHEDULECOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -1825,7 +1835,7 @@
                         	<c:if test="${pm.userId eq sc.SCHEDULECOMMENTID}">
                                 <td class="d-flex align-items-start">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-                                        <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
+                                        <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center commentDiv">
                                         <div class="d-flex flex-column justify-content-center">
@@ -1897,9 +1907,13 @@
                         	<input type="hidden" name="senderId" value="${loginUser.userId}"/>
                         	
 	                        <div class="d-flex mt-1">
-	                            <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
-	                                <img src="${path}/resources/images/defaultProfile.png" style="max-width: 100%; height: auto;"/>
-	                            </div>
+	                            <c:forEach items="${projectMember}" var="pm">
+	                            <c:if test="${loginUser.userId eq pm.userId}">
+	                                <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+		                                <img src="${path}/resources/upload/profile/${pm.profile}" style="max-width: 100%; height: auto;"/>
+		                            </div>
+                                </c:if>
+                                </c:forEach>
 	                            <div class="pt-1 pb-1 d-flex" style="width: 95%;">
 	                                <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" size="100px"/>
 	                                <button type="submit" onclick="fn_insertCommentSubmit(${pb.BOARDNO});" class="ml-2" style="border: none; background: none;">
@@ -2030,11 +2044,11 @@
 											<c:if test="${ (s.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'schedule')}">
 											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
                                                 <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
-                                                    <div class='selectedWorker_imgDiv mr-2'>
-                                                        <img src="${path}/resources/images/defaultProfile.png">
-                                                    </div>
                                                     <c:forEach items="${projectMember}" var="pm">
                         							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/upload/profile/${pm.profile}">
+                                                    </div>
                                                     <span><c:out value="${pm.userName}"/></span>
                                                     <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
                             							<i class='fas fa-minus-circle stoolPink'></i>
@@ -2107,7 +2121,7 @@
                         <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
+                                    <img src="${path}/resources/upload/profile/${pm.profile}">
                                 </div>
                                 <p class="m-0 searchName">
                                 	<c:out value="${pm.userName}">
@@ -2149,7 +2163,7 @@
                         <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <img src="${path}/resources/images/defaultProfile.png">
+                                    <img src="${path}/resources/upload/profile/${pm.profile}"/>
                                 </div>
                                 <p class="m-0 searchName">
                                 	<c:out value="${pm.userName}"/>
