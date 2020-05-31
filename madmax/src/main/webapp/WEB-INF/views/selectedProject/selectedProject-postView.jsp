@@ -424,7 +424,7 @@
                     
                     
                     <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                    <!-- 수정할 때 추가 -->
+                    <!-- 1. 글 수정 -->
                 <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
 	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
 	                <!-- from 공통 hidden input모음 -->
@@ -453,9 +453,7 @@
 	                <!-- from 공통 hidden input모음 끝 -->
 	
 	                    <div id="pjUpdateWriteBox" class="w-100">
-	
-	                        <!-- 작성 카테고리별 div -->
-	                            <!-- 1) 글 작성 -->
+
 	                            <div id="writeCategory-board" class="row w-100 m-0">
 	                                <div id="boardContainer" class="w-100 p-3">
 	                                    <div id="boardTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-2">
@@ -735,7 +733,7 @@
                                         	<button type="button" class="btn border-right btn-primary" disabled>
                                         </c:if>
                                         <c:if test="${t.TASKSTATE ne '요청'}">
-                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState(this, '요청');">
+                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState_viewUpdate(this, '요청',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                        
                                         	요청
                                        	</button>
@@ -743,7 +741,7 @@
                                         	<button type="button" class="btn border-right btn-success" disabled>
                                         </c:if>
                                      	<c:if test="${t.TASKSTATE ne '진행'}">
-                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">
+                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState_viewUpdate(this, '진행',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                        
                                         	진행
                                        	</button>
@@ -751,7 +749,7 @@
                                         	<button type="button" class="btn border-right btn-danger" disabled>
                                         </c:if>  
                                      	<c:if test="${t.TASKSTATE ne '피드백'}">
-                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">
+                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState_viewUpdate(this, '피드백',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                                                             	 
                                         	피드백
                                        	</button>
@@ -759,7 +757,7 @@
                                         	<button type="button" class="btn border-right btn-info" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '완료'}">
-                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">
+                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState_viewUpdate(this, '완료',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>
                                         	완료
                                        	</button>
@@ -767,7 +765,7 @@
                                         	<button type="button" class="btn btn-secondary" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '보류'}">
-                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">
+                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState_viewUpdate(this, '보류',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                           
                                         	보류
                                        	</button>
@@ -1155,7 +1153,7 @@
                     
                     
                     <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                    <!-- 수정할 때 추가 -->
+                    <!-- 2. 업무수정 -->
                 <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
 	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
 	                <!-- from 공통 hidden input모음 -->
@@ -1506,6 +1504,9 @@
 					<c:if test="${pb.BOARDTYPE eq 'S'}">
 					<c:forEach items="${scheduleList }" var="s">
 					<c:if test="${pb.BOARDNO == s.BOARDNO}">
+					
+					<div id="viewBoxDiv${pb.BOARDNO}">
+					
                     <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                               
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
@@ -1562,7 +1563,7 @@
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate(${pb.BOARDNO})"  style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
@@ -1590,7 +1591,11 @@
                                             </strong> <!-- 일정제목 -->
                                             <hr class="w-100">
                                             <strong class="">
-                                            	<fmt:formatDate value="${s.SCHEDULETIME}" dateStyle="long"/>
+                                            	<fmt:formatDate value="${s.SCHEDULESTARTDATE}" dateStyle="long"/>
+                                            	<c:if test="${s.SCHEDULESTARTDATE ne s.SCHEDULEENDDATE}">
+                                            		<c:out value=" ~ "/>
+                                            		<fmt:formatDate value="${s.SCHEDULEENDDATE}" dateStyle="long"/>
+                                            	</c:if>
                                             </strong> <!-- 일정 실행일 -->
                                         </div>
                                     </div>
@@ -1730,13 +1735,6 @@
     
 
                         </div><!-- viewBundle 닫기 -->
-
-
-
-                        <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                        <!-- 수정할 때 추가 -->
-                        <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->
-
 
 
                     </div><!-- viewBox 닫는 태그 -->
@@ -1912,6 +1910,172 @@
                         </form>  
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
+                    
+					</div> <!-- viewBoxDiv 닫는 태그 -->
+                    
+                    <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
+                    <!-- 3. 일정 수정 -->
+                <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
+	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
+	                <!-- from 공통 hidden input모음 -->
+					    <!-- 0) 게시글 번호 -->
+					    <input type="hidden" name="projectBoardNo" value="${pb.BOARDNO}"/>    
+					    <!-- 1) 프로젝트 번호 저장 -->
+					    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
+	                    <!-- 2) 글 타입 -->
+	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
+	                    <!-- 3) 게시글 번호 (ex : writingNo) -->
+	                    <input type="hidden" name="postNo" value="${s.SCHEDULENO}"/>
+	                    <!-- 4) 작성자 -->
+	                    <input type="hidden" name="writer" value="${s.SCHEDULEID}"/>
+	                    <!-- 5) 파일 -->                
+	                    <input type="file" name="newFiles" id="newFiles${pb.BOARDNO}" multiple style="display: none;" class="newFiles"
+	                    	onchange="fn_handleFilesSelect_update(${pb.BOARDNO});"/>
+	                    <!-- 6) 이미지파일 -->
+	                    <input type="file" name="newImgFiles" id="newImgFiles${pb.BOARDNO}" multiple style="display: none;" accept="image/*" class="newImgFiles"/>
+	                    
+	                
+	                    <!-- 7) 태그 -->
+	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newTagListStr" id="newTagListStr${pb.BOARDNO}"/>
+	                    <!-- 8) 언급 -->
+	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr${pb.BOARDNO}"/>
+	                <!-- from 공통 hidden input모음 끝 -->	                
+	                                    
+                    <!-- 일정 INPUT -->
+                    
+	
+	                    <div id="pjUpdateWriteBox" class="w-100">
+	
+						<div id="writeCategory-schedule" class="row w-100 m-0">
+                            <div id="scheduleBox" class="w-100 p-3">
+                                <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-3">
+                                    <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        value="${s.SCHEDULETITLE}" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                </div>
+                                <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">시작일</strong>
+                                    <input type="date" id="scheduleStartDate_update${s.BOARDNO}" name="scheduleStartdate" class="stoolDateInput"
+                                    		value="${s.SCHEDULESTARTDATE}" />
+                                </div>   
+                                <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">마감일</strong>
+                                    <input type="date" id="scheduleEndDate_update${s.BOARDNO}" name="scheduleEnddate" class="stoolDateInput"
+                                    	value="${s.SCHEDULEENDDATE}" />
+                                </div>    
+                                <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">장소</strong>
+                                    <div class="d-flex align-items-end">
+                                    	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="execDaumPostcode_update(${s.BOARDNO});">주소 검색</button>
+                                    	<div id="schedulePlaceText_update${s.BOARDNO}" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2">
+                                    		${s.SCHEDULEPLACE}
+                                    	</div>
+                                    	<input type="hidden" id="schedulePlace_update${s.BOARDNO}" name="schedulePlace"
+                                    		value="${s.SCHEDULEPLACE}"/>
+                                    </div>
+                                </div>      
+                                <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
+									 <div id="mapBox${s.BOARDNO}" style="height:300px; display: none;" class="border w-100">
+									 	<div id="map${s.BOARDNO}" style="height:300px;" class="w-100"></div>
+									 </div>
+                                </div>                                                                                        
+                                <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
+                                    <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
+                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;">${s.SCHEDULEMEMO}</textarea>
+                                </div>
+                            </div>
+                        </div>
+	
+	                        <!-- 공통 하단 -->                        
+	                        <div class="w-100 p-3">
+	                            <!-- 공통) 태그 & 언급 -->
+	                            <!-- 태그 입력 -->
+	                            <div class="col-12 addTagListBox mb-2">
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-2">태그</strong>
+	                                    <div class="w-100 d-flex flex-wrap align-items-center addTagList_update">
+	                                    
+	                                    <c:forEach items="${hashTag}" var="ht">
+											<c:if test="${s.BOARDNO==ht.BOARDNO}">
+											<input type="hidden" name="oriTags${ht.BOARDNO}" value="${ht.HASHTAGTEXT}"/>
+                                                <p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>
+													<span style='color:#25558F;'>#</span>
+													<span class='tagText'>${ht.HASHTAGTEXT}</span>
+													<i class='fas fa-minus-circle stoolGrey ml-2' onclick='fn_deleteTag_update(this,${ht.BOARDNO},${ht.HASHTAGNO})'></i>
+												</p>
+		                                    </c:if>
+	                                    </c:forEach>		                                    
+                                    
+	                                        <div class="d-flex addTagInputDiv pl-2 pr-2 ml-2">
+	                                            # <input type="text" onkeyup="fn_addTag_update(this,${s.BOARDNO})" placeholder="태그입력"/>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 태그문자열 -->
+	                            	<input type="hidden" id="checkTagStr${s.BOARDNO}" value=""/>
+	                            	
+	                                <hr class="w-100">
+	                            </div>  <!-- 태그 입력 끝 -->     
+	                            
+	                            
+	                            <!-- 언급 입력 -->
+	                            <div class="col-12 addMentionListBox mb-2">                             
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-1">언급할 참여자 추가</strong>
+	                                    <div id="" class="w-100 d-flex flex-wrap align-items-center addMentionList_update">
+	                                        <c:forEach items="${notification}" var="n">
+											<c:if test="${ (s.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'schedule')}">
+											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
+                                                <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/images/defaultProfile.png">
+                                                    </div>
+                                                    <c:forEach items="${projectMember}" var="pm">
+                        							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <span><c:out value="${pm.userName}"/></span>
+                                                    <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
+                            							<i class='fas fa-minus-circle stoolPink'></i>
+                            						</button>
+                                                    </c:if>
+                                                    </c:forEach>
+                                                </div>
+											</c:if>
+											</c:forEach>
+	                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="$('#addMentionModal_update${pb.BOARDNO}').modal('show');">언급 추가</button>                       
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 언급문자열 -->
+	                            	<input type="hidden" id="checkMentionStr${s.BOARDNO}" value=""/>
+	                            </div>  <!-- 언급 입력 끝 -->    
+
+	                        </div>
+	
+	
+	                        <!-- 공통) 하단 버튼 -->
+	                        <div id="writeCategory-bordBtns" class="row w-100 border-top border-light m-0 justify-content-between align-items-center">
+	                            <div class="col-5 w-100 d-flex align-items-center"> 
+	                                <div id="fileUploadBtns" class="">
+	                                </div>                                                                          
+	                            </div>      
+	                            <div class="col-7 w-100 d-flex align-items-center justify-content-end">                              
+	                                <button type="button" onclick="fn_updateFormCancel(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	취소
+	                                </button>                             
+	                                <button type="submit" onclick="fn_updateSubmit(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	수정완료
+	                                </button>    
+	                            </div>                                                              
+	                        </div>
+						</div>
+	                        
+	                </form>                    
+                </div>
+                    <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->                    
+                                        
                     
                 	</c:if>
                 	</c:forEach>   <!-- 타입별로 forEach 닫기 -->                	                	

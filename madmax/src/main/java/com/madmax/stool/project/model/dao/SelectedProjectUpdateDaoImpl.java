@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -174,6 +175,16 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 	@Override
 	public int deleteTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
 		return session.delete("SelectedProjectUpdate.deleteTaskAttachmentTB", a);
+	}
+
+	@Override
+	public int updateSchedule(SqlSessionTemplate session, InsertSchedule schedule) {
+		return session.update("SelectedProjectUpdate.updateSchedule", schedule);
+	}
+
+	@Override
+	public int updateTaskProgressState(SqlSessionTemplate session, Map<String, Object> tMap) {
+		return session.update("SelectedProjectUpdate.updateTaskProgressState", tMap);
 	}
 
 

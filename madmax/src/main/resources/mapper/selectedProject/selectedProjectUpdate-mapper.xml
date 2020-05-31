@@ -143,4 +143,20 @@
 		DELETE TASKATTACHMENT WHERE TASKNO = #{no} AND TASKORINAME = #{originalFilename} AND TASKRENAME = #{renamedFilename}
 	</delete>
 	
+	<!-- 일정수정 -->
+	<update id="updateSchedule" parameterType="schedule">
+		UPDATE SCHEDULE SET SCHEDULETITLE = #{scheduleTitle}, SCHEDULEPLACE = #{schedulePlace}, SCHEDULEMEMO = #{scheduleMemo}
+		<if test="scheduleStartdate!=null and !scheduleStartdate.equals('')">
+			,SCHEDULESTARTDATE = #{scheduleStartdate}
+		</if>
+		<if test="scheduleEnddate!=null and !scheduleEnddate.equals('')">
+			,SCHEDULEENDDATE = #{scheduleEnddate}
+		</if>
+		    WHERE SCHEDULENO = #{scheduleNo} AND BOARDNO = #{boardNo}
+	</update>	
+	
+	<update id="updateTaskProgressState" parameterType="map">
+		UPDATE TASK SET TASKSTATE = #{state} WHERE TASKNO = #{taskNo} AND BOARDNO = #{bNo}
+	</update>
+	
 </mapper>

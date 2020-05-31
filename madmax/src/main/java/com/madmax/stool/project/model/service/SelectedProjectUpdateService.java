@@ -7,6 +7,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -49,5 +50,11 @@ public interface SelectedProjectUpdateService {
 			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
 			List<Attachment> oriFiles, List<Attachment> newFiles, Map<String, Object> pInfo,
 			List<InsertTaskManager> deleteTMList, List<InsertTaskManager> newTMList);
+
+	int updateSchedule(InsertSchedule schedule, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
+			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
+			Map<String, Object> pInfo);
+
+	int updateTaskProgressState(Map<String, Object> tMap);
 
 }

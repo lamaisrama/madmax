@@ -32,6 +32,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -406,8 +407,11 @@ public class SelectedProjectUpdateController {
 
         //새로운 파일이 있는 경우 전에 있던 파일을 삭제해야함
         //전 파일 목록을 가져온다
-        List<Attachment> oriFiles = service.selectOrifiles(pInfo);
+        List<Attachment> oriFiles = new ArrayList<Attachment>();
         boolean deleteFlag = false;
+        if(!boardType.equals("S")) {
+	        oriFiles = service.selectOrifiles(pInfo);
+        }
  
 		//파일 저장경로 가져오기
 		String path = session.getServletContext().getRealPath("/resources/upload/selectedProject"+pjNo);
@@ -641,9 +645,66 @@ public class SelectedProjectUpdateController {
     			}
     		}    	
         	
+        }else if(boardType.equals("S")) {
+        	/* 3) 일정 */
+        	/* 2) 업무 */
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        	pb.setBoardType("S");
+        	InsertSchedule schedule = new InsertSchedule();
+        	schedule.setScheduleNo(postNo);
+        	schedule.setScheduleTitle(map.get("scheduleTitle"));
+        	Date startDate = null;
+        	Date endDate = null;
+			try {
+				if(!map.get("scheduleStartdate").equals("")) {
+					startDate = dateFormat.parse(map.get("scheduleStartdate"));
+				}
+				if(!map.get("scheduleEnddate").equals("")) {
+					endDate = dateFormat.parse(map.get("scheduleEnddate"));
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} 
+			if(startDate != null) schedule.setScheduleStartdate(new java.sql.Date(startDate.getTime()));
+			if(endDate != null) schedule.setScheduleEnddate(new java.sql.Date(endDate.getTime()));
+			schedule.setSchedulePlace(map.get("schedulePlace"));
+			schedule.setScheduleMemo(map.get("scheduleMemo"));
+			schedule.setScheduleId(writer);
+			schedule.setBoardNo(bNo);
+			
+        	
+    		try {
+            	result = service.updateSchedule(schedule, pb, deleteNotList, newNotList, deleteTagList, newTagList, pInfo);
+    		}catch(RuntimeException e){
+    			e.printStackTrace();
+    		}			
         }
 		
 		return result;
 	}
 
+	
+	@RequestMapping("/selectedProject/updateTaskProgressState.do")
+	@ResponseBody
+	public int updateTaskProgressState(@RequestParam Map<String, String> map) {
+		// 값 받기
+		String state = map.get("state");
+		int bNo = Integer.parseInt(map.get("bNo"));
+		int taskNo = Integer.parseInt(map.get("taskNo"));
+
+		Map<String, Object> tMap = new HashMap();
+		tMap.put("state", state);
+		tMap.put("bNo", bNo);
+		tMap.put("taskNo", taskNo);
+
+		int result = 0;
+		try {
+			result = service.updateTaskProgressState(tMap);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 }

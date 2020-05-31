@@ -15,6 +15,7 @@ import com.madmax.stool.project.model.vo.Attachment;
 import com.madmax.stool.project.model.vo.InsertHashTag;
 import com.madmax.stool.project.model.vo.InsertNotification;
 import com.madmax.stool.project.model.vo.InsertProjectBoard;
+import com.madmax.stool.project.model.vo.InsertSchedule;
 import com.madmax.stool.project.model.vo.InsertTask;
 import com.madmax.stool.project.model.vo.InsertTaskManager;
 import com.madmax.stool.project.model.vo.InsertWriting;
@@ -357,6 +358,66 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 		}		
 		
 		return result;
+	}
+
+	@Override
+	@Transactional
+	public int updateSchedule(InsertSchedule schedule, InsertProjectBoard pb, List<InsertNotification> deleteNotList,
+			List<InsertNotification> newNotList, List<InsertHashTag> deleteTagList, List<InsertHashTag> newTagList,
+			Map<String, Object> pInfo) {
+
+		//1. 업무 수정
+		int result = dao.updateSchedule(session, schedule);
+		if(result == 0) {
+			throw new MyException("updateSchedule 에러!");
+		}
+		
+		//2. 해시태그
+		//2-1) 해시태그 삭제
+		if(!deleteTagList.isEmpty()){
+			for(InsertHashTag t : deleteTagList) {
+				result = dao.deleteHashTag(session, t);
+				if(result==0) {
+					throw new MyException("deleteHashTag 에러!");
+				}
+			}
+		}
+		//2-2) 해시태그 등록
+		if(!newTagList.isEmpty()){
+			for(InsertHashTag t : newTagList) {
+				result = dao.insertHashTag(session, t);
+				if(result==0) {
+					throw new MyException("insertHashTag 에러!");
+				}
+			}
+		}
+		
+		//3. 언급
+		//3-1) 언급 삭제
+		if(!deleteNotList.isEmpty()){
+			for(InsertNotification n : deleteNotList) {
+				result = dao.deleteNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("deleteNotification 에러!");
+				}
+			}
+		}		
+		//3-2) 언급 등록 (추가)
+		if(!newNotList.isEmpty()){
+			for(InsertNotification n : newNotList) {
+				result = dao.insertNotificationTB(session, n);
+				if(result==0) {
+					throw new MyException("insertNotification 에러!");
+				}
+			}
+		}		
+		
+		return result;
+	}
+
+	@Override
+	public int updateTaskProgressState(Map<String, Object> tMap) {
+		return dao.updateTaskProgressState(session, tMap);
 	}
 	
 

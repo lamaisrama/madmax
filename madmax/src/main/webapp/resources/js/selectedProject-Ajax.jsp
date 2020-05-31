@@ -268,6 +268,23 @@ function fn_updatePin(check,pjNo,bNo){
 	});
 }
 
+//업무 - 진행상태변경
+function fn_progressState_viewUpdate(e, state, bNo, taskNo){
+	$.ajax({
+		url:"${path}/selectedProject/updateTaskProgressState.do",
+		data:{state:state,
+			  taskNo:taskNo,
+			  bNo:bNo},
+		success:function(data){
+			if(data > 0){
+        		location.reload(true);
+			}else{
+				alert("업무상태 변경에 실패하였습니다. 다시 시도해주세요");
+			}
+		}
+	});
+}
+
 //댓글 쓰기 fn_insertCommentSubmit()
 function fn_insertCommentSubmit(bNo){
     // Get form
@@ -399,9 +416,8 @@ function fn_updateSubmit(bNo){
         		alert("게시글이 정상적으로 수정되지않았습니다. 다시 시도해주세요.");
         	}
         },
-        error: function (e) {
-            console.log("ERROR : ", e);
-            alert("fail");
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         }
     });
 }
