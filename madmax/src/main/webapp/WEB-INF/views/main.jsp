@@ -117,12 +117,15 @@
 								            	}
 							        		})
 							        }
-							        	
-							        
 							        </script>
-                          
-                         
                         </div>
+						
+						<!-- 공지사항 -->	
+						
+						<div>
+							<a href="${path}/board/boardList.do">공지사항</a>
+						</div>	
+
                         
                     </div>
                     

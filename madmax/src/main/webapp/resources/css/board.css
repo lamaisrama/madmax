@@ -1,0 +1,95 @@
+.brdcontainer{
+	background-color: rgba(241, 240, 245, .7);
+}
+
+.thead-bg {
+	background-color: #233C61;
+	color: #F1F0F5;
+	}
+.boardBtn {
+	width: 6em; 
+	height: 3em; 
+	font-size : 13px;
+	font-weight : 600;
+	color :white; 
+	border: 2px solid #233C61; 
+	border-radius:50px;
+	background-color: #233C61;
+	/* float:right; */
+	}
+	
+.boardBtn:hover {
+   	/* background-color: #FFE3E3; */
+   	background-color: transparent; 
+   	color : #233C61;
+    }
+    
+.boardDownBtn {
+	width: 100%; 
+	height: 3em; 
+	font-size : 13px;
+	font-weight : 600;
+	color :white; 
+	border: 2px solid #233C61; 
+	border-radius:50px;
+	background-color: #233C61;
+	}
+	
+.boardDownBtn:hover {
+   	/* background-color: #FFE3E3; */
+   	background-color: transparent; 
+   	color : #233C61;
+    }
+        
+a:link{
+	color: #233C61;
+	text-decoration: none;
+	}
+a:visited{
+	color: #233C61; 
+	text-decoration: none;
+	}
+a:hover{
+	color: #233C61;
+	font-weight: 700;
+	}  
+
+.brdFrame{
+	/* border-top : 1px solid #233C61;
+	border-bottom : 1px solid #233C61; */
+}	  
+
+th.brdTh{
+	width: 20%;
+	padding : 20px 0 15px 20px;
+	/* border : none;
+	border-bottom : 1px solid #233C61; */
+	text-align : left;
+}	
+
+td.brdviewtd{
+	width:100%;
+}
+
+input.brdview, textarea{
+	width:100%;
+	border : none;
+	border-bottom : 1px solid #233C61;
+	padding : 20px 0 15px 20px;
+	background-color: transparent;
+}
+th.brdbb,td.brdbb{
+	/* border-bottom:1px solid red; */
+	border-bottom:1px solid #E8E8EB;
+}
+
+/* div#board-container{width:400px; margin:0 auto; text-align:center;}
+div#board-container input,div#board-container button{margin-bottom:15px;} */
+/* 부트스트랩 : 파일라벨명 정렬*/
+label.custom-file-label{
+	border : none;
+	border-bottom: 1px solid #233C61;
+	border-radius : 0;
+	background-color: transparent;
+	text-align:left;
+	}    

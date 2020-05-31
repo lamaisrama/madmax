@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+  
+  	<select id="selectBoard" resultType="board">
+  		SELECT * FROM BOARD ORDER BY BOARDDATE DESC
+  	</select>
+  	
+  	<select id="selectBoardCount" resultType="_int">
+  		SELECT COUNT(*) FROM BOARD
+  	</select>
+  	
+  	<insert id="insertBoard" parameterType="board">
+  		INSERT INTO BOARD VALUES (SEQ_BOARDNO.NEXTVAL,#{boardTitle},#{boardWriter},#{boardContent},#{boardOriginalFilename},#{boardRenamedFilename},DEFAULT,0)
+		<selectKey order="AFTER" keyProperty="boardNo" resultType="_int">
+  			SELECT SEQ_BOARDNO.CURRVAL FROM DUAL
+  		</selectKey>	  								
+  	</insert>
+  	
+  	<select id="selectView" resultType="board" parameterType="_int">
+  		 SELECT * FROM BOARD WHERE BOARDNO=#{no}
+  	</select>
+  	
+  	<select id="selectFile" resultType="board" parameterType="_int">
+  		SELECT * FROM BOARD WHERE BOARDNO=#{no}
+  	</select>
+  	
+  	<delete id="deleteBoard" parameterType="_int">
+  		DELETE FROM BOARD WHERE BOARDNO=#{no}
+  	</delete>
+  	
+  	<update id="updateBoard" parameterType="board">
+  		UPDATE BOARD SET BOARDTITLE=#{boardTitle},BOARDCONTENT=#{boardContent},BOARDORIGINALFILENAME=#{boardOriginalFilename},BOARDRENAMEDFILENAME=#{boardRenamedFilename} WHERE BOARDNO=#{boardNo}
+  	</update>
+  	
+</mapper>

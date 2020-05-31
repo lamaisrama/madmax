@@ -60,8 +60,8 @@ public class UserController {
 	@Autowired
 	private Email email;
 	
-	
-	
+
+		
 	@RequestMapping("/main.do")
 	public String main() {
 		return "main";
