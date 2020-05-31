@@ -35,6 +35,7 @@
 		<typeAlias type="com.madmax.stool.admin.model.vo.AdminUserManage" alias="adminUserManage"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.AllAttachment" alias="allAttach"/>
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprSearch" alias="search"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.InsertProjectMember" alias="insertProjectMember"/>
 		<typeAlias type="com.madmax.stool.attendance.model.vo.AttdSearch" alias="attdSearch"/>
 	</typeAliases>
 </configuration>
