@@ -497,17 +497,17 @@
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
-                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                        <input type="text" id="" name="" placeholder="담당자 이름 검색" class="searchProjectMember w-100 addWorker_search"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                    <div class="memberListH d-flex flex-column pl-2 pr-2 w-100">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
                         <c:forEach items="${projectMember}" var="pm">
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                        <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0"><c:out value="${pm.userName}"/></p>
+                                <p class="m-0 searchName"><c:out value="${pm.userName}"/></p>
                                 <span class="d-none"><c:out value="${pm.userId}"/></span>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker(this,'${pm.userId}');">
@@ -537,17 +537,19 @@
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
-                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 searchProjectMember"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                    <div class="memberListH d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
                         <c:forEach items="${projectMember}" var="pm">
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                        <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                                <p class="m-0 searchName">
+                                	<c:out value="${pm.userName}"/>
+                                </p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addMention(this,'${pm.userId}');">
                                 	선택
@@ -576,18 +578,19 @@
                 <div class="modal-body">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
-                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                        <!-- <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/> -->
+                        <input type="text" name="addWorker_search" placeholder="참여자 이름 검색" class="w-100 searchProjectMember"/>
                     </div>
-                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                    <div class="memberListH d-flex flex-column pl-2 pr-2 w-100" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
                         <c:forEach items="${projectMember}" var="pm">
                         <c:if test="${pm.userId ne loginUser.userId}">
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                        <div class="pjMemberlist d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <img src="${path}/resources/images/defaultProfile.png">
                                 </div>
-                                <p class="m-0"><c:out value="${pm.userName}"></c:out></p>
+                                <p class="m-0 searchName"><c:out value="${pm.userName}"></c:out></p>
                             </div>
                             <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_changePjManager(${pm.projectNo},'${loginUser.userId}','${pm.userId}');">
                                 	선택
