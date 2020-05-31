@@ -6,10 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.project.model.vo.Project;
-import com.madmax.stool.task.model.vo.ProTask;
+import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
-import com.madmax.stool.task.model.vo.TaskJoinPnPm;
+
 
 @Repository
 public class TaskDaoImpl implements TaskDao {
@@ -41,9 +41,9 @@ public class TaskDaoImpl implements TaskDao {
 	}
 
 	@Override
-	public String selectTaskNoti(SqlSessionTemplate session, int boardNo) {
+	public List<NotiMember> selectTaskNoti(SqlSessionTemplate session, int boardNo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("task.selectTaskNoti", boardNo);
+		return session.selectList("task.selectTaskNoti", boardNo);
 	}
 
 }

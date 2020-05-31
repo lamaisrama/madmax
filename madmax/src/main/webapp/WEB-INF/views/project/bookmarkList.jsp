@@ -123,7 +123,7 @@
 	                                    <!-- 담당자 프로필 for문 시작 -->
 	                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
 	                                        <div class='selectedWorker_imgDiv mr-2'>
-	                                            <img src="${path}/resources/images/defaultProfile.png" width="50px" height="50px">
+	                                            <img src="${path}/resources/upload/profile/${l.tmProfile}" width="50px" height="50px">
 	                                        </div>
 	                                        <span>${l.tmName }</span>
 	                                    </div>                                    
@@ -233,37 +233,6 @@
 </div>
 
 <script>
-$(window).scroll(function () { 
-	var scrollValue = $(document).scrollTop(); 
-	console.log(scrollValue);
-	var strCook=document.cookie;
-	strCook=scrollValue;
-	console.log(strPos);
-	});
-
-
-
-
-/*  window.onload=function(){
-	var strCook=document.cookie;
-	if(strCook.indexOf("!~")!=0) { 
-		var intS = strCook.indexOf("!~"); 
-		var intE = strCook.indexOf("~!"); 
-		var strPos = strCook.substring(intS+2,intE);
-		
-		document.getElementById("divTest").scrollTop = strPos; 
-		console.log("스크롤값:"+strPos);
-		}
-	} 
-	
-function SetDivPosition(){ 
-	var intY = document.getElementById("divTest").scrollTop;
-	document.title = intY; 
-	document.cookie = "yPos=!~" + intY + "~!"; 
-	}
-
-		 */
- 
 
 
 
