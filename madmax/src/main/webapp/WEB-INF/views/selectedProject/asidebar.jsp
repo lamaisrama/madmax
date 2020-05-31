@@ -35,10 +35,10 @@
 			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" data-toggle="modal" data-target="#fileListModal">
 				<span>파일함</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="">
+			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_taskView();">
 				<span>업무</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="">
+			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_schedule();">
 				<span>일정</span>
 			</button>
 		</div> <!-- btn-group -->
@@ -494,4 +494,30 @@ img#cardProfileImg {
         </div>
     </div> 
       
+<script>
 
+	function fn_taskView(){
+	   var url=window.location.href;
+		   //console.log(typeof url);
+		   //console.log(loction.search.substr(location.search.lastIndex))
+		var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
+		alert(pjNo);
+		location.href="${path}/task/selectProjectTask.do?pjNo="+pjNo;
+	
+};
+
+function fn_schedule(){
+	
+	var url=window.location.href;
+	   //console.log(typeof url);
+	   //console.log(loction.search.substr(location.search.lastIndex))
+	var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
+	alert(page_id);
+	location.href="${path}/"+pjNo;
+	
+	
+	
+	
+}
+
+</script>

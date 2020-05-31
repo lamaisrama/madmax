@@ -8,6 +8,7 @@ import com.madmax.stool.project.model.vo.Project;
 import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
+import com.madmax.stool.task.model.vo.TaskProject;
 
 public interface TaskDao {
 
@@ -22,5 +23,7 @@ public interface TaskDao {
 	TaskPb selectTaskView(SqlSessionTemplate session, int boardNo);
 
 	List<NotiMember> selectTaskNoti(SqlSessionTemplate session, int boardNo);
+
+	TaskProject selectProjectTitle(SqlSessionTemplate session, int pjNo);
 
 }
