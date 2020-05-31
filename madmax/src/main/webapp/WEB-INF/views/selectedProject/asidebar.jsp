@@ -561,8 +561,8 @@ function fn_schedule(){
 	   //console.log(typeof url);
 	   //console.log(loction.search.substr(location.search.lastIndex))
 	var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
-	alert(page_id);
-	location.href="${path}/"+pjNo;
+	alert(pjNo);
+	location.href="${path}/calendar/projectCalendar.do?pjNo="+pjNo;
 	
 	
 	

@@ -1,6 +1,8 @@
 package com.madmax.stool.calendar.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +34,23 @@ public class CalendarController {
 		
 		mv.addObject("schedule",list);
 		mv.setViewName("calendar/calendar");
+		return mv;
+	}
+	
+	@RequestMapping("/calendar/projectCalendar.do")
+	public ModelAndView projectCalendar(int pjNo,HttpServletRequest req) {
+		ModelAndView mv=new ModelAndView();
+		Map<String,Object> map=new HashMap();
+		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		map.put("id", id);
+		map.put("pjNo",pjNo);
+		List<Calendar> list=service.selectProjectSchedule(map);
+		logger.debug("보자"+list);
+		String pjTitle=service.selectProjectTitle(pjNo);
+		
+		mv.addObject("projectTitle",pjTitle);
+		mv.addObject("schedule",list);
+		mv.setViewName("calendar/projectCalendar");
 		return mv;
 	}
 	

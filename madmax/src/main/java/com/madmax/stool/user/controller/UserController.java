@@ -31,6 +31,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.calendar.model.service.CalendarService;
+import com.madmax.stool.calendar.model.vo.Calendar;
 import com.madmax.stool.project.model.service.ProjectService;
 import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.user.email.Email;
@@ -47,6 +49,8 @@ public class UserController {
 	@Autowired
 	private ProjectService proService;
 	
+	@Autowired
+	private CalendarService cService;
 	@Autowired
 	private Logger logger;
 	
@@ -130,7 +134,8 @@ public class UserController {
 		
 		List<Favorite> list = proService.selectFavorite(id);
 		int total = proService.selectFavoriteCount(id); 
-		
+		//캘린더 추가
+		List<Calendar> cal=cService.selectSchedule(id);
 		logger.debug("조회결과 : " + list);
 //		mv.addObject("list", list);
 //		mv.addObject("total", total);
@@ -140,6 +145,7 @@ public class UserController {
 			page = "main";
 			m.addAttribute("list",list);
 			m.addAttribute("total",total);
+			m.addAttribute("schedule",cal);
 			m.addAttribute("loginUser", login);
 			
 			//logger.debug("user:"+login.getUserName());

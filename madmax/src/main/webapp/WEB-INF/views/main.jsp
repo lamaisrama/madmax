@@ -20,7 +20,7 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-	<div class="col-sm-7 row" id="area">
+	<div class="col-sm-9 row" id="area">
 
                   <br>
                   
@@ -29,48 +29,13 @@
                         <div class="column col-sm-6" id="calendar" >
 
                         </div>
-
-                        <div class="column col-sm-3" style="margin-top: 50px;">
-                          <span>✔️ 진행중인 업무</span>
-<!--                           <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
-                            더보기
-                           </button> -->
-                          <div class="row list" >
-                          </div>
-                          <div>
-                            
-
-                            <div class="modal fade" id="myModal">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                
-                                  <!-- Modal Header -->
-                                  <div class="modal-header">
-                                    <h5 class="modal-title">✅ 진행중인 업무</h5>
-                                    <button type="button" class="close" data-dismiss="modal">×</button>
-                                  </div>
-                                  
-                                  <!-- Modal body -->
-                                  <div class="modal-body">
-                                    Modal body..
-                                  </div>
-                                  
-                                  <!-- Modal footer -->
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-light text-dark" data-dismiss="modal">Close</button>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                            </div>
-                            
-
-
-                          </div>
-                        </div>
-                        
+					<!-- 날씨 출력하는 부분 -->
+						<div class="column col-sm-4">
+						</div>
+						
                     </div>
                     
+                    <!-- 즐겨찾기 프로젝트 ! -->
                     <div class="container p-5">
                       <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h5>                    
 						<br>
@@ -126,7 +91,9 @@
 		background-color:#cc3333;
 		border:1px solid #cc3333;
 		}
-	
+		#calendar{
+			width:800px;
+		}
    </style>
 
 <script>
@@ -144,18 +111,59 @@
           //center: 'title',
           //right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
+        eventClick: function(info) {//window창으로 보이는 부분!!
+			console.log(info);
+		
+			var title = open('','_blank','width=500,height=300');
+			var js = '<script>';
+			js+='function viewScd(){';
+			js+="opener.parent.location='${path}/selectedProject/selectedProject.do?pjNo="+info.event.extendedProps.projectNo+'&loginId=';
+			js+='${loginUser.userId}&boardNo='+info.event.extendedProps.boardNo+"';";
+			js+='window.close();';
+			js+='}';
+			js+='</';
+			js+='script>';
+			var content = '<html>';
+			content+='<head>';
+			content+='<script';
+			content+="src='https://kit.fontawesome.com/b5f4d53f14.js'";
+			content+="crossorigin='anonymous'>";
+			content+='</';
+			content+='script>';
+			content+='</';
+			content+='head>';
+			content+='<body>';
+			content+="<div style='text-align:center;'>";
+			content+='<h1 style="color:#25558F;">'+info.event.title+'</h1>';
+			content+='<hr>';
+			content+='<h4><i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>&nbsp;'+info.event.extendedProps.scheduleMemo+'</h4>';
+			content+='<h4>주소:'+info.event.extendedProps.schedulePlace+'</h4>';
+			content+="<a href='javascript:viewScd();' class='btn btn-primary'>상세보러가기</a>";
+			content+='</div>'
+			content+=js+'</body>';
+			content+='</html>';
+			title.document.write(content);
+			//calendar.fullCalendar('unselect'); 
+		},
         defaultDate: new Date(),
         //navLinks: true, // can click day/week names to navigate views
-        editable: true,
+        editable: false,
         eventLimit: true, // allow "more" link when too many events
         eventSources:['ko.south_korea#holiday@group.v.calendar.google.com']
 		,events:[
-			'ko.south_korea#holiday@group.v.calendar.google.com',
+			{"googleCalendarId":'ko.south_korea#holiday@group.v.calendar.google.com',
+				},
 		 	<c:forEach items="${schedule}" var="s" varStatus="status">
 			{"title":'<c:out value="${s.scheduleTitle}"/>'
 				,"start":'<c:out value="${s.scheduleStartDate}"/>'
 				,"end":'<c:out value="${s.scheduleEndDate}"/>'
 				,"className":'info'
+				,"color":'#25558F'
+				,"textColor" : 'white'
+				,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
+				,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
+				,"projectNo":'<c:out value="${s.projectNo}"/>'
+				,"boardNo":	'<c:out value="${s.boardNo}"/>'
 			},
 			
 		</c:forEach>  	

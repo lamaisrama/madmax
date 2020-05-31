@@ -119,6 +119,8 @@
 					,"start":'<c:out value="${s.scheduleStartDate}"/>'
 					,"end":'<c:out value="${s.scheduleEndDate}"/>'
 					,"className":'info'
+					,"color":'#25558F'
+					,"textColor" : 'white'
 					,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
 					,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
 					,"projectNo":'<c:out value="${s.projectNo}"/>'
