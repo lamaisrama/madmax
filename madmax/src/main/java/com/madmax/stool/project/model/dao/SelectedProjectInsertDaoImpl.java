@@ -40,7 +40,7 @@ public class SelectedProjectInsertDaoImpl implements SelectedProjectInsertDao {
 	}
 
 	@Override
-	public int InsertNotificationTB(SqlSessionTemplate session, InsertNotification notification) {
+	public int insertNotificationTB(SqlSessionTemplate session, InsertNotification notification) {
 		return session.insert("SelectedProjectInsert.InsertNotificationTB", notification);	
 	}
 

@@ -1,9 +1,19 @@
 package com.madmax.stool.project.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.madmax.stool.project.model.vo.Attachment;
+import com.madmax.stool.project.model.vo.InsertHashTag;
+import com.madmax.stool.project.model.vo.InsertNotification;
+import com.madmax.stool.project.model.vo.InsertSchedule;
+import com.madmax.stool.project.model.vo.InsertTask;
+import com.madmax.stool.project.model.vo.InsertTaskManager;
+import com.madmax.stool.project.model.vo.InsertWriting;
+import com.madmax.stool.project.model.vo.ProjectFile;
 
 @Repository
 public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
@@ -91,6 +101,93 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 	public int updateProjectBoardStatus(SqlSessionTemplate session, Map<String, Object> pbMap) {
 		return session.update("SelectedProjectUpdate.updateProjectBoardStatus", pbMap);
 	}
+
+	@Override
+	public List<Attachment> selectOrifiles(SqlSessionTemplate session, Map<String, Object> pInfo) {
+		return session.selectList("SelectedProjectUpdate.selectOrifiles", pInfo);
+	}
+
+	@Override
+	public int updateWriting(SqlSessionTemplate session, InsertWriting writing) {
+		return session.update("SelectedProjectUpdate.updateWriting", writing);
+	}
+
+	@Override
+	public int deleteHashTag(SqlSessionTemplate session, InsertHashTag t) {
+		return session.delete("SelectedProjectUpdate.deleteHashTag", t);
+	}
+
+	@Override
+	public int insertHashTag(SqlSessionTemplate session, InsertHashTag t) {
+		return session.insert("SelectedProjectInsert.insertHashTagTB", t);
+	}
+
+	@Override
+	public int deleteNotificationTB(SqlSessionTemplate session, InsertNotification n) {
+		return session.delete("SelectedProjectUpdate.deleteNotificationTB", n);
+	}
+
+	@Override
+	public int insertNotificationTB(SqlSessionTemplate session, InsertNotification n) {
+		return session.insert("SelectedProjectInsert.InsertNotificationTB", n);
+	}
+
+	@Override
+	public int insertWritingAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.insert("SelectedProjectInsert.insertWritingAttachmentTB", a);
+	}
+
+	@Override
+	public int deleteWritingAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.delete("SelectedProjectUpdate.deleteWritingAttachmentTB", a);
+	}
+
+	@Override
+	public int deleteProjectFile(SqlSessionTemplate session, Map<String, Object> pjFileMap) {
+		return session.delete("SelectedProjectUpdate.deleteProjectFile", pjFileMap);
+	}
+
+	@Override
+	public int insertProjectFileTB(SqlSessionTemplate session, ProjectFile pf) {
+		return session.insert("SelectedProjectInsert.insertProjectFileTB", pf);
+	}
+
+	@Override
+	public int updateTask(SqlSessionTemplate session, InsertTask task) {
+		return session.update("SelectedProjectUpdate.updateTask",task);
+	}
+
+	@Override
+	public int deleteTaskManager(SqlSessionTemplate session, InsertTaskManager tm) {
+		return session.delete("SelectedProjectUpdate.deleteTaskManager", tm);
+	}
+
+	@Override
+	public int insertTaskManager(SqlSessionTemplate session, InsertTaskManager tm) {
+		return session.insert("SelectedProjectInsert.insertTaskManagerTB", tm);
+	}
+
+	@Override
+	public int insertTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.insert("SelectedProjectInsert.insertTaskAttachmentTB", a);
+	}
+
+	@Override
+	public int deleteTaskAttachmentTB(SqlSessionTemplate session, Attachment a) {
+		return session.delete("SelectedProjectUpdate.deleteTaskAttachmentTB", a);
+	}
+
+	@Override
+	public int updateSchedule(SqlSessionTemplate session, InsertSchedule schedule) {
+		return session.update("SelectedProjectUpdate.updateSchedule", schedule);
+	}
+
+	@Override
+	public int updateTaskProgressState(SqlSessionTemplate session, Map<String, Object> tMap) {
+		return session.update("SelectedProjectUpdate.updateTaskProgressState", tMap);
+	}
+
+
 
 
 }

@@ -1,4 +1,8 @@
 /*--------- 전체설정 ------*/
+.c-pointer{
+	cursor: pointer;
+}
+
 .pjViewBox-header .dropdown-menu{
 	margin: 0 -95px 0;
 }
@@ -95,7 +99,19 @@ input:focus, textarea:focus {
     max-width: 100%; 
     height: auto;
 }
-
+.filePreview_view{
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.filePreview_view span{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 24px;
+}
 .fileDownPreview{
     border: 1px solid #dadada;
     border-radius: 5px;
