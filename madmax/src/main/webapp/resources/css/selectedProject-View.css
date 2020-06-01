@@ -94,6 +94,7 @@ input:focus, textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .imgPreview img{
     max-width: 100%; 

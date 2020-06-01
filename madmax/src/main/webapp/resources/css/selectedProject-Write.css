@@ -93,7 +93,20 @@ input:focus, textarea:focus {
 }
 
 #tagBox{
-    height: 40px;
+    min-height: 40px;
+}
+#tagBox a:link{
+    color: #595959;
+    font-weight: bold;
+}
+#tagBox a:visited{
+    color: #595959;
+    font-weight: bold;
+}
+#tagBox a:hover{
+    color: #25558F;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 #writeCategoryBtns{
@@ -264,21 +277,30 @@ input:focus, textarea:focus {
     visibility: visible;
 }
 
-/* modal position(center)*/
-/* .modal {
-  text-align: center;
+.memberListH{
+	min-height: 400px;
+	max-height: 400px;
+	overflow: auto;
 }
-@media screen and (min-width: 768px) {
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-  }
-}
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-} */
 
+
+/*------------------------------------------------*/
+/* 태그 jsp */
+#tagBackBtn{
+	background: none;
+	border: 0;	
+}
+#tagBackBtn:active{
+	background: none;
+	border: 0;	
+}
+#tagBackBtn > i{
+	color: #595959;
+}
+#tagBackBtn > i:hover{
+	color: #EBDACE;
+}
+.btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}

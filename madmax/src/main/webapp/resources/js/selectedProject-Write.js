@@ -1,11 +1,8 @@
-/**
- * 
- */
+//폼에서 엔터키 전송 막기
 function captureReturnKey(e) { 
     if(e.keyCode==13 && e.srcElement.type != 'textarea') 
     return false; 
 }
-
 
 //카테고리버튼 선택
 function fn_writeCategory(e, id){
@@ -577,3 +574,17 @@ function fn_deleteMention(e, removeId){
     console.log($("#mentionListStr").val());
 }
 //작성 공통 스크립트 끝 -------------------------------------------<
+
+//********************************* 모달 js
+//모달 - 참여자 검색
+$(document).ready(function() {
+	$(".searchProjectMember").keyup(function(){
+//		alert("실행중");
+		var searchText = $(this).val();
+		$(".pjMemberList").removeClass("d-flex");
+		$(".pjMemberList").addClass("d-none");
+		var temp = $(".searchName:contains('"+ searchText +"')");
+		$(temp).parent().parent().removeClass("d-none");
+		$(temp).parent().parent().addClass("d-flex");
+	});
+});

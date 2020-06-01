@@ -38,6 +38,7 @@
 		<typeAlias type="com.madmax.stool.approval.model.vo.ApprSearch" alias="search"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.InsertProjectMember" alias="insertProjectMember"/>
 		<typeAlias type="com.madmax.stool.attendance.model.vo.AttdSearch" alias="attdSearch"/>
+		<typeAlias type="com.madmax.stool.project.model.vo.Tag" alias="pjTag"/>
 	</typeAliases>
 </configuration>
 
