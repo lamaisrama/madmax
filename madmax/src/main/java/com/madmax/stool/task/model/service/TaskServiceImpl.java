@@ -11,6 +11,7 @@ import com.madmax.stool.task.model.dao.TaskDao;
 import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
+import com.madmax.stool.task.model.vo.TaskProject;
 
 
 @Service
@@ -59,6 +60,14 @@ public class TaskServiceImpl implements TaskService {
 	public List<NotiMember> selectTaskNoti(int boardNo) {
 		// TODO Auto-generated method stub
 		return dao.selectTaskNoti(session,boardNo);
+	}
+
+
+
+	@Override
+	public TaskProject selectProjectTitle(int pjNo) {
+		// TODO Auto-generated method stub
+		return dao.selectProjectTitle(session,pjNo);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.madmax.stool.project.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.madmax.stool.project.model.service.SelectedProjectSelectService;
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
 
 @Controller
 public class SelectedProjectSelectController {
@@ -54,6 +59,7 @@ public class SelectedProjectSelectController {
       //일정
       List<Map<String,Object>> scheduleList=service.selectScheduleList(pjNo);
       List<Map<String,Object>> scheduleComment=service.selectScheduleComment();
+
 
       //상단 고정 갯수
       Map<String,Object> pinpostCount=service.selectPinPostCount();
@@ -111,6 +117,34 @@ public class SelectedProjectSelectController {
       
       
       
+      // 업무 통계 리포트
+      
+      int projectNo=1;
+      
+      List<TaskReport> ts=service.selectTaskReport(projectNo);
+      
+      Gson gson=new Gson();
+      JsonArray jArray=new JsonArray();
+      
+      Iterator<TaskReport> it=ts.iterator();
+      
+      while(it.hasNext()){
+         
+         TaskReport tr=it.next();
+         JsonObject object=new JsonObject();
+         String taskState=tr.getTaskState();
+         int cnt=tr.getCnt();
+         
+         object.addProperty("taskState", taskState);
+         object.addProperty("count", cnt);
+         jArray.add(object);
+         
+      }
+      
+      String json=gson.toJson(jArray);
+      mv.addObject("json",json);
+      
+      
       mv.setViewName("selectedProject/selectedProject");
       
       
@@ -119,4 +153,6 @@ public class SelectedProjectSelectController {
    }
    
    
+	
 }
+

@@ -19,6 +19,7 @@ import com.madmax.stool.task.model.service.TaskService;
 import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
+import com.madmax.stool.task.model.vo.TaskProject;
 
 @Controller
 
@@ -132,6 +133,34 @@ public class TaskController {
 		  mv.addObject("task",tp);
 		  mv.addObject("notiMember",nm);//이건 업무 담당자임..
 		  mv.setViewName("jsonView");
+		  return mv;
+		  
+	  }
+	  
+	  //프로젝트에 해당하는 업무만 가져오기
+	  @RequestMapping("/task/selectProjectTask.do")
+	  public ModelAndView selectProjectTask(int pjNo,HttpServletRequest req) {
+		  //프로젝트에 해당하는 값들만 뿌려주기
+		  ModelAndView mv=new ModelAndView();
+		  
+		  //업무 리스트 가져오기
+		  List<TaskPb> tasks=service.selectTaskEach(pjNo);
+		  
+		  String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
+		
+		  //업무 이름가져오기
+		  TaskProject tp=service.selectProjectTitle(pjNo);
+
+		
+			
+			
+		  mv.addObject("project",tp);
+		  mv.addObject("tasks",tasks);
+		  mv.setViewName("task/projectTask");
+		  
+		  logger.debug("프로젝트 들어옴"+pjNo);
+		  
+		  
 		  return mv;
 		  
 	  }
