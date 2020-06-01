@@ -14,6 +14,7 @@ public interface BoardService {
 	Board selectFile(int no);
 	int boardDelete(int no);
 	int boardUpdate(Board b);
+	int noFileUpdate(Board b);
 	
 
 	

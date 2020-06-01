@@ -79,6 +79,7 @@ a:hover{
 	width:100%; height:120px;
 	overflow:hidden; 
 	background-color: #fff;
+	color:#000;
 	}
 .rolling{
 	position:relative; 
@@ -106,7 +107,7 @@ a:hover{
 
 /* favourite */
  .fvcontainer{
- 	/* border:1px solid pink;  */
+ 	border:1px solid pink;
  	margin-left: 4%;
  }
 .favoriteBox{

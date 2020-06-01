@@ -75,6 +75,12 @@ public class BoardServiceImpl implements BoardService {
 		return dao.updateBoard(session, b);
 	}
 
+	@Override
+	public int noFileUpdate(Board b) {
+		
+		return dao.noFileUpdate(session, b);
+	}
+
 
 
 

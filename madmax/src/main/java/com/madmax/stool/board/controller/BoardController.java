@@ -206,37 +206,51 @@ public class BoardController {
 	@RequestMapping("/board/boardModify.do")
 	public ModelAndView boardUpdate(Board b, HttpServletRequest req, ModelAndView mv, MultipartFile upFile, HttpSession session) {
 		
-		// 파일저장경로
-		String path = session.getServletContext().getRealPath("/resources/upload/board");
-		// 파일 저장 객체 생성
-		File f = new File(path);
-		// 폴더 생성
-		if(!f.exists()) f.mkdirs();
-		
-		if(!upFile.isEmpty()) {
-			// 파일명 생성
-			String ori = upFile.getOriginalFilename();
-			String ext = ori.substring(ori.lastIndexOf("."));
-			// 파일 리네임
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-			int rnd = (int)(Math.random()*1000);
-			String rename = sdf.format(System.currentTimeMillis()) + "_" + rnd + ext;
-			// 리네임으로 저장
-			try{
-				upFile.transferTo(new File(path + "/" + rename)); // 실제 파일 저장 메소드
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			b.setBoardOriginalFilename(ori);
-			b.setBoardRenamedFilename(rename);
-		}
 		int result = 0;
-		try {
-			result = service.boardUpdate(b);
-		}catch(RuntimeException e) {
-			File delF = new File(path+"/"+b.getBoardRenamedFilename());
-			if(delF.exists()) delF.delete();
+		
+		
+		// 파일을 새로 등록헀을 경우 ->
+
+		
+		
+		// 기존파일을 유지했을 경우 -> 넘어오는 값이 null
+		if(b.getBoardOriginalFilename()==null) {
+			result = service.noFileUpdate(b);
+		}else {
+			
+			// 파일저장경로
+			String path = session.getServletContext().getRealPath("/resources/upload/board");
+			// 파일 저장 객체 생성
+			File f = new File(path);
+			// 폴더 생성
+			if(!f.exists()) f.mkdirs();
+			
+			if(!upFile.isEmpty()) {
+				// 파일명 생성
+				String ori = upFile.getOriginalFilename();
+				String ext = ori.substring(ori.lastIndexOf("."));
+				// 파일 리네임
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rnd = (int)(Math.random()*1000);
+				String rename = sdf.format(System.currentTimeMillis()) + "_" + rnd + ext;
+				// 리네임으로 저장
+				try{
+					upFile.transferTo(new File(path + "/" + rename)); // 실제 파일 저장 메소드
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				b.setBoardOriginalFilename(ori);
+				b.setBoardRenamedFilename(rename);
+			}
+			try {
+				result = service.boardUpdate(b);
+			}catch(RuntimeException e) {
+				File delF = new File(path+"/"+b.getBoardRenamedFilename());
+				if(delF.exists()) delF.delete();
+			}
+			
 		}
+		
 		if(result>0) {
 			mv.addObject("no", b.getBoardNo()).addObject("msg", "공지사항 수정 성공!");
 		}else {

@@ -33,7 +33,7 @@
 				<td class="brdviewtd">      	
 				 <div class="custom-file">
 	                    <input type="file" class="custom-file-input" name="upFile" id="upFile1">
-	                    <label class="custom-file-label" for="upFile1">수정할 파일을 선택하세요</label>
+	                    <label class="custom-file-label" for="upFile1">${board.boardOriginalFilename}</label>
 	             </div>
 		        </td>
 	        <tr>

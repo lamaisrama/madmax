@@ -33,4 +33,8 @@
   		UPDATE BOARD SET BOARDTITLE=#{boardTitle},BOARDCONTENT=#{boardContent},BOARDORIGINALFILENAME=#{boardOriginalFilename},BOARDRENAMEDFILENAME=#{boardRenamedFilename} WHERE BOARDNO=#{boardNo}
   	</update>
   	
+  	<update id="noFileUpdate" parameterType="board">
+  		UPDATE BOARD SET BOARDTITLE=#{boardTitle},BOARDCONTENT=#{boardContent} WHERE BOARDNO=#{boardNo}
+  	</update>
+  	
 </mapper>

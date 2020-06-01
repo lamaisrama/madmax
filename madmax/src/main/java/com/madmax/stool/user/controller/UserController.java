@@ -31,6 +31,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.board.model.service.BoardService;
+import com.madmax.stool.board.model.vo.Board;
 import com.madmax.stool.calendar.model.service.CalendarService;
 import com.madmax.stool.calendar.model.vo.Calendar;
 import com.madmax.stool.project.model.service.ProjectService;
@@ -51,6 +53,10 @@ public class UserController {
 	
 	@Autowired
 	private CalendarService cService;
+	
+	@Autowired
+	private BoardService bService;
+	
 	@Autowired
 	private Logger logger;
 	
@@ -138,11 +144,17 @@ public class UserController {
 		
 		List<Favorite> list = proService.selectFavorite(id);
 		int total = proService.selectFavoriteCount(id); 
+		
 		//캘린더 추가
 		List<Calendar> cal=cService.selectSchedule(id);
 		logger.debug("조회결과 : " + list);
 //		mv.addObject("list", list);
 //		mv.addObject("total", total);
+		
+		// 공지사항
+		List<Board> blist = bService.selectBoard(1, 10);
+//		logger.debug("board조회결과 : "+blist.size());
+		logger.debug("board조회결과 : "+blist);
 		
 		String page = "";
 		if(login!=null&&encoder.matches(password, login.getPassword())) {	
@@ -151,7 +163,7 @@ public class UserController {
 			m.addAttribute("total",total);
 			m.addAttribute("schedule",cal);
 			m.addAttribute("loginUser", login);
-			
+			m.addAttribute("blist", blist);
 			//logger.debug("user:"+login.getUserName());
 			
 		}else {

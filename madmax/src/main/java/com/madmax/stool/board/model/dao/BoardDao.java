@@ -15,5 +15,6 @@ public interface BoardDao {
 	Board selectFile(SqlSessionTemplate session, int no);
 	int deleteBoard(SqlSessionTemplate session, int no);
 	int updateBoard(SqlSessionTemplate session, Board b);
+	int noFileUpdate(SqlSessionTemplate session, Board b);
 	
 }

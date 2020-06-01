@@ -51,6 +51,12 @@ public class BoardDaoimpl implements BoardDao {
 		
 		return session.update("board.updateBoard", b);
 	}
+
+	@Override
+	public int noFileUpdate(SqlSessionTemplate session, Board b) {
+		
+		return session.update("board.noFileUpdate", b);
+	}
 	
 	
 	
