@@ -38,7 +38,7 @@
 		        </td>
 	        <tr>
 	        <tr>
-	        	<th class="brdTh">내용</th>
+	        	<th class="brdTh align-top">내용</th>
 	        	<td class="brdviewtd">
 	        		<textarea name="boardContent" placeholder="내용" required>${board.boardContent }</textarea>
 	        	<td>

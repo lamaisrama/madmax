@@ -49,7 +49,9 @@
 	  </tbody>
 	</table>	
 	<br>
-	<button class="boardBtn" style="float:right;" onclick="location.replace('${path}/board/boardWrite');">글쓰기</button>
+	<c:if test="${loginUser.userId=='admin'}">
+		<button class="boardBtn" style="float:right;" onclick="location.replace('${path}/board/boardWrite');">글쓰기</button>
+	</c:if>
 	<br>
 	<div id="page-container">
 		${pageBar}
