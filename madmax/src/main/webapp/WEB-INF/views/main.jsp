@@ -25,7 +25,7 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-	<div class="maincontainer col-sm-10" id="area"  style="border:1px solid red;">
+	<div class="maincontainer col-sm-10" id="area">
 	<div class="col-sm-10 row" id="area">
 
                   <br>
@@ -33,10 +33,10 @@
                     <div class="row justify-content-around">
                   
                     <!-- 달력출력하는 부분 -->
-                       	<div class="col-sm-6" id="calendar" style="background-color: #fff; padding: 10px 10px; border:1px solid red;"></div>
+                       	<div class="col-sm-6" id="calendar" style="background-color: #fff; padding: 10px 10px;"></div>
                        	
 					<!-- 날씨 -->
-                        <div class="col-sm-4" style="border:1px solid red;">
+                        <div class="col-sm-4">
                            <h5 class="modal-title mb-2"><i class="wi wi-day-cloudy"></i>&nbsp;WEATHER</h5>
                                <div id="">
 								<table class="weathertbl text-center">
