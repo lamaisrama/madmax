@@ -35,20 +35,10 @@
 			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" data-toggle="modal" data-target="#fileListModal">
 				<span>파일함</span>
 			</button>
-<<<<<<< HEAD
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" 
-			onclick="location.replace('${path }/task/selectTask.do');">
-=======
 			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_taskView();">
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 				<span>업무</span>
 			</button>
-<<<<<<< HEAD
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" 
-			onclick="('${path }/calendar/calendar.do');">
-=======
 			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_schedule();">
->>>>>>> branch 'dev' of https://github.com/lamaisrama/madmax.git
 				<span>일정</span>
 			</button>
 		</div> <!-- btn-group -->
