@@ -9,7 +9,7 @@
 
 <jsp:include page="/WEB-INF/views/admin/adminSidebar.jsp" />
 
-<div class="col col-sm-9 list-container">
+<div class="col col-sm-8 list-container">
 	<br><br>
 	<h4 style="font-weight:bolder">&nbsp;<i class="fas fa-id-card"></i> &nbsp;회원 관리</h4>
 	<br>
@@ -17,32 +17,36 @@
 	
 	<div class="row draftList" style="clear:both;">
 		<div class="col">
-			<table class="table table-hover" style="text-align:center;">
-				<tr class="bg-light">
-					<th>#</th>
-					<th>회원 이름</th>
-					<th>전화 번호</th>
-					<th>입사일</th>
-					<th>부서 </th>
-					<th>직급</th>
-					<th></th>
-				</tr>
+			<table class="table table-hover "  style="text-align:center; width:100%;">
+				<thead class="bg-light">
+					<tr>
+						<th>#</th>
+						<th>회원 이름</th>
+						<th>전화 번호</th>
+						<th>입사일</th>
+						<th>부서 </th>
+						<th>직급</th>
+						<th></th>
+					</tr>
+				</thead>
 				
 				<c:if test="${not empty list}">
 					<form id="form">
 						<c:forEach items="${list }" var="l" varStatus="vs">
-							<tr>
-								<td>${vs.index+1}</td>
-								<td>${l.userName}</td>
-								<td>${l.phone}</td>
-								<td><fmt:formatDate value="${l.hireDate}" type="both" pattern="yyyy-MM-dd" /></td>
-								<td>${l.deptName}</td>
-								<td>${l.jobName}</td>
-								<td>
-									<input type="hidden" id="userId1" name="userId" value="${l.userId}" />
-									<button type="button" class="btn btn-outline-primary" onclick="modalBtn(this);"  data-toggle="modal" data-target="#myModal">직급 권한</button>
-								</td>
-							</tr>
+							<tbody>
+								<tr>
+									<td>${vs.index+1}</td>
+									<td>${l.userName}</td>
+									<td>${l.phone}</td>
+									<td><fmt:formatDate value="${l.hireDate}" type="both" pattern="yyyy-MM-dd" /></td>
+									<td>${l.deptName}</td>
+									<td>${l.jobName}</td>
+									<td>
+										<input type="hidden" id="userId1" name="userId" value="${l.userId}" />
+										<button type="button" class="btn btn-outline-primary" onclick="modalBtn(this);"  data-toggle="modal" data-target="#myModal">직급 권한</button>
+									</td>
+								</tr>
+							</tbody>
 						</c:forEach>
 					</form>
 				</c:if>
@@ -136,6 +140,10 @@
 			}
 		}
 	}
+	
+	$(document).ready(function() {
+	    $('#example').DataTable();
+	} );
 	
 </script>
 
