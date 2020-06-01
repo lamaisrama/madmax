@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.madmax.stool.project.model.dao.SelectedProjectSelectDao;
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
 
 @Service
 public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectService {
@@ -148,6 +149,16 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 	@Override
 	public List<Map<String, Object>> selectUser() {
 		return dao.selectUser(session);
+	}
+
+	
+	
+	
+	// 업무 리포트
+	@Override
+	public List<TaskReport> selectTaskReport(int pjNo) {
+		// TODO Auto-generated method stub
+		return dao.selectTaskReport(session,pjNo);
 	}
 	
 	

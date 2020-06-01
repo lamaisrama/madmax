@@ -8,6 +8,13 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+
 
     <!-- 데이트피커 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/bootstrap-datepicker.css">
@@ -120,8 +127,10 @@
                             <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
                         </button>
                         <div id="demo" class="collapse p-2 w-100">
-                            <div class="border w-100" style="height: 200px;">
-                                
+                            <div class="border w-100" style="height:600px;">
+                            <br>
+                            <br>
+                            	<canvas id="reportArea" style=""></canvas>
                             </div>
                         </div>
                 </div>
@@ -659,6 +668,63 @@
     <!-- 프로젝트 수정  끝 -------------------->  
     
 <!----------------------------------------------------------------------------------------------------------------------- 모달모음 끝 ------->    
+ 
+ 
+ 
+ 
+ 
+ <script>
+ 	
+ 	var jsonData=${json};
+ 	var jsonObject=JSON.stringify(jsonData);
+ 	var jData=JSON.parse(jsonObject);
+ 	
+ 	var taskStateList = new Array();
+ 	var cntList=new Array();
+ 	var colorList=new Array();
+ 	
+ 	for(var i=0;i<jData.length;i++){
+ 		var d=jData[i];
+ 		taskStateList.push(d.taskState);
+ 		cntList.push(d.count);
+ 		colorList.push(colorize());
+ 	}
+ 	/* $.each(jsonData, function(i, e){
+ 		cntList.push(e.count);
+ 		}); */
+ 	var data={
+ 			labels:taskStateList,
+ 			datasets:[{
+ 					backgroundColor:colorList,
+ 					data:cntList
+ 			}],
+ 			options:{
+ 				title:{
+ 					display:true,
+ 					text:'업무 상태별 수'
+ 				}
+ 			}
+ 	};
+ 
+	var ctx=document.getElementById('reportArea').getContext('2d');
+	new Chart(ctx,{
+		type:'doughnut',
+		data:data
+	});
+ 
+	function colorize() {
+		var r = Math.floor(Math.random()*200);
+		var g = Math.floor(Math.random()*200);
+		var b = Math.floor(Math.random()*200);
+		var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.7)';
+		return color;
+	}
+ 
+ </script>
+ 
+ 
+ 
+ 
  
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

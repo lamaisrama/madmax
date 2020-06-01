@@ -121,5 +121,11 @@
 		FROM PROJECTBOARD PB JOIN BOOKMARK B ON PB.BOARDNO = B.BOARDNO
 		WHERE B.USERID = #{loginId} AND PB.PROJECTNO = #{pjNo}
 	</select>
+	
+	<select id="selectTaskReport" parameterType="_int" resultType="taskReport">
+		SELECT TASKSTATE,COUNT(*) AS CNT FROM TASK 
+		JOIN PROJECTBOARD USING(BOARDNO) 
+		JOIN PROJECTTABLE USING(PROJECTNO) WHERE PROJECTNO=#{projectNo} GROUP BY TASKSTATE
+	</select>
 
 </mapper>

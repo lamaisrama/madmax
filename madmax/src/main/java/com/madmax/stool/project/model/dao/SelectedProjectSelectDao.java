@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
+import com.madmax.stool.project.model.vo.TaskReport;
 
 public interface SelectedProjectSelectDao {
 
@@ -34,6 +36,6 @@ public interface SelectedProjectSelectDao {
 	List<Map<String, Object>> selectBookmarkList(SqlSessionTemplate session, Map<String, Object> pjInfo);
 	
 
-	
+	List<TaskReport> selectTaskReport(SqlSessionTemplate session,int pjNo);
 
 }
