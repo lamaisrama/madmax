@@ -4,6 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
+<link href='${path}/resources/css/main.css' rel='stylesheet' />
+<link href='${path}/resources/css/weather-icons.css' rel='stylesheet' />
+<link href='${path}/resources/css/weather-icons.min.css' rel='stylesheet' />
+<link href='${path}/resources/font/weathericons-regular-webfont.woff' rel='stylesheet' />
+<link href='${path}/resources/font/weathericons-regular-webfont.woff2' rel='stylesheet' />
 <link href='${path}/resources/mainresources/calendar/core/main.css' rel='stylesheet' />
 <link href='${path}/resources/mainresources/calendar/daygrid/main.css' rel='stylesheet' />
 <link href='${path}/resources/mainresources/calendar/timegrid/main.css' rel='stylesheet' />
@@ -20,117 +25,178 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-	<div class="col-sm-7 row" id="area">
+	<div class="maincontainer col-sm-10" id="area">
+	<div class="col-sm-10 row" id="area">
 
                   <br>
                   
                     <div class="row justify-content-around">
+                  
                     <!-- 달력출력하는 부분 -->
-                        <div class="column col-sm-6" id="calendar" >
+                       	<div class="col-sm-6" id="calendar" style="background-color: #fff; padding: 10px 10px;"></div>
+                       	
+					<!-- 날씨 -->
+                        <div class="col-sm-4">
+                           <h5 class="modal-title mb-2"><i class="wi wi-day-cloudy"></i>&nbsp;WEATHER</h5>
+                               <div id="">
+								<table class="weathertbl text-center">
+									<tr>
+										<td class="weathertd" rowspan="3" colspan="3"><div id="weatherArea"></div></td>					
+										<td colspan="3" class="display-4 text-right pr-3 pb-2 pt-2 weathertd text-white" id="weatherTemp" width="50%;"></td>
+									</tr>
+									<tr >
+										<!-- 상세설명 -->
+										<td colspan="3" class="text-right pr-3 pb-2 weathertd text-white" id="weatherDesc"></td>
+									</tr>
+									<tr>
+										<!-- 위치 -->
+										<td colspan="3" class="text-right pr-3 pb-2 weathertd text-muted" id="weatherCity"></td>
+									</tr>
+									<tr><td class="weathertd text-white" colspan="6">&nbsp;</td></tr>
+									<tr>
+										<td colspan="2" class="pt-2"><i class="wi wi-humidity"></i></td>
+										<td colspan="2" class="pt-2"><i class="wi wi-sandstorm"></i></td>
+										<td colspan="2" class="pt-2"><i class="wi wi-cloudy"></i></td>
+									</tr>
+									<tr>
+										<td colspan="2" class="pb-2" id="weatherHum"></td>
+										<td colspan="2" class="pb-2" id="weatherSp"></td>
+										<td colspan="2" class="pb-2" id="weatherCl"></td>
+									</tr>
+									<!-- <tr><td colspan="6">&nbsp;</td></tr> -->
+								</table>									
+								</div>
+                                  <script>
+                                  var apiURI = "";
+                                  
+                                  let latitude, longitude;
+                                  navigator.geolocation.getCurrentPosition(position => {
+                                  	latitude = position.coords.latitude;	
+                                  	longitude = position.coords.longitude;
+                                  	console.log(latitude);
+                                  	console.log(longitude);
+									apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=eff8dc2d4e17c75db816ed11e4456e57";
+                                  	weatherF(apiURI);
+                                  });
 
+                                  /* var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"내APIKEY"; */
+						     	   function weatherF(apiURI){
+							        	$.ajax({
+								            url: apiURI,
+								            dataType: "json",
+								            type: "GET",
+								            async: "false",
+								            success: function(resp) {
+								                /* console.log(resp);
+								                console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+								                console.log("현재습도 : "+ resp.main.humidity);
+								                console.log("날씨 : "+ resp.weather[0].main );
+								                console.log("상세날씨설명 : "+ resp.weather[0].description );
+								                console.log("날씨 이미지 : "+ resp.weather[0].icon );
+								                console.log("바람   : "+ resp.wind.speed );
+								                console.log("나라   : "+ resp.sys.country );
+								                console.log("도시이름  : "+ resp.name );
+								                console.log("구름  : "+ (resp.clouds.all) +"%" );  */                
+								                var imgURL = "<img src='http://openweathermap.org/img/wn/" + resp.weather[0].icon + ".png' width='40%'>";
+								                var temp = Math.round(resp.main.temp- 273.15)+'<i class="wi wi-celsius"></i>';
+								                var hum = resp.main.humidity+"%";
+								                var speed = resp.wind.speed+"m/s";
+								                var clouds = resp.clouds.all+"%";
+								                var city = '<i>'+resp.name+'</i>';
+								                var desc = resp.weather[0].description;
+								                
+									    		/* var sky = "";
+									        	switch(resp.weather[0].main){
+													case "맑음": sky='<i class="wi wi-day-sunny"></i>'; break;
+													case "구름 조금": sky='<i class="wi wi-day-sunny-overcast"></i>'; break;
+													case "Clouds": sky='<i class="wi wi-day-cloudy"></i>'; break;
+													case "흐림": sky='<i class="wi wi-cloudy"></i>'; break;
+													case "Rain": sky='<i class="wi wi-rain"></i>'; break;
+													case "눈": sky='<i class="wi wi-snow"></i>'; break;
+													case "눈/비": sky='<i class="wi wi-hail"></i>'; break;
+												}  */
+												$("#weatherArea").html(imgURL);
+												$("#weatherTemp").html(temp);
+												$("#weatherHum").html(hum);
+												$("#weatherSp").html(speed);
+												$("#weatherCl").html(clouds);
+												$("#weatherCity").html(city);
+												$("#weatherDesc").html(desc);
+												
+												/* $("#weatherArea").html(sky); */
+								            	}
+							        		})
+						        	}
+					        </script>
+						<br><br>					        
+						<!-- 공지사항 -->	
+						<h5><i class="fab fa-codepen"></i>&nbsp;MADMAX NOTICE</h5>
+						<div class="text-right">
+							<a href="${path}/board/boardList.do"><small>Notice All</small></a>
+						</div>	
+						<div class="notice mb-1">
+							<ul class="rolling">
+								<c:forEach items="${blist }" var="b" >
+									<li>
+										<a href="${path }/board/boardList.do?no=${b.boardNo}">${b.boardTitle}</a>
+									</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="h6 text-right">
+							<a href="#" class="rolling_stop"><i class="far fa-pause-circle"></i></a>&nbsp;
+							<a href="#" class="rolling_start"><i class="far fa-play-circle"></i></a>
+						</div>
+						<script>
+						$(document).ready(function(){
+							var height =  $(".notice").height();
+							var num = $(".rolling li").length-3;
+							var max = height*num;
+							var move = 0;
+							function noticeRolling(){
+								move += height;
+								$(".rolling").animate({"top":-move},600,function(){
+									if( move >= max ){
+										$(this).css("top",0);
+										move = 0;
+									};
+								});
+							};
+							noticeRollingOff = setInterval(noticeRolling,1000);
+/* 							$(".rolling").append($(".rolling li").first().clone()); */
+							$(".rolling").append($(".rolling li").clone());
+							/* console.log($(".rolling li").first().clone()); */
+							$(".rolling_stop").click(function(){
+								clearInterval(noticeRollingOff);
+							});
+							$(".rolling_start").click(function(){
+								noticeRollingOff = setInterval(noticeRolling,1000);
+							});
+						});		
+						</script>
                         </div>
-
-                        <div class="column col-sm-3" style="margin-top: 50px;">
-                          <span>✔️ 진행중인 업무</span>
-<!--                           <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
-                            더보기
-                           </button> -->
-                          <div class="row list" >
-                          </div>
-                          <div>
-                            
-
-                            <div class="modal fade" id="myModal">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                
-                                  <!-- Modal Header -->
-                                  <div class="modal-header">
-                                    <h5 class="modal-title">✅ 진행중인 업무</h5>
-                                    <button type="button" class="close" data-dismiss="modal">×</button>
-                                  </div>
-                                  
-                                  <!-- Modal body -->
-                                  <div class="modal-body">
-                                    Modal body..
-                                  </div>
-                                  
-                                  <!-- Modal footer -->
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-light text-dark" data-dismiss="modal">Close</button>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                            </div>
-                            
-
-
-                          </div>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="container p-5">
-                      <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h5>                    
+					<br>
+                    <br>
+                    <div class="fvcontainer mt-3">
+                      <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
+                    <!-- 즐겨찾기 프로젝트 ! -->
+                    <div class="container">
 						<br>
-                      <div class="flex-row justify-content-around row-nw d-flex flex-wrap">
-							<c:forEach items="${list }" var="f" begin="0" end="3">
-	                            <div class="item p-3 bookmarkProject">
-	                            	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
-	                            		<c:out value="${f.projectTitle}"/>
-	                            	</a>
-	                            </div>
-                            </c:forEach>
-                      </div>
+                      <div class="d-flex justify-content-between">
+							<c:forEach items="${list }" var="f" begin="0" end="4">
+						     	<div class="favoriteBox">
+							       	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
+							       		<c:out value="${f.projectTitle}"/>
+							       	</a>
+						     	</div>
+						    </c:forEach>
+						</div>
                     </div>
                 </div>
 
-   <style>
-     .list{
-       width: 180px;
-      height: 300px;
-      
-     }
-
-		ddiv{
-			border:1px solid black;
-		}
-       .item{
-
-         height: 160px;
-         width: 150px;
-         
-         border-radius: 30px;
-         border: #2C3E50;
-         background-color:  #2C3E50;
-         color: black;
-         cursor: pointer;
-       }
-       .item:hover{
-
-        height: 160px;
-        width: 150px;
-
-        border-radius: 30px;
-        border:  rgb(35, 60, 97);
-        background-color: rgb(35, 60, 97);
-        color: white;
-        }
-
-       #area{
-        height: 768px;
-       }
-       .fc-event{//공휴일 글씨색 설정
-		color:#FFFFFF;
-		background-color:#cc3333;
-		border:1px solid #cc3333;
-		}
-	
-   </style>
-
 <script>
 
+//캘린더 api*************
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
   
@@ -143,18 +209,59 @@
           //center: 'title',
           //right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
+        eventClick: function(info) {//window창으로 보이는 부분!!
+			console.log(info);
+		
+			var title = open('','_blank','width=500,height=300');
+			var js = '<script>';
+			js+='function viewScd(){';
+			js+="opener.parent.location='${path}/selectedProject/selectedProject.do?pjNo="+info.event.extendedProps.projectNo+'&loginId=';
+			js+='${loginUser.userId}&boardNo='+info.event.extendedProps.boardNo+"';";
+			js+='window.close();';
+			js+='}';
+			js+='</';
+			js+='script>';
+			var content = '<html>';
+			content+='<head>';
+			content+='<script';
+			content+="src='https://kit.fontawesome.com/b5f4d53f14.js'";
+			content+="crossorigin='anonymous'>";
+			content+='</';
+			content+='script>';
+			content+='</';
+			content+='head>';
+			content+='<body>';
+			content+="<div style='text-align:center;'>";
+			content+='<h1 style="color:#25558F;">'+info.event.title+'</h1>';
+			content+='<hr>';
+			content+='<h4><i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 25px;"></i>&nbsp;'+info.event.extendedProps.scheduleMemo+'</h4>';
+			content+='<h4>주소:'+info.event.extendedProps.schedulePlace+'</h4>';
+			content+="<a href='javascript:viewScd();' class='btn btn-primary'>상세보러가기</a>";
+			content+='</div>'
+			content+=js+'</body>';
+			content+='</html>';
+			title.document.write(content);
+			//calendar.fullCalendar('unselect'); 
+		},
         defaultDate: new Date(),
         //navLinks: true, // can click day/week names to navigate views
-        editable: true,
+        editable: false,
         eventLimit: true, // allow "more" link when too many events
         eventSources:['ko.south_korea#holiday@group.v.calendar.google.com']
 		,events:[
-			'ko.south_korea#holiday@group.v.calendar.google.com',
+			{"googleCalendarId":'ko.south_korea#holiday@group.v.calendar.google.com',
+				},
 		 	<c:forEach items="${schedule}" var="s" varStatus="status">
 			{"title":'<c:out value="${s.scheduleTitle}"/>'
 				,"start":'<c:out value="${s.scheduleStartDate}"/>'
 				,"end":'<c:out value="${s.scheduleEndDate}"/>'
 				,"className":'info'
+				,"color":'#25558F'
+				,"textColor" : 'white'
+				,"schedulePlace":'<c:out value="${s.schedulePlace}"/>'
+				,"scheduleMemo":'<c:out value="${s.scheduleMemo}"/>'
+				,"projectNo":'<c:out value="${s.projectNo}"/>'
+				,"boardNo":	'<c:out value="${s.boardNo}"/>'
 			},
 			
 		</c:forEach>  	

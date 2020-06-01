@@ -6,6 +6,7 @@ import com.madmax.stool.project.model.vo.Project;
 import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
+import com.madmax.stool.task.model.vo.TaskProject;
 
 
 public interface TaskService {
@@ -21,5 +22,7 @@ public interface TaskService {
 	TaskPb selectTaskView(int boardNo);
 
 	List<NotiMember> selectTaskNoti(int boardNo);
+
+	TaskProject selectProjectTitle(int pjNo);
 
 }

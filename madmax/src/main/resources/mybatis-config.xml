@@ -10,6 +10,7 @@
 	<typeAliases>
 		<typeAlias type="com.madmax.stool.common.StringArrayType" alias="strArr"/>
 		<typeAlias type="com.madmax.stool.user.model.vo.User" alias="user"/>
+		<typeAlias type="com.madmax.stool.board.model.vo.Board" alias="board"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.Project" alias="project"/>
 		<typeAlias type="com.madmax.stool.attendance.model.vo.Attendance" alias="attend"/>
 		<typeAlias type="com.madmax.stool.attendance.model.vo.Worktime" alias="worktime"/>
