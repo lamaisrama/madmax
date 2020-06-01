@@ -1,6 +1,7 @@
 package com.madmax.stool.project.controller;
 
-import java.util.ArrayList;
+import static com.madmax.stool.common.PagingFactory.getPage;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.madmax.stool.common.PagingFactory.getPage;
+import com.madmax.stool.calendar.model.service.CalendarService;
+import com.madmax.stool.calendar.model.vo.Calendar;
 import com.madmax.stool.project.model.service.ProjectService;
 import com.madmax.stool.project.model.vo.Favorite;
 import com.madmax.stool.project.model.vo.Project;
@@ -25,6 +27,8 @@ public class ProjectController {
 	private ProjectService service;
 	@Autowired
 	private Logger logger;
+	@Autowired
+	private CalendarService cService;
 	
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
@@ -138,11 +142,12 @@ public class ProjectController {
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		
 		List<Favorite> list = service.selectFavorite(id);
-		
+		List<Calendar> cal=cService.selectSchedule(id);
 		int total = service.selectFavoriteCount(id); 
 		
 		logger.debug("조회결과 : " + list);
 		
+		mv.addObject("schedule",cal);//일정도 같이 보여주자
 		mv.addObject("list", list);
 		mv.addObject("total", total);
 		mv.setViewName("main");

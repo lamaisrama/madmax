@@ -17,16 +17,21 @@
 		select a.*,p.boardtype from TASKATTACHMENT a join task t on(a.taskno=t.taskno) join PROJECTBOARD p on (p.boardno=t.boardno) where projectno=#{pjNo}
 	</select>
 	
-	<select id="checkPjMember" parameterType="_int">
-		select count(*) from projectMember where userid=#{userid} projectno=#{pjNo}
+	<select id="checkPjMember" parameterType="map" resultType="_int">
+		select count(*) from PROJECTMEMBER where USERID=#{userid} and PROJECTNO=#{pjno}
 	</select>
 	
 	<!-- 프로젝트 참여자 초대하기 -->
 	<insert id="insertProjectMember" parameterType="map">
 		INSERT INTO PROJECTMEMBER VALUES(SEQ_PJMEMBERNO.NEXTVAL,#{pjno},#{userid})
-		<selectKey order="AFTER" keyProperty="PJMEMBERNO" resultType="_int">
-			SELECT SEQ_PJMEMBERNO.CURRVAL FROM DUAL
-		</selectKey>
 	</insert>
+
+	<!--  -->
+	<select id="selectPjMemberProfile" parameterType="map" resultType="map">
+		SELECT PM.*, U.USERNAME, U.PROFILE, U.PHONE, D.DEPTNAME, J.JOBNAME
+		FROM PROJECTMEMBER PM
+		JOIN STOOLUSER U ON PM.USERID = U.USERID JOIN DEPT D ON D.DEPTCODE=U.DEPTCODE 
+        JOIN JOBTABLE J ON U.JOBCODE=J.JOBCODE WHERE PM.PROJECTNO=#{pjNo}
+	</select>
 
 </mapper>
