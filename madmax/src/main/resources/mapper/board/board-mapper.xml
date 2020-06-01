@@ -37,4 +37,19 @@
   		UPDATE BOARD SET BOARDTITLE=#{boardTitle},BOARDCONTENT=#{boardContent} WHERE BOARDNO=#{boardNo}
   	</update>
   	
+  	<select id="selectReadBoard" parameterType="_int" resultType="board">
+  		SELECT * FROM BOARD WHERE BOARDNO=#{no}
+  	</select>
+  	
+  	<update id="updateReadCount" parameterType="_int">
+  		UPDATE BOARD SET BOARDREADCOUNT=BOARDREADCOUNT+1 WHERE BOARDNO=#{no}
+  	</update>
+  	
 </mapper>
+
+
+
+
+
+
+

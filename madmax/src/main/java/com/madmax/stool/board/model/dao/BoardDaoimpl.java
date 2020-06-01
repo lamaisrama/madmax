@@ -1,6 +1,7 @@
 package com.madmax.stool.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,9 +30,9 @@ public class BoardDaoimpl implements BoardDao {
 	}
 	
 	@Override
-	public Board selectBoard(SqlSessionTemplate session, int no) {
+	public Board selectBoard(SqlSessionTemplate session, Map<String, Object> map) {
 		
-		return session.selectOne("board.selectView",no);
+		return session.selectOne("board.selectView", map);
 	}
 
 	@Override
@@ -56,6 +57,24 @@ public class BoardDaoimpl implements BoardDao {
 	public int noFileUpdate(SqlSessionTemplate session, Board b) {
 		
 		return session.update("board.noFileUpdate", b);
+	}
+
+	@Override
+	public Board selectBoard(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("board.selectReadBoard", no);
+	}
+
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.update("board.updateReadCount", no);
+	}
+
+	@Override
+	public Board selectBoardM(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("board.selectView", no);
 	}
 	
 	
