@@ -1,13 +1,12 @@
 package com.madmax.stool.board.controller;
 
-import static com.madmax.stool.common.RenameFactory.getRenamedFileName;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,7 +113,34 @@ public class BoardController {
 	@RequestMapping("/board/boardView.do")
 	public ModelAndView boardView(ModelAndView mv, int no, HttpServletRequest req, HttpServletResponse res) {
 
-		mv.addObject("board",service.selectBoard(no));
+		Cookie[] cookies = req.getCookies();
+		String cookieVal = "";
+		boolean hasRead = false;	// false면 조회수 증가, true면 조회수 증가안함
+		if(cookies!=null){
+			for(Cookie c : cookies) {
+				String name = c.getName();	
+				String value = c.getValue();	
+				if("boardCookie".equals(name)) {	// boardCookie와 같은 key값이 있다면
+					cookieVal = value;	// cookieVal에 value값을 저장
+					if(value.contains("|"+no+"|")) {	
+						hasRead = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!hasRead) {	// 안읽은 거면
+			Cookie c = new Cookie("boardCookie", cookieVal + "|" + no + "|");	
+			c.setMaxAge(-1);	// session종료시 삭제
+			res.addCookie(c);	
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hasRead", hasRead);
+		map.put("no", no);
+		
+		mv.addObject("board",service.selectBoard(map));
 		
 		mv.addObject("file",service.selectFile(no));
 		
@@ -197,7 +223,7 @@ public class BoardController {
 	public ModelAndView boardUpdate(int no) {
 		
 		ModelAndView mv = new ModelAndView();
-		Board b = service.selectBoard(no);
+		Board b = service.selectBoardM(no);
 		mv.addObject("board", b);
 		mv.setViewName("board/boardUpdate");
 		
