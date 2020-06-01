@@ -72,7 +72,7 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 		if(!notList.isEmpty()){
 			for(InsertNotification n : notList) {
 				n.setBoardNo(pb.getBoardNo());
-				result = dao.InsertNotificationTB(session, n);
+				result = dao.insertNotificationTB(session, n);
 				if(result==0) {
 					throw new MyException("NotificationTB 삽입에러!");
 				}
@@ -143,7 +143,7 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 		if(!notList.isEmpty()){
 			for(InsertNotification n : notList) {
 				n.setBoardNo(pb.getBoardNo());
-				result = dao.InsertNotificationTB(session, n);
+				result = dao.insertNotificationTB(session, n);
 				if(result==0) {
 					throw new MyException("NotificationTB 삽입에러!");
 				}
@@ -226,7 +226,7 @@ public class SelectedProjectInsertServiceImpl implements SelectedProjectInsertSe
 		if(!notList.isEmpty()){
 			for(InsertNotification n : notList) {
 				n.setBoardNo(pb.getBoardNo());
-				result = dao.InsertNotificationTB(session, n);
+				result = dao.insertNotificationTB(session, n);
 				if(result==0) {
 					throw new MyException("NotificationTB 삽입에러!");
 				}

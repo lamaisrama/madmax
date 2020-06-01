@@ -85,4 +85,7 @@
   	JOIN  TASK T ON T.TASKNO=TM.TASKNO
 	WHERE T.BOARDNO=#{boardNo}
   </select>
+  <select id="selectProjectTitle" resultType="com.madmax.stool.task.model.vo.TaskProject">
+  	SELECT PROJECTTITLE,PROJECTNO FROM PROJECTTABLE WHERE PROJECTNO=#{pjNo} 	
+  </select>
 </mapper>

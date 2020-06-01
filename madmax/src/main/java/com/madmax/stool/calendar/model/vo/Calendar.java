@@ -20,5 +20,5 @@ public class Calendar {
 	private String scheduleMemo;
 	private int projectNo;
 	private int boardNo;
-	
+	private String projectTitle;
 }

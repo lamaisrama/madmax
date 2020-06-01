@@ -1,6 +1,7 @@
 package com.madmax.stool.calendar.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,18 @@ public class CalendarDaoImpl implements CalendarDao {
 	public List<Calendar> selectSchedule(SqlSessionTemplate session, String id) {
 		// TODO Auto-generated method stub
 		return session.selectList("calendar.selectSchedule",id);
+	}
+
+	@Override
+	public List<Calendar> selectProjectSchedule(SqlSessionTemplate session, Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("calendar.selectProjectSchedule",map);
+	}
+
+	@Override
+	public String selectProjectTitle(SqlSessionTemplate session, int pjNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("calendar.selectProjectTitle",pjNo);
 	}
 
 }
