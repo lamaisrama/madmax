@@ -163,15 +163,18 @@ public class ApprovalController {
 		}
 		String msg = "", loc ="";
 		if(result>0) {
-			msg ="결재문서 작성 완료";
+			if(appr.getTemp().equals("temp"))  msg = "임시 저장 완료";
+			else msg ="결재문서 작성 완료";
 			loc = "";
 		}else{
 			msg = "결재 문서 작성 실패";
 			loc = "";
 		}
+		
 		m.addAttribute("loc", loc);
 		m.addAttribute("msg", msg);
 		m.addAttribute("script", "window.close();");
+		
 		return "common/msg";
 	}
 	
@@ -473,17 +476,19 @@ public class ApprovalController {
 					//파일 삭제
 					File delF = new File(path+"/"+delFileInfo[0]);
 					if(delF.exists()) delF.delete();
-					msg ="결재문서 작성 완료";
-					loc = "";
 				}
 			}
+			if(appr.getTemp().equals("temp")) msg = "임시 저장 완료";
+			else msg ="결재문서 작성 완료";
+			loc = "/appr/apprReqBox.do";
+			
 		}catch(RuntimeException e) {
 			for(ApprAttachment a : files) {
 				File delF=new File(path+"/"+a.getDocRenamedFile());
 				if(delF.exists()) delF.delete();
 				e.printStackTrace();
 				msg = "결재 문서 작성 실패 : "+e.getMessage();
-				loc = "";
+				loc = "/appr/apprTempBox.do";
 				
 			}
 		}

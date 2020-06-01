@@ -17,7 +17,7 @@ import com.madmax.stool.project.model.vo.ProjectMember;
 import com.madmax.stool.project.model.vo.Tag;
 
 @Controller
-public class SelectedProjectSelectController {
+public class SelectedProjectSelectTagController {
 	
 	@Autowired
 	private Logger logger;
@@ -25,8 +25,8 @@ public class SelectedProjectSelectController {
 	@Autowired
 	private SelectedProjectSelectService service;
 	
-	@RequestMapping("/selectedProject/selectedProject.do")
-	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId,
+	@RequestMapping("/selectedProject/selectedProjectSelectTag.do")
+	public ModelAndView selectSelectedProject(ModelAndView mv, int pjNo, String loginId, String tag,
 												@RequestParam(required = false, defaultValue="1") int boardNo) {
 		
 	
@@ -34,10 +34,11 @@ public class SelectedProjectSelectController {
 		Map<String,Object> pjInfo = new HashMap();
 		pjInfo.put("pjNo", pjNo);
 		pjInfo.put("loginId", loginId);
+		pjInfo.put("tag", tag);
 		Map<String,Object> projectInfo=service.selectProjectTB(pjNo);
 		int favorite=service.selectFavorit(pjInfo);
 		List<Map<String,Object>> bookmarkList=service.selectBookmarkList(pjInfo);
-		List<Map<String,Object>> projectBoardList=service.selectProjectBoard(pjNo);
+		List<Map<String,Object>> projectBoardList=service.selectProjectBoardWithTag(pjInfo);
 		List<ProjectMember> projectMember = service.selectProjectMemberList(pjNo);
 		List<Tag> pjTagList = service.selectProjectTag(pjNo);
 		
@@ -82,6 +83,7 @@ public class SelectedProjectSelectController {
 		
 		mv.addObject("projectInfo",projectInfo);
 		mv.addObject("favorite",favorite);
+		mv.addObject("selectTag",tag);
 		if(bookmarkList.size()>0) mv.addObject("bookmarkList",bookmarkList);
 		if(projectMember.size()>0) mv.addObject("projectMember",projectMember);
 		if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);		
@@ -115,7 +117,7 @@ public class SelectedProjectSelectController {
 		
 		
 		
-		mv.setViewName("selectedProject/selectedProject");
+		mv.setViewName("selectedProject/selectedProjectTag");
 
 		
 		

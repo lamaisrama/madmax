@@ -167,9 +167,20 @@
 	.imgbox:hover .shadow {top: 0px;}
 	.imgbox:hover span {display: none;}
 	.imgbox:hover .detail {display: block;}  
+	.sidebar-container{
+		position:sticky;
+		/* min-height:500px; */
+		background-color:#233C61;
+		color:white;
+	}
+	.sidebar-container *{
+		position:sticky;
+		background-color:#233C61;
+		color:white;
+	}
 </style>
 
-<div class="col col-sm-2">
+<div class="col col-sm-2 sidebar-container">
 	<br>	
 	<nav>
 		<ul class="menu">

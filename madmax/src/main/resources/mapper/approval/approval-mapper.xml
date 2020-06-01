@@ -25,7 +25,9 @@
 	</select>
 	
 	<insert id="insertApproval" parameterType="approval">
-		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 1, #{receiver})
+		INSERT INTO APPROVAL VALUES(SEQ_APPRNO.NEXTVAL, #{apprTitle}, #{apprContent}, #{apprText}, sysdate, #{apprDocTypeNo}, #{userId}, #{finalApprStep}, 0, 
+		<if test='temp eq "temp"'> 0 </if> 
+		<if test='temp neq "temp"'> 1 </if> ,#{receiver})
 		<selectKey order="AFTER" keyProperty="apprNo" resultType="_int">
 			SELECT SEQ_APPRNO.CURRVAL FROM DUAL
 		</selectKey>
@@ -178,7 +180,10 @@
 		<if test='apprContent !=null'>APPRCONTENT=#{apprContent},</if>
 		<if test='apprText != null'>APPRTEXT=#{apprText},</if>
 		WRITEDATE=SYSDATE, FINALAPPRSTEP=#{finalApprStep}, 
-		APPRSTATUS=1, RECEIVER=#{receiver}
+		APPRSTATUS=
+		<if test='temp eq "temp"'> 0 </if> 
+		<if test='temp neq "temp"'> 1 </if> 
+		,RECEIVER=#{receiver}
 		WHERE APPRNO=#{apprNo}
 	</update>
 	
