@@ -137,32 +137,31 @@
             /* background-size: cover; */
         }    
         
-        
-      #adminSidebar{
-       	background-color: #4f545d;
-       	
-      }
-
- 	*{
-		 background-color: #747d8c !important;
-		 color: white !important;
-	} 
-	
-	.aside-container{
-		border: 1px solid white;
-		border-radius:15px;
-	}
-	
 	a:link { text-decoration: none; }
  	a:visited {text-decoration: none; }
  	a:hover { text-decoration: underline; }
 	
+	.admin-side-container{
+		min-height:500px;
+		background-color:#c0392b;
+		color:white;
+	}
+	.admin-side-container *{
+		background-color:#c0392b;
+		color:white;	
+	}
 </style>
 
-<div class="col col-sm-2" >
+<div class="col col-sm-2 admin-side-container" >
 	<br>	
 	<nav>
 		<ul class="menu">
+			<li>
+				<div class="user-container text-center">
+					<h4>관리자 페이지</h4>
+				</div>
+			</li>
+			<hr>
 			<li>
 				<!-- Elements Section Begin -->
 	            <div class="row">

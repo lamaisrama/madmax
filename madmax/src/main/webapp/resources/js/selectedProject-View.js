@@ -6,7 +6,6 @@ function fn_progressState_update(e, id, bNo){
 	    $("#progress"+bNo).removeClass("btn-success");
 	    $("#feedback"+bNo).removeClass("btn-danger");
 	    $("#end"+bNo).removeClass("btn-info");
-	    $("#hold"+bNo).removeClass("btn-secondary");
 	
 	    $("#progressStateUpdate"+bNo).val("요청");
 	    $(e).addClass("btn-primary");

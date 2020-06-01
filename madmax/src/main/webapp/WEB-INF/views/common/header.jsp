@@ -40,7 +40,7 @@
 					<li class="nav-item active"></li>
 				</ul>
 				<c:if test="${loginUser.userId=='admin'}">
-					<button type="button" class="btn headerBtn" style="margin-right:10px;"
+					<button type="button" class="headerBtn" style="margin-right:10px;"
 						onclick="location.replace('${path}/admin/adminIndex.do')">관리자</button>
 				</c:if>
 				<button type="button" class="headerBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
@@ -108,7 +108,7 @@
 		
 <script>
 	//소켓 서버와 연결
-	var socket = new WebSocket('ws://localhost:9090${path}/notification');
+	var socket = new WebSocket('ws://localhost:9090/${path}/notification');
 	
 	socket.onopen=function(){
 		console.log('info : connection opend');

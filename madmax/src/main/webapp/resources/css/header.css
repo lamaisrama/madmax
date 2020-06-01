@@ -1,7 +1,8 @@
 @charset "UTF-8";
 	.header-container{
-		margin-bottom : 15px;
+		background-color:rgba(35, 85, 143, 0.3);
 	}
+	
 	.headerBtn {
 		width: 6em; 
 		height: 3em; 

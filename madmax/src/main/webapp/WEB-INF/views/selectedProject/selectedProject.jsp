@@ -361,9 +361,9 @@
                 </form>
                 </c:if>
             <!-- ☆★☆ 게시글List include -->
-            <div class="mb-3"> <!-- 고정글 -->
+<%--             <div class="mb-3"> <!-- 고정글 -->
 				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-            </div>
+            </div> --%>
             <div class="mb-3"> <!-- 게시글 리스트 -->
 				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
             </div>
@@ -376,10 +376,7 @@
 				<jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" />
 
 				<%-- <jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" /> --%>
-
-			<div class="col col-sm-3">
-
-</div>
+			</div>
 
 
 <!-- 모달모음 ------------------------------------------------------------------------------------------------------------------------------->   
