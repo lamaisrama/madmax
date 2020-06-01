@@ -22,6 +22,13 @@ public class AsidebarDaoImpl implements AsidebarDao {
 		return session.insert("aside.insertProjectMember",map);
 	}
 
+	@Override
+	public int checkPjMember(SqlSessionTemplate session, Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("aside.checkPjMember",map);
+	}
+
+	
 	
 
 	

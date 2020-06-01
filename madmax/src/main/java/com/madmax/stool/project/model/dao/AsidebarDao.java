@@ -14,5 +14,7 @@ public interface AsidebarDao {
 
 	int insertProjectMember(SqlSessionTemplate session, Map<String, Object> map);
 
+	int checkPjMember(SqlSessionTemplate session, Map<String, Object> map);
+
 
 }

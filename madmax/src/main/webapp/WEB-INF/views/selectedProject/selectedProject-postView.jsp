@@ -424,31 +424,36 @@
                     
                     
                     <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                    <!-- 수정할 때 추가 -->
+                    <!-- 1. 글 수정 -->
                 <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
 	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
 	                <!-- from 공통 hidden input모음 -->
+					    <!-- 0) 게시글 번호 -->
+					    <input type="hidden" name="projectBoardNo" value="${pb.BOARDNO}"/>    
 					    <!-- 1) 프로젝트 번호 저장 -->
 					    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
 	                    <!-- 2) 글 타입 -->
 	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
-	                    <!-- 3) 파일 -->                
-	                    <input type="file" name="newFiles" id="newFiles" multiple style="display: none;"/>
-	                    <!-- 4) 이미지파일 -->
-	                    <input type="file" name="newImgFiles" id="newImgFiles" 
-	                    	onchange="fn_newImgFilesChange(${pb.BOARDNO});fn_handleImgsFilesSelect_update(this,${pb.BOARDNO});" multiple style="display: none;" accept="image/*"/>
-	                    <!-- 5) 태그 -->
-	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr"/>
-	                    <input type="hidden" name="newTagListStr" id="newTagListStr"/>
-	                    <!-- 6) 언급 -->
-	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr"/>
-	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr"/>
+	                    <!-- 3) 게시글 번호 (ex : writingNo) -->
+	                    <input type="hidden" name="postNo" value="${w.WRITINGNO}"/>
+	                    <!-- 4) 작성자 -->
+	                    <input type="hidden" name="writer" value="${w.WRITINGID}"/>
+	                    
+	                    <!-- 5) 파일 -->                
+	                    <input type="file" name="newFiles" id="newFiles${pb.BOARDNO}" multiple style="display: none;" class="newFiles"
+	                    	onchange="fn_handleFilesSelect_update(${pb.BOARDNO});"/>
+	                    <!-- 6) 이미지파일 -->
+	                    <input type="file" name="newImgFiles" id="newImgFiles${pb.BOARDNO}" multiple style="display: none;" accept="image/*" class="newImgFiles"/>
+	                    <!-- 7) 태그 -->
+	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newTagListStr" id="newTagListStr${pb.BOARDNO}"/>
+	                    <!-- 8) 언급 -->
+	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr${pb.BOARDNO}"/>
 	                <!-- from 공통 hidden input모음 끝 -->
 	
 	                    <div id="pjUpdateWriteBox" class="w-100">
-	
-	                        <!-- 작성 카테고리별 div -->
-	                            <!-- 1) 글 작성 -->
+
 	                            <div id="writeCategory-board" class="row w-100 m-0">
 	                                <div id="boardContainer" class="w-100 p-3">
 	                                    <div id="boardTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-2">
@@ -540,15 +545,12 @@
 	                                        	첨부이미지
 	                                    </p>
 	                                    <div id="oriImgFilesPreview_update${pb.BOARDNO}" class="w-100 d-flex justify-content-center">
-	                                        <div id="updateImgFileBox" class="w-100 row">
+	                                        <div class="update_oriImgFileBox w-100 row">
                                                 <c:forEach var="wai" items="${writingAttachment}">
                                     			<c:if test="${wai.WRITINGNO==w.WRITINGNO}">
                                     			<c:set var="attachmentCk" value="Y" />
                                     			<c:set var = "splitText" value = "${fn:split(wai.WRITINGRENAME,'_')}"/>
-                                    			<c:if test="${splitText[0] eq 'img'}">
-                                    			
-	                    						<input type="hidden" name="oriImgFiles" value="${wai.WRITINGRENAME}"/>
-                                    			
+                                    			<c:if test="${splitText[0] eq 'img'}">                                    			
                                                 <div class='col-2 p-1' style='height: 150px;'>
                                                     <div class='imgPreview h-100' onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${wai.WRITINGORINAME}','${wai.WRITINGRENAME}');">
                                                         <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${wai.WRITINGRENAME}'/> 
@@ -558,14 +560,14 @@
                                                 </c:if>                                
                                     			</c:forEach>                                                    
 	                                        </div>
+	                                        
+	                                        <!-- new 이미지 첨부파일 -->
+	                                        <div class="update_newImgFileBox w-100 row d-none">
+                                                  
+	                                        </div>
 	                                    </div>
 	                                </div>
-	                                <!-- new 이미지 첨부파일 -->
-                                    <div id="imgFilesPreview_update${pb.BOARDNO}" class="w-100 d-none justify-content-center">
-                                        <div id="imgFileBox_update${pb.BOARDNO}" class="w-100 row">
 
-                                        </div>
-                                    </div>
 	                                
 	                                <div class="col-12 d-flex flex-column">
 	                                    <p id="updateFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
@@ -573,39 +575,36 @@
 	                                       	 첨부파일
 	                                    </p>
 	                                    <div id="oriFilesPreview_update" class="w-100 d-flex justify-content-center">
-	                                        <div id="oriFileBox" class="w-100 row">
+	                                        <div class="update_oriFileBox w-100 row">
                                                 <c:forEach var="waf" items="${writingAttachment}">
                                        			<c:if test="${waf.WRITINGNO==w.WRITINGNO}">
                                        			<c:set var="attachmentCk" value="Y" />
                                        			<c:set var = "splitText" value = "${fn:split(waf.WRITINGRENAME,'_')}"/>
-                                       			<c:if test="${splitText[0] eq 'file'}">
-                                       			
-                                       			<input type="hidden" name="oriFiles" value="${waf.WRITINGRENAM}"/>
-                                       			
+                                       			<c:if test="${splitText[0] eq 'file'}">                                       			
                                                    <div class='col-4 p-1 w-100' style='height: 46px;'>
-                                                       <div class='fileDownPreview w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center' 
-                                                       	onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${waf.WRITINGORINAME}','${waf.WRITINGRENAME}');">
+                                                       <div class='filePreview_view w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center'>
                                                            <div class='d-flex align-items-center'>
                                                                <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
                                                                <span>
                                                                	<c:out value="${waf.WRITINGORINAME}"/>
                                                                </span>
                                                            </div>
-                                                           <i class="fas fa-download" style="font-size: 20px; color: lightslategray;"></i>
                                                        </div>
                                                    </div>
 												</c:if>                                
                                                    </c:if>                                
                                        			</c:forEach>
 	                                        </div>
+	                                        
+	                                        <!-- new 첨부파일 -->
+	                                        <div class="update_newFileBox w-100 row d-none">
+
+	                                        </div>	                                        
+	                                        
 	                                    </div>
 	                                </div>  
-	                                <!-- new 첨부파일 -->
-                                    <div id="filesPreview_update" class="w-100 d-none justify-content-center">
-                                        <div id="fileBox_update" class="w-100 row">
+	                                
 
-                                        </div>
-                                    </div>
 	                                                              
 	                            </div>
 	                        </div>
@@ -617,11 +616,11 @@
 	                                <div id="fileUploadBtns" class="">
 	                                    <div class="d-flex align-items-center">
 	                                        <!-- 파일 업로드 -->                                      
-	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn" onclick="$('#newFiles').click();">
+	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn" onclick="$('#newFiles${pb.BOARDNO}').click();">
 	                                            <i class="fas fa-file-upload stoolGrey" style="font-size: 25px;"></i>
 	                                        </button>
 	                                        <!-- 이미지파일 업로드 -->                                    
-	                                        <button type="button" class="btn" id="updateImgFilesBtn" onclick="$('#newImgFiles').click();">
+	                                        <button type="button" class="btn" id="updateImgFilesBtn" onclick="$('#newImgFiles${pb.BOARDNO}').click();">
 	                                            <i class="fas fa-images stoolGrey" style="font-size: 25px;"></i>
 	                                        </button>
 	                                    </div>
@@ -631,7 +630,7 @@
 	                                <button type="button" onclick="fn_updateFormCancel(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
 	                                    	취소
 	                                </button>                             
-	                                <button type="submit" onclick="fn_updateSubmit();" class="btn m-2 stoolDarkBlue">
+	                                <button type="submit" onclick="fn_updateSubmit(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
 	                                    	수정완료
 	                                </button>    
 	                            </div>                                                              
@@ -654,6 +653,9 @@
 					<c:if test="${pb.BOARDTYPE eq 'T'}">
 					<c:forEach items="${taskList}" var="t">
 					<c:if test="${pb.BOARDNO==t.BOARDNO }">
+					
+					<div id="viewBoxDiv${pb.BOARDNO}">
+					
                     <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                              
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
@@ -709,7 +711,7 @@
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate(${pb.BOARDNO})" style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
@@ -731,7 +733,7 @@
                                         	<button type="button" class="btn border-right btn-primary" disabled>
                                         </c:if>
                                         <c:if test="${t.TASKSTATE ne '요청'}">
-                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState(this, '요청');">
+                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState_viewUpdate(this, '요청',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                        
                                         	요청
                                        	</button>
@@ -739,7 +741,7 @@
                                         	<button type="button" class="btn border-right btn-success" disabled>
                                         </c:if>
                                      	<c:if test="${t.TASKSTATE ne '진행'}">
-                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">
+                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState_viewUpdate(this, '진행',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                        
                                         	진행
                                        	</button>
@@ -747,7 +749,7 @@
                                         	<button type="button" class="btn border-right btn-danger" disabled>
                                         </c:if>  
                                      	<c:if test="${t.TASKSTATE ne '피드백'}">
-                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">
+                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState_viewUpdate(this, '피드백',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                                                             	 
                                         	피드백
                                        	</button>
@@ -755,7 +757,7 @@
                                         	<button type="button" class="btn border-right btn-info" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '완료'}">
-                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">
+                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState_viewUpdate(this, '완료',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>
                                         	완료
                                        	</button>
@@ -763,7 +765,7 @@
                                         	<button type="button" class="btn btn-secondary" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '보류'}">
-                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">
+                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState_viewUpdate(this, '보류',${pb.BOARDNO},${t.TASKNO});">
                                         </c:if>                                           
                                         	보류
                                        	</button>
@@ -777,7 +779,7 @@
                                     <c:if test="${t.TASKNO==tm.TASKNO }">
                                     <c:forEach items="${projectMember}" var="pm">
                                    	<c:if test="${tm.TASKMANAGERID==pm.userId}">
-                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2'>
+                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 mr-2'>
                                         <div class='selectedWorker_imgDiv mr-2'>
                                             <img src="${path}/resources/images/defaultProfile.png"><!-- 여기서 해당 프로필 파일 어떻게 가져오는지? -->
                                         </div>
@@ -880,7 +882,7 @@
                                             <c:forEach items="${notification}" var="n">
 											<c:if test="${ (t.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'task')}">
 											<c:set var="notificationCk" value="Y" />
-                                                <div id="mentionListBox" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
+                                                <div id="mentionListBox" class="d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2">
                                                     <div class='selectedWorker_imgDiv mr-2'>
                                                         <img src="${path}/resources/images/defaultProfile.png">
                                                     </div>
@@ -970,13 +972,6 @@
     
 
                         </div><!-- viewBundle 닫기 -->
-
-
-
-                        <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                        <!-- 수정할 때 추가 -->
-                        <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->
-
 
 
                     </div><!-- viewBox 닫는 태그 -->
@@ -1153,6 +1148,351 @@
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
                     
+                    </div> <!-- viewBoxDiv 닫는 태그 -->
+                    
+                    
+                    
+                    <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
+                    <!-- 2. 업무수정 -->
+                <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
+	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
+	                <!-- from 공통 hidden input모음 -->
+					    <!-- 0) 게시글 번호 -->
+					    <input type="hidden" name="projectBoardNo" value="${pb.BOARDNO}"/>    
+					    <!-- 1) 프로젝트 번호 저장 -->
+					    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
+	                    <!-- 2) 글 타입 -->
+	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
+	                    <!-- 3) 게시글 번호 (ex : writingNo) -->
+	                    <input type="hidden" name="postNo" value="${t.TASKNO}"/>
+	                    <!-- 4) 작성자 -->
+	                    <input type="hidden" name="writer" value="${t.TASKID}"/>
+	                    
+	                    <!-- 5) 파일 -->                
+	                    <input type="file" name="newFiles" id="newFiles${pb.BOARDNO}" multiple style="display: none;" class="newFiles"
+	                    	onchange="fn_handleFilesSelect_update(${pb.BOARDNO});"/>
+	                    <!-- 6) 이미지파일 -->
+	                    <input type="file" name="newImgFiles" id="newImgFiles${pb.BOARDNO}" multiple style="display: none;" accept="image/*" class="newImgFiles"/>
+	                    <!-- 7) 태그 -->
+	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newTagListStr" id="newTagListStr${pb.BOARDNO}"/>
+	                    <!-- 8) 언급 -->
+	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr${pb.BOARDNO}"/>
+	                <!-- from 공통 hidden input모음 끝 -->	                
+	                                    
+                    <!-- 업무 INPUT -->
+	                    <!-- 담당자 -->
+	                    <input type="hidden" name="newTMListStr" id="newTMListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="deleteTMListStr" id="deleteTMListStr${pb.BOARDNO}"/>
+                    
+	
+	                    <div id="pjUpdateWriteBox" class="w-100">
+	
+	                        <!-- 작성 카테고리별 div -->
+	                            <!-- 2) 업무 수정 -->
+						<div id="writeCategory-task" class="row w-100 m-0">
+                            <div id="taskBox" class="w-100 p-3">
+                                <div id="taskTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-3">
+                                    <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        type="text" value="${t.TASKTITLE}" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                </div>
+                                <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">진행상태</strong>
+                                    <div id="taskTabBtns" class="btn-group border border-grey rounded overflow-hidden">                                    
+                                        <input type="hidden" id="progressStateUpdate${pb.BOARDNO}" name="taskState" value="${t.TASKSTATE}"/>
+                                        <c:if test="${t.TASKSTATE eq '요청'}">
+                                        	<button type="button" class="btn border-right btn-primary" id="request${pb.BOARDNO}" onclick="fn_progressState_update(this, '요청', ${pb.BOARDNO});">
+                                        </c:if>
+                                        <c:if test="${t.TASKSTATE ne '요청'}">
+                                        	<button type="button" class="btn border-right" id="request${pb.BOARDNO}" onclick="fn_progressState_update(this, '요청', ${pb.BOARDNO});">
+                                        </c:if>                                        
+                                        	요청
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '진행'}">
+                                        	<button type="button" class="btn border-right btn-success" id="progress${pb.BOARDNO}" onclick="fn_progressState_update(this, '진행', ${pb.BOARDNO});">
+                                        </c:if>
+                                     	<c:if test="${t.TASKSTATE ne '진행'}">
+                                        	<button type="button" class="btn border-right" id="progress${pb.BOARDNO}" onclick="fn_progressState_update(this, '진행', ${pb.BOARDNO});">
+                                        </c:if>                                        
+                                        	진행
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '피드백'}">
+                                        	<button type="button" class="btn border-right btn-danger" id="feedback${pb.BOARDNO}" onclick="fn_progressState_update(this, '피드백', ${pb.BOARDNO});">
+                                        </c:if>  
+                                     	<c:if test="${t.TASKSTATE ne '피드백'}">
+                                        	<button type="button" class="btn border-right" id="feedback${pb.BOARDNO}" onclick="fn_progressState_update(this, '피드백', ${pb.BOARDNO});">
+                                        </c:if>                                                                             	 
+                                        	피드백
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '완료'}">
+                                        	<button type="button" class="btn border-right btn-info" id="end${pb.BOARDNO}" onclick="fn_progressState_update(this, '완료', ${pb.BOARDNO});">
+                                        </c:if>                                        	
+                                     	<c:if test="${t.TASKSTATE ne '완료'}">
+                                        	<button type="button" class="btn border-right" id="end${pb.BOARDNO}" onclick="fn_progressState_update(this, '완료', ${pb.BOARDNO});">
+                                        </c:if>
+                                        	완료
+                                       	</button>
+                                     	<c:if test="${t.TASKSTATE eq '보류'}">
+                                        	<button type="button" class="btn btn-secondary" id="hold${pb.BOARDNO}" onclick="fn_progressState_update(this, '보류', ${pb.BOARDNO});">
+                                        </c:if>                                        	
+                                     	<c:if test="${t.TASKSTATE ne '보류'}">
+                                        	<button type="button" class="btn" id="hold${pb.BOARDNO}" onclick="fn_progressState_update(this, '보류', ${pb.BOARDNO});">
+                                        </c:if>                                           
+                                        	보류
+                                       	</button>
+                                    </div>
+                                </div>
+                                
+                                
+                                <!-- 중복확인용 언급문자열 -->
+                            	<input type="hidden" id="checkTMStr${t.BOARDNO}" value=""/>
+                                <div id="taskListBox" class="col-12 d-flex align-items-center mb-3 addTMList_update flex-nowrap">
+                                    <strong class="mr-2">담당자</strong>
+                                    <!-- 담당자 프로필 for문 시작 -->
+                                    <c:forEach var="tm" items="${taskManager}">                                    
+                                    <c:if test="${t.TASKNO==tm.TASKNO }">
+                                    <c:forEach items="${projectMember}" var="pm">
+                                   	<c:if test="${tm.TASKMANAGERID==pm.userId}">
+                                   	
+                                   	<input type="hidden" name="oriTMs${t.BOARDNO}" value="${tm.TASKMANAGERID}"/>
+                                   	
+                                    <div class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 mr-2'>
+                                        <div class='selectedWorker_imgDiv mr-2'>
+                                            <img src="${path}/resources/images/defaultProfile.png">
+                                        </div>
+                                      	<sapn>
+                                    		<c:out value="${pm.userName}"/>
+                                     	</sapn>
+                                        <button type="button" onclick="fn_deleteTMListStr(this, ${t.BOARDNO},'${tm.TASKMANAGERID}');" class="p-0 ml-2">
+                							<i class='fas fa-minus-circle stoolPink c-pointer'></i>
+                						</button>                                     	
+                                    </div>
+                                    </c:if>
+                                    </c:forEach>
+                                    </c:if>                  
+                                    </c:forEach>                  
+                                    <!-- 담당자 프로필 for문 끝 -->            
+                                    <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="$('#addWorkerModal_update${pb.BOARDNO}').modal('show');">담당자 추가</button>                       
+                                </div>
+                                <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">시작일</strong>
+                                    <input type="date" name="taskStartdate" id="taskStartdate${pb.BOARDNO}" class="stoolDateInput" value="${t.TASKSTARTDATE}"/>
+                                </div>   
+                                <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3 taskEndDate_update">
+                                    <strong class="mr-2">마감일</strong>
+                                    <input type="date" name="taskEnddate" id="taskEnddate${pb.BOARDNO}" class="stoolDateInput" value="${t.TASKENDDATE}"/>
+                                </div>  
+                                <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">우선순위</strong>
+                                    <input type="hidden" id="taskPriority${pb.BOARDNO}" name="taskProiority" value="${t.TASKPROIORITY}"/>
+                                    <div class="dropdown">
+                                        <button type="button" id="prioritySelectBtn${pb.BOARDNO}" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
+	                                    	<c:if test="${t.TASKPROIORITY eq '없음'}">
+	                                    		<i class="fas fa-times stoolGrey mr-3" style="font-size:17px;"></i>없음
+	                                    	</c:if>
+	                                    	<c:if test="${t.TASKPROIORITY eq '낮음'}">                                    	
+	                                            <i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음
+	                                        </c:if>
+	                                    	<c:if test="${t.TASKPROIORITY eq '보통'}"> 
+	                                            <i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통
+	                                        </c:if>
+	                                    	<c:if test="${t.TASKPROIORITY eq '높음'}">                                             
+	                                            <i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음
+	                                        </c:if>
+	                                    	<c:if test="${t.TASKPROIORITY eq '긴급'}">                                             
+	                                            <i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급
+	                                        </c:if> 
+                                        </button>
+                                        <div class="dropdown-menu text-center" id="taskPriority-dropItem">
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="없음" onclick="fn_priority_update(this, '없음', ${pb.BOARDNO});"><i class="fas fa-times stoolGrey mr-3" style="font-size:17px;"></i>없음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="낮음" onclick="fn_priority_update(this, '낮음', ${pb.BOARDNO});"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="보통" onclick="fn_priority_update(this, '보통', ${pb.BOARDNO});"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="높음" onclick="fn_priority_update(this, '높음', ${pb.BOARDNO});"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
+                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="긴급" onclick="fn_priority_update(this, '긴급', ${pb.BOARDNO});"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
+                                        </div>
+                                    </div>                   
+                                </div>                                  
+                                <div id="taskContentBox" class="col-12 d-flex justify-content-center">
+                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;">${t.TASKCONTENT}</textarea>
+                                </div>
+                            </div>
+                        </div>   
+	
+	                        <!-- 공통 하단 -->                        
+	                        <div class="w-100 p-3">
+	                            <!-- 공통) 태그 & 언급 -->
+	                            <!-- 태그 입력 -->
+	                            <div class="col-12 addTagListBox mb-2">
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-2">태그</strong>
+	                                    <div class="w-100 d-flex flex-wrap align-items-center addTagList_update">
+	                                    
+	                                    <c:forEach items="${hashTag}" var="ht">
+											<c:if test="${t.BOARDNO==ht.BOARDNO}">
+											<input type="hidden" name="oriTags${ht.BOARDNO}" value="${ht.HASHTAGTEXT}"/>
+                                                <p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>
+													<span style='color:#25558F;'>#</span>
+													<span class='tagText'>${ht.HASHTAGTEXT}</span>
+													<i class='fas fa-minus-circle stoolGrey ml-2' onclick='fn_deleteTag_update(this,${ht.BOARDNO},${ht.HASHTAGNO})'></i>
+												</p>
+		                                    </c:if>
+	                                    </c:forEach>		                                    
+                                    
+	                                        <div class="d-flex addTagInputDiv pl-2 pr-2 ml-2">
+	                                            # <input type="text" onkeyup="fn_addTag_update(this,${t.BOARDNO})" placeholder="태그입력"/>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 태그문자열 -->
+	                            	<input type="hidden" id="checkTagStr${t.BOARDNO}" value=""/>
+	                            	
+	                                <hr class="w-100">
+	                            </div>  <!-- 태그 입력 끝 -->     
+	                            
+	                            
+	                            <!-- 언급 입력 -->
+	                            <div class="col-12 addMentionListBox mb-2">                             
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-1">언급할 참여자 추가</strong>
+	                                    <div id="" class="w-100 d-flex flex-wrap align-items-center addMentionList_update">
+	                                        <c:forEach items="${notification}" var="n">
+											<c:if test="${ (t.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'task')}">
+											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
+                                                <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/images/defaultProfile.png">
+                                                    </div>
+                                                    <c:forEach items="${projectMember}" var="pm">
+                        							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <span><c:out value="${pm.userName}"/></span>
+                                                    <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
+                            							<i class='fas fa-minus-circle stoolPink'></i>
+                            						</button>
+                                                    </c:if>
+                                                    </c:forEach>
+                                                </div>
+											</c:if>
+											</c:forEach>
+	                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="$('#addMentionModal_update${pb.BOARDNO}').modal('show');">언급 추가</button>                       
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 언급문자열 -->
+	                            	<input type="hidden" id="checkMentionStr${t.BOARDNO}" value=""/>
+	                            		                                
+	                                <hr class="w-100">
+	                            </div>  <!-- 언급 입력 끝 -->    
+	
+	                            <!-- 공통) 파일 미리보기 -->
+	                            <div id="" class="col-12 mb-2">
+	                                <strong class="mb-2">업로드 파일</strong>
+	                                <div class="col-12 d-flex flex-column mb-2">
+	                                    <p id="imgFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
+	                                        <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
+	                                        	첨부이미지
+	                                    </p>
+	                                    <div id="oriImgFilesPreview_update${pb.BOARDNO}" class="w-100 d-flex justify-content-center">
+	                                        <div class="update_oriImgFileBox w-100 row">
+                                                <c:forEach var="tai" items="${taskAttachment}">
+                                    			<c:if test="${tai.TASKNO==t.TASKNO}">
+                                    			<c:set var="attachmentCk" value="Y" />
+                                    			<c:set var = "splitText" value = "${fn:split(tai.TASKRENAME,'_')}"/>
+                                    			<c:if test="${splitText[0] eq 'img'}">
+                                                <div class='col-2 p-1' style='height: 150px;'>
+                                                    <div class='imgPreview h-100' onclick="fn_fileDownload(${projectInfo.PROJECTNO},'${tai.TASKORINAME}','${tai.TASKRENAME}');">
+                                                        <img src='${path}/resources/upload/selectedProject${pb.PROJECTNO}/${tai.TASKRENAME}'/> 
+                                                    </div> 
+                                                </div>                            
+                                                </c:if>                                
+                                                </c:if>                                
+                                    			</c:forEach>                                                      
+	                                        </div>
+	                                        
+	                                        <!-- new 이미지 첨부파일 -->
+	                                        <div class="update_newImgFileBox w-100 row d-none">
+                                                  
+	                                        </div>
+	                                    </div>
+	                                </div>
+
+	                                
+	                                <div class="col-12 d-flex flex-column">
+	                                    <p id="updateFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
+	                                        <i class="fas fa-file-upload stoolGrey" style="font-size: 20px;"></i>
+	                                       	 첨부파일
+	                                    </p>
+	                                    <div id="oriFilesPreview_update" class="w-100 d-flex justify-content-center">
+	                                        <div class="update_oriFileBox w-100 row">
+												<c:forEach var="taf" items="${taskAttachment}">
+                                       			<c:if test="${taf.TASKNO==t.TASKNO}">
+                                       			<c:set var="attachmentCk" value="Y" />
+                                       			<c:set var = "splitText" value = "${fn:split(taf.TASKRENAME,'_')}"/>
+                                       			<c:if test="${splitText[0] eq 'file'}">
+                                                   <div class='col-4 p-1 w-100' style='height: 46px;'>
+                                                       <div class='filePreview_view w-100 h-100 pl-3 pr-3 d-flex justify-content-between align-items-center'>
+                                                           <div class='d-flex align-items-center'>
+                                                               <i class='fas fa-file text-info mr-2' style='font-size: 25px; color: #D0D0D4;'></i>
+                                                               <span>
+                                                               	<c:out value="${taf.TASKRENAME}"/>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+												</c:if>                                
+                                                </c:if>                                
+                                       			</c:forEach>     
+	                                        </div>
+	                                        
+	                                        <!-- new 첨부파일 -->
+	                                        <div class="update_newFileBox w-100 row d-none">
+
+	                                        </div>	                                        
+	                                        
+	                                    </div>
+	                                </div>  
+	                                
+
+	                                                              
+	                            </div>
+	                        </div>
+	
+	
+	                        <!-- 공통) 하단 버튼 -->
+	                        <div id="writeCategory-bordBtns" class="row w-100 border-top border-light m-0 justify-content-between align-items-center">
+	                            <div class="col-5 w-100 d-flex align-items-center"> 
+	                                <div id="fileUploadBtns" class="">
+	                                    <div class="d-flex align-items-center">
+	                                        <!-- 파일 업로드 -->                                      
+	                                        <button type="button" class="btn mr-2 ml-2" id="updateFilesBtn" onclick="$('#newFiles${pb.BOARDNO}').click();">
+	                                            <i class="fas fa-file-upload stoolGrey" style="font-size: 25px;"></i>
+	                                        </button>
+	                                        <!-- 이미지파일 업로드 -->                                    
+	                                        <button type="button" class="btn" id="updateImgFilesBtn" onclick="$('#newImgFiles${pb.BOARDNO}').click();">
+	                                            <i class="fas fa-images stoolGrey" style="font-size: 25px;"></i>
+	                                        </button>
+	                                    </div>
+	                                </div>                                                                          
+	                            </div>      
+	                            <div class="col-7 w-100 d-flex align-items-center justify-content-end">                              
+	                                <button type="button" onclick="fn_updateFormCancel(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	취소
+	                                </button>                             
+	                                <button type="submit" onclick="fn_updateSubmit(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	수정완료
+	                                </button>    
+	                            </div>                                                              
+	                        </div>
+						</div>
+	                        
+	                </form>                    
+                </div>
+                    <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->                    
+                    
+                    
+                    
                     
                 	</c:if>
                 	</c:forEach>   <!-- 타입별로 forEach 닫기 -->                	                	
@@ -1164,6 +1504,9 @@
 					<c:if test="${pb.BOARDTYPE eq 'S'}">
 					<c:forEach items="${scheduleList }" var="s">
 					<c:if test="${pb.BOARDNO == s.BOARDNO}">
+					
+					<div id="viewBoxDiv${pb.BOARDNO}">
+					
                     <div class="pjViewBox w-100 p-3" value="p${pb.BOARDNO}">                               
                         <div class="viewBundle w-100 bg-white rounded p-3">
 
@@ -1220,7 +1563,7 @@
                                             <i class="fas fa-bars stoolDarkBlue-text" style="font-size: 25px;" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu dropR" style="min-width: 120px;">
-                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate()" style="cursor: pointer;">수정</a>
+                                            <a class="dropdown-item text-center" onclick="fn_viewPostUpdate(${pb.BOARDNO})"  style="cursor: pointer;">수정</a>
                                             <a class="dropdown-item text-center" onclick="fn_viewPostDelete(${projectInfo.PROJECTNO},${pb.BOARDNO})" style="cursor: pointer;">삭제</a>
                                         </div>
                                     </div>
@@ -1248,7 +1591,11 @@
                                             </strong> <!-- 일정제목 -->
                                             <hr class="w-100">
                                             <strong class="">
-                                            	<fmt:formatDate value="${s.SCHEDULETIME}" dateStyle="long"/>
+                                            	<fmt:formatDate value="${s.SCHEDULESTARTDATE}" dateStyle="long"/>
+                                            	<c:if test="${s.SCHEDULESTARTDATE ne s.SCHEDULEENDDATE}">
+                                            		<c:out value=" ~ "/>
+                                            		<fmt:formatDate value="${s.SCHEDULEENDDATE}" dateStyle="long"/>
+                                            	</c:if>
                                             </strong> <!-- 일정 실행일 -->
                                         </div>
                                     </div>
@@ -1388,13 +1735,6 @@
     
 
                         </div><!-- viewBundle 닫기 -->
-
-
-
-                        <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
-                        <!-- 수정할 때 추가 -->
-                        <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->
-
 
 
                     </div><!-- viewBox 닫는 태그 -->
@@ -1571,6 +1911,172 @@
                     </div>
                     <!--★☆★ 댓글 끝 ----------------------------------------------------------------------------------------------------------------------->
                     
+					</div> <!-- viewBoxDiv 닫는 태그 -->
+                    
+                    <!-- ※※※※ 수정 DIV ※※※※※※※※※※※※※※  ----------------------------------------------------------------------------------------->
+                    <!-- 3. 일정 수정 -->
+                <div id="postUpdateFormDiv${pb.BOARDNO}" class="d-none">
+	 				<form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="postUpdateForm${pb.BOARDNO}">
+	                <!-- from 공통 hidden input모음 -->
+					    <!-- 0) 게시글 번호 -->
+					    <input type="hidden" name="projectBoardNo" value="${pb.BOARDNO}"/>    
+					    <!-- 1) 프로젝트 번호 저장 -->
+					    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
+	                    <!-- 2) 글 타입 -->
+	                    <input type="hidden" name="boardType" id="boardType" value="${pb.BOARDTYPE}"/>
+	                    <!-- 3) 게시글 번호 (ex : writingNo) -->
+	                    <input type="hidden" name="postNo" value="${s.SCHEDULENO}"/>
+	                    <!-- 4) 작성자 -->
+	                    <input type="hidden" name="writer" value="${s.SCHEDULEID}"/>
+	                    <!-- 5) 파일 -->                
+	                    <input type="file" name="newFiles" id="newFiles${pb.BOARDNO}" multiple style="display: none;" class="newFiles"
+	                    	onchange="fn_handleFilesSelect_update(${pb.BOARDNO});"/>
+	                    <!-- 6) 이미지파일 -->
+	                    <input type="file" name="newImgFiles" id="newImgFiles${pb.BOARDNO}" multiple style="display: none;" accept="image/*" class="newImgFiles"/>
+	                    
+	                
+	                    <!-- 7) 태그 -->
+	                    <input type="hidden" name="deleteTagListStr" id="deleteTagListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newTagListStr" id="newTagListStr${pb.BOARDNO}"/>
+	                    <!-- 8) 언급 -->
+	                    <input type="hidden" name="deleteMentionListStr" id="deleteMentionListStr${pb.BOARDNO}"/>
+	                    <input type="hidden" name="newMentionListStr" id="newMentionListStr${pb.BOARDNO}"/>
+	                <!-- from 공통 hidden input모음 끝 -->	                
+	                                    
+                    <!-- 일정 INPUT -->
+                    
+	
+	                    <div id="pjUpdateWriteBox" class="w-100">
+	
+						<div id="writeCategory-schedule" class="row w-100 m-0">
+                            <div id="scheduleBox" class="w-100 p-3">
+                                <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mt-3 mb-3">
+                                    <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        value="${s.SCHEDULETITLE}" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                </div>
+                                <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">시작일</strong>
+                                    <input type="date" id="scheduleStartDate_update${s.BOARDNO}" name="scheduleStartdate" class="stoolDateInput"
+                                    		value="${s.SCHEDULESTARTDATE}" />
+                                </div>   
+                                <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">마감일</strong>
+                                    <input type="date" id="scheduleEndDate_update${s.BOARDNO}" name="scheduleEnddate" class="stoolDateInput"
+                                    	value="${s.SCHEDULEENDDATE}" />
+                                </div>    
+                                <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
+                                    <strong class="mr-2">장소</strong>
+                                    <div class="d-flex align-items-end">
+                                    	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="execDaumPostcode_update(${s.BOARDNO});">주소 검색</button>
+                                    	<div id="schedulePlaceText_update${s.BOARDNO}" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2">
+                                    		${s.SCHEDULEPLACE}
+                                    	</div>
+                                    	<input type="hidden" id="schedulePlace_update${s.BOARDNO}" name="schedulePlace"
+                                    		value="${s.SCHEDULEPLACE}"/>
+                                    </div>
+                                </div>      
+                                <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
+									 <div id="mapBox${s.BOARDNO}" style="height:300px; display: none;" class="border w-100">
+									 	<div id="map${s.BOARDNO}" style="height:300px;" class="w-100"></div>
+									 </div>
+                                </div>                                                                                        
+                                <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
+                                    <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
+                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;">${s.SCHEDULEMEMO}</textarea>
+                                </div>
+                            </div>
+                        </div>
+	
+	                        <!-- 공통 하단 -->                        
+	                        <div class="w-100 p-3">
+	                            <!-- 공통) 태그 & 언급 -->
+	                            <!-- 태그 입력 -->
+	                            <div class="col-12 addTagListBox mb-2">
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-2">태그</strong>
+	                                    <div class="w-100 d-flex flex-wrap align-items-center addTagList_update">
+	                                    
+	                                    <c:forEach items="${hashTag}" var="ht">
+											<c:if test="${s.BOARDNO==ht.BOARDNO}">
+											<input type="hidden" name="oriTags${ht.BOARDNO}" value="${ht.HASHTAGTEXT}"/>
+                                                <p class='selectedTag m-0 pl-2 pr-2 font-weight-bolder d-flex align-items-center'>
+													<span style='color:#25558F;'>#</span>
+													<span class='tagText'>${ht.HASHTAGTEXT}</span>
+													<i class='fas fa-minus-circle stoolGrey ml-2' onclick='fn_deleteTag_update(this,${ht.BOARDNO},${ht.HASHTAGNO})'></i>
+												</p>
+		                                    </c:if>
+	                                    </c:forEach>		                                    
+                                    
+	                                        <div class="d-flex addTagInputDiv pl-2 pr-2 ml-2">
+	                                            # <input type="text" onkeyup="fn_addTag_update(this,${s.BOARDNO})" placeholder="태그입력"/>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 태그문자열 -->
+	                            	<input type="hidden" id="checkTagStr${s.BOARDNO}" value=""/>
+	                            	
+	                                <hr class="w-100">
+	                            </div>  <!-- 태그 입력 끝 -->     
+	                            
+	                            
+	                            <!-- 언급 입력 -->
+	                            <div class="col-12 addMentionListBox mb-2">                             
+	                                <div class="w-100 d-flex flex-column">
+	                                    <strong class="mb-1">언급할 참여자 추가</strong>
+	                                    <div id="" class="w-100 d-flex flex-wrap align-items-center addMentionList_update">
+	                                        <c:forEach items="${notification}" var="n">
+											<c:if test="${ (s.BOARDNO==n.BOARDNO) and (n.NOTTYPE eq 'schedule')}">
+											<input type="hidden" name="oriMentions${n.BOARDNO}" value="${n.RECEIVEID}"/>
+                                                <div id="" class='d-flex justify-content-between align-items-center selectedWorker p-1 pl-2 pr-2 ml-2 mr-2'>
+                                                    <div class='selectedWorker_imgDiv mr-2'>
+                                                        <img src="${path}/resources/images/defaultProfile.png">
+                                                    </div>
+                                                    <c:forEach items="${projectMember}" var="pm">
+                        							<c:if test="${pm.userId eq n.RECEIVEID}">
+                                                    <span><c:out value="${pm.userName}"/></span>
+                                                    <button type="button" onclick="fn_deleteMentionListStr(this, ${n.BOARDNO}, '${n.RECEIVEID}');" class="p-0 ml-2">
+                            							<i class='fas fa-minus-circle stoolPink'></i>
+                            						</button>
+                                                    </c:if>
+                                                    </c:forEach>
+                                                </div>
+											</c:if>
+											</c:forEach>
+	                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="$('#addMentionModal_update${pb.BOARDNO}').modal('show');">언급 추가</button>                       
+	                                    </div>
+	                                </div>
+	                                
+	                            	<!-- 중복확인용 언급문자열 -->
+	                            	<input type="hidden" id="checkMentionStr${s.BOARDNO}" value=""/>
+	                            </div>  <!-- 언급 입력 끝 -->    
+
+	                        </div>
+	
+	
+	                        <!-- 공통) 하단 버튼 -->
+	                        <div id="writeCategory-bordBtns" class="row w-100 border-top border-light m-0 justify-content-between align-items-center">
+	                            <div class="col-5 w-100 d-flex align-items-center"> 
+	                                <div id="fileUploadBtns" class="">
+	                                </div>                                                                          
+	                            </div>      
+	                            <div class="col-7 w-100 d-flex align-items-center justify-content-end">                              
+	                                <button type="button" onclick="fn_updateFormCancel(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	취소
+	                                </button>                             
+	                                <button type="submit" onclick="fn_updateSubmit(${pb.BOARDNO});" class="btn m-2 stoolDarkBlue">
+	                                    	수정완료
+	                                </button>    
+	                            </div>                                                              
+	                        </div>
+						</div>
+	                        
+	                </form>                    
+                </div>
+                    <!-- ※※※※ 수정 DIV 끝 ※※※※※※※※※※※※※※  --------------------------------------------------------------------------------------->                    
+                                        
+                    
                 	</c:if>
                 	</c:forEach>   <!-- 타입별로 forEach 닫기 -->                	                	
                 	</c:if>   <!-- 타입별로 forEach 닫기 -->                	                	
@@ -1617,7 +2123,48 @@
             </div>
         </div>
     </div> 
-    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ]  끝 -->                      
+    <!-- 게시글 작성 [ 공통 - 언급할 참여자 추가 ]  끝 -->     
+    
+    
+    <!-- 게시글 작성 [ 업무 - 담당자 추가 ] -->
+    <div class="modal fade" id="addWorkerModal_update${pb.BOARDNO}">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content addWorkerModal">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title">담당자 추가하기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
+                        <input type="text" name="addWorker_search" placeholder="담당자 이름 검색" class="w-100 addWorker_search"/>
+                    </div>
+                    <div class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                        <!-- 프로젝트 참여자 데이터 넣기 -->
+                        <c:forEach items="${projectMember}" var="pm">
+                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="addWorker_profile_div mr-2">
+                                    <img src="${path}/resources/images/defaultProfile.png">
+                                </div>
+                                <p class="m-0"><c:out value="${pm.userName}"/></p>
+                                <span class="d-none"><c:out value="${pm.userId}"/></span>
+                            </div>
+                            <button type="button" class="btn stoolDarkBlue-outline align-self-end" onclick="fn_addWorker_update(this, ${pb.BOARDNO},'${pm.userId}','${pm.userName}');">
+                                	선택
+                            </button>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                </div>            
+            </div>
+        </div>
+    </div> 
+    <!-- 게시글 작성 [ 업무 - 담당자 추가 ]  끝 -->                    
             
 <!-- 모달모음 끝 ---------------------------------------------------------------------------------------------------------------------------->                 
                 

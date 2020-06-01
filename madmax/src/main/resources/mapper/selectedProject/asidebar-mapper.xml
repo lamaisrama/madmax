@@ -17,6 +17,10 @@
 		select a.*,p.boardtype from TASKATTACHMENT a join task t on(a.taskno=t.taskno) join PROJECTBOARD p on (p.boardno=t.boardno) where projectno=#{pjNo}
 	</select>
 	
+	<select id="checkPjMember" parameterType="_int">
+		select count(*) from projectMember where userid=#{userid} projectno=#{pjNo}
+	</select>
+	
 	<!-- 프로젝트 참여자 초대하기 -->
 	<insert id="insertProjectMember" parameterType="map">
 		INSERT INTO PROJECTMEMBER VALUES(SEQ_PJMEMBERNO.NEXTVAL,#{pjno},#{userid})

@@ -9,6 +9,7 @@ import com.madmax.stool.project.model.vo.Project;
 import com.madmax.stool.task.model.vo.NotiMember;
 import com.madmax.stool.task.model.vo.TaskFilter;
 import com.madmax.stool.task.model.vo.TaskPb;
+import com.madmax.stool.task.model.vo.TaskProject;
 
 
 @Repository
@@ -44,6 +45,12 @@ public class TaskDaoImpl implements TaskDao {
 	public List<NotiMember> selectTaskNoti(SqlSessionTemplate session, int boardNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("task.selectTaskNoti", boardNo);
+	}
+
+	@Override
+	public TaskProject selectProjectTitle(SqlSessionTemplate session, int pjNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("task.selectProjectTitle",pjNo);
 	}
 
 }
