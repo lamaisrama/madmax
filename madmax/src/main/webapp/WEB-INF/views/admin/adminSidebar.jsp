@@ -143,32 +143,26 @@
        	
       }
 
+ 	*{
+		 background-color: #747d8c !important;
+		 color: white !important;
+	} 
+	
+	.aside-container{
+		border: 1px solid white;
+		border-radius:15px;
+	}
+	
+	a:link { text-decoration: none; }
+ 	a:visited {text-decoration: none; }
+ 	a:hover { text-decoration: underline; }
+	
 </style>
 
 <div class="col col-sm-2" >
 	<br>	
 	<nav>
 		<ul class="menu">
-			<li>
-				<div class="user-container text-center">
-					<div class="imgbox">
-		                <div class="img2">
-		                	<img src="${path}/resources/upload/profile/${loginUser.profile}" 
-		                		style="border: 3px solid #233C61; 
-					            border-radius: 500px; width:150px; height:150px; overflow:hidden;">
-            			</div> 
-			        </div>   
-
-					<%-- <button type="button" class="userBtn btn btn-light">
-						<img src="${path }/resources/upload/profile/${loginUser.profile }" style="width: 100px; height: auto;">
-					</button> --%>
-					<br><br>
-					<c:if test="${loginUser!=null}">
-						<div><strong><c:out value="${loginUser.userName }"/></strong>님, 안뇽!</div>
-					</c:if>				
-				</div>
-			</li>
-			<hr>
 			<li>
 				<!-- Elements Section Begin -->
 	            <div class="row">

@@ -173,7 +173,7 @@ public class ApprovalController {
 		
 		m.addAttribute("loc", loc);
 		m.addAttribute("msg", msg);
-		m.addAttribute("script", "opener.window.reload(); window.close();");
+		m.addAttribute("script", "window.close();");
 		
 		return "common/msg";
 	}
@@ -480,7 +480,7 @@ public class ApprovalController {
 			}
 			if(appr.getTemp().equals("temp")) msg = "임시 저장 완료";
 			else msg ="결재문서 작성 완료";
-			loc = "";
+			loc = "/appr/apprReqBox.do";
 			
 		}catch(RuntimeException e) {
 			for(ApprAttachment a : files) {
@@ -488,13 +488,13 @@ public class ApprovalController {
 				if(delF.exists()) delF.delete();
 				e.printStackTrace();
 				msg = "결재 문서 작성 실패 : "+e.getMessage();
-				loc = "";
+				loc = "/appr/apprTempBox.do";
 				
 			}
 		}
 		m.addAttribute("loc", loc);
 		m.addAttribute("msg", msg);
-		m.addAttribute("script", "opener.window.reload(); window.close();");
+		m.addAttribute("script", "window.close();");
 			
 		return "common/msg";
 	}
