@@ -31,4 +31,6 @@ public class Approval {
 	
 
 	private String typeTitle;
+	
+	private String temp;
 }

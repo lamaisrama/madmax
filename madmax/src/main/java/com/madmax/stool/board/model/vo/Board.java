@@ -20,4 +20,5 @@ public class Board {
 	private Date boardDate;
 	private int boardReadCount;
 	
+	
 }

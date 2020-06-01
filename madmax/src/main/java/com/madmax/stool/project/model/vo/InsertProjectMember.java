@@ -12,5 +12,9 @@ public class InsertProjectMember {
 		private int pjMemberNo;
 		private int projectNo;
 		private String userId;
+		private String userName;
+		private String profile;
+		private String deptCode;
+		private String jobCode;
 	
 }

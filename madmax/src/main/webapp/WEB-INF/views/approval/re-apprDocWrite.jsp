@@ -29,14 +29,16 @@
 </head>
 
 <body>
-	<form action="${path }/appr/reDraftFormEnd" method="post"  enctype="multipart/form-data" onsubmit="return beforeSubmit();">
+	<form action="${path }/appr/reDraftFormEnd" method="post" id="submitDoc" enctype="multipart/form-data" onsubmit="return beforeSubmit();">
 		<input type="hidden" name="apprDocTypeNo" value="${appr.apprDocTypeNo }">
+		<input type="hidden" name="temp" id="isTemp" value="normal">
 		<input type="hidden" name="apprNo" value="${appr.apprNo }">
 		<input type="hidden" name="userId" value="${loginUser.userId }">
 		<div class="header">
+			<button type="button" class="btn btnSecondary" style="width:8em" onclick="attachAppredDoc();">기결재첨부</button>
+			<button type="button" class="btn btnSecondary" onclick="saveAsTemp();">임시저장</button>
 			<button type="button" class="btn btnPrimary" onclick="openLine();">결재선</button>
-			<button type="button" class="btn btnLight" style="width:7em" onclick="attachAppredDoc();">기결재첨부</button>
-			<button type="button" class="btn btnLight" onclick="">임시저장</button>
+			<button type="submit" class="btn btnPrimary ">결재요청</button>
 			<button type="button" class="btn btnLight" onclick="closePage();">취소</button>
 		</div>
 		<h3 style="text-align:center; margin:30px auto;">${appr.typeTitle }</h3>
@@ -297,6 +299,11 @@
 		function fileDownload(ori, rename){
 			ori=encodeURIComponent(ori);
 			location.href="${path}/appr/fileDownload?ori="+ori+"&rename="+rename;
+		}
+		
+ 		function saveAsTemp(){
+			$("#isTemp").val("temp");
+			$("#submitDoc").submit();
 		}
 		
 	</script>

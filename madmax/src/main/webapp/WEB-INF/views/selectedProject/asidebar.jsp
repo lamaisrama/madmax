@@ -22,7 +22,6 @@
 <jsp:include page="/resources/js/selectedProject-Ajax.jsp" />
 
 
-<div class="col-sm-3">
 	<!-- <div class="row"> -->
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
 		<div class="mt-3">
@@ -300,7 +299,7 @@
 		        });
 			</script>
 	</div>
-	</div>
+
 	<!--col-sm-3-->
 
 <!-- </div> -->

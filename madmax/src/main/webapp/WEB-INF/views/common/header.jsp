@@ -20,7 +20,6 @@
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <!-- google icon-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <!-- 카카오지도 api&services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services,clusterer,drawing"></script>
 <!-- header CSS -->
@@ -41,7 +40,8 @@
 					<li class="nav-item active"></li>
 				</ul>
 				<c:if test="${loginUser.userId=='admin'}">
-					<button type="button" class="btn headerBtn" onclick="location.replace('${path}/admin/adminIndex.do')">관리자</button>
+					<button type="button" class="headerBtn" style="margin-right:10px;"
+						onclick="location.replace('${path}/admin/adminIndex.do')">관리자</button>
 				</c:if>
 				<button type="button" class="headerBtn" data-toggle="modal" data-target="#checkState" >출/퇴근</button>
 				<!-- 모달창 -->
@@ -102,13 +102,15 @@
 	<!-- 알림 메시지 표시 구역 -->
 	<div id="snackbar" ></div>	
 	
-	<div class="container-fluid">
-		<div class="row">	
+	<div class="container-fluid content-container">
+		<div class="row" style="height:100vh;">	
 		
 		
 <script>
 	//소켓 서버와 연결
-	var socket = new WebSocket('ws://localhost:9090/${path}/notification');
+	//var socketUrl = 'wss://rclass.iptime.org';
+	var socketUrl= 'ws://localhost:9090'
+	var socket = new WebSocket(socketUrl+'${path}/notification');
 	
 	socket.onopen=function(){
 		console.log('info : connection opend');

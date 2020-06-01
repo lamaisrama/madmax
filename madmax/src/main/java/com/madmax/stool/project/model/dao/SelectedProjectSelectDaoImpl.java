@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
+import com.madmax.stool.project.model.vo.Tag;
 
 @Repository
 public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
@@ -138,6 +140,23 @@ public class SelectedProjectSelectDaoImpl implements SelectedProjectSelectDao {
 	@Override
 	public List<Map<String, Object>> selectUser(SqlSessionTemplate session) {
 		return session.selectList("selectedProjectSelect.selectUser");
+	}
+
+	@Override
+	public List<TaskReport> selectTaskReport(SqlSessionTemplate session, int pjNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("selectedProjectSelect.selectTaskReport",pjNo);
+		
+	}
+	
+	@Override
+	public List<Tag> selectProjectTag(SqlSessionTemplate session, int pjNo) {
+		return session.selectList("selectedProjectSelect.selectProjectTag",pjNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectProjectBoardWithTag(SqlSessionTemplate session, Map<String, Object> pjInfo) {
+		return session.selectList("selectedProjectSelect.selectProjectBoardWithTag",pjInfo);
 	}
 	
 	

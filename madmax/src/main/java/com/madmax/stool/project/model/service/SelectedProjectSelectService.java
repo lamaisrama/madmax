@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
+import com.madmax.stool.project.model.vo.Tag;
 
 public interface SelectedProjectSelectService {
 
@@ -30,7 +32,9 @@ public interface SelectedProjectSelectService {
 	int selectFavorit(Map<String, Object> pjInfo);
 	List<ProjectMember> selectProjectMemberList(int pjNo);
 	List<Map<String, Object>> selectBookmarkList(Map<String, Object> pjInfo);
+	List<Tag> selectProjectTag(int pjNo);
+	List<Map<String, Object>> selectProjectBoardWithTag(Map<String, Object> pjInfo);
 
-
+	List<TaskReport> selectTaskReport(int pjNo);
 
 }

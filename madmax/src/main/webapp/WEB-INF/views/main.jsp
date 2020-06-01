@@ -75,7 +75,7 @@
                                   	longitude = position.coords.longitude;
                                   	console.log(latitude);
                                   	console.log(longitude);
-									apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=eff8dc2d4e17c75db816ed11e4456e57";
+									apiURI = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=eff8dc2d4e17c75db816ed11e4456e57";
                                   	weatherF(apiURI);
                                   });
 
@@ -137,8 +137,8 @@
 						<div class="notice mb-1">
 							<ul class="rolling">
 								<c:forEach items="${blist }" var="b" >
-									<li>
-										<a href="${path }/board/boardList.do?no=${b.boardNo}">${b.boardTitle}</a>
+									<li style="border:none; border-bottom:1px dotted lightgray; padding:1px 2px;">
+										<a href="${path }/board/boardView.do?no=${b.boardNo}">${b.boardTitle}</a>
 									</li>
 								</c:forEach>
 							</ul>
@@ -152,19 +152,23 @@
 							var height =  $(".notice").height();
 							var num = $(".rolling li").length-3;
 							var max = height*num;
+							console.log(max);
 							var move = 0;
-							function noticeRolling(){
+							/* function noticeRolling(){
 								move += height;
 								$(".rolling").animate({"top":-move},600,function(){
 									if( move >= max ){
-										$(this).css("top",0);
+										$(this).css("top",800);
 										move = 0;
 									};
 								});
-							};
+							}; */
+							function noticeRolling(){
+								$(".rolling").append($(".rolling>li").first());
+							}
 							noticeRollingOff = setInterval(noticeRolling,1000);
-/* 							$(".rolling").append($(".rolling li").first().clone()); */
-							$(".rolling").append($(".rolling li").clone());
+							/* $(".rolling").append($(".rolling li").first().clone()); */
+							/* $(".rolling").append($(".rolling li").clone()); */
 							/* console.log($(".rolling li").first().clone()); */
 							$(".rolling_stop").click(function(){
 								clearInterval(noticeRollingOff);
@@ -177,12 +181,12 @@
                         </div>
 					<br>
                     <br>
-                    <div class="fvcontainer mt-3">
-                      <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
+                    <div class="col fvcontainer mt-3">
+                      <h5 class="text-left"><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
                     <!-- 즐겨찾기 프로젝트 ! -->
                     <div class="container">
 						<br>
-                      <div class="d-flex justify-content-between">
+                      <div class="d-flex justify-content-start">
 							<c:forEach items="${list }" var="f" begin="0" end="4">
 						     	<div class="favoriteBox">
 							       	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
