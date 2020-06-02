@@ -19,7 +19,7 @@
 <!-- aside.jsp에 대한 js -->
 <script type="text/javascript" src="${path}/resources/js/asidebar.js"></script>
 <script type="text/javascript" src="${path}/resources/js/asidebar.js"></script>
-<jsp:include page="/resources/js/selectedProject-Ajax.jsp" />
+<%-- <jsp:include page="/resources/js/selectedProject-Ajax.jsp" /> --%>
 
 
 	<!-- <div class="row"> -->
@@ -102,7 +102,7 @@
 							data-target="#member${pm.userId}"
 							data-profile="${pm.profile }"
 							data-userName="${pm.userName }">
-									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px; width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile/${pm.profile}"
@@ -115,57 +115,51 @@
 						</li>
 						
 						<!-- 멤버별 프로필 Modal : 멤버 리스트 클릭시 뜨는 프로필 카드-->
-    <!-- 카드 모달 도전 -->
-<div class="modal fade" id="member${pm.userId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
-	<div
-		class="modal-dialog modal-dialog-centered d-flex justify-content-center"
-		role="document">
-		<div class="modal-content" style="width: 400px; height: 700px;">
-			<div id="profileBox">
-				<img id="cardProfileImg"
-					src="${path}/resources/upload/profile/${pm.profile}"
-					alt="cardProfileImg"
-					style="object-fit: cover; height: 400px; width: 398px;">
-			</div>
-		
-			<div>
-				<div style="padding: 25px 40px;">
-					<div>
-						<p style="color:#25558F;">${pm.deptName}</p>
-						<strong id="userName">
-							${pm.userName}
-						</strong> 
-						<span>
-							${pm.jobName}
-						</span>
-					</div>
-					<hr>
-					<div style="margin-bottom: 20px;">
-						<p class="" style="color:#595959;">이메일</p>	
-						<p id="email">
-							${pm.email }
-						</> 
-						<hr> 
-						<p class="" style="color:#595959;">연락처</p>
-						<p id="phoneNo">
-							${pm.phone }
-						</p> 
-						<br> 
-						<!-- <span id="officeNO">02-567-8901</span> -->
-					</div>
-					<!-- <div style="padding-top: 15px;" align="center">
-						<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
-						프로필 수정하기</button>
-					</div> -->
-				</div>
-			</div>
-		</div>
-		<!-- modal-content 끝 -->
-	</div>
-	<!-- modal-dialog 끝 -->
-</div>
-<!-- 카드 모달 도전 끝 -->
-						</c:if>
+						<!-- 카드 모달 도전 -->
+						<div class="modal fade" id="member${pm.userId}" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true" style="z-index: 10000;">
+							<div
+								class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+								role="document">
+								<div class="modal-content" style="width: 400px; height: 700px;">
+									<div id="profileBox">
+										<img id="cardProfileImg"
+											src="${path}/resources/upload/profile/${pm.profile}"
+											alt="cardProfileImg"
+											style="object-fit: cover; height: 400px; width: 398px;">
+									</div>
+
+									<div>
+										<div style="padding: 25px 40px;">
+											<div>
+												<p style="color: #25558F;">${pm.deptName}</p>
+												<strong id="userName"> ${pm.userName} </strong> <span>
+													${pm.jobName} </span>
+											</div>
+											<hr>
+											<div style="margin-bottom: 20px;">
+												<p class="" style="color: #595959;">이메일</p>
+												<p id="email">${pm.email } </>
+												<hr>
+												<p class="" style="color: #595959;">연락처</p>
+												<p id="phoneNo">${pm.phone }</p>
+												<br>
+												<!-- <span id="officeNO">02-567-8901</span> -->
+											</div>
+											<!-- <div style="padding-top: 15px;" align="center">
+												<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
+												프로필 수정하기</button>
+											</div> -->
+										</div>
+									</div>
+								</div>
+								<!-- modal-content 끝 -->
+							</div>
+							<!-- modal-dialog 끝 -->
+						</div>
+						<!-- 카드 모달 도전 끝 -->
+					</c:if>
 						</c:forEach>
 					</ul>
 				</div>
@@ -189,7 +183,7 @@
 									data-profile="${pm.profile }"
 									data-userName="${pm.userName }" 
 									>
-									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px; width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile${pm.profile}"
@@ -423,30 +417,29 @@ img#cardProfileImg {
 </div>
 <!-- 파일함 Modal 끝 -->
 
-<!-- 참여인원 전체보기 클릭시 보여지는 리스트에 대한 Modal -->
-<div class="modal fade" id="chatAllMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalScrollableTitle">프로젝트 참여자</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<!--modal header-->
-			<div class="modal-body">
-				<!-- Actual search box -->
-				<div class="form-group has-search">
-					<span class="fa fa-search form-control-feedback"></span> 
-					<input type="text" id="searchMember" class="form-control" placeholder="Search">
-				</div>
-				<!--search-->
-				<div class="row">
-					<div class="col-sm-12" style="height: 500px;">
-						<div class="projectJoinMember">
-							<p>프로젝트 참여자</p>
+<!-- 초대하기 모달 -->
+
+    <div class="modal fade" id="chatAllMemberModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center">
+            <div class="modal-content addWorkerModal">                
+                <!-- Modal Header -->
+                <div class="modal-header p-2 pl-3 pr-3">
+                    <h4 class="modal-title">프로젝트 참여자 보기</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>                
+                <!-- Modal body -->
+                <div class="modal-body" style="min-height:600px; max-height:600px;">
+                    <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
+                        <i class="fas fa-search mr-3 stoolGrey"></i>
+                        <input type="text" id="joinMemberSearch" name="addWorker_search" placeholder="이름 검색" class="w-100 addWorker_search"/>
+                    </div>
+                    <div id="joinMember" class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
+                        <!-- 프로젝트 참여자 데이터 넣기 -->
+                        
+                        
+                        <p>프로젝트 참여자</p>
 							<c:forEach var="pm" items="${projectMember}">
-							<div class="pjJoinAllMemberList d-flex align-items-center" 
+							<div class="pjJoinAllMemberList d-flex align-items-center" style="margin-bottom:7px;"
 							data-toggle="modal"
 							data-target="#member${pm.userId }">
 									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
@@ -455,7 +448,7 @@ img#cardProfileImg {
 										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
 									</div>				
-								<span id="pjmemberSearch">
+								<span id="pjmemberSearch" class="searchName">
 									<c:out value="${pm.userName}"/>
 								</span>
 								<c:if test="${pm.userId eq projectInfo.USERID  }">
@@ -464,26 +457,30 @@ img#cardProfileImg {
 								</c:if>
 							
 								<hr>
-							</div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--modal body-->
-		</div>
-	</div>
-</div>
+                        </div>
+                        </c:forEach>
+					                           
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                </div>            
+            </div>
+        </div>
+    </div> 
 
 <script>
-$(document).ready(function(){
-	  $("#searchMember").on("keyup", function() {
-	    var value = $(this).val().toLowerCase();
-	    $("#pjmemberSearch").find(function() {
-	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	    });
-	  });
+//모달 - 참여자 검색
+ $(document).ready(function() {
+	$("#joinMemberSearch").keyup(function(){
+//		alert("실행중");
+		var searchText = $(this).val();
+		$(".pjJoinAllMemberList").removeClass("d-flex");
+		$(".pjJoinAllMemberList").addClass("d-none");
+		var temp = $(".searchName:contains('"+ searchText +"')");
+		$(temp).parent().removeClass("d-none");
+		$(temp).parent().addClass("d-flex");
 	});
+});
 </script>
 <!-- 전체보기 리스트 모달창 끝-->
 
@@ -547,7 +544,7 @@ $(document).ready(function(){
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>                
                 <!-- Modal body -->
-                <div class="modal-body">
+                <div class="modal-body" style="min-height:600px; max-height:600px;">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
                         <input type="text" id="invitationSearch" name="addWorker_search" placeholder="초대할 멤버 이름 검색" class="w-100 addWorker_search"/>
@@ -557,7 +554,7 @@ $(document).ready(function(){
                         
                         
                         <c:forEach items="${user}" var="u">
-                        <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
+                        <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
                                     <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
@@ -566,11 +563,11 @@ $(document).ready(function(){
 										src="${path}/resources/upload/profile${u.PROFILE}"
 										alt="프로필사진">
 									</div>
+									
                                 </div>
-                                <p id="inviUserSearch" class="m-0"><c:out value="${u.USERNAME}"></c:out></p>
+                                <p id="inviUserSearch" class="searchName m-0"><c:out value="${u.USERNAME}"></c:out></p>
                               <%--   <p class="m-0"><c:out value="${u.USERID}"></c:out></p> --%>
-                            </div> 
-                           
+                            </div>  
                                 <input type="hidden" name="userid" id="userid" value="${u.USERID}"/> <!-- 아이디 -->
                                	<input type="hidden" name="pjno" id="pjno" value="${projectInfo.PROJECTNO }"  /><!-- 프로젝트 넘버 -->
                             	
@@ -585,19 +582,31 @@ $(document).ready(function(){
                     
                     
                     <script>
-	                    $(document).ready(function(){
+/* 	                    $(document).ready(function(){
 	                    	$("#invitationSearch").on("keyup", function() {
 	                    		var value = $(this).val().toLowerCase();
 	                    			$("p#inviUserSearch").filter(function() {
 	                    				console.log($(this).val());
 	                    				/*console.log($(this).children().eq(1).text());*/
-	                    				/* $(this).toggle($(this).children().eq(1).text().toLowerCase().indexOf(value) > -1) */
+	                    				/* $(this).toggle($(this).children().eq(1).text().toLowerCase().indexOf(value) > -1)
 	                    				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 	                    			});
 	                    	});
+	                    }); */
+	                    
+	                  //모달 - 참여자 검색
+	                    $(document).ready(function() {
+	                    	$("#invitationSearch").keyup(function(){
+//	                    		alert("실행중");
+	                    		var searchText = $(this).val();
+	                    		$(".pjMemberList").removeClass("d-flex");
+	                    		$(".pjMemberList").addClass("d-none");
+	                    		var temp = $(".searchName:contains('"+ searchText +"')");
+	                    		$(temp).parent().parent().removeClass("d-none");
+	                    		$(temp).parent().parent().addClass("d-flex");
+	                    	});
 	                    });
 	                    
-	                   
                     
                     
 	                    function insertPjMember(e){
@@ -615,7 +624,7 @@ $(document).ready(function(){
 	                    			pjno:$(e).prev().val()},
 	                    		type: "post",
 	                    		success : function(data){
-	                    			console.log(data);
+	                    			/* console.log(data); */
 	                    			if(data == -1){
 	                    				alert("이미 초대된 멤버입니다.")
 	                    			}else if(data > 0){
@@ -624,6 +633,8 @@ $(document).ready(function(){
 	                    				alert("초대하기에 실패하였습니다. 관리자에게 문의해주세요.");
 	                    			}
 	                    		}
+	                    	
+	                    		
 	                    	}); 
 	                    }
 
