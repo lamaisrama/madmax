@@ -11,14 +11,17 @@
 		</p>
 	</footer> -->
 	
-	<footer class="footer">
+	
+	<footer>
         <div class="container-fluid">
           <div class="copyright text-center">
-            &copy; 2020. <strong>Team MAD-MAX</strong>. All right reserved. 
+            <!-- &copy; 2020. <strong>Team MAD-MAX</strong>. All right reserved. --> 
           </div>
         </div>
-      </footer>
+    </footer>
 	
+	 
+	 
 </div> <!--header.jsp의 div.container-fluid 끝 -->
 
 
