@@ -23,7 +23,7 @@
 	<link href="${path}/resources/css/fullcalendar.css" rel="stylesheet">
 <script src="${path}/resources/js/fullcalendar.js" type="text/javascript"></script>
 <!-- 전체일정 -->
-<div class="col col-sm-7">	
+<div class="col col-sm-9">	
 <div id='wrap'>
 	<h4><i class="far fa-calendar-alt"></i>&nbsp;전체일정</h4>	
 	<hr>
@@ -33,11 +33,11 @@
 </div>
 </div>
 
-
+<!-- 
 <div class="col col-sm-3">
 
 </div> 
-
+ -->
 	
 <script>
 
