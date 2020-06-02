@@ -25,18 +25,17 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-	<div class="maincontainer col-sm-10" id="area">
-	<div class="col-sm-10 row" id="area">
-
-                  <br>
-                  
-                    <div class="row justify-content-around">
+<div class="maincontainer col-sm-10" id="area"> <!-- style="border:1px solid green;" -->
+	<div class="row mt-4" id="area"> 
+    	<div class="row justify-content-around" style="background-color: transparent;">
                   
                     <!-- 달력출력하는 부분 -->
-                       	<div class="col-sm-6" id="calendar" style="background-color: #fff; padding: 10px 10px;"></div>
+                    <div class="col-sm-6" id="calendar" style="background-color: #fff; padding: 15px 15px; border:1px solid #F1F0F5;"></div>
                        	
-					<!-- 날씨 -->
-                        <div class="col-sm-4">
+					<!-- 날씨 & 공지 -->
+                    <div class="col-sm-4" style="border-bottom:1px solid #E8E8EB;">
+                    
+                    	<!-- 날씨 -->
                            <h5 class="modal-title mb-2"><i class="wi wi-day-cloudy"></i>&nbsp;WEATHER</h5>
                                <div id="">
 								<table class="weathertbl text-center">
@@ -66,7 +65,78 @@
 									<!-- <tr><td colspan="6">&nbsp;</td></tr> -->
 								</table>									
 								</div>
-                                  <script>
+								<br><br>
+					<!-- 공지사항 -->	
+					<h4><i class="fab fa-codepen"></i>&nbsp;MADMAX NOTICE</h4>
+					<div class="text-right">
+						<a href="${path}/board/boardList.do"><small>Notice All</small></a>
+					</div>	
+					<div class="notice mb-3">
+						<ul class="rolling">
+							<c:forEach items="${blist }" var="b" >
+								<li style="border:none; border-bottom:1px dotted lightgray; padding: 2px 2px;">
+									<a href="${path }/board/boardView.do?no=${b.boardNo}">${b.boardTitle}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+					<div class="h6 text-right">
+						<a href="#" class="rolling_stop"><i class="far fa-pause-circle"></i></a>&nbsp;
+						<a href="#" class="rolling_start"><i class="far fa-play-circle"></i></a>
+					</div>
+					<script>
+					$(document).ready(function(){
+						var height =  $(".notice").height();
+						var num = $(".rolling li").length-3;
+						var max = height*num;
+						console.log(max);
+						var move = 0;
+						/* function noticeRolling(){
+							move += height;
+							$(".rolling").animate({"top":-move},600,function(){
+								if( move >= max ){
+									$(this).css("top",800);
+									move = 0;
+								};
+							});
+						}; */
+						function noticeRolling(){
+							$(".rolling").append($(".rolling>li").first());
+						}
+						noticeRollingOff = setInterval(noticeRolling,1000);
+						/* $(".rolling").append($(".rolling li").first().clone()); */
+						/* $(".rolling").append($(".rolling li").clone()); */
+						/* console.log($(".rolling li").first().clone()); */
+						$(".rolling_stop").click(function(){
+							clearInterval(noticeRollingOff);
+						});
+						$(".rolling_start").click(function(){
+							noticeRollingOff = setInterval(noticeRolling,1000);
+						});
+					});		
+					</script>
+                    </div>
+                   
+             <!-- 즐겨찾기 프로젝트 ! -->
+			 <div class="col-sm-12 mt-4">
+		        <h5 class="ml-4"><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
+				<div class="container">
+					
+			        <div class="d-flex justify-content-start">
+						<c:forEach items="${list }" var="f" begin="0" end="3">
+					     	<div class="favoriteBox ml-4">
+						       	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
+						       		<c:out value="${f.projectTitle}"/>
+						       	</a>
+					     	</div>
+					    </c:forEach>
+					</div>
+		    	</div>
+		    </div>
+		     
+					</div>
+		
+                    <script>
                                   var apiURI = "";
                                   
                                   let latitude, longitude;
@@ -128,75 +198,8 @@
 							        		})
 						        	}
 					        </script>
-						<br><br>					        
-						<!-- 공지사항 -->	
-						<h5><i class="fab fa-codepen"></i>&nbsp;MADMAX NOTICE</h5>
-						<div class="text-right">
-							<a href="${path}/board/boardList.do"><small>Notice All</small></a>
-						</div>	
-						<div class="notice mb-1">
-							<ul class="rolling">
-								<c:forEach items="${blist }" var="b" >
-									<li style="border:none; border-bottom:1px dotted lightgray; padding:1px 2px;">
-										<a href="${path }/board/boardView.do?no=${b.boardNo}">${b.boardTitle}</a>
-									</li>
-								</c:forEach>
-							</ul>
-						</div>
-						<div class="h6 text-right">
-							<a href="#" class="rolling_stop"><i class="far fa-pause-circle"></i></a>&nbsp;
-							<a href="#" class="rolling_start"><i class="far fa-play-circle"></i></a>
-						</div>
-						<script>
-						$(document).ready(function(){
-							var height =  $(".notice").height();
-							var num = $(".rolling li").length-3;
-							var max = height*num;
-							console.log(max);
-							var move = 0;
-							/* function noticeRolling(){
-								move += height;
-								$(".rolling").animate({"top":-move},600,function(){
-									if( move >= max ){
-										$(this).css("top",800);
-										move = 0;
-									};
-								});
-							}; */
-							function noticeRolling(){
-								$(".rolling").append($(".rolling>li").first());
-							}
-							noticeRollingOff = setInterval(noticeRolling,1000);
-							/* $(".rolling").append($(".rolling li").first().clone()); */
-							/* $(".rolling").append($(".rolling li").clone()); */
-							/* console.log($(".rolling li").first().clone()); */
-							$(".rolling_stop").click(function(){
-								clearInterval(noticeRollingOff);
-							});
-							$(".rolling_start").click(function(){
-								noticeRollingOff = setInterval(noticeRolling,1000);
-							});
-						});		
-						</script>
-                        </div>
-					<br>
-                    <br>
-                    <div class="col fvcontainer mt-3">
-                      <h5 class="text-left"><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
-                    <!-- 즐겨찾기 프로젝트 ! -->
-                    <div class="container">
-						<br>
-                      <div class="d-flex justify-content-start">
-							<c:forEach items="${list }" var="f" begin="0" end="4">
-						     	<div class="favoriteBox">
-							       	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
-							       		<c:out value="${f.projectTitle}"/>
-							       	</a>
-						     	</div>
-						    </c:forEach>
-						</div>
-                    </div>
-                </div>
+						
+									        
 
 <script>
 
@@ -276,6 +279,13 @@
     });
 
   </script>
-
+  		
+  			<!-- 예전 즐겨찾기 영역 -->
+  			
+  		<br><br>	
+  		</div>
+  </div>
+  
+  	
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

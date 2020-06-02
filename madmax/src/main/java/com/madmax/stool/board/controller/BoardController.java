@@ -39,6 +39,7 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
+	private String rootName = "/stool";
 	
 //	@RequestMapping("/board/boardList")
 //	public String boardList() {
@@ -56,7 +57,7 @@ public class BoardController {
 		
 		mv.addObject("list", list);
 		mv.addObject("total", totalData);
-		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerpage, "/stool/board/boardList.do"));
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerpage, rootName + "/board/boardList.do"));
 		mv.setViewName("board/boardList");
 		
 		return mv;

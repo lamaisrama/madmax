@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.board.model.service.BoardService;
+import com.madmax.stool.board.model.vo.Board;
 import com.madmax.stool.calendar.model.service.CalendarService;
 import com.madmax.stool.calendar.model.vo.Calendar;
 import com.madmax.stool.project.model.service.ProjectService;
@@ -29,6 +31,9 @@ public class ProjectController {
 	private Logger logger;
 	@Autowired
 	private CalendarService cService;
+	@Autowired
+	private BoardService bService;
+	
 	
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
@@ -142,6 +147,8 @@ public class ProjectController {
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		
 		List<Favorite> list = service.selectFavorite(id);
+		// 공지사항
+		List<Board> blist = bService.selectBoard(1, 10);
 		List<Calendar> cal=cService.selectSchedule(id);
 		int total = service.selectFavoriteCount(id); 
 		
@@ -149,6 +156,7 @@ public class ProjectController {
 		
 		mv.addObject("schedule",cal);//일정도 같이 보여주자
 		mv.addObject("list", list);
+		mv.addObject("blist", blist);
 		mv.addObject("total", total);
 		mv.setViewName("main");
 		
