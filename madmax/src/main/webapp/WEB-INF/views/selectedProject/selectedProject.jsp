@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
@@ -127,8 +128,10 @@
                             <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
                         </button>
                         <div id="demo" class="collapse p-2 w-100">
-                            <div class="border w-100" style="height: 200px;">
-                                
+                            <div class="border w-100" style="height:600px;">
+                            <br>
+                            <br>
+                            	<canvas id="reportArea" style=""></canvas>
                             </div>
                         </div>
                 </div>
@@ -669,6 +672,56 @@
     <!-- 프로젝트 수정  끝 -------------------->  
     
 <!----------------------------------------------------------------------------------------------------------------------- 모달모음 끝 ------->    
- 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+
+
+ <script>
+ 	
+ 	var jsonData=${json};
+ 	var jsonObject=JSON.stringify(jsonData);
+ 	var jData=JSON.parse(jsonObject);
+ 	
+ 	var taskStateList = new Array();
+ 	var cntList=new Array();
+ 	var colorList=new Array();
+ 	
+ 	for(var i=0;i<jData.length;i++){
+ 		var d=jData[i];
+ 		taskStateList.push(d.taskState);
+ 		cntList.push(d.count);
+ 		colorList.push(colorize());
+ 	}
+ 	/* $.each(jsonData, function(i, e){
+ 		cntList.push(e.count);
+ 		}); */
+ 	var data={
+ 			labels:taskStateList,
+ 			datasets:[{
+ 					backgroundColor:colorList,
+ 					data:cntList
+ 			}],
+ 			options:{
+ 				title:{
+ 					display:true,
+ 					text:'업무 상태별 수'
+ 				}
+ 			}
+ 	};
+ 
+	var ctx=document.getElementById('reportArea').getContext('2d');
+	new Chart(ctx,{
+		type:'doughnut',
+		data:data
+	});
+ 
+	function colorize() {
+		var r = Math.floor(Math.random()*200);
+		var g = Math.floor(Math.random()*200);
+		var b = Math.floor(Math.random()*200);
+		var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.7)';
+		return color;
+	}
+ 
+ </script>
