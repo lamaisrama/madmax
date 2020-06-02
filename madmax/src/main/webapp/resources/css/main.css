@@ -72,7 +72,8 @@ a:hover{
 	
 /* notice */
 .notice{
-	padding : 5px auto;
+	padding-left:10px;
+	padding-right:15px;
 	border:none;
 	border-top:1px solid #233C61;
 	border-bottom:1px solid #233C61;
