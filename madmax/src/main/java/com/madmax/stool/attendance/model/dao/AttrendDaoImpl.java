@@ -90,7 +90,7 @@ public class AttrendDaoImpl implements AttendDao {
 	@Override
 	public List<Worktime> selectSearchAttd(SqlSessionTemplate session, AttdSearch search) {
 		// TODO Auto-generated method stub
-		return session.selectList("attend.selectSearchAttd");
+		return session.selectList("attend.selectSearchAttd",search);
 	}
 
 	@Override
