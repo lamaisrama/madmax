@@ -660,8 +660,8 @@
 		    </c:if>
 		    <!-- 상단고정글 > 게시물[글] 끝 -->
 		    
-	    </c:if> <!-- test="${pb.PINPOST eq 'Y' -->
-    </c:forEach> <!-- c:forEach items="${projectBoardList}" var="pb" 닫기 -->
+	    </c:if> <!-- test="pb.PINPOST eq 'Y' -->
+    </c:forEach> <!-- c:forEach items="projectBoardList" var="pb" 닫기 -->
 
 
 	<hr class="w-100 mt-2 mb-2"/> <!-- if문으로 마지막 글은 반복하지 않기 -->

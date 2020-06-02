@@ -120,18 +120,17 @@
 
 
                 <!-- 업무리포트 -->
-                <div id="reportBox" class="w-100 bg-white border border-grey d-flex flex-column align-items-center mb-3 p-2">
+                <div id="reportBox" class="w-100 bg-white border border-grey d-flex flex-column align-items-center mb-3">
                         <button type="button" class="btn w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#demo" id="reportBoxBtn">
-                        	<div class="d-flex align-items-center justify-content-start">
-	                        	<i class="fas fa-chart-pie stoolGrey mr-3 ml-1" style="font-size: 25px;"></i> 
-	                            <strong class="m-0">
-	                                	업무리포트
-	                            </strong>
-	                        </div>
+                            <strong class="m-0">
+                                	업무리포트
+                            </strong>
                             <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
                         </button>
                         <div id="demo" class="collapse p-2 w-100">
-                            <div class="w-100 mt-3" style="height:600px;">
+                            <div class="border w-100" style="height:600px;">
+                            <br>
+                            <br>
                             	<canvas id="reportArea" style=""></canvas>
                             </div>
                         </div>
@@ -175,7 +174,7 @@
                             <div id="writeCategory-board" class="row w-100 m-0">
                                 <div id="boardContainer" class="w-100 p-3">
                                     <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
-                                        <input name="writingTitle" id="writingTitle" class="inputTite w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                             placeholder="제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                     </div>
                                     <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
@@ -190,7 +189,7 @@
                         <div id="writeCategory-task" class="row w-100 m-0">
                             <div id="taskBox" class="w-100 p-3">
                                 <div id="taskTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="taskTitle" id="taskTitle" class="inputTite w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                    <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                         placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;"  required="required">
                                 </div>
                                 <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
@@ -246,7 +245,7 @@
                         <div id="writeCategory-schedule" class="row w-100 m-0">
                             <div id="scheduleBox" class="w-100 p-3">
                                 <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="scheduleTitle" id="scheduleTitle" class="inputTite w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                    <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                         placeholder="일정 제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
@@ -261,7 +260,7 @@
                                     <strong class="mr-2">장소</strong>
                                     <div class="d-flex align-items-end">
                                     	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
-                                    	<div id="schedulePlaceText" style="width:340px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
+                                    	<div id="schedulePlaceText" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
                                     	<input type="hidden" id="schedulePlace" name="schedulePlace" required="required"/>
                                     </div>
                                 </div>      
@@ -372,10 +371,9 @@
                 </c:if>
                 
 	            <!-- ☆★☆ 게시글List include -->
- 	            <div class="mb-3"> <!-- 고정글 -->
+<%-- 	            <div class="mb-3"> <!-- 고정글 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-	            </div>
-	            
+	            </div> --%>
 	            <div class="mb-3"> <!-- 게시글 리스트 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
 	            </div>
@@ -460,7 +458,7 @@
                     	</p>
                     <div class="w-100 row flex m-0 justify-content-around">
                         <button type="button" class="btn btn-outline-dark col-5" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn stoolDarkBlue col-5" data-dismiss="modal" onclick="$('#changePjManagerModal').modal('show')">
+                        <button type="button" class="btn btn-info col-5" data-dismiss="modal" onclick="$('#changePjManagerModal').modal('show')">
                             	관리자 위임
                         </button>
                     </div>
