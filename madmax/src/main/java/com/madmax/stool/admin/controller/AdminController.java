@@ -1,5 +1,6 @@
 package com.madmax.stool.admin.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.madmax.stool.admin.model.service.AdminService;
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
 import com.madmax.stool.admin.model.vo.AdminUserManage;
+import com.madmax.stool.admin.model.vo.DeptReport;
 import com.madmax.stool.common.PagingFactory;
 
 @Controller
@@ -22,12 +27,42 @@ public class AdminController {
 	@Autowired
 	AdminService service;
 	
+	private String rootName="/20PM_stool_final";
+	//private String rootName="/stool";
+	
 	
 	//관리자 페이지로 이동
 	@RequestMapping("/admin/adminIndex.do")
-	public String adminIndexPage() {
+	public ModelAndView adminIndexPage(ModelAndView mv) {
 		
-		return "redirect:/admin/signupApproval.do";
+		List<DeptReport> report=service.selectUserReport();
+		
+		Gson gson=new Gson();
+		JsonArray jArray=new JsonArray();
+	      
+	    Iterator<DeptReport> it=report.iterator();
+	    
+	    
+	    while(it.hasNext()) {
+	    	
+	    	DeptReport dr=it.next();
+	    	JsonObject object=new JsonObject();
+	    	String deptName=dr.getDeptName();
+	    	int cnt=dr.getCnt();
+	    			
+	    	object.addProperty("deptName", deptName);
+	    	object.addProperty("count", cnt);
+	    	jArray.add(object);
+	    	
+	    }
+	    
+	    String json=gson.toJson(jArray);
+	    mv.addObject("json",json);
+		
+		mv.setViewName("/admin/adminIndex");
+		
+		
+		return mv;
 	}
 	
 	
@@ -96,7 +131,7 @@ public class AdminController {
 
 		mv.addObject("list",list);
 		mv.addObject("total",totalData);
-		mv.addObject("pageBar",PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/admin/userManagement.do"));
+		mv.addObject("pageBar",PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/admin/userManagement.do"));
 		
 		mv.setViewName("admin/userManagement");
 		
