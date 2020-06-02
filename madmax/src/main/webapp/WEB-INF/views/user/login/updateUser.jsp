@@ -70,6 +70,8 @@
                       <div class="input-group mb-3">
                         <input type="password" class="modify" placeholder="비밀번호 확인" size="30" id="password2" required>
                       </div>
+                      <div class="alert alert-success" id="alert-success2">비밀번호가 일치합니다.</div>
+                      <div class="alert alert-danger" id="alert-danger2">비밀번호가 일치하지 않습니다.</div>
                       <br>
                       <h6><i class="icon far fa-grin"></i>&nbsp;이름</h6>
                       <div class="input-group mb-3">
@@ -122,6 +124,26 @@
         			$(this).next(".custom-file-label").html(fileName);
         		});
         	});
+            
+            $(function(){
+                $("#alert-success2").hide();
+                $("#alert-danger2").hide();
+                $("input").keyup(function(){
+                   var pwd1 = $("#password_").val();
+                   var pwd2 = $("#password2").val();
+                   if(pwd1 != "" || pwd2 != ""){
+                      if(pwd1 == pwd2){
+                         $("#alert-success2").show();
+                         $("#alert-danger2").hide();
+                         $("#check").removeAttr("disabled");
+                      } else {
+                         $("#alert-success2").hide();
+                         $("#alert-danger2").show();
+                         $("#check").attr("disabled","disabled");
+                      }
+                   }
+                });
+            }); 
             </script>
         </div>
     </div>
