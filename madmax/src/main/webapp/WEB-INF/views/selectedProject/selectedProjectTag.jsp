@@ -8,13 +8,6 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
-
 
     <!-- 데이트피커 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/bootstrap-datepicker.css">
@@ -106,273 +99,22 @@
 
 
                 <!-- 태그 -->
-                <div id="" class="w-100 bg-white border border-grey d-flex align-items-start mb-3 p-2">
-                         <i class="fas fa-hashtag stoolGrey mt-2 mr-3 ml-3" style="font-size: 25px;"></i>                            
-                         <!-- 태그목록 -->
-                         <div id="tagBox" class="d-flex flex-wrap align-items-center">
-	                         <c:forEach items="${pjTagList}" var="tag">
-	                         	<a href="${path}/selectedProject/selectedProjectSelectTag.do?pjNo=${projectInfo.PROJECTNO}&loginId=${loginUser.userId}&tag=${tag.tag}" class="ml-3 mr-3 mt-1">
-									<c:out value="${tag.tag}"/>
-								</a>
-	                         </c:forEach>
-                         </div>
+                <div id="" class="w-100 bg-white border border-grey d-flex align-items-center mb-3 p-2">
+                	<i class="fas fa-hashtag stoolGrey mr-3 ml-3" style="font-size: 25px;"></i>                            
+					<p class="m-0" style="font-size: 17px;">
+						선택한 태그 : <strong class="ml-2">${selectTag}</strong>
+					</p>	
+					<button type="button" onclick="history.back();" id="tagBackBtn">
+						<i class="fas fa-window-close ml-5" style="font-size: 25px;"></i>
+					</button>
                 </div>
 
 
-                <!-- 업무리포트 -->
-                <div id="reportBox" class="w-100 bg-white border border-grey d-flex flex-column align-items-center mb-3">
-                        <button type="button" class="btn w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#demo" id="reportBoxBtn">
-                            <strong class="m-0">
-                                	업무리포트
-                            </strong>
-                            <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
-                        </button>
-                        <div id="demo" class="collapse p-2 w-100">
-                            <div class="border w-100" style="height:600px;">
-                            <br>
-                            <br>
-                            	<canvas id="reportArea" style=""></canvas>
-                            </div>
-                        </div>
-                </div>
-
-				<c:if test="${projectInfo.PROJECTSTATE eq 'P'}">
-                <!-- 게시물 작성 -->
-                <form method="post" enctype="multipart/form-data" onkeydown="return captureReturnKey(event);" id="pjMainForm">
-                <!-- from 공통 hidden input모음 -->
-				    <!-- 0) 프로젝트 작성자  --> <!-- value수정 -->
-				    <input type="hidden" name="writer" value="${loginUser.userId}"/>
-				    <!-- 1) 프로젝트 번호 저장 --><!-- value수정 -->
-				    <input type="hidden" name="selectedProjectNo" value="${projectInfo.PROJECTNO}"/>    
-                    <!-- 2) 글 타입 -->
-                    <input type="hidden" name="boardType" id="boardType" value="writing"/>
-                    <!-- 3) 파일-->                
-                    <input type="file" name="files" id="files" multiple style="display: none;"/>
-                    <!-- 4) 이미지파일 -->
-                    <input type="file" name="imgFiles" id="imgFiles" multiple style="display: none;" accept="image/*"/>
-                    <!-- 5) 태그 -->
-                    <input type="hidden" name="tagListStr" id="tagListStr"/>
-                    <!-- 6) 언급 -->
-                    <input type="hidden" name="mentionListStr" id="mentionListStr"/>
-                <!-- from 공통 hidden input모음 끝 -->
-
-                    <div id="pjWriteBox" class="w-100 mb-3 bg-white border border-grey rounded">
-                        <div id="writeCategoryBtns" class="row w-100 border-bottom border-light m-0">
-                            <button type="button" id="cBtn-board" class="btn col-4 cBtnSelect" onclick="fn_writeCategory(this,'board');">
-                                	글 작성
-                            </button>
-                            <button type="button" id="cBtn-task" class="btn col-4" onclick="fn_writeCategory(this,'task');">
-                               	업무 작성
-                            </button>
-                            <button type="button" id="cBtn-schedule" class="btn col-4" onclick="fn_writeCategory(this, 'schedule');">
-                                	일정 작성
-                            </button>                                                                     
-                        </div>
-
-                        <!-- 작성 카테고리별 div -->
-                            <!-- 1) 글 작성 -->
-                            <div id="writeCategory-board" class="row w-100 m-0">
-                                <div id="boardContainer" class="w-100 p-3">
-                                    <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
-                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                            placeholder="제목 입력 (선택)" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
-                                    </div>
-                                    <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
-                                        <div id="boardContentAreaDiv" class="w-100">
-                                            <textarea id="boardContentArea" name="writingContent" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
-                                        </div>
-                                    </div>                                                                 
-                                </div>
-                        </div>     
-                    
-                        <!-- 2) 업무 작성 -->
-                        <div id="writeCategory-task" class="row w-100 m-0">
-                            <div id="taskBox" class="w-100 p-3">
-                                <div id="taskTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                        placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
-                                </div>
-                                <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">진행상태</strong>
-                                    <div id="taskTabBtns" class="btn-group border border-grey rounded overflow-hidden">
-                                        <input type="hidden" id="progressState" name="taskState" value="요청"/>
-                                        <button type="button" class="btn border-right btn-primary" id="request" onclick="fn_progressState(this, '요청');">요청</button>
-                                        <button type="button" class="btn border-right" id="progress" onclick="fn_progressState(this, '진행');">진행</button>
-                                        <button type="button" class="btn border-right" id="feedback" onclick="fn_progressState(this, '피드백');">피드백</button>
-                                        <button type="button" class="btn border-right" id="end" onclick="fn_progressState(this, '완료');">완료</button>
-                                        <button type="button" class="btn" id="hold" onclick="fn_progressState(this, '보류');">보류</button>
-                                    </div>
-                                </div>
-                                <div id="taskListBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">담당자</strong>
-                                    <input type="text" id="workerListStr" name="taskManagerId" style="display: none;"/>
-                                    <div id="workerList" class="d-flex flex-wrap">            
-                                        <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
-                                    </div>
-                                </div>
-                                <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartdate" class="stoolDateInput" />
-                                </div>   
-                                <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEnddate" class="stoolDateInput" />
-                                </div>  
-                                <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">우선순위</strong>
-                                    <input type="hidden" id="taskPriority" name="taskProiority" value="없음"/>
-                                    <div class="dropdown">
-                                        <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
-                                            	우선순위 선택
-                                        </button>
-                                        <div class="dropdown-menu text-center" id="taskPriority-dropItem">
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="없음" onclick="fn_priority(this, '없음');"><i class="fas fa-times stoolGrey mr-3" style="font-size:17px;"></i>없음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="낮음" onclick="fn_priority(this, '낮음');"><i class="fas fa-arrow-down text-success mr-3" style="font-size:17px;"></i>낮음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="보통" onclick="fn_priority(this, '보통');"><i class="fas fa-circle text-secondary mr-3" style="font-size:10px;"></i>보통</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="높음" onclick="fn_priority(this, '높음');"><i class="fas fa-arrow-up text-warning mr-3" style="font-size:17px;"></i>높음</p>
-                                            <p class="dropdown-item m-0 d-flex align-items-center justify-content-center" id="긴급" onclick="fn_priority(this, '긴급');"><i class="fas fa-arrow-up text-danger mr-3" style="font-size:17px;"></i>긴급</p>
-                                        </div>
-                                    </div>                   
-                                </div>                                  
-                                <div id="taskContentBox" class="col-12 d-flex justify-content-center">
-                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                        <!-- 3) 일정 작성 -->
-                        <div id="writeCategory-schedule" class="row w-100 m-0">
-                            <div id="scheduleBox" class="w-100 p-3">
-                                <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                        placeholder="일정 제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
-                                </div>
-                                <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">시작일</strong>
-                                    <input type="date" id="scheduleStartDate" name="scheduleStartdate" class="stoolDateInput" />
-                                </div>   
-                                <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="scheduleEndDate" name="scheduleEnddate" class="stoolDateInput" />
-                                </div>    
-                                <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
-                                    <strong class="mr-2">장소</strong>
-                                    <div class="d-flex align-items-end">
-                                    	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
-                                    	<div id="schedulePlaceText" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
-                                    	<input type="hidden" id="schedulePlace" name="schedulePlace"/>
-                                    </div>
-                                </div>      
-                                <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
-									 <div id="mapBox" style="height:300px; display: none;" class="border w-100">
-									 	<div id="map" style="height:300px;" class="w-100"></div>
-									 </div>
-                                </div>                                                                                        
-                                <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
-                                    <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
-                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 공통 하단 -->                        
-                        <div class="w-100 p-3">
-                            <!-- 공통) 태그 & 언급 -->
-                            <!-- 태그 입력 -->
-                            <div class="col-12 addTagListBox d-none mb-2">
-                                <div class="w-100 d-flex flex-column">
-                                    <strong class="mb-2">태그</strong>
-                                    <div class="w-100 d-flex flex-wrap align-items-center addTagList">
-                                        <div class="d-flex addTagInputDiv pl-2 pr-2">
-                                            # <input type="text" onkeyup="fn_addTag(this)" placeholder="태그 입력"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="w-100">
-                            </div>  <!-- 태그 입력 끝 -->     
-                            
-                            <!-- 언급 입력 -->
-                            <div class="col-12 addMentionListBox d-none mb-2">                             
-                                <div class="w-100 d-flex flex-column">
-                                    <strong class="mb-1">언급할 참여자 추가</strong>
-                                    <div id="mentionListBox" class="w-100 d-flex flex-wrap align-items-center addMentionList">
-                                        <button type="button" id="mentionModalBtn" class="btn stoolDarkBlue-outline m-1 mt-0" onclick="fn_addMentionModal();">언급 추가</button>                       
-                                    </div>
-                                </div>
-                                <hr class="w-100">
-                            </div>  <!-- 언급 입력 끝 -->    
-
-                            <!-- 공통) 파일 미리보기 -->
-                            <div id="uploadFilesPreview" class="d-none col-12 mb-2">
-                                <strong class="mb-2">업로드 파일</strong>
-                                <div class="col-12 d-flex flex-column mb-2">
-                                    <p  id="imgFilesPreviewTitle" class="d-none align-items-center m-0 pl-1">
-                                        <i class="fas fa-images stoolGrey" style="font-size: 20px;"></i>
-                                        	첨부이미지
-                                    </p>
-                                    <div class="w-100 d-flex justify-content-center">
-                                        <div id="imgFileBox" class="w-100 row">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex flex-column d-none">
-                                    <p id="filesPreviewTitle" class="d-none align-items-center m-0 pl-1">
-                                        <i class="fas fa-file-upload stoolGrey" style="font-size: 20px;"></i>
-                                       	 첨부파일
-                                    </p>
-                                    <div class="w-100 d-flex justify-content-center">
-                                        <div id="fileBox" class="w-100 row">
-
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
-                        </div>
-
-
-                        <!-- 공통) 하단 버튼 -->
-                        <div id="writeCategory-bordBtns" class="row w-100 border-top border-light m-0 justify-content-between align-items-center">
-                            <div class="col-5 w-100 d-flex align-items-center"> 
-                                <div id="fileUploadBtns" class="">
-                                    <div class="d-flex align-items-center">
-                                        <!-- 파일 업로드 -->                                      
-                                        <button type="button" class="btn mr-2 ml-2" id="filesBtn">
-                                            <i class="fas fa-file-upload stoolGrey" style="font-size: 25px;"></i>
-                                        </button>
-                                        <!-- 이미지파일 업로드 -->                                    
-                                        <button type="button" class="btn" id="imgFilesBtn">
-                                            <i class="fas fa-images stoolGrey" style="font-size: 25px;"></i>
-                                        </button>
-                                        <span style="width: 2px; height: 25px; border-left: 1px solid rgb(235, 235, 235);" class=" mr-3 ml-3"></span>
-                                    </div>
-                                </div>
-                                <!-- 태그입력창 toggleBtn -->
-                                <button type="button" class="btn mr-2 ml-2" data-toggle="tooltip" title="태그를 추가하시고 싶으시다면 클릭해주세요."
-                                        onclick="fn_tagBtn()">
-                            		<i class="fas fa-hashtag stoolGrey" style="font-size: 25px;"></i>
-                                </button>
-                                <!-- 언급할 참여자 입력 toggleBtn -->
-                                <button type="button" class="btn mr-2 ml-2 tooltipBtn" data-toggle="tooltip" title="클릭하시면 회원 멘션기능을 사용하실 수 있습니다."
-                                        onclick="fn_atBtn()">
-                                    <i class="fas fa-at stoolGrey" style="font-size: 25px;"></i>
-                                </button>                                                                            
-                            </div>      
-                            <div class="col-4 w-100 d-flex align-items-center justify-content-end">                           
-                                <button type="submit" onclick="fn_writeSubmit();" class="btn m-2 stoolDarkBlue">
-                                    	올리기
-                                </button>    
-                            </div>                                                              
-                        </div>
-					</div>
-                        
-                </form>
-                </c:if>
+				
             <!-- ☆★☆ 게시글List include -->
-<%--             <div class="mb-3"> <!-- 고정글 -->
-				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-            </div> --%>
+            <div class="mb-3"> <!-- 고정글 -->
+				<%-- <jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" /> --%>
+            </div>
             <div class="mb-3"> <!-- 게시글 리스트 -->
 				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
             </div>
@@ -385,7 +127,10 @@
 				<jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" />
 
 				<%-- <jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" /> --%>
-			</div>
+
+			<div class="col col-sm-3">
+
+</div>
 
 
 <!-- 모달모음 ------------------------------------------------------------------------------------------------------------------------------->   
@@ -670,63 +415,6 @@
     <!-- 프로젝트 수정  끝 -------------------->  
     
 <!----------------------------------------------------------------------------------------------------------------------- 모달모음 끝 ------->    
- 
- 
- 
- 
- 
- <script>
- 	
- 	var jsonData=${json};
- 	var jsonObject=JSON.stringify(jsonData);
- 	var jData=JSON.parse(jsonObject);
- 	
- 	var taskStateList = new Array();
- 	var cntList=new Array();
- 	var colorList=new Array();
- 	
- 	for(var i=0;i<jData.length;i++){
- 		var d=jData[i];
- 		taskStateList.push(d.taskState);
- 		cntList.push(d.count);
- 		colorList.push(colorize());
- 	}
- 	/* $.each(jsonData, function(i, e){
- 		cntList.push(e.count);
- 		}); */
- 	var data={
- 			labels:taskStateList,
- 			datasets:[{
- 					backgroundColor:colorList,
- 					data:cntList
- 			}],
- 			options:{
- 				title:{
- 					display:true,
- 					text:'업무 상태별 수'
- 				}
- 			}
- 	};
- 
-	var ctx=document.getElementById('reportArea').getContext('2d');
-	new Chart(ctx,{
-		type:'doughnut',
-		data:data
-	});
- 
-	function colorize() {
-		var r = Math.floor(Math.random()*200);
-		var g = Math.floor(Math.random()*200);
-		var b = Math.floor(Math.random()*200);
-		var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.7)';
-		return color;
-	}
- 
- </script>
- 
- 
- 
- 
  
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

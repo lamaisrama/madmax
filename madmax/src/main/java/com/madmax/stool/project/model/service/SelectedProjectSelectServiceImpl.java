@@ -11,6 +11,7 @@ import com.madmax.stool.project.model.dao.SelectedProjectSelectDao;
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
 import com.madmax.stool.project.model.vo.TaskReport;
+import com.madmax.stool.project.model.vo.Tag;
 
 @Service
 public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectService {
@@ -153,12 +154,22 @@ public class SelectedProjectSelectServiceImpl implements SelectedProjectSelectSe
 
 	
 	
-	
 	// 업무 리포트
 	@Override
 	public List<TaskReport> selectTaskReport(int pjNo) {
 		// TODO Auto-generated method stub
 		return dao.selectTaskReport(session,pjNo);
+	}
+	
+	@Override
+	public List<Tag> selectProjectTag(int pjNo) {
+		return dao.selectProjectTag(session, pjNo);
+	}
+
+	
+	@Override
+	public List<Map<String, Object>> selectProjectBoardWithTag(Map<String, Object> pjInfo) {
+		return dao.selectProjectBoardWithTag(session,pjInfo);
 	}
 	
 	

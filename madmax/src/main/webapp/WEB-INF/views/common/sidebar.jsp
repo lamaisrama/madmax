@@ -29,19 +29,21 @@
     
     /* Accordion Styles */
 	.accordin-elem {
-		width:80%;
+		width:90%;
 		/* margin-bottom: 45px; */
 	}
 	
 	.accordin-elem .card {
 		border: none;
 		margin-bottom: 20px;
+		background: #233C61;
 	}
 	
 	.accordin-elem .card .card-heading {
 		padding-left: 15px;
 	 	width:100%;
 	 	line-height: 40px;
+	 	background: #233C61;
 		/* background: #EBEDF8; */
 		/* padding: 22px 30px 22px 35px; */
 	}
@@ -56,23 +58,24 @@
 	}
 	
 	.accordin-elem .card .card-content {
-		color: #7b7b7b;
+		color: #F1F0F5;
+		background: #233C61;
 		font-size: 16px;
 		font-weight: 400;
 		line-height: 30px;
-		padding : 15px 0px 0 20px;
+		padding : 15px 0px 0 0;
 	}
 	
 	.accordin-elem .card .card-content a:link{
-		color: #7b7b7b; 
+		color: #F1F0F5; 
 		text-decoration: none;
 	}
 	.accordin-elem .card .card-content a:visited{
-		color: #7b7b7b; 
+		color: #F1F0F5; 
 		text-decoration: none;
 	}
 	.accordin-elem .card .card-content a:hover{
-		color: #233C61;
+		color: #FFE3E3;
 		font-weight: 700;
 	}
 	
@@ -92,7 +95,8 @@
 		float: right;
 		font-size: 14px;
 		font-weight: 700;
-		color: #060a0f;
+		color: #fff;
+ 		/* color: #060a0f; */
 	}
 	
 	.accordin-elem .card-heading a[aria-expanded=true]:after,
@@ -101,11 +105,12 @@
 		float: right;
 		font-size: 14px;
 		font-weight: 700;
-		color: #060a0f;
+		color: #fff;
+		/* color: #060a0f; */
 	}
 	
 	.accordin-elem .card-heading.active {
-		background: #233EDE;
+		background-color: #233C61;
 		color: #fff;
 	}
 	
@@ -117,16 +122,22 @@
 		width:100%;
 		font-size : 17px;
 		font-weight : 600;
-		color : #233C61; 
-		border: 3px solid #233C61; 
+		color : #F1F0F5;
+		border: 3px solid #F1F0F5;
 		border-radius:50px;
 	}
+	.newProjectBtn:hover{
+		color : #FFE3E3;
+		font-weight : 700;
+		border: 3px solid #FFE3E3;
+	}
+	
 	.user-container{
 		/* border : 1px solid red;
 		justify-content: center; */
 	}
 	.imgbox{
-		border: 3px solid #233C61; 
+		border: 2px solid #FFE3E3; 
        	display:inline-block;
         text-align:center;
         border-radius: 500px; 
@@ -137,7 +148,8 @@
         position: relative;
     }
     .imgbox img {
-		width: 100%; height:auto;
+		/* width: 100%; height:auto; */
+		max-width: 130px; height: auto;
 		vertical-align: middle;
 	}  
 	.shadow {
@@ -146,7 +158,8 @@
 		text-align:center; 
 		background-color: rgba(0, 0, 0, .3); 
 		width: 130px; height: 130px; 
-		margin:0; transition: 0.5s;
+		margin:0; 
+		transition: 0.5s;
 	}
 	.shadow span {
 		font-size: 12pt; 
@@ -167,9 +180,17 @@
 	.imgbox:hover .shadow {top: 0px;}
 	.imgbox:hover span {display: none;}
 	.imgbox:hover .detail {display: block;}  
+	
+	.sidebar-container{
+		
+		/* min-height:500px; */
+		background-color:#233C61;
+		color: #F1F0F5;
+	}
+	
 </style>
 
-<div class="col col-sm-2">
+<div class="col col-sm-2 sidebar-container">
 	<br>	
 	<nav>
 		<ul class="menu">
@@ -245,27 +266,27 @@
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-edit"></i><b>기안</b></h5>
-									      <span class="p-3"><a href="${path }/appr/approval.do">기안문 작성</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/apprReqBox.do">결재 요청함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/apprTempBox.do">임시 문서함</a></span>
+									      &nbsp;&nbsp;<a href="${path }/appr/approval.do">기안문 작성</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/apprReqBox.do">결재 요청함</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/apprTempBox.do">임시 문서함</a>
 									    </div>
                                     </div>
 								    <hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon fas fa-edit"></i><b>결재</b></h5>
-									      <span class="p-3"><a href="${path }/appr/apprWaitBox.do">결재 대기함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/apprProgBox.do">결재 진행함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/apprDoneBox.do">완료 문서함</a></span>
+									      &nbsp;&nbsp;<a href="${path }/appr/apprWaitBox.do">결재 대기함</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/apprProgBox.do">결재 진행함</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/apprDoneBox.do">완료 문서함</a>
 									    </div>
                                     </div>
 								  	<hr>
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
-									      <span class="p-3"><a href="${path }/appr/myDocBox">내 문서함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/deptDocBox">부서 문서함</a></span><br>
-									      <span class="p-3"><a href="${path }/appr/referredDocBox">참조 문서함</a></span><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/myDocBox">내 문서함</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/deptDocBox">부서 문서함</a><br>
+									      &nbsp;&nbsp;<a href="${path }/appr/referredDocBox">참조 문서함</a><br>
 									    </div>
                                     </div>
 								    <hr>

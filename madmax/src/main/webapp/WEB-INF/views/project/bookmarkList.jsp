@@ -9,13 +9,15 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<div class="col col-sm-7 " id="divTest" onscroll="SetDivPosition()">
+<div class="col col-sm-9 mx-auto" id="divTest" onscroll="SetDivPosition()">
 <!-- 담아둔글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
 			
  			<div id="bookmarkTitle">
-               <h4><i class="icon far fa-bookmark"></i>담아둔 글 보기</h4>
+ 			<br><br>
+               <h4 style="font-weight:bolder;"><i class="icon far fa-bookmark"></i>담아둔 글 보기</h4>
+               <br>
             </div>
        		<c:if test="${empty List }">
        			<div class="w-100 h-25 mt-5 text-center bg-light ">

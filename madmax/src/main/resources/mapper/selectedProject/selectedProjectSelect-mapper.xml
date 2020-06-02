@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="selectedProjectSelect">
 
-	<select id="selectProjectBoard" parameterType="map" resultType="map">
-		 <![CDATA[
+	<select id="selectProjectBoard" parameterType="_int" resultType="map">
+<!-- 		 <![CDATA[
 			 SELECT * FROM 
 			 (SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO WHERE PB.STATUS = 'V' ORDER BY BOARDNO DESC) 
 			 WHERE ROWNUM <=5
-		 ]]>
+		 ]]> -->
+		 SELECT PB.* FROM PROJECTBOARD PB JOIN PROJECTTABLE PT ON PB.PROJECTNO = PT.PROJECTNO 
+		 WHERE PB.STATUS = 'V' AND PB.PROJECTNO = #{pjNo}
+		 ORDER BY BOARDNO DESC
 	</select>
 
 	<!-- 글,업무,일정에 대한 기본 테이블 불러오기 -->
@@ -101,9 +104,13 @@
 	
 	
 	<select resultType="projectMember" parameterType="_int" id="selectProjectMemberList">
-		SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
+		<!-- SELECT PM.*, U.USERNAME, U.PROFILE, U.DEPTCODE, U.JOBCODE
 		FROM PROJECTMEMBER PM
-		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo}
+		JOIN STOOLUSER U ON PM.USERID = U.USERID WHERE PM.PROJECTNO=#{pjNo} -->
+		SELECT PM.*, U.USERNAME, U.EMAIL, U.PROFILE, U.PHONE, D.DEPTNAME, J.JOBNAME
+		FROM PROJECTMEMBER PM
+		JOIN STOOLUSER U ON PM.USERID = U.USERID JOIN DEPT D ON D.DEPTCODE=U.DEPTCODE 
+        JOIN JOBTABLE J ON U.JOBCODE=J.JOBCODE WHERE PM.PROJECTNO=#{pjNo}
 	</select>
 	
 	<select resultType="map" parameterType="map" id="selectProjectTB">
@@ -128,4 +135,16 @@
 		JOIN PROJECTTABLE USING(PROJECTNO) WHERE PROJECTNO=#{projectNo} GROUP BY TASKSTATE
 	</select>
 
+	<select id="selectProjectTag" parameterType="_int" resultType="pjTag">
+		SELECT HASHTAGTEXT TAG, COUNT(*) CNT
+		FROM (SELECT * FROM HASHTAG T JOIN PROJECTBOARD PB ON T.BOARDNO = PB.BOARDNO WHERE PB.PROJECTNO = #{pjNo})
+		GROUP BY HASHTAGTEXT
+		ORDER BY CNT DESC
+	</select>
+	
+	<select id="selectProjectBoardWithTag" parameterType="map" resultType="map">
+		SELECT T.HASHTAGTEXT,PB.* FROM HASHTAG T JOIN PROJECTBOARD PB ON T.BOARDNO = PB.BOARDNO 
+		WHERE PB.PROJECTNO = #{pjNo} AND T.HASHTAGTEXT = #{tag}
+	</select>
+	
 </mapper>

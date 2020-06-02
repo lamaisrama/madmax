@@ -14,5 +14,9 @@ public class ProjectMember {
 	private String userName;
 	private String profile;
 	private String deptCode;
-	private String jobCode;	
+	private String jobCode;
+	private String deptName;
+	private String jobName;
+	private String phone;
+	private String email;
 }

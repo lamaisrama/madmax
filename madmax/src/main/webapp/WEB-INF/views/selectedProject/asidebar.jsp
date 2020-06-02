@@ -22,7 +22,6 @@
 <jsp:include page="/resources/js/selectedProject-Ajax.jsp" />
 
 
-<div class="col-sm-3">
 	<!-- <div class="row"> -->
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
 		<div>
@@ -43,39 +42,38 @@
 			</button>
 		</div> <!-- btn-group -->
 		<p></p>
-		<%-- <c:choose>
-			<c:when test=${pm.userId eq loginUser.userId}> --%>
-				<div>
-					<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="fn_inviteModal();">
-						<span>초대하기</span>
-					</button>
-				</div>
-				<p></p>
-				<script>
-				//담당자 추가
-					function fn_inviteModal(){
-				    	$("#inviteModal").modal("show");
-					}
-				</script>
-			<%-- </c:when>
-			<c:otherwise>
-				<div style="display:none">
-				<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="">
+		<c:if test="${projectInfo.USERID eq loginUser.userId }">
+			<div>
+				<button id="beforePage" type="button"
+					class="btn bg-white border border-grey rounded"
+					onclick="fn_inviteModal();">
 					<span>초대하기</span>
 				</button>
 			</div>
 			<p></p>
-			</c:otherwise>
-		</c:choose> --%>
+		</c:if>
+		<c:if test="${projectInfo.USERID ne loginUser.userId }">
+			<div style="display:none;">
+				<button id="beforePage" type="button"
+					class="btn bg-white border border-grey rounded"
+					onclick="fn_inviteModal();">
+					<span>초대하기</span>
+				</button>
+			</div>
+			<p></p>
+		</c:if>
+
+	<script>
+				//초대하기 모달창 띄우기
+					function fn_inviteModal(){
+				    	$("#inviteModal").modal("show");
+					}
+				</script>
+			
 	<!-- </div> -->
 	<!--row-->
 	
-	
-	<script>
-		$('.member').onclick(function(){
-			$('.member').hide();
-		});
-	</script>
+
 		
 		<!--전체참여자 확인박스-->
 		<div class="allMemberListBox bg-white border border-grey rounded" >
@@ -99,30 +97,75 @@
 					<c:if test="${pm.userId eq projectInfo.USERID }">
 						<li>
 							<div
-							class="member"
+							class="member d-flex align-items-center"
 							data-toggle="modal"
-							data-target="#member"
+							data-target="#member${pm.userId}"
 							data-profile="${pm.profile }"
 							data-userName="${pm.userName }">
-								<c:choose>
-									<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
-										<img 
-										id="profileImg"
-										src="${path}/resources/images/defaultProfile.png"
-										alt="프로필사진">
-									</c:when>
-									<c:otherwise>
+								<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile${pm.profile}"
 										alt="프로필사진">
-									</c:otherwise>
-								</c:choose>  
+									</div>	
 								<span id="memberName">
 									<c:out value="${pm.userName}"/> <!-- 플젝 생성자 이름 -->
 								</span>
 							</div>
 						</li>
+						
+						<!-- 멤버별 프로필 Modal : 멤버 리스트 클릭시 뜨는 프로필 카드-->
+    <!-- 카드 모달 도전 -->
+<div class="modal fade" id="member${pm.userId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+	<div
+		class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+		role="document">
+		<div class="modal-content" style="width: 400px; height: 700px;">
+			<div id="profileBox">
+				<img id="cardProfileImg"
+					src="${path}/resources/upload/profile/${pm.profile}"
+					alt="cardProfileImg"
+					style="object-fit: cover; height: 400px; width: 398px;">
+			</div>
+		
+			<div>
+				<div style="padding: 25px 40px;">
+					<div>
+						<strong id="userName">
+							${pm.userName}
+						</strong> 
+						<span>
+							${pm.jobName}
+						</span>
+						
+						<p style="color:#25558F;">${pm.deptName}</p>
+					</div>
+					<hr>
+					<div style="margin-bottom: 20px;">
+						<p class="" style="color:#595959;">이메일</p>	
+						<p id="email">
+							${pm.email }
+						</> 
+						<hr> 
+						<p class="" style="color:#595959;">연락처</p>
+						<p id="phoneNo">
+							${pm.phone }
+						</p> 
+						<br> 
+						<!-- <span id="officeNO">02-567-8901</span> -->
+					</div>
+					<!-- <div style="padding-top: 15px;" align="center">
+						<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
+						프로필 수정하기</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- modal-content 끝 -->
+	</div>
+	<!-- modal-dialog 끝 -->
+</div>
+<!-- 카드 모달 도전 끝 -->
 						</c:if>
 						</c:forEach>
 					</ul>
@@ -143,24 +186,16 @@
 									<div
 									class="member"
 									data-toggle="modal"
-									data-target="#member"
+									data-target="#member${pm.userId}"
 									data-profile="${pm.profile }"
 									data-userName="${pm.userName }" 
 									>
-									<c:choose>
-										<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
-											<img 
-											id="profileImg"
-											src="${path}/resources/images/defaultProfile.png"
-											alt="프로필사진">
-										</c:when>
-										<c:otherwise>
-											<img 
-											id="profileImg"
-											src="${path}/resources/upload/profile${pm.profile}"
-											alt="프로필사진">
-										</c:otherwise>
-									</c:choose>
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+										<img 
+										id="profileImg"
+										src="${path}/resources/upload/profile${pm.profile}"
+										alt="프로필사진">
+									</div>	
 										<span id="memberName"> 
 											<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
 										</span>
@@ -170,33 +205,83 @@
 								<c:otherwise>
 									<li>
 									<div
-									class="member"
+									class="member d-flex align-items-center"
 									data-toggle="modal"
-									data-target="#member"
+									data-target="#member${pm.userId}"
 									data-profile="${pm.profile }"
 									data-userName="${pm.userName }" 
 									>
-									<c:choose>
-										<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
-											<img 
-											id="profileImg"
-											src="${path}/resources/images/defaultProfile.png"
-											alt="프로필사진">
-										</c:when>
-										<c:otherwise>
-											<img 
-											id="profileImg"
-											src="${path}/resources/upload/profile${pm.profile}"
-											alt="프로필사진">
-										</c:otherwise>
-									</c:choose>
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+										<img 
+										id="profileImg"
+										src="${path}/resources/upload/profile/${pm.profile}"
+										alt="프로필사진">
+									</div>	
 										<span id="memberName"> 
 											<c:out value="${pm.userName}"/> <!-- 셀렉문 가져와서 객체 하나 만들어야하는거 ㅠㅠ -->
 										</span>
+										<%-- <input type="hidden" name="jobName" id="jobName" value="${pm.jobName }"/>
+										<input type="hidden" name="deptName" id="deptName" value="${pm.deptName }"/>
+										<input type="hidden" name="phone" id="phone" value="${pm.phone }"/>
+										<input type="hidden" name="email" id="email" value="${pm.email }"/> --%>
 									</div>
 								</li>
 								</c:otherwise>
 								</c:choose>
+								<!-- 멤버별 프로필 Modal : 멤버 리스트 클릭시 뜨는 프로필 카드-->
+    <!-- 카드 모달 도전 -->
+<div class="modal fade" id="member${pm.userId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+	<div
+		class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+		role="document">
+		<div class="modal-content" style="width: 400px; height: 700px;">
+			<div id="profileBox">
+				<img id="cardProfileImg"
+					src="${path}/resources/upload/profile/${pm.profile}"
+					alt="cardProfileImg"
+					style="object-fit: cover; height: 400px; width: 398px;">
+			</div>
+		
+			<div>
+				<div style="padding: 25px 40px;">
+					<div>
+						<strong id="userName">
+							${pm.userName}
+						</strong> 
+						<span>
+							${pm.jobName}
+						</span>
+						
+						<p style="color:#25558F;">${pm.deptName}</p>
+					</div>
+					<hr>
+					<div style="margin-bottom: 20px;">
+						<p class="" style="color:#595959;">이메일</p>	
+						<p id="email">
+							${pm.email }
+						</> 
+						<hr> 
+						<p class="" style="color:#595959;">연락처</p>
+						<p id="phoneNo">
+							${pm.phone }
+						</p> 
+						<br> 
+						<!-- <span id="officeNO">02-567-8901</span> -->
+					</div>
+					<!-- <div style="padding-top: 15px;" align="center">
+						<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
+						프로필 수정하기</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- modal-content 끝 -->
+	</div>
+	<!-- modal-dialog 끝 -->
+</div>
+<!-- 카드 모달 도전 끝 -->
+								
+								
 						</c:forEach>
 					</ul>
 					
@@ -207,9 +292,16 @@
 			<hr> 
 		<!-- </div> -->
 		<!--row-->
-			
+			<script>
+				$(function(e){
+		            $("#member").on("click",function(){
+		                console.log($(e).nextAll().val());
+		                   
+		            });
+		        });
+			</script>
 	</div>
-	</div>
+
 	<!--col-sm-3-->
 
 <!-- </div> -->
@@ -356,23 +448,15 @@ img#cardProfileImg {
 						<div class="projectJoinMember">
 							<p>프로젝트 참여자</p>
 							<c:forEach var="pm" items="${projectMember}">
-							<div class="pjJoinAllMemberList" 
+							<div class="pjJoinAllMemberList d-flex align-items-center" 
 							data-toggle="modal"
-							data-target="#member">
-								<c:choose>
-									<c:when test="${pm.profile eq null}"> <!-- 프로필이 널이면 -->
+							data-target="#member${pm.userId }">
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
-										src="${path}/resources/images/defaultProfile.png"
+										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
-									</c:when>
-									<c:otherwise>
-										<img 
-										id="profileImg"
-										src="${path}/resources/upload/profile${pm.profile}"
-										alt="프로필사진">
-									</c:otherwise>
-								</c:choose>
+									</div>				
 								<span>
 									<c:out value="${pm.userName}"/>
 								</span>
@@ -492,13 +576,13 @@ img#cardProfileImg {
                                 <input type="hidden" name="userid" id="userid" value="${u.USERID}"/> <!-- 아이디 -->
                                	<input type="hidden" name="pjno" id="pjno" value="${projectInfo.PROJECTNO }"  /><!-- 프로젝트 넘버 -->
                             	
-                            	<div>
+                            	
                             	
 	                            <button type="button" id="choose" class="btn stoolDarkBlue-outline pull-right" onclick="insertPjMember(this);">
 	                            	선택
 	                            </button>
 	                           
-	                            </div>
+	                            
                         </div>
                         </c:forEach>
 					                           
@@ -511,11 +595,9 @@ img#cardProfileImg {
 	                    	//console.log(e);
 	                    	//console.log($(e).("#pjno").val());
 	                    	//console.log($(e).prevAll().val());
-	                    	console.log($(e).prevAll().val());
-	                    	//$("#pjno").val();
-	                    	//var pjno=document.getElementsByName('pjno').value;
-	                    	//console.log($("userid").val());
-	                    	//console.log(pjno);
+	                    	//console.log($(e).prevAll().val());
+	                    	console.log('userId');
+	                    	console.log($(e).prev().prev().val());
 	                    	
 	                    	$.ajax({
 	                    		url:"${path}/aside/insertProjectMember.do",
@@ -528,11 +610,11 @@ img#cardProfileImg {
 	                    				alert("이미 초대된 멤버입니다.")
 	                    			}else if(data > 0){
 	                    				alert("프로젝트 초대 성공!");	
-	                    			} else{
+	                    			}else{
 	                    				alert("초대하기에 실패하였습니다. 관리자에게 문의해주세요.");
 	                    			}
 	                    		}
-	                    	});
+	                    	}); 
 	                    }
 
                     </script>

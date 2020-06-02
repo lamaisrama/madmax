@@ -20,7 +20,7 @@
 	
 	
 </style>
-<div class="col col-sm-9 list-container">
+<div class="col col-sm-9 list-container mx-auto">
 	<br><br>
 	<h4 style="font-weight:bolder">&nbsp;<i class="fas fa-clipboard-list"></i> &nbsp;기안문 작성</h4>
 	<br>
@@ -34,7 +34,6 @@
 				<tr class="bg-light">
 					<th width="15%">문서번호</th>
 					<th>양식명</th>
-					<th width="10%">북마크</th>
 				</tr>
 				<c:forEach items="${list }" var="l">
 					<tr>
@@ -44,7 +43,6 @@
 							onclick="window.open('${path}/appr/draftForm.do?dNo=${l.apprDocTypeNo }','_blank','width = 1000, height = 600, top = 120px, left = 400px')">
 								${l.typeTitle}
 						</a></td>
-						<td><i class="fa fa-star-o"></i></td>
 					</tr>
 				</c:forEach>
 			</table>
