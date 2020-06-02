@@ -24,7 +24,7 @@
 
 	<!-- <div class="row"> -->
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
-		<div>
+		<div class="mt-3">
 			<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="fn_goBack()">
 				<span>이전화면</span>
 			</button>
@@ -102,7 +102,7 @@
 							data-target="#member${pm.userId}"
 							data-profile="${pm.profile }"
 							data-userName="${pm.userName }">
-								<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile${pm.profile}"
@@ -131,14 +131,13 @@
 			<div>
 				<div style="padding: 25px 40px;">
 					<div>
+						<p style="color:#25558F;">${pm.deptName}</p>
 						<strong id="userName">
 							${pm.userName}
 						</strong> 
 						<span>
 							${pm.jobName}
 						</span>
-						
-						<p style="color:#25558F;">${pm.deptName}</p>
 					</div>
 					<hr>
 					<div style="margin-bottom: 20px;">
@@ -245,14 +244,13 @@
 			<div>
 				<div style="padding: 25px 40px;">
 					<div>
+						<p style="color:#25558F;">${pm.deptName}</p>
 						<strong id="userName">
 							${pm.userName}
 						</strong> 
 						<span>
 							${pm.jobName}
 						</span>
-						
-						<p style="color:#25558F;">${pm.deptName}</p>
 					</div>
 					<hr>
 					<div style="margin-bottom: 20px;">
@@ -457,7 +455,7 @@ img#cardProfileImg {
 										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
 									</div>				
-								<span>
+								<span id="pjmemberSearch">
 									<c:out value="${pm.userName}"/>
 								</span>
 								<c:if test="${pm.userId eq projectInfo.USERID  }">
@@ -476,11 +474,19 @@ img#cardProfileImg {
 		</div>
 	</div>
 </div>
-<!-- 전체보기 리스트 모달창 끝-->
 
 <script>
-	
+$(document).ready(function(){
+	  $("#searchMember").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#pjmemberSearch").find(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
 </script>
+<!-- 전체보기 리스트 모달창 끝-->
+
 
 
 
@@ -554,35 +560,24 @@ img#cardProfileImg {
                         <div class="d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="addWorker_profile_div mr-2">
-                                    <c:choose>
-									<c:when test="${u.PROFILE eq null}"> <!-- 프로필이 널이면 -->
-										<img 
-										id="profileImg"
-										src="${path}/resources/images/defaultProfile.png"
-										alt="프로필사진">
-									</c:when>
-									<c:otherwise>
+                                    <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile${u.PROFILE}"
-										alt="프로필사진">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     진">
-									</c:otherwise>
-								</c:choose>
+										alt="프로필사진">
+									</div>
                                 </div>
-                                <p class="m-0"><c:out value="${u.USERNAME}"></c:out></p>
+                                <p id="inviUserSearch" class="m-0"><c:out value="${u.USERNAME}"></c:out></p>
                               <%--   <p class="m-0"><c:out value="${u.USERID}"></c:out></p> --%>
                             </div> 
                            
                                 <input type="hidden" name="userid" id="userid" value="${u.USERID}"/> <!-- 아이디 -->
                                	<input type="hidden" name="pjno" id="pjno" value="${projectInfo.PROJECTNO }"  /><!-- 프로젝트 넘버 -->
                             	
-                            	
-                            	
 	                            <button type="button" id="choose" class="btn stoolDarkBlue-outline pull-right" onclick="insertPjMember(this);">
 	                            	선택
 	                            </button>
-	                           
-	                            
+
                         </div>
                         </c:forEach>
 					                           
@@ -590,6 +585,21 @@ img#cardProfileImg {
                     
                     
                     <script>
+	                    $(document).ready(function(){
+	                    	$("#invitationSearch").on("keyup", function() {
+	                    		var value = $(this).val().toLowerCase();
+	                    			$("p#inviUserSearch").filter(function() {
+	                    				console.log($(this).val());
+	                    				/*console.log($(this).children().eq(1).text());*/
+	                    				/* $(this).toggle($(this).children().eq(1).text().toLowerCase().indexOf(value) > -1) */
+	                    				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	                    			});
+	                    	});
+	                    });
+	                    
+	                   
+                    
+                    
 	                    function insertPjMember(e){
 	                    	//console.log($("#userid").val());
 	                    	//console.log(e);
