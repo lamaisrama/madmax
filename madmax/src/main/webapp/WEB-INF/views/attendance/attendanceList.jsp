@@ -12,10 +12,9 @@
 
 
 
-
-
-	<div class="col col-sm-10">	
-		<h4><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
+	<div class="col col-sm-9 mx-auto">
+		<br><br>	
+		<h4 style="font-weight:bolder"><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
 		<hr>
 	 	<br>
 	 	<!-- Search -->
@@ -47,8 +46,8 @@
 	                <th scope="row" style="vertical-align: middle;"></th>
 	                <!-- <th scope="row">5</th> -->
 	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['checkDate']}" type="both" pattern="yyyy-MM-dd" /></td>
-	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['comeTime']}" type="both" pattern="HH:mm" /></td>
-	                <td style="vertical-align: middle;"><fmt:formatDate value="${wt['goTime']}" type="both" pattern="HH:mm"/></td>
+	                <td style="vertical-align: middle;">${wt['comeTime']}</td>
+	                <td style="vertical-align: middle;">${wt['goTime']}</td>
 	                <td style="vertical-align: middle;">${wt['employeeState']}</td>
 	                <td>
 	                <input type="hidden"  id="managementNo"  value="${wt['managementNo']}"/>

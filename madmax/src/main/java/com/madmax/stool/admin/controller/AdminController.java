@@ -27,7 +27,7 @@ public class AdminController {
 	@RequestMapping("/admin/adminIndex.do")
 	public String adminIndexPage() {
 		
-		return "/admin/adminIndex";
+		return "redirect:/admin/signupApproval.do";
 	}
 	
 	

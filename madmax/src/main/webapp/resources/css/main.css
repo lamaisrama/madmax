@@ -107,7 +107,7 @@ a:hover{
 
 /* favourite */
  .fvcontainer{
- 	/* border:1px solid pink; */
+ 	border:1px solid pink; 
  	margin-left: 4%;
  }
 .favoriteBox{

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.madmax.stool.project.model.vo.AllAttachment;
 import com.madmax.stool.project.model.vo.ProjectMember;
+import com.madmax.stool.project.model.vo.TaskReport;
 import com.madmax.stool.project.model.vo.Tag;
 
 public interface SelectedProjectSelectDao {
@@ -37,6 +38,6 @@ public interface SelectedProjectSelectDao {
 	List<Map<String, Object>> selectProjectBoardWithTag(SqlSessionTemplate session, Map<String, Object> pjInfo);
 	
 
-	
+	List<TaskReport> selectTaskReport(SqlSessionTemplate session,int pjNo);
 
 }

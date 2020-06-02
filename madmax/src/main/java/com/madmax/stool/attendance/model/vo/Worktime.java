@@ -15,8 +15,8 @@ public class Worktime {
 
 	
 	private int managementNo;
-	private Date comeTime;
-	private Date goTime;
+	private String comeTime;
+	private String goTime;
 	private String timeState;
 	private String userId;
 	private Date checkDate;
