@@ -36,7 +36,7 @@
        #area{
         height: 768px;
        }
-       .fc-event{//공휴일 글씨색 설정
+       .fc-event{
 		color:#FFFFFF;
 		background-color:#cc3333;
 		border:1px solid #cc3333;

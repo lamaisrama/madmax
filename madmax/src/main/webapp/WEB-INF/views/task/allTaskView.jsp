@@ -10,7 +10,7 @@
 </jsp:include>
 <style>
 .task-side-container{
-	background-color: #25558F;
+	background-color: #233C61;
 	color:white;
 	font-weight:border;
 }
@@ -21,7 +21,7 @@
 }
 </style>
 	
-<div class="col col-sm-2 task-side-container">
+<div class="col col-sm-2 task-side-container pl-4">
         <!-- 전체업무 사이드바 -->
         <div class="mt-3 ">
             <label>업무구분</label>
@@ -124,7 +124,7 @@
   				<div id="tab-content">
  				<!-- 업무테이블 출력공간*****----------------------------------------------------------------------------- -->
  				<c:if test="${empty tasks}">
- 				<h4 class="text-center pt-5">해당 프로젝트에 업무가 없습니다</h4>
+ 				<h4 class="text-center pt-5">검색된 업무가 없습니다</h4>
  				
  				</c:if>
  				 <c:if test="${tasks!=null}">
@@ -262,7 +262,7 @@
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="modalBtn">
   Open modal
 </button> -->
-<div class="modal" id="myModal" style="display:hidden">
+ <div class="modal" id="myModal" style="display:hidden">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -286,13 +286,25 @@
 
     </div>
   </div>
-</div>
+</div> 
 <script>
-$(document).ready(function(){
-	
-	$("#myModal").modal("show");
-});
 
+ $(document).ready(function(){
+	
+	 function getParameterByName(name) {
+		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		        results = regex.exec(location.search);
+		    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+	 var projectNo = getParameterByName("no");
+	 console.log(projectNo);
+	 if(projectNo==""){
+		$("#myModal").modal("show");
+	 }
+});
+ 
 
 
 function selectTask(pNo){

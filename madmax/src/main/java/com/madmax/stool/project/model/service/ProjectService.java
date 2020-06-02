@@ -16,13 +16,15 @@ public interface ProjectService {
 
 	int selectProjectCount(String id);
 
-	List<Project> selectComProjectList(String id, int cPage, int numPerpage);
+	List<Project> selectComProjectList( int cPage, int numPerpage);
 
-	int selectComProjectCount(String id);
+	
 
 	List<Favorite> selectFavorite(String id);
 
 	int selectFavoriteCount(String id);
+
+	int selectComProjectCount();
 
 
 
