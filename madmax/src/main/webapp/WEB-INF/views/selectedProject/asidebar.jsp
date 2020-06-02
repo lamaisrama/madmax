@@ -25,19 +25,19 @@
 	<!-- <div class="row"> -->
 		<!--이전화면 버튼을 클릭하면 이전에 보았던 페이지로 이동함-->
 		<div class="mt-3">
-			<button id="beforePage" type="button" class="btn bg-white border border-grey rounded" onclick="fn_goBack()">
+			<button id="beforePage" type="button" class="btnBtn bg-white border border-grey rounded" onclick="fn_goBack()">
 				<span>이전화면</span>
 			</button>
 		</div>
 		<p></p>
 		<div class="btn-group bg-white" style="border 1; border-radius: 0.2rem;">
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" data-toggle="modal" data-target="#fileListModal">
+			<button type="button" id="threeBtn" class="btnBtn bg-white border border-grey rounded" data-toggle="modal" data-target="#fileListModal">
 				<span>파일함</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_taskView();">
+			<button type="button" id="threeBtn" class="btnBtn bg-white border border-grey rounded" onclick="fn_taskView();">
 				<span>업무</span>
 			</button>
-			<button type="button" id="threeBtn" class="btn bg-white border border-grey rounded" onclick="fn_schedule();">
+			<button type="button" id="threeBtn" class="btnBtn bg-white border border-grey rounded" onclick="fn_schedule();">
 				<span>일정</span>
 			</button>
 		</div> <!-- btn-group -->
@@ -107,7 +107,7 @@
 										id="profileImg"
 										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
-									</div>	
+									</div>
 								<span id="memberName">
 									<c:out value="${pm.userName}"/> <!-- 플젝 생성자 이름 -->
 								</span>
@@ -139,8 +139,8 @@
 											</div>
 											<hr>
 											<div style="margin-bottom: 20px;">
-												<p class="" style="color: #595959;">이메일</p>
-												<p id="email">${pm.email } </>
+												<p class="" style="color: #595959; margin-bottom:0;">이메일</p>
+												<p id="email">${pm.email } </p>
 												<hr>
 												<p class="" style="color: #595959;">연락처</p>
 												<p id="phoneNo">${pm.phone }</p>
@@ -222,59 +222,53 @@
 								</c:otherwise>
 								</c:choose>
 								<!-- 멤버별 프로필 Modal : 멤버 리스트 클릭시 뜨는 프로필 카드-->
-    <!-- 카드 모달 도전 -->
-<div class="modal fade" id="member${pm.userId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
-	<div
-		class="modal-dialog modal-dialog-centered d-flex justify-content-center"
-		role="document">
-		<div class="modal-content" style="width: 400px; height: 700px;">
-			<div id="profileBox">
-				<img id="cardProfileImg"
-					src="${path}/resources/upload/profile/${pm.profile}"
-					alt="cardProfileImg"
-					style="object-fit: cover; height: 400px; width: 398px;">
-			</div>
-		
-			<div>
-				<div style="padding: 25px 40px;">
-					<div>
-						<p style="color:#25558F;">${pm.deptName}</p>
-						<strong id="userName">
-							${pm.userName}
-						</strong> 
-						<span>
-							${pm.jobName}
-						</span>
+					<!-- 카드 모달 도전 -->
+					<div class="modal fade" id="member${pm.userId}" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true" style="z-index: 10000;">
+						<div
+							class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+							role="document">
+							<div class="modal-content" style="width: 400px; height: 700px;">
+								<div id="profileBox">
+									<img id="cardProfileImg"
+										src="${path}/resources/upload/profile/${pm.profile}"
+										alt="cardProfileImg"
+										style="object-fit: cover; height: 400px; width: 398px;">
+								</div>
+
+								<div>
+									<div style="padding: 25px 40px;">
+										<div>
+											<p style="color: #25558F;">${pm.deptName}</p>
+											<strong id="userName"> ${pm.userName} </strong> <span>
+												${pm.jobName} </span>
+										</div>
+										<hr>
+										<div style="margin-bottom: 20px;">
+											<p class="" style="color: #595959;">이메일</p>
+											<p id="email">${pm.email } </>
+											<hr>
+											<p class="" style="color: #595959;">연락처</p>
+											<p id="phoneNo">${pm.phone }</p>
+											<br>
+											<!-- <span id="officeNO">02-567-8901</span> -->
+										</div>
+										<!-- <div style="padding-top: 15px;" align="center">
+												<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
+												프로필 수정하기</button>
+											</div> -->
+									</div>
+								</div>
+							</div>
+							<!-- modal-content 끝 -->
+						</div>
+						<!-- modal-dialog 끝 -->
 					</div>
-					<hr>
-					<div style="margin-bottom: 20px;">
-						<p class="" style="color:#595959;">이메일</p>	
-						<p id="email">
-							${pm.email }
-						</> 
-						<hr> 
-						<p class="" style="color:#595959;">연락처</p>
-						<p id="phoneNo">
-							${pm.phone }
-						</p> 
-						<br> 
-						<!-- <span id="officeNO">02-567-8901</span> -->
-					</div>
-					<!-- <div style="padding-top: 15px;" align="center">
-						<button type="button" class="btn btn-sm btn bg-white border border-grey rounded">
-						프로필 수정하기</button>
-					</div> -->
-				</div>
-			</div>
-		</div>
-		<!-- modal-content 끝 -->
-	</div>
-	<!-- modal-dialog 끝 -->
-</div>
-<!-- 카드 모달 도전 끝 -->
-								
-								
-						</c:forEach>
+					<!-- 카드 모달 도전 끝 -->
+
+
+				</c:forEach>
 					</ul>
 					
 				</div>
@@ -547,7 +541,7 @@ img#cardProfileImg {
                 <div class="modal-body" style="min-height:600px; max-height:600px;">
                     <div class="d-flex w-100 p-2 align-items-center mb-5 addWorkerModal_searchBox">
                         <i class="fas fa-search mr-3 stoolGrey"></i>
-                        <input type="text" id="invitationSearch" name="addWorker_search" placeholder="초대할 멤버 이름 검색" class="w-100 addWorker_search"/>
+                        <input type="text" id="invitationSearch" name="addWorker_search" placeholder="초대할 직원 이름 검색" class="w-100 addWorker_search"/>
                     </div>
                     <div id="invitationMember" class="d-flex flex-column pl-2 pr-2 w-100 overflow-auto" style="max-height: 500px;">
                         <!-- 프로젝트 참여자 데이터 넣기 -->
