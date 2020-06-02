@@ -41,6 +41,9 @@ import com.madmax.stool.common.RenameFactory;
 public class ApprovalController {
 	@Autowired
 	ApprovalService service;
+	
+	//private String rootName="/20PM_stool_final";
+	private String rootName="/stool";
 
 	@RequestMapping("/appr/approval.do")
 	public ModelAndView approvalList(ModelAndView mv, @RequestParam(required = false, defaultValue = "1") int cPage,
@@ -49,7 +52,7 @@ public class ApprovalController {
 		int totalData = service.selectApprDocListCount();
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
-		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/approval.do"));
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/approval.do"));
 		mv.setViewName("approval/apprList");
 		return mv;
 	}
@@ -106,11 +109,6 @@ public class ApprovalController {
 		} else { //ApprText 없을 때
 			appr.setApprText("");
 		}
-		System.out.println("1");
-		System.out.println(appr);
-		System.out.println(apprLine);
-		System.out.println(appredNo);
-		System.out.println(upFile);
 		// 결재선 정보 입력
 		List<ApprLine> apprLines=new ArrayList();
 		for(int i=0;i<apprLine.length;i++){  
@@ -219,7 +217,7 @@ public class ApprovalController {
 		int totalData = service.selectApprReqListCount(userId);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprReqBox.do"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/apprReqBox.do"));
 		return "approval/apprReqBox";
 	}
 	
@@ -233,7 +231,7 @@ public class ApprovalController {
 		int totalData = service.selectApprTempListCount(userId);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprTempBox.do"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/apprTempBox.do"));
 		return "approval/apprTempBox";
 	}
 
@@ -246,7 +244,7 @@ public class ApprovalController {
 		int totalData = service.selectApprWaitListCount(userId);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/apprWaitBox.do"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/apprWaitBox.do"));
 		return "approval/apprWaitBox";
 	}
 
@@ -259,7 +257,7 @@ public class ApprovalController {
 		int totalData = service.selectMyDocListCount(userId);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/myDocBox"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/myDocBox"));
 		return "/approval/myDocBox";
 	}
 
@@ -272,7 +270,7 @@ public class ApprovalController {
 		int totalData = service.selectDeptDocListCount(userDept);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/deptDocBox"));
 		return "approval/deptDocBox";
 	}
 	
@@ -285,7 +283,7 @@ public class ApprovalController {
 		int totalData = service.selectRefferedDocListCount(userId);
 		m.addAttribute("list", list);
 		m.addAttribute("totalData", totalData);
-		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/appr/deptDocBox"));
+		m.addAttribute("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/appr/deptDocBox"));
 		return "approval/refferedDocBox";
 	}
 
@@ -304,8 +302,7 @@ public class ApprovalController {
 		approval.setUserId(userId);
 		approval.setApprNo(apprNo);
 		ApprDoc appr= service.selectDoApproval(approval);
-		m.addAttribute("appr", appr);
-		System.out.println(appr);	
+		m.addAttribute("appr", appr);	
 		return "approval/openDoApprDoc";
 	}
 	
@@ -434,11 +431,9 @@ public class ApprovalController {
 			
 			if(!mf.isEmpty()) {
 				String ori = mf.getOriginalFilename();
-				System.out.println(ori);
 				String rename = RenameFactory.getRenamedFileName(ori);
 				try {
 					mf.transferTo(new File(path+"/"+rename));
-					System.out.println("트랜스퍼 두번 함");
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
@@ -459,7 +454,6 @@ public class ApprovalController {
 				//delFileInfo[1] - docFileNo
 				//삭제할 파일번호 list에 담기
 				delAttachment.setDocFileNo(Integer.parseInt(delFileInfo[1]));
-				System.out.println("잘 담겼는지 확인 : "+delAttachment.getDocFileNo());
 				delFiles.add(delAttachment);
 			}
 		}
