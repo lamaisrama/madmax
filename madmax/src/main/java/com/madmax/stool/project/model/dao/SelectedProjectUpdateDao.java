@@ -78,5 +78,9 @@ public interface SelectedProjectUpdateDao {
 
 	int updateTaskProgressState(SqlSessionTemplate session, Map<String, Object> tMap);
 
+	int insertTaskCommentProgressState(SqlSessionTemplate session, Map<String, Object> tMap);
+
+	int insertCommentNotificationProgressState(SqlSessionTemplate session, Map<String, Object> tMap);
+
 
 }

@@ -74,11 +74,11 @@
 	</delete>
 	
 	<delete id="deleteComment-T" parameterType="map">
-		DELETE TASKCOMMENT WHERE TASKCOMMENT = #{cNo}
+		DELETE TASKCOMMENT WHERE TASKCOMMENTNO = #{cNo}
 	</delete>
 	
 	<delete id="deleteComment-S" parameterType="map">
-		DELETE SCHEDULECOMMENT WHERE SCHEDULECOMMENT = #{cNo}
+		DELETE SCHEDULECOMMENT WHERE SCHEDULECOMMENTNO = #{cNo}
 	</delete>	
 
 	<update id="updateProjectBoardStatus" parameterType="map">		 
@@ -159,4 +159,12 @@
 		UPDATE TASK SET TASKSTATE = #{state} WHERE TASKNO = #{taskNo} AND BOARDNO = #{bNo}
 	</update>
 	
+	<insert id="insertTaskCommentProgressState" parameterType="map">
+		INSERT INTO TASKCOMMENT
+		VALUES(SEQ_TASKCOMMENTNO.NEXTVAL,#{str},DEFAULT,#{taskNo},#{loginId})
+	</insert>
+	
+	<insert id="insertCommentNotificationProgressState" parameterType="map">
+		INSERT INTO NOTIFICATIONTABLE VALUES(SEQ_NOTNO.NEXTVAL, #{taskId}, #{loginId}, 'taskcomment', DEFAULT, DEFAULT, #{bNo})
+	</insert>
 </mapper>
