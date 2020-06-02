@@ -1,4 +1,16 @@
 /*--------- 전체설정 ------*/
+.inputTite{
+	font-size: 25px;
+	padding-left: 10px;
+}
+
+.profileImgDiv{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
 #map img {
 
 	max-width: none;
