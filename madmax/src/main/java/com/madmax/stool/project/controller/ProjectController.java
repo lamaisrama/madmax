@@ -116,6 +116,7 @@ public class ProjectController {
 		int totalData=service.selectComProjectCount();
 		//List<String> pmNames=new ArrayList();
 		
+		
 		mv.addObject("list",list);
 		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
 		//mv.addObject("member",pmNames);
