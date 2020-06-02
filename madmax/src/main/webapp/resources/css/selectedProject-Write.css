@@ -1,4 +1,9 @@
 /*--------- 전체설정 ------*/
+.inputTite{
+	font-size: 25px;
+	padding-left: 10px;
+}
+
 #map img {
 
 	max-width: none;
@@ -10,7 +15,7 @@
 }
 
 .stoolGrey{
-	color: #E8E8EB;
+	color: #B1B1B1;
 }
 .stoolPink{
 	color: #EBDACE;
