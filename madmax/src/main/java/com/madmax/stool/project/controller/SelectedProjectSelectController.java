@@ -92,6 +92,7 @@ public class SelectedProjectSelectController {
       if(bookmarkList.size()>0) mv.addObject("bookmarkList",bookmarkList);
       if(projectMember.size()>0) mv.addObject("projectMember",projectMember);
       if(projectBoardList.size()>0) mv.addObject("projectBoardList",projectBoardList);      
+      if(pjTagList.size()>0) mv.addObject("pjTagList",pjTagList);      
       
       if(writingList.size()>0) mv.addObject("writingList",writingList);
       if(taskList.size()>0) mv.addObject("taskList",taskList);

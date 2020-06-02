@@ -26,7 +26,7 @@
 	  				AND TASKID=#{userId}
 	  			</if>
 	  			<if test="task.equals('내업무')">
-	  				 AND TASKID=#{userId} OR TASKMANAGERID=#{userId}
+	  				 AND (TASKID=#{userId} OR TASKMANAGERID=#{userId})
 	  			</if>
 	  		</if>
 	  		<!-- 상태를 골랐을때 -->

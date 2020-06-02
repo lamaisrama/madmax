@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
@@ -14,7 +15,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
-
 
     <!-- 데이트피커 -->
     <link rel="stylesheet" type="text/css" href="${path}/resources/css/bootstrap-datepicker.css">
@@ -36,7 +36,7 @@
     
             <div class="col-sm-7">
                 <!-- 프로젝트정보 -->
-                <div class="rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: ${projectInfo.PROJECTCOLOR};">
+                <div class="mt-3 rounded mb-3 justify-content-center align-items-center" id="pjInfoContainer" style="background-color: ${projectInfo.PROJECTCOLOR};">
                     <div id="pjInfoBox" class="row w-100 d-flex align-items-center m-0">
 						<c:if test="${favorite > 0}">
 	                        <button type="button" class="btn col-1 justify-content-center align-items-center pl-2" onclick="fn_favorite(${favorite},${projectInfo.PROJECTNO},'${loginUser.userId}');">
@@ -175,11 +175,11 @@
                                 <div id="boardContainer" class="w-100 p-3">
                                     <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
                                         <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                            placeholder="제목 입력 (선택)" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                            placeholder="제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                     </div>
                                     <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
                                         <div id="boardContentAreaDiv" class="w-100">
-                                            <textarea id="boardContentArea" name="writingContent" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요."></textarea>
+                                            <textarea id="boardContentArea" name="writingContent" class="w-100 border-0 contentArea" style="resize: none; visibility: visible;" placeholder="글을 입력하세요." required="required"></textarea>
                                         </div>
                                     </div>                                                                 
                                 </div>
@@ -190,7 +190,7 @@
                             <div id="taskBox" class="w-100 p-3">
                                 <div id="taskTitleBox" class="col-12 d-flex justify-content-center mb-3">
                                     <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                        placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                        placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;"  required="required">
                                 </div>
                                 <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">진행상태</strong>
@@ -205,22 +205,22 @@
                                 </div>
                                 <div id="taskListBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">담당자</strong>
-                                    <input type="text" id="workerListStr" name="taskManagerId" style="display: none;"/>
+                                    <input type="text" id="workerListStr" name="taskManagerId" style="display: none;" required="required"/>
                                     <div id="workerList" class="d-flex flex-wrap">            
                                         <button type="button" id="addWorker" class="btn stoolDarkBlue-outline m-1" onclick="fn_addWorkerModal();">담당자 추가</button>                       
                                     </div>
                                 </div>
                                 <div id="taskStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date"" id="taskStartDate" name="taskStartdate" class="stoolDateInput" />
+                                    <input type="date"" id="taskStartDate" name="taskStartdate" class="stoolDateInput" required="required"/>
                                 </div>   
                                 <div id="taskEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="taskEndDate" name="taskEnddate" class="stoolDateInput" />
+                                    <input type="date"" id="taskEndDate" name="taskEnddate" class="stoolDateInput" required="required"/>
                                 </div>  
                                 <div id="priorityBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">우선순위</strong>
-                                    <input type="hidden" id="taskPriority" name="taskProiority" value="없음"/>
+                                    <input type="hidden" id="taskPriority" name="taskProiority" value="없음" required="required"/>
                                     <div class="dropdown">
                                         <button type="button" id="prioritySelectBtn" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 150px;">
                                             	우선순위 선택
@@ -235,7 +235,7 @@
                                     </div>                   
                                 </div>                                  
                                 <div id="taskContentBox" class="col-12 d-flex justify-content-center">
-                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요."></textarea>
+                                    <textarea name="taskContent" id="taskContentArea" class="w-100 border-0 contentArea" style="resize: none;" placeholder="글을 입력하세요." required="required"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -246,22 +246,22 @@
                             <div id="scheduleBox" class="w-100 p-3">
                                 <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mb-3">
                                     <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
-                                        placeholder="일정 제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;">
+                                        placeholder="일정 제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">시작일</strong>
-                                    <input type="date" id="scheduleStartDate" name="scheduleStartdate" class="stoolDateInput" />
+                                    <input type="date" id="scheduleStartDate" name="scheduleStartdate" class="stoolDateInput" required="required"/>
                                 </div>   
                                 <div id="scheduleEndDateBox" class="col-12 d-flex align-items-center mb-3">
                                     <strong class="mr-2">마감일</strong>
-                                    <input type="date"" id="scheduleEndDate" name="scheduleEnddate" class="stoolDateInput" />
+                                    <input type="date"" id="scheduleEndDate" name="scheduleEnddate" class="stoolDateInput" required="required"/>
                                 </div>    
                                 <div id="schedulePlaceBox" class="col-12 w-100 d-flex align-items-center mb-3">
                                     <strong class="mr-2">장소</strong>
                                     <div class="d-flex align-items-end">
                                     	<button type="button" class="btn stoolDarkBlue-outline mr-2" onclick="sample5_execDaumPostcode();">주소 검색</button>
                                     	<div id="schedulePlaceText" style="width:280px; border-bottom: 2px solid #E8E8EB;" class="ml-2"></div>
-                                    	<input type="hidden" id="schedulePlace" name="schedulePlace"/>
+                                    	<input type="hidden" id="schedulePlace" name="schedulePlace" required="required"/>
                                     </div>
                                 </div>      
                                 <div id="schedulePlaceMapBox" class="col-12 d-flex w-100 align-items-center mb-3" >
@@ -271,7 +271,7 @@
                                 </div>                                                                                        
                                 <div id="scheduleContentBox" class="col-12 d-flex justify-content-center">
                                     <i class="far fa-sticky-note mr-2 stoolGrey" style="font-size: 24px;"></i>
-                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요."></textarea>
+                                    <textarea id="scheduleContentArea" name="scheduleMemo" class="w-100 border-0 contentArea" style="resize: none;" placeholder="메모를 입력하세요." required="required"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -369,13 +369,14 @@
                         
                 </form>
                 </c:if>
-            <!-- ☆★☆ 게시글List include -->
-<%--             <div class="mb-3"> <!-- 고정글 -->
-				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-            </div> --%>
-            <div class="mb-3"> <!-- 게시글 리스트 -->
-				<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
-            </div>
+                
+	            <!-- ☆★☆ 게시글List include -->
+<%-- 	            <div class="mb-3"> <!-- 고정글 -->
+					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
+	            </div> --%>
+	            <div class="mb-3"> <!-- 게시글 리스트 -->
+					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
+	            </div>
 
             </div> <!-- col-sm-7닫는 div -->
 
@@ -385,6 +386,7 @@
 				<jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" />
 
 				<%-- <jsp:include page="/WEB-INF/views/selectedProject/asidebar.jsp" /> --%>
+
 			</div>
 
 
@@ -670,11 +672,11 @@
     <!-- 프로젝트 수정  끝 -------------------->  
     
 <!----------------------------------------------------------------------------------------------------------------------- 모달모음 끝 ------->    
- 
- 
- 
- 
- 
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+
+
  <script>
  	
  	var jsonData=${json};
@@ -723,10 +725,3 @@
 	}
  
  </script>
- 
- 
- 
- 
- 
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

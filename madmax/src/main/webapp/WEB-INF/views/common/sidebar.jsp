@@ -148,8 +148,9 @@
         position: relative;
     }
     .imgbox img {
-		/* width: 100%; height:auto; */
-		max-width: 130px; height: auto;
+		width: 100%; height:auto;
+		/* width: auto; height: auto;
+	    max-width: 130px; max-height: 130px; */
 		vertical-align: middle;
 	}  
 	.shadow {
@@ -187,10 +188,12 @@
 		background-color:#233C61;
 		color: #F1F0F5;
 	}
-	
+	hr.sbHr {border-top: 1px solid rgba(235, 218, 206, .3)}
+
 </style>
 
-<div class="col col-sm-2 sidebar-container">
+<div class="col-sm-2 sidebar-container">
+
 	<br>	
 	<nav>
 		<ul class="menu">
@@ -210,7 +213,7 @@
 					</c:if>				
 				</div>
 			</li>
-			<hr>
+			<hr class="sbHr">
 			<li>
 				<!-- Elements Section Begin -->
 	            <div class="row">
@@ -233,7 +236,7 @@
                             <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseTwo">
-                                        프로젝트
+                                        	프로젝트
                                     </a>
                                 </div>
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
@@ -243,15 +246,15 @@
                                         	+&nbsp;&nbsp;새 프로젝트</button></li>                                        	
 											<li><a href="${path }/project/projectList.do"><i class="icon fas fa-project-diagram"></i>전체 프로젝트</a></li>
 											<li><a href="${path }/project/favList"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
-                                        	<hr/>
+                                        	<hr class="sbHr">
                                         	<li><a href="${path }/project/companyProjectList.do"><i class='icon fas fa-building'></i>회사 공개 프로젝트</a></li>
-                                        	<hr/>
+                                        	<hr class="sbHr">
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href="${path }/calendar/calendar.do"><i class="icon far fa-calendar-alt"></i>전체 일정</a></li>
 											<li><a href="${path }/project/bookmarkList.do"><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
 											<li><a href="${path }/project/myNoti.do"><i class="icon fas fa-at"></i>나를 지정</a></li>	
 											<li><a href="${path }/project/myBoard.do"><i class="icon far fa-smile"></i>내 게시물</a></li>
-											<hr/>
+											<hr class="sbHr">
                                         </ul>
                                     </div>
                                 </div>
@@ -266,30 +269,30 @@
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-edit"></i><b>기안</b></h5>
-									      &nbsp;&nbsp;<a href="${path }/appr/approval.do">기안문 작성</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/apprReqBox.do">결재 요청함</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/apprTempBox.do">임시 문서함</a>
+									      <a href="${path }/appr/approval.do">&nbsp;&nbsp;기안문 작성</a><br>
+									      <a href="${path }/appr/apprReqBox.do">&nbsp;&nbsp;결재 요청함</a><br>
+									      <a href="${path }/appr/apprTempBox.do">&nbsp;&nbsp;임시 문서함</a>
 									    </div>
                                     </div>
-								    <hr>
+								    <hr class="sbHr">
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon fas fa-edit"></i><b>결재</b></h5>
-									      &nbsp;&nbsp;<a href="${path }/appr/apprWaitBox.do">결재 대기함</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/apprProgBox.do">결재 진행함</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/apprDoneBox.do">완료 문서함</a>
+									      <a href="${path }/appr/apprWaitBox.do">&nbsp;&nbsp;결재 대기함</a><br>
+									      <a href="${path }/appr/apprProgBox.do">&nbsp;&nbsp;결재 진행함</a><br>
+									      <a href="${path }/appr/apprDoneBox.do">&nbsp;&nbsp;완료 문서함</a>
 									    </div>
                                     </div>
-								  	<hr>
+								  	<hr class="sbHr">
                                     <div class="card-content">
                                         <div class="p-2">
 									      <h5 class="h6"><i class="icon far fa-folder-open"></i><b>문서함</b></h5>
-									      &nbsp;&nbsp;<a href="${path }/appr/myDocBox">내 문서함</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/deptDocBox">부서 문서함</a><br>
-									      &nbsp;&nbsp;<a href="${path }/appr/referredDocBox">참조 문서함</a><br>
+									     <a href="${path }/appr/myDocBox">&nbsp;&nbsp;내 문서함</a><br>
+									      <a href="${path }/appr/deptDocBox"> &nbsp;&nbsp;부서 문서함</a><br>
+									      <a href="${path }/appr/referredDocBox">&nbsp;&nbsp;참조 문서함</a><br>
 									    </div>
                                     </div>
-								    <hr>
+								    <hr class="sbHr">
                                 </div>
                             </div>
                         </div>
@@ -317,7 +320,7 @@
                             <input type="text" class="form-control" name="projectTitle" placeholder="프로젝트 제목을 입력하세요" 
                             style="font-size: 25px; font-weight: bolder;">
                         </li>
-                        <hr>
+                        <hr class="sbHr">
                         <li>
                             <p><b>옵션 설정</b></p>
                         </li>

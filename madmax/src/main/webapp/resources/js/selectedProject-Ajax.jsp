@@ -269,14 +269,22 @@ function fn_updatePin(check,pjNo,bNo){
 }
 
 //업무 - 진행상태변경
-function fn_progressState_viewUpdate(e, state, bNo, taskNo){
+function fn_progressState_viewUpdate(e, state, bNo, taskNo, taskId, loginId, loginName, taskTitle){
 	$.ajax({
 		url:"${path}/selectedProject/updateTaskProgressState.do",
 		data:{state:state,
 			  taskNo:taskNo,
-			  bNo:bNo},
+			  bNo:bNo,
+			  taskId:taskId,
+			  loginId:loginId,
+			  loginName:loginName},
 		success:function(data){
 			if(data > 0){
+				msg =  '[${projectInfo.PROJECTTITLE}] <br>';
+				msg += '<b>\"'+taskTitle+'\"</b>의 업무 상태가 '
+				msg += '\"'+state+'\"으로 변경되었습니다. -';
+				msg += loginName;
+				sendNotiMessage(taskId, msg);
         		location.reload(true);
 			}else{
 				alert("업무상태 변경에 실패하였습니다. 다시 시도해주세요");
@@ -307,8 +315,6 @@ function fn_insertCommentSubmit(bNo){
         		msg += "\""+$(form[name="comment"]).val()+"\"";
         		sendNotiMessage(receiver, msg);
         		location.reload(true);
-        		
-        		
         	}else{
         		alert("댓글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
         	}

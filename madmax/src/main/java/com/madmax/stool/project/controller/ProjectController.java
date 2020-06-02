@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.madmax.stool.board.model.service.BoardService;
+import com.madmax.stool.board.model.vo.Board;
 import com.madmax.stool.calendar.model.service.CalendarService;
 import com.madmax.stool.calendar.model.vo.Calendar;
 import com.madmax.stool.project.model.service.ProjectService;
@@ -29,7 +31,11 @@ public class ProjectController {
 	private Logger logger;
 	@Autowired
 	private CalendarService cService;
+	@Autowired
+	private BoardService bService;
 	
+	
+	private String rootName="/stool";
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
 	public String insertProject(Project p,Model m,HttpServletRequest req) {
@@ -44,11 +50,12 @@ public class ProjectController {
 		//세션에서 받아와 넣을것!
 		p.setUserId(id);	
 		 int result=service.insertProject(p);
-		  
+		 
+		 logger.debug("가져온 프로젝트번호:"+result);
 		
 		 if(result>0) {
 		 m.addAttribute("msg","프로젝트 생성 성공"); 
-		 m.addAttribute("loc","/task/backhome.do"); 
+		 m.addAttribute("loc","/selectedProject/selectedProject.do?pjNo="+result+"&loginId="+id); 
 		 }else {
 		 m.addAttribute("msg","프로젝트 생성 실패"); 
 		 m.addAttribute("loc","/task/backhome.do"); 
@@ -86,7 +93,7 @@ public class ProjectController {
 			
 		}
 		mv.addObject("list",list);
-		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
+		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, rootName+"/project/projectList.do"));
 		//mv.addObject("member",pmNames);
 		mv.setViewName("project/allProjectList");
 		
@@ -142,6 +149,8 @@ public class ProjectController {
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		
 		List<Favorite> list = service.selectFavorite(id);
+		// 공지사항
+		List<Board> blist = bService.selectBoard(1, 10);
 		List<Calendar> cal=cService.selectSchedule(id);
 		int total = service.selectFavoriteCount(id); 
 		
@@ -149,6 +158,7 @@ public class ProjectController {
 		
 		mv.addObject("schedule",cal);//일정도 같이 보여주자
 		mv.addObject("list", list);
+		mv.addObject("blist", blist);
 		mv.addObject("total", total);
 		mv.setViewName("main");
 		

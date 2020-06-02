@@ -21,11 +21,7 @@
 		<hr>
 	 	<br>
 	 	<!-- Search -->
-        기간검색&nbsp;
-        <input type="date" class="dateInput" />&nbsp;~&nbsp;<input type="date" class="dateInput" />
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false">
-        검색
-        </button>
+       
         <br><br>
         <!-- AttendanceList -->
         <table class="table text-center">

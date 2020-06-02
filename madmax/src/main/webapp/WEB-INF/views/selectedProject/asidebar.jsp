@@ -105,7 +105,7 @@
 									<div class="mr-2 overflow-hidden" style="border-radius: 25px; width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
-										src="${path}/resources/upload/profile${pm.profile}"
+										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
 									</div>	
 								<span id="memberName">
@@ -653,7 +653,7 @@ img#cardProfileImg {
 		   //console.log(typeof url);
 		   //console.log(loction.search.substr(location.search.lastIndex))
 		var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
-		alert(pjNo);
+		//alert(pjNo);
 		location.href="${path}/task/selectProjectTask.do?pjNo="+pjNo;
 	
 };
@@ -664,7 +664,7 @@ function fn_schedule(){
 	   //console.log(typeof url);
 	   //console.log(loction.search.substr(location.search.lastIndex))
 	var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
-	alert(pjNo);
+	//alert(pjNo);
 	location.href="${path}/calendar/projectCalendar.do?pjNo="+pjNo;
 	
 	

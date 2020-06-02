@@ -416,8 +416,30 @@ public class SelectedProjectUpdateServiceImpl implements SelectedProjectUpdateSe
 	}
 
 	@Override
+	@Transactional
 	public int updateTaskProgressState(Map<String, Object> tMap) {
-		return dao.updateTaskProgressState(session, tMap);
+		int result = dao.updateTaskProgressState(session, tMap);
+		if(result == 0) {
+			throw new MyException("updateTaskProgressState 에러!");
+		}
+		
+		String str = ""; 
+		if(tMap.get("state").equals("완료")||tMap.get("state").equals("보류")) {
+			str = tMap.get("loginName")+"님이 ["+tMap.get("state")+"]로 진행상태를 변경하였습니다.";
+		} else {
+			str = tMap.get("loginName")+"님이 ["+tMap.get("state")+"]으로 진행상태를 변경하였습니다.";
+		}
+		tMap.put("str",str);
+		result = dao.insertTaskCommentProgressState(session,tMap);
+		if(result == 0) {
+			throw new MyException("insertTaskCommentProgressState 에러!");
+		}
+		
+		if(!tMap.get("taskId").equals(tMap.get("loginId"))) {
+			result = dao.insertCommentNotificationProgressState(session,tMap);
+		}
+		
+		return result;
 	}
 	
 
