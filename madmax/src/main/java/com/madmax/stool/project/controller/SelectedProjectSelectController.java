@@ -122,9 +122,8 @@ public class SelectedProjectSelectController {
       
       // 업무 통계 리포트
       
-      int projectNo=1;
       
-      List<TaskReport> ts=service.selectTaskReport(projectNo);
+      List<TaskReport> ts=service.selectTaskReport(pjNo);
       
       Gson gson=new Gson();
       JsonArray jArray=new JsonArray();
