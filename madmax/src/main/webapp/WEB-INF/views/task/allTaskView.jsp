@@ -111,7 +111,7 @@
   				<div id="tab-content">
  				<!-- 업무테이블 출력공간*****----------------------------------------------------------------------------- -->
  				<c:if test="${empty tasks}">
- 				<h4 class="text-center">해당 프로젝트에 업무가 없습니다</h4>
+ 				<h4 class="text-center pt-5">해당 프로젝트에 업무가 없습니다</h4>
  				
  				</c:if>
  				 <c:if test="${tasks!=null}">
