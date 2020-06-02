@@ -187,17 +187,21 @@ public class UserController {
 	
 	@RequestMapping("/user/checkId.do")
 	@ResponseBody
-	public Map checkId(String userId){
+	public ModelAndView checkId(String userId){
 		
 		User u=service.selectUser(userId);
 		
+		ModelAndView mv = new ModelAndView();
+		
 		boolean flag=u!=null?false:true;
 		
-		Map<String,Object> map=new HashMap();
-		map.put("user", u);
-		map.put("flag",flag);
-		//return flag;
-		return map;
+//		Map<String,Object> map=new HashMap();
+//		map.put("user", u);
+//		map.put("flag",flag);
+		
+		mv.addObject("flag", flag);
+		mv.setViewName("jsonView");
+		return mv;
 	}
 	
 //	@RequestMapping("/user/checkId")

@@ -234,16 +234,14 @@ public class BoardController {
 	public ModelAndView boardUpdate(Board b, HttpServletRequest req, ModelAndView mv, MultipartFile upFile, HttpSession session) {
 		
 		int result = 0;
-		
-		
-		// 파일을 새로 등록헀을 경우 ->
 
-		
+//		System.out.println("보드수정 : "+ upFile.getOriginalFilename());
 		
 		// 기존파일을 유지했을 경우 -> 넘어오는 값이 null
-		if(b.getBoardOriginalFilename()==null) {
+		if(upFile.isEmpty()) {
 			result = service.noFileUpdate(b);
 		}else {
+			// 파일을 새로 등록헀을 경우
 			
 			// 파일저장경로
 			String path = session.getServletContext().getRealPath("/resources/upload/board");
@@ -270,7 +268,9 @@ public class BoardController {
 				b.setBoardRenamedFilename(rename);
 			}
 			try {
+			//	System.out.println("보드수정결과1: "+b);
 				result = service.boardUpdate(b);
+			//	System.out.println("보드수정결과2: "+result);
 			}catch(RuntimeException e) {
 				File delF = new File(path+"/"+b.getBoardRenamedFilename());
 				if(delF.exists()) delF.delete();
@@ -285,33 +285,8 @@ public class BoardController {
 		}
 		mv.setViewName("redirect:/board/boardList.do");
 		return mv;
-		
-//		int result = service.boardUpdate(b);
-//		if(result>0) {
-//			mv.addObject("no", b.getBoardNo()).addObject("msg", "공지사항 수정 성공!");
-//		}else {
-//			mv.addObject("msg", "수정실패!");
-//		}
-//		mv.setViewName("redirect:/board/boardList.do");
-//		
-//		System.out.println("BoardUpdateComplete : " + b);
-//		
-//		return mv;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

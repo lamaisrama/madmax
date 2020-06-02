@@ -116,7 +116,7 @@
                 						url:"${path}/user/checkId.do",
                 						data:{userId:id},
                 						success:function(data){
-                							console.log(data);
+                							console.log(data.flag);
                 							if(!data.flag){
                 								$(".guide.ok").hide();
                 								$(".guide.error").show();
