@@ -632,7 +632,7 @@ img#cardProfileImg {
 		   //console.log(typeof url);
 		   //console.log(loction.search.substr(location.search.lastIndex))
 		var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
-		alert(pjNo);
+		//alert(pjNo);
 		location.href="${path}/task/selectProjectTask.do?pjNo="+pjNo;
 	
 };
@@ -643,7 +643,7 @@ function fn_schedule(){
 	   //console.log(typeof url);
 	   //console.log(loction.search.substr(location.search.lastIndex))
 	var pjNo=url.substring(url.lastIndexOf('?')+6,url.lastIndexOf('&'));//url의 parameter중 프로젝트 번호를 가져온다.
-	alert(pjNo);
+	//alert(pjNo);
 	location.href="${path}/calendar/projectCalendar.do?pjNo="+pjNo;
 	
 	

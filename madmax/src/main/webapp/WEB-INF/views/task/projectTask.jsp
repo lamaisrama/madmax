@@ -27,11 +27,11 @@
             <div id="status" class="collapse show">
                 <!--숨기는 영역-->
                 <ul style="list-style: none;">
-                    <li><label><input type="radio" value="요청" name="status" onclick="taskFilter()"/> 요청</label></li>
-                    <li><label><input type="radio" value="진행" name="status" onclick="taskFilter()"/> 진행</label></li>
-                    <li><label><input type="radio" value="피드백" name="status" onclick="taskFilter()"/> 피드백</label></li>
-                    <li><label><input type="radio" value="완료" name="status" onclick="taskFilter()"/> 완료</label></li>
-                    <li><label><input type="radio" value="보류" name="status" onclick="taskFilter()"/> 보류</label></li>
+                    <li><label><input type="radio" value="요청" name="status" onclick="taskFilter();"/> 요청</label></li>
+                    <li><label><input type="radio" value="진행" name="status" onclick="taskFilter();"/> 진행</label></li>
+                    <li><label><input type="radio" value="피드백" name="status" onclick="taskFilter();"/> 피드백</label></li>
+                    <li><label><input type="radio" value="완료" name="status" onclick="taskFilter();"/> 완료</label></li>
+                    <li><label><input type="radio" value="보류" name="status" onclick="taskFilter();"/> 보류</label></li>
                 </ul>
             </div>
         <hr/>
@@ -41,11 +41,11 @@
             <div id="priority" class="collapse show">
                 <!--숨기는 영역-->
                 <ul style="list-style: none;">
-                    <li><label><input type="radio" value="긴급" name="priority" onclick="taskFilter()"/> 긴급</label></li>
-                    <li><label><input type="radio" value="높음" name="priority" onclick="taskFilter()"/> 높음</label></li>
-                    <li><label><input type="radio" value="보통" name="priority" onclick="taskFilter()"/> 보통</label></li>
-                    <li><label><input type="radio" value="낮음" name="priority" onclick="taskFilter()"/> 낮음</label></li>
-                    <li><label><input type="radio" value="없음" name="priority" onclick="taskFilter()"/> 없음</label></li>
+                    <li><label><input type="radio" value="긴급" name="priority" onclick="taskFilter();"/> 긴급</label></li>
+                    <li><label><input type="radio" value="높음" name="priority" onclick="taskFilter();"/> 높음</label></li>
+                    <li><label><input type="radio" value="보통" name="priority" onclick="taskFilter();"/> 보통</label></li>
+                    <li><label><input type="radio" value="낮음" name="priority" onclick="taskFilter();"/> 낮음</label></li>
+                    <li><label><input type="radio" value="없음" name="priority" onclick="taskFilter();"/> 없음</label></li>
                 </ul>
             </div>
         <hr/>
@@ -55,10 +55,10 @@
             <div id="startDate" class="collapse">
                 <!--숨기는 영역-->
                 <ul style="list-style: none;">
-                    <li><label><input type="radio" value="전체" name="startDate" onclick="taskFilter()"/> 전체</label></li>
-                    <li><label><input type="radio" value="오늘" name="startDate" onclick="taskFilter()"/> 오늘</li>
-                    <li><label><input type="radio" value="일주일이내" name="startDate" onclick="taskFilter()"/> 일주일이내</li>
-                    <li><label><input type="radio" value="한달이내" name="startDate" onclick="taskFilter()"/> 한달이내</li>
+                    <li><label><input type="radio" value="전체" name="startDate" onclick="taskFilter();"/> 전체</label></li>
+                    <li><label><input type="radio" value="오늘" name="startDate" onclick="taskFilter();"/> 오늘</li>
+                    <li><label><input type="radio" value="일주일이내" name="startDate" onclick="taskFilter();"/> 일주일이내</li>
+                    <li><label><input type="radio" value="한달이내" name="startDate" onclick="taskFilter();"/> 한달이내</li>
                 </ul>
             </div>
         <hr/>
@@ -68,11 +68,11 @@
             <div id="endDate" class="collapse">
                 <!--숨기는 영역-->
                 <ul style="list-style: none;">
-                    <li><label><input type="radio" value="전체" name="endDate" onclick="taskFilter()"/> 전체</label></li>
-                    <li><label><input type="radio" value="지연" name="endDate" onclick="taskFilter()"/> 지연</label></li>
-                    <li><label><input type="radio" value="오늘까지" name="endDate" onclick="taskFilter()"/> 오늘까지</label></li>
-                    <li><label><input type="radio" value="일주일이내" name="endDate" onclick="taskFilter()"/> 일주일이내</label></li>
-                    <li><label><input type="radio" value="한달이내" name="endDate" onclick="taskFilter()"/> 한달이내</label></li>
+                    <li><label><input type="radio" value="전체" name="endDate" onclick="taskFilter();"/> 전체</label></li>
+                    <li><label><input type="radio" value="지연" name="endDate" onclick="taskFilter();"/> 지연</label></li>
+                    <li><label><input type="radio" value="오늘까지" name="endDate" onclick="taskFilter();"/> 오늘까지</label></li>
+                    <li><label><input type="radio" value="일주일이내" name="endDate" onclick="taskFilter();"/> 일주일이내</label></li>
+                    <li><label><input type="radio" value="한달이내" name="endDate" onclick="taskFilter();"/> 한달이내</label></li>
                 </ul>
             </div>    
     </div>
@@ -201,7 +201,8 @@
                             <div class='d-flex selectedWorker_imgDiv mr-2' id="selectedWorker"><!-- 이미지넣기 -->
                                 <!-- <img src='img/profile_img.png'/> -->
                             </div>
-                        </div>                                    
+                        </div>     
+                                                  
                         <!-- 담당자 프로필 for문 끝 -->
                     </div>
                     <hr class="w-100 mt-1 mb-2">

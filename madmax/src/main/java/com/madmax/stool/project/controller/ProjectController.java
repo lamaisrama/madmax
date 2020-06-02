@@ -29,7 +29,7 @@ public class ProjectController {
 	private Logger logger;
 	@Autowired
 	private CalendarService cService;
-	
+	private String rootName="/stool";
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
 	public String insertProject(Project p,Model m,HttpServletRequest req) {
@@ -87,7 +87,7 @@ public class ProjectController {
 			
 		}
 		mv.addObject("list",list);
-		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
+		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, rootName+"/project/projectList.do"));
 		//mv.addObject("member",pmNames);
 		mv.setViewName("project/allProjectList");
 		
