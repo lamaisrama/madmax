@@ -44,11 +44,12 @@ public class ProjectController {
 		//세션에서 받아와 넣을것!
 		p.setUserId(id);	
 		 int result=service.insertProject(p);
-		  
+		 
+		 logger.debug("가져온 프로젝트번호:"+result);
 		
 		 if(result>0) {
 		 m.addAttribute("msg","프로젝트 생성 성공"); 
-		 m.addAttribute("loc","/task/backhome.do"); 
+		 m.addAttribute("loc","/selectedProject/selectedProject.do?pjNo="+result+"&loginId="+id); 
 		 }else {
 		 m.addAttribute("msg","프로젝트 생성 실패"); 
 		 m.addAttribute("loc","/task/backhome.do"); 
