@@ -40,6 +40,7 @@
 		<typeAlias type="com.madmax.stool.attendance.model.vo.AttdSearch" alias="attdSearch"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.TaskReport" alias="taskReport"/>
 		<typeAlias type="com.madmax.stool.project.model.vo.Tag" alias="pjTag"/>
+		<typeAlias type="com.madmax.stool.admin.model.vo.DeptReport" alias="deptReport"/>
 	</typeAliases>
 </configuration>
 

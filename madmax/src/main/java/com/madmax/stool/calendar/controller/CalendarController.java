@@ -48,6 +48,7 @@ public class CalendarController {
 		logger.debug("보자"+list);
 		String pjTitle=service.selectProjectTitle(pjNo);
 		
+		mv.addObject("projectNo",pjNo);
 		mv.addObject("projectTitle",pjTitle);
 		mv.addObject("schedule",list);
 		mv.setViewName("calendar/projectCalendar");

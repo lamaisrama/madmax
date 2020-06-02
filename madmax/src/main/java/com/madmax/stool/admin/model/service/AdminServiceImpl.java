@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.madmax.stool.admin.model.dao.AdminDao;
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
 import com.madmax.stool.admin.model.vo.AdminUserManage;
+import com.madmax.stool.admin.model.vo.DeptReport;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -65,6 +66,12 @@ public class AdminServiceImpl implements AdminService {
 	public int updateJobCode(AdminUserManage aum) {
 		// TODO Auto-generated method stub
 		return dao.updateJobCode(session,aum);
+	}
+
+	@Override
+	public List<DeptReport> selectUserReport() {
+		// TODO Auto-generated method stub
+		return dao.selectUserReport(session);
 	}
 	
 	

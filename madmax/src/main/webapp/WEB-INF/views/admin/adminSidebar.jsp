@@ -143,11 +143,11 @@
 	
 	.admin-side-container{
 		min-height:500px;
-		background-color:#c0392b;
+		background-color:rgba(37, 36, 36, 1);
 		color:white;
 	}
 	.admin-side-container *{
-		background-color:#c0392b;
+		background-color:rgba(37, 36, 36, 1);
 		color:white;	
 	}
 </style>
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
+                           <!--  <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseThree">
                                         프로젝트관리
@@ -212,7 +212,7 @@
 									    </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                            <!--  <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseFour">

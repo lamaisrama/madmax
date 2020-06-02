@@ -29,10 +29,13 @@ public class AttendController {
 	@Autowired
 	AttendService service;
 	
+	
+	private String rootName="/20PM_stool_final";
+	//private String rootName="/stool";
+	
 	@RequestMapping("/attd/attendList.do")
 	public ModelAndView attendList(HttpServletRequest req,ModelAndView mv,@RequestParam(required = false, defaultValue = "1") int cPage,
 			@RequestParam(required = false, defaultValue = "10") int numPerPage) {
-		
 		
 		
 		User u = (User)req.getSession().getAttribute("loginUser");
@@ -46,7 +49,7 @@ public class AttendController {
 		
 		mv.addObject("list",list);
 		mv.addObject("totalData", totalData);
-		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, "/stool/attd/attendList.do"));
+		mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerPage, rootName+"/attd/attendList.do"));
 		mv.setViewName("attendance/attendanceList");
 		
 		

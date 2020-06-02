@@ -181,16 +181,9 @@
 	.imgbox:hover span {display: none;}
 	.imgbox:hover .detail {display: block;}  
 	
-	.sidebar-container{
-		
-		/* min-height:500px; */
-		background-color:#233C61;
-		color: #F1F0F5;
-	}
-	
 </style>
 
-<div class="col col-sm-2 sidebar-container">
+<div class="col col-sm-2">
 	<br>	
 	<nav>
 		<ul class="menu">
@@ -233,7 +226,7 @@
                             <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseTwo">
-                                        프로젝트
+                                        	프로젝트
                                     </a>
                                 </div>
                                 <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
