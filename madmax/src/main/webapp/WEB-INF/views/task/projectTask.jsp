@@ -10,7 +10,7 @@
 </jsp:include>
 <style>
 .task-side-container{
-	background-color: #25558F;
+	background-color: #233C61;
 	color:white;
 	font-weight:border;
 }
@@ -21,9 +21,9 @@
 }
 </style>
 	
-<div class="col col-sm-2 task-side-container">
+<div class="col col-sm-2 task-side-container pl-4">
         <!-- 전체업무 사이드바 -->
-        <div class="mt-3 ">
+        <div class="mt-3">
             <label>업무구분</label>
             <ul style="list-style: none;">
                 <li><label><input type="radio" value="내업무" name="task" onclick="taskFilter();"> 내 업무</label></li>

@@ -20,9 +20,9 @@ public interface ProjectDao {
 
 	int selectProjectCount(SqlSessionTemplate session, String id);
 
-	List<Project> selectComProjectList(SqlSessionTemplate session, String id, int cPage, int numPerpage);
+	List<Project> selectComProjectList(SqlSessionTemplate session,  int cPage, int numPerpage);
 
-	int selectComProjectCount(SqlSessionTemplate session, String id);
+	int selectComProjectCount(SqlSessionTemplate session);
 
 	List<Favorite> selectFavorite(SqlSessionTemplate session, String id);
 

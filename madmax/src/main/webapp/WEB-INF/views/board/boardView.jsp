@@ -48,10 +48,10 @@
         	<td class="brdviewtd text-center" colspan="2">
         	<br><br><br>
 	    		<button class="boardBtn" onclick="location.replace('${path}/board/boardList.do');">목록</button>&nbsp;
-	    	<%-- <c:if test="${loginUser.userId=='admin'}"> --%>
+	    	<c:if test="${loginUser.userId=='admin'}">
 	    		<button class="boardBtn" onclick="location.replace('${path}/board/boardModify?no=${board.boardNo }');">수정</button>&nbsp;
 	    		<button class="boardBtn" id="btn_board_delete">삭제</button>
-	    	<%-- </c:if> --%>
+	    	</c:if>
     		<br><br><br><br>
     		</td>
     	</tr>	

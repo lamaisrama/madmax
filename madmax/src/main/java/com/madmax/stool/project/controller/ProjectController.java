@@ -111,9 +111,9 @@ public class ProjectController {
 		
 		String id=((com.madmax.stool.user.model.vo.User)req.getSession().getAttribute("loginUser")).getUserId();
 		 
-		List<Project> list=service.selectComProjectList(id,cPage,numPerpage);
+		List<Project> list=service.selectComProjectList(cPage,numPerpage);
 		
-		int totalData=service.selectComProjectCount(id);
+		int totalData=service.selectComProjectCount();
 		//List<String> pmNames=new ArrayList();
 		
 		mv.addObject("list",list);

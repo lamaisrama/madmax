@@ -53,7 +53,7 @@
 </style>
 
 
-<div class="col col-sm-10">
+<div class="col col-sm-10" style="background:#F1F0F5;">
 	<div class="container" id="container">
 
         <div class="d-flex">
