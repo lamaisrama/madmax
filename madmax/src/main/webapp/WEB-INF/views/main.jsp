@@ -177,12 +177,12 @@
                         </div>
 					<br>
                     <br>
-                    <div class="fvcontainer mt-3">
-                      <h5><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
+                    <div class="col fvcontainer mt-3">
+                      <h5 class="text-left"><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;Favourite Project</h5>                    
                     <!-- 즐겨찾기 프로젝트 ! -->
                     <div class="container">
 						<br>
-                      <div class="d-flex justify-content-between">
+                      <div class="d-flex justify-content-start">
 							<c:forEach items="${list }" var="f" begin="0" end="4">
 						     	<div class="favoriteBox">
 							       	<a href="${path }/selectedProject/selectedProject.do?pjNo=${f.projectNo}&loginId=${loginUser.userId}">
