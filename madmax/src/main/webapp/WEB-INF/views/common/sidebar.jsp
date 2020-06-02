@@ -248,7 +248,7 @@
 											<li><a href="${path }/project/favList"><i class="icon fas fa-star"></i>즐겨찾기 프로젝트</a></li>
                                         	<hr class="sbHr">
                                         	<li><a href="${path }/project/companyProjectList.do"><i class='icon fas fa-building'></i>회사 공개 프로젝트</a></li>
-                                        	<hr/>
+                                        	<hr class="sbHr">
 											<li><a href="${path }/task/selectTask.do"><i class="icon far fa-calendar-check"></i>전체 업무</a></li>
 											<li><a href="${path }/calendar/calendar.do"><i class="icon far fa-calendar-alt"></i>전체 일정</a></li>
 											<li><a href="${path }/project/bookmarkList.do"><i class="icon far fa-bookmark"></i>담아둔 글</a></li>
