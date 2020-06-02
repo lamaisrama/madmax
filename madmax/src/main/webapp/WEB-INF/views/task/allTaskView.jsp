@@ -107,7 +107,7 @@
 				  </ul>
 			</div>
 		</div>		  
-        <div  style="height:100%">
+        <div  class="mt-5" style="height:100%">
 	       <div class="pl-2 pr-2 pt-2 " style="position:relative"  >
 	           <table  class="bWhite" style="width:100%;height:100%; border-bottom:1px solid black" >
 	               <tr class="text-sm-center container-fluid">
@@ -123,6 +123,10 @@
 	           <!-- 프로젝트별 업무내용 출력 -->
   				<div id="tab-content">
  				<!-- 업무테이블 출력공간*****----------------------------------------------------------------------------- -->
+ 				<c:if test="${empty tasks}">
+ 				<h4 class="text-center pt-5">해당 프로젝트에 업무가 없습니다</h4>
+ 				
+ 				</c:if>
  				 <c:if test="${tasks!=null}">
  	           <c:forEach items="${tasks }" var="t">
  	           
@@ -166,7 +170,7 @@
 	       </div>
        </div>
        <!-- 제목 클릭했을때 나오는 div-********-------------------------------------------- -->
-       <div id="showTask" style="display:none; border:1px solid grey; border-style:rounded; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:70%">
+       <div id="showTask" style="overflow:hidden; display:none; border:1px solid grey; border-style:rounded; background-color:white;  position:absolute ; top:11.5%; right:1%; width:60%; height:75%">
        		<button type="button" class="close ml-2" >&times;</button>
      		 <!-- <div class="w-100 bg-white border overflow-hidden mb-3">-->
         <div class="pjViewBox w-100 p-3">                              
@@ -251,10 +255,46 @@
   	</div>
   </div><!-- taskCenter -->
  <div class="col col-sm-1">
- </div>       
+ </div>     
+ 
+   
+<!-- onload시 보여줄 modal 창 -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="modalBtn">
+  Open modal
+</button> -->
+<div class="modal" id="myModal" style="display:hidden">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">알림</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div> 
 
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+      <img src="${path }/resources/images/task_modal.png"/>
+      <br/>
+      <br/>
+      <hr/>
+      	<h5>프로젝트 제목을 선택하여<br>
+      	프로젝트별 업무를 확인하세요</h5>
+      </div>
+
+      
+
+    </div>
+  </div>
+</div>
 <script>
+$(document).ready(function(){
+	
+	$("#myModal").modal("show");
+});
+
+
+
 function selectTask(pNo){
 	
 	//$("#pNo").show();
@@ -443,7 +483,7 @@ function taskFilter(){
 
 .box{width:100%; height:10%; margin:0 auto;}
 
-#projects{overflow-x:scroll;
+#projects{
      white-space:nowrap; text-align:center}
 
 /* #tab ul li{display:inline-block;} */

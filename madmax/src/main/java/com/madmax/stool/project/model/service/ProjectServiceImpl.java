@@ -38,7 +38,9 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		if(result==0){
 			throw new MyException("프로젝트멤버 삽입에러");
-		}
+	}else {
+		result=p.getProjectNo();
+	}
 		
 		return result;
 	}

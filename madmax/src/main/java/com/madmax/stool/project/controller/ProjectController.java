@@ -35,6 +35,7 @@ public class ProjectController {
 	private BoardService bService;
 	
 	
+	private String rootName="/stool";
 	// 프로젝트 생성
 	@RequestMapping("/project/insertProject.do")
 	public String insertProject(Project p,Model m,HttpServletRequest req) {
@@ -49,11 +50,12 @@ public class ProjectController {
 		//세션에서 받아와 넣을것!
 		p.setUserId(id);	
 		 int result=service.insertProject(p);
-		  
+		 
+		 logger.debug("가져온 프로젝트번호:"+result);
 		
 		 if(result>0) {
 		 m.addAttribute("msg","프로젝트 생성 성공"); 
-		 m.addAttribute("loc","/task/backhome.do"); 
+		 m.addAttribute("loc","/selectedProject/selectedProject.do?pjNo="+result+"&loginId="+id); 
 		 }else {
 		 m.addAttribute("msg","프로젝트 생성 실패"); 
 		 m.addAttribute("loc","/task/backhome.do"); 
@@ -91,7 +93,7 @@ public class ProjectController {
 			
 		}
 		mv.addObject("list",list);
-		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, "/stool/project/projectList.do"));
+		mv.addObject("pageBar",getPage(totalData, cPage, numPerpage, rootName+"/project/projectList.do"));
 		//mv.addObject("member",pmNames);
 		mv.setViewName("project/allProjectList");
 		
