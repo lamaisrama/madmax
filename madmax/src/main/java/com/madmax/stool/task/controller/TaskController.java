@@ -153,7 +153,7 @@ public class TaskController {
 
 		
 			
-			
+		  //mv.addObject("loginUser",id);
 		  mv.addObject("project",tp);
 		  mv.addObject("tasks",tasks);
 		  mv.setViewName("task/projectTask");

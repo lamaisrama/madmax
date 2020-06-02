@@ -82,7 +82,7 @@
         	<span class="d-flex justify-content-between mb-3 " >
         	<h4 class="pt-4 pl-2"><i class="icon far fa-calendar-check"></i>&nbsp;${project.projectTitle }의 업무</h4>
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
-        	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/project/favList.do'">닫기&times;</button>
+        	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/selectedProject/selectedProject.do?pjNo=${project.projectNo}&loginId=${loginUser.userId}'">닫기&times;</button>
         	</span>
         </div>
         <%--  <div class="container box w-100 h-20 " >   
@@ -264,7 +264,7 @@ function taskFilter(){
 	 // 전체 Url을 가져온다.
     var str = location.href;
     // QueryString의 값을 가져오기 위해서, ? 이후 첫번째 index값을 가져온다.
-    var projectNo = getParameterByName("no");
+    var projectNo = getParameterByName("pjNo");
     //var projectNo=pNo;
 	console.log(projectNo);
 	var task=$(":input:radio[name=task]:checked").val();
