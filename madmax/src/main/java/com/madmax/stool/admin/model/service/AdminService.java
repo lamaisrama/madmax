@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
 import com.madmax.stool.admin.model.vo.AdminUserManage;
+import com.madmax.stool.admin.model.vo.DeptReport;
 
 public interface AdminService {
 	
@@ -22,4 +23,6 @@ public interface AdminService {
 	int selectUserCount();
 	
 	int updateJobCode(AdminUserManage aum);
+	
+	List<DeptReport> selectUserReport();
 }

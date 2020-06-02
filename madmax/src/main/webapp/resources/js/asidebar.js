@@ -25,7 +25,7 @@ $(document).ready(function(){
     });
   });
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	$("#invitationSearch").on("keyup", function() {
 		var value = $(this).val().toLowerCase();
 			$(".m-0").filter(function() {
@@ -33,7 +33,7 @@ $(document).ready(function(){
 				$(this).toggle($(this).children().eq(1).text().toLowerCase().indexOf(value) > -1)
 			});
 	});
-});
+});*/
 
 /*프로젝트 참여자 전체보기 클릭 후 (나)에 대한 나가기 버튼*/
 $(document).ready(function() {

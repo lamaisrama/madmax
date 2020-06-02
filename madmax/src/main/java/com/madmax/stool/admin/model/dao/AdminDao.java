@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
 import com.madmax.stool.admin.model.vo.AdminUserManage;
+import com.madmax.stool.admin.model.vo.DeptReport;
 
 public interface AdminDao {
 	
@@ -24,5 +25,7 @@ public interface AdminDao {
 	int selectUserCount(SqlSessionTemplate session);
 	
 	int updateJobCode(SqlSessionTemplate session,AdminUserManage aum);
+	
+	List<DeptReport> selectUserReport(SqlSessionTemplate session);
 	
 }

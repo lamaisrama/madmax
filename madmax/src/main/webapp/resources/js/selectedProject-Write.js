@@ -436,6 +436,11 @@ function fn_handleFilesSelect(){
         let ext = name.substr(name.indexOf(".")+1, name.length);
         let iconStr = "";
 
+        if(ext == "exe"||ext=="jar"||ext=="war"){
+        	alert("해당 형식의 파일은 업로드하실 수 없습니다.");
+        	return;
+        }
+        
         switch(ext){
             case "jpg" : iconStr = "fas fa-file-image text-success"; 
             case "png" : iconStr = "fas fa-file-image text-success";
