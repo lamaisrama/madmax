@@ -39,6 +39,11 @@ div.memberListbox{
 	height: auto; 
 	min-height: auto; 
 	max-height: 590px;
+	-ms-overflow-style:none;
+}
+
+::-webkit-scrollbar{
+	display:none;
 }
 
 div.member{
@@ -52,9 +57,9 @@ ul.detailedList{
 }
 
 img#profileImg{
-	width: auto; 
+	width: 45px; 
 	height: 45px;
-	display: inline;
+	
 }
 
 span#mName{
@@ -64,8 +69,14 @@ span#mName{
 
 /*참여자 목록에서 확인 시*/
 div.member:hover {
-	background-color: lightgray;
+	background-color:#E8E8EB;
 }
+
+div.pjJoinAllMemberList:hover {
+	background-color:#E8E8EB;
+}
+
+
 
 span#memberName{
 	padding-left:10px;

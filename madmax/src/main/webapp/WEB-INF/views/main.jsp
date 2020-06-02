@@ -75,7 +75,7 @@
 						<ul class="rolling">
 							<c:forEach items="${blist }" var="b" >
 								<li style="border:none; border-bottom:1px dotted lightgray; padding: 2px 2px;">
-									<a href="${path }/board/boardView.do?no=${b.boardNo}">${b.boardTitle}</a>
+									<a href="${path }/board/boardView.do?no=${b.boardNo}">∙&nbsp;&nbsp;${b.boardTitle}</a>
 								</li>
 							</c:forEach>
 						</ul>

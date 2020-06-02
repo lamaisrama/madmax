@@ -25,6 +25,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
 </head>
 
 <body>
@@ -79,7 +82,7 @@
    		top:12px; right:10px;
 	}
    div#userId-container span.ok {
-   		color:green;
+   		color:lightgreen;
  	}
    div#userId-container span.error{
    		color: #FFE3E3;
@@ -145,6 +148,7 @@
 */                        
 					</script>
 					
+					
 					<br>
                       <h6><i class="icon fas fa-unlock-alt"></i>&nbsp;비밀번호</h6>
                       <div class="input-group mb-3">
@@ -155,6 +159,8 @@
                         <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;" 
                         		type="password" class="form-control" placeholder="비밀번호 확인" size="30" id="password2" required>
                       </div>
+                        		<div class="alert alert-success" id="alert-success2">비밀번호가 일치합니다.</div>
+                        		<div class="alert alert-danger" id="alert-danger2">비밀번호가 일치하지 않습니다.</div>
                       <br>
                       <h6><i class="icon far fa-grin"></i>&nbsp;이름</h6>
                       <div class="input-group mb-3">
@@ -177,7 +183,7 @@
                       <h6><i class="icon fas fa-birthday-cake"></i>&nbsp;생년월일</h6>
                       <div class="input-group mb-3">
                         <input style="color: white; border: none; border-bottom: solid 1px #FFE3E3; border-radius:0; background: #233C61;"  
-                        		type="date" class="form-control" placeholder="클릭하여 날짜 선택" size="30" name="birthday" id="birthday" required>
+                        		type="date" class="form-control text-white" placeholder="클릭하여 날짜 선택" size="30" name="birthday" id="birthday" required>
                       </div>
                       <br>
                       <h6><i class="icon fas fa-briefcase"></i>&nbsp;부서</h6>
@@ -221,7 +227,7 @@
     			//현재 text에 입력되어 있는 값
     			var userId = $("#userId_").val();
     			var pw = $("#password_").val();
-    			var pwck = $("#password_2").val();
+    			var pwck = $("#password2").val();
     			var reg = /^[a-zA-Z0-9]{4,13}$/; 
     			if(!reg.test(userId.trim())){
     				alert("영문자(대소)나 숫자로 이루어진 4글자이상 13글자 이하로 작성하세요!");
@@ -239,6 +245,26 @@
     			}
     			return true;
     		}	
+            
+            $(function(){
+                $("#alert-success2").hide();
+                $("#alert-danger2").hide();
+                $("input").keyup(function(){
+                   var pwd1 = $("#password_").val();
+                   var pwd2 = $("#password2").val();
+                   if(pwd1 != "" || pwd2 != ""){
+                      if(pwd1 == pwd2){
+                         $("#alert-success2").show();
+                         $("#alert-danger2").hide();
+                         $("#check").removeAttr("disabled");
+                      } else {
+                         $("#alert-success2").hide();
+                         $("#alert-danger2").show();
+                         $("#check").attr("disabled","disabled");
+                      }
+                   }
+                });
+            }); 
             </script>
         </div>
     </div>
