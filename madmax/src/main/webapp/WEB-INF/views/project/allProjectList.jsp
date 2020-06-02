@@ -61,9 +61,10 @@
 
 </script>
 
-<div class="col-sm-9 mt-5">
+<div class="col-sm-9 mx-auto">
+			<br><br>
 			<div id="myBoardTitle">
-		               <h4><b>전체 프로젝트</b></h4>
+		               <h4><i class="fas fa-project-diagram"></i> <b> 전체 프로젝트</b></h4>
 		    </div>
 				<table id="projectList" class="table">
 					<thead>

@@ -51,9 +51,11 @@
 
 </script>
 
-<div class="col-sm-9 mt-5">
+<div class="col-sm-9 mx-auto">
+			<br><br>
 			<div id="myBoardTitle">
-		               <h4><b>회사 공개 프로젝트</b></h4>
+		         <h4 style="font-weight:bolder;"><i class='icon fas fa-building'></i><b>회사 공개 프로젝트</b></h4>
+		               
 		    </div>
 				<table id="projectList" class="table">
 					<thead>

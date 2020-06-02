@@ -8,8 +8,20 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
+<style>
+.task-side-container{
+	background-color: #25558F;
+	color:white;
+	font-weight:border;
+}
+
+.task-side-container li{
+	font-size:14px;
+	font-weight:normal;
+}
+</style>
 	
-<div class=" col col-sm-2 ml-3" >
+<div class="col col-sm-2 task-side-container">
         <!-- 전체업무 사이드바 -->
         <div class="mt-3 ">
             <label>업무구분</label>

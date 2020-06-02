@@ -103,7 +103,7 @@
 	<div id="snackbar" ></div>	
 	
 	<div class="container-fluid content-container">
-		<div class="row">	
+		<div class="row" style="height:100vh;">	
 		
 		
 <script>
