@@ -737,7 +737,7 @@
                                         	<button type="button" class="btn border-right btn-primary" disabled>
                                         </c:if>
                                         <c:if test="${t.TASKSTATE ne '요청'}">
-                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState_viewUpdate(this, '요청',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}');">
+                                        	<button type="button" class="btn border-right" id="request" onclick="fn_progressState_viewUpdate(this, '요청',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}', '${t.TASKTITLE }');">
                                         </c:if>                                        
                                         	요청
                                        	</button>
@@ -745,7 +745,7 @@
                                         	<button type="button" class="btn border-right btn-success" disabled>
                                         </c:if>
                                      	<c:if test="${t.TASKSTATE ne '진행'}">
-                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState_viewUpdate(this, '진행',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}');">
+                                        	<button type="button" class="btn border-right" id="progress" onclick="fn_progressState_viewUpdate(this, '진행',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}', '${t.TASKTITLE }');">
                                         </c:if>                                        
                                         	진행
                                        	</button>
@@ -753,7 +753,7 @@
                                         	<button type="button" class="btn border-right btn-danger" disabled>
                                         </c:if>  
                                      	<c:if test="${t.TASKSTATE ne '피드백'}">
-                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState_viewUpdate(this, '피드백',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}');">
+                                        	<button type="button" class="btn border-right" id="feedback" onclick="fn_progressState_viewUpdate(this, '피드백',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}', '${t.TASKTITLE }');">
                                         </c:if>                                                                             	 
                                         	피드백
                                        	</button>
@@ -761,7 +761,7 @@
                                         	<button type="button" class="btn border-right btn-info" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '완료'}">
-                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState_viewUpdate(this, '완료',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}');">
+                                        	<button type="button" class="btn border-right" id="end" onclick="fn_progressState_viewUpdate(this, '완료',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}', '${t.TASKTITLE }');">
                                         </c:if>
                                         	완료
                                        	</button>
@@ -769,7 +769,7 @@
                                         	<button type="button" class="btn btn-secondary" disabled>
                                         </c:if>                                        	
                                      	<c:if test="${t.TASKSTATE ne '보류'}">
-                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState_viewUpdate(this, '보류',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}');">
+                                        	<button type="button" class="btn" id="hold" onclick="fn_progressState_viewUpdate(this, '보류',${pb.BOARDNO},${t.TASKNO},'${t.TASKID}','${loginUser.userId}','${loginUser.userName}', '${t.TASKTITLE }');">
                                         </c:if>                                           
                                         	보류
                                        	</button>

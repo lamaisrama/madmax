@@ -9,23 +9,23 @@
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <style>
 	.favoriteBox{
-		/* background-color: #F1F0F5; */
-		border-left: 5px solid #233C61;
+		background-color: #233C61;
+		border-left: 5px solid #FFE3E3;
 		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   		transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 		width : 200px;
 		height : 150px;
 		text-align : center;
-		color: #233C61;
+		color: #FFE3E3;
 		padding-top : 55px;
-		margin : 0 40px 40px 0;
+		margin : 0 30px 40px 0;
 	}
 	.favoriteBox a:link{
-		color: #233C61;
+		color: #FFE3E3;
 		text-decoration: none;
 	}
 	.favoriteBox a:visited{
-		color: #233C61; 
+		color: #FFE3E3; 
 		text-decoration: none;
 	}
 	.favoriteBox:hover {

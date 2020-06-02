@@ -41,7 +41,6 @@ public class NotificationServer extends TextWebSocketHandler{
 			//System.out.println(message.getPayload());
 		//받아온 Msg를 자바객체화 ("type", "sender", "receiver", "msg")
 		NotificationMsg msg = getMessage(message.getPayload());
-		System.out.println("메세지 받음 : "+ msg);
 		switch(msg.getType()) {
 		case "login" : addLoginUser(msg, session); break;
 		case "count" : sendMessage(countUnreadNoti(msg), session); break;
@@ -65,7 +64,6 @@ public class NotificationServer extends TextWebSocketHandler{
 			try {				
 				if(!msg.getReceiver().equals("")) { // 리시버가 있을 때 (우리 로직에선 항상 있음)
 					if(msg.getReceiver().equals(user.getKey())) {
-						System.out.println("보낼꺼야");
 						System.out.println(getJsonMessage(msg));
 						user.getValue().sendMessage(new TextMessage(getJsonMessage(msg)));
 					}

@@ -32,4 +32,8 @@
 		UPDATE STOOLUSER SET JOBCODE=#{jobCode} WHERE USERID=#{userId}
 	</update>
 	
+	<select id="selectUserReport" resultType="deptReport">
+		SELECT DEPTNAME,COUNT(*) AS CNT FROM STOOLUSER JOIN DEPT USING(DEPTCODE) GROUP BY DEPTNAME	
+	</select>
+	
 </mapper>

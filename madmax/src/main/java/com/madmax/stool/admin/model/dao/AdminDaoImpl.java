@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.madmax.stool.admin.model.vo.AdminAttendManagement;
 import com.madmax.stool.admin.model.vo.AdminUserManage;
+import com.madmax.stool.admin.model.vo.DeptReport;
 
 @Repository
 public class AdminDaoImpl implements AdminDao {
@@ -58,6 +59,12 @@ public class AdminDaoImpl implements AdminDao {
 	public int updateJobCode(SqlSessionTemplate session, AdminUserManage aum) {
 		// TODO Auto-generated method stub
 		return session.update("admin.updateJobCode",aum);
+	}
+
+	@Override
+	public List<DeptReport> selectUserReport(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectUserReport");
 	}
 
 	
