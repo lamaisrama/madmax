@@ -26,7 +26,8 @@
 <div class="col col-sm-9">	
 <div id='wrap'>
 	
-	<h4><i class="far fa-calendar-alt"></i>&nbsp;${projectTitle}의 일정</h4>
+	<br><br>
+	<h4 style="font-weight:bolder;"><i class="far fa-calendar-alt"></i>&nbsp;${projectTitle}의 일정</h4>
 	<div class="w-100 text-right">
 	<button class="btn btn-sm  mt-4 mb-2 " style="background-color:#233C61; color:white;"onclick="location.href='${path}/selectedProject/selectedProject.do?pjNo=${projectNo}&loginId=${loginUser.userId}'">프로젝트로 돌아가기 &gt;</button>
 	</div>	

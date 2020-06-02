@@ -8,12 +8,13 @@
 </jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-<div class="col col-sm-7">
+<div class="col col-sm-9 mx-auto">
 <!-- 나를지정한글 출력 화면 글,업무,일정-->
 <!-- projectboard테이블에서 projectType으로 분기하여 출력해준다 -->
 <!-- 페이징 처리할것 -->
+			<br><br>
  			<div id="myNotiTitle">
-               <h4><i class="icon fas fa-at"></i>나를 지정한 글 보기 </h4>
+               <h4 style="font-weight:bolder;"><i class="icon fas fa-at"></i>나를 지정한 글 보기 </h4>
             </div>
             <c:if test="${empty List }">
        			<div class="w-100 h-25 mt-5 text-center bg-light ">

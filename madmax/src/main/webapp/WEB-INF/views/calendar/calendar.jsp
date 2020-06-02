@@ -31,12 +31,8 @@
 	<div id='calendar'></div>
 	<div style='clear:both'></div>
 </div>
-</div>
 
 <!-- 
-<div class="col col-sm-3">
-
-</div> 
  -->
 	
 <script>

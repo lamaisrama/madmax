@@ -8,8 +8,20 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="Stool" />
 </jsp:include>
+<style>
+.task-side-container{
+	background-color: #25558F;
+	color:white;
+	font-weight:border;
+}
+
+.task-side-container li{
+	font-size:14px;
+	font-weight:normal;
+}
+</style>
 	
-<div class=" col col-sm-2 ml-3" >
+<div class="col col-sm-2 task-side-container">
         <!-- 전체업무 사이드바 -->
         <div class="mt-3 ">
             <label>업무구분</label>
@@ -77,10 +89,11 @@
             </div>    
     </div>
     <!-- 전체업무 센터 -->
-    <div class="taskCenter col col-sm-9 bg-light"   >
+    <div class="taskCenter col col-sm-9 mx-auto"   >
     	<div>
+    		<br><br>
         	<span class="d-flex justify-content-between mb-3 " >
-        	<h4 class="pt-4 pl-2"><i class="icon far fa-calendar-check"></i>&nbsp;전체업무</h4>
+        	<h4 style="font-weight:bolder"><i class="icon far fa-calendar-check"></i>&nbsp;전체업무</h4>
        		<!-- 닫기 버튼 누르면 메인 페이지로 이동 -->
         	<button class="btn btn-sm btn-dark mt-4 mb-2 " onclick="location.href='${path}/project/favList.do'">닫기&times;</button>
         	</span>

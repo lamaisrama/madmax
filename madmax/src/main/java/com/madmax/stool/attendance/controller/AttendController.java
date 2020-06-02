@@ -110,14 +110,15 @@ public class AttendController {
 			
 				Worktime wt = service.selectWorktime(w);
 			
-				Date go=wt.getGoTime(); 
+				//Date go=wt.getGoTime(); 
 				// 출근 시간 가져오기
-				GregorianCalendar come=new GregorianCalendar();
-				come.setTime(wt.getComeTime());
+				
+				//GregorianCalendar come=new GregorianCalendar();
+				//come.setTime(wt.getComeTime());
 				
 				//퇴근 시간 가져오기
-				GregorianCalendar goHome=new GregorianCalendar();
-				goHome.setTime(wt.getGoTime());
+				//GregorianCalendar goHome=new GregorianCalendar();
+				//goHome.setTime(wt.getGoTime());
 				
 				//Worktime wt=service.selectCometime(w);
 				
@@ -128,10 +129,29 @@ public class AttendController {
 				//if(Integer.parseInt(wt.getComeTime())<9&&Integer.parseInt(go.getGoTime())>18) {
 				//	  service.insert
 				//  }
-				if(come.get(Calendar.HOUR)<9||goHome.get(Calendar.HOUR)>18) {
+				
+				/*
+				 * System.out.println("입력된 출근 시간:"+come.get(Calendar.HOUR)+"입력된 퇴근 시간"+goHome.
+				 * get(Calendar.HOUR));
+				 * 
+				 * if(come.get(Calendar.HOUR)<9||goHome.get(Calendar.HOUR)>18) {
+				 * 
+				 * result=service.insertEmpManage(wt.getManagementNo()); }else
+				 * if(come.get(Calendar.HOUR)>9||goHome.get(Calendar.HOUR)>18){ // 지각
+				 * result=service.insertLate(wt.getManagementNo()); }else { //결근
+				 * result=service.insertAbsence(wt.getManagementNo()); }
+				 */
+				//System.out.println("입력된 출근 시간:"+come.get(Calendar.HOUR)+"입력된 퇴근 시간"+goHome.get(Calendar.HOUR));
+				
+				
+				
+				System.out.println("입력된 출근 시간:"+wt.getComeTime().substring(11,13)+"입력된 퇴근 시간"+wt.getGoTime().substring(11,13));
+				
+				if(Integer.parseInt(wt.getComeTime().substring(11,13))<9&&Integer.parseInt(wt.getGoTime().substring(11,13))>18) {
 					
 					result=service.insertEmpManage(wt.getManagementNo());
-				}else if(come.get(Calendar.HOUR)>9){
+					
+				}else if(Integer.parseInt(wt.getComeTime().substring(11,13))>9&&Integer.parseInt(wt.getGoTime().substring(11,13))>18){
 					// 지각
 					result=service.insertLate(wt.getManagementNo());
 				}else {
@@ -190,7 +210,9 @@ public class AttendController {
 		//System.out.println(s);
 		
 		// 퇴근시간이 안찍혀 있으면 true,
-		return s!=null?true:false;
+		// s =null  false
+		// s!=null true
+		return s!=null?false:true;
 		
 	}
 	
@@ -223,13 +245,13 @@ public class AttendController {
 		
 		int result=service.insertNoCometime(w);
 		
-		//System.out.println("된거야 만거야1"+result);
+		System.out.println("된거야 만거야1"+result);
 		
 		Worktime wt = service.selectWorktime(w);
 		
 		result=service.insertLate(wt.getManagementNo());
 		
-		//System.out.println("된거야 만거야2"+result);
+		System.out.println("된거야 만거야2"+result);
 		
 		return "redirect:/attd/attendList.do";
 		
@@ -240,6 +262,7 @@ public class AttendController {
 		
 		String userId=((User)req.getSession().getAttribute("loginUser")).getUserId();
 
+		System.out.println(userId+"!@#@!$@#!$");
 		AttdSearch search=new AttdSearch();
 		search.setUserId(userId);
 		search.setStartDate(startDate);

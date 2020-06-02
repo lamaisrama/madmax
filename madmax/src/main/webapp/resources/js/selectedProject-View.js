@@ -84,11 +84,11 @@ function fn_selectPin(e){
 //pinPost Ajax ---------------------------------------------------------------------------
 
 //댓글 더보기 ----------------------------------------------------------------------------
-function fn_displayHiddenComment(e){
+function fn_displayHiddenComment(e, count){
     if($(e).parent("div").siblings("table").find(".hiddenComment").hasClass("d-none")){
-        $(e).text("댓글 숨기기");
+        $(e).html("댓글 숨기기");
     }else{
-        $(e).text("이전 댓글 더보기");
+        $(e).html("이전 댓글 더보기  <span class='font-weight-light ml-2' style='color:#000000;'>총 </span>" + count + "개<span class='font-weight-light' style='color:#000000;'>의 댓글이 있습니다.</span>");
     }
     $(e).parent("div").siblings("table").find(".hiddenComment").toggleClass("d-none");
 }

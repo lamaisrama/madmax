@@ -137,8 +137,8 @@
 						<div class="notice mb-1">
 							<ul class="rolling">
 								<c:forEach items="${blist }" var="b" >
-									<li>
-										<a href="${path }/board/boardList.do?no=${b.boardNo}">${b.boardTitle}</a>
+									<li style="border:none; border-bottom:1px dotted lightgray; padding:1px 2px;">
+										<a href="${path }/board/boardView.do?no=${b.boardNo}">${b.boardTitle}</a>
 									</li>
 								</c:forEach>
 							</ul>
@@ -152,19 +152,23 @@
 							var height =  $(".notice").height();
 							var num = $(".rolling li").length-3;
 							var max = height*num;
+							console.log(max);
 							var move = 0;
-							function noticeRolling(){
+							/* function noticeRolling(){
 								move += height;
 								$(".rolling").animate({"top":-move},600,function(){
 									if( move >= max ){
-										$(this).css("top",0);
+										$(this).css("top",800);
 										move = 0;
 									};
 								});
-							};
+							}; */
+							function noticeRolling(){
+								$(".rolling").append($(".rolling>li").first());
+							}
 							noticeRollingOff = setInterval(noticeRolling,1000);
-/* 							$(".rolling").append($(".rolling li").first().clone()); */
-							$(".rolling").append($(".rolling li").clone());
+							/* $(".rolling").append($(".rolling li").first().clone()); */
+							/* $(".rolling").append($(".rolling li").clone()); */
 							/* console.log($(".rolling li").first().clone()); */
 							$(".rolling_stop").click(function(){
 								clearInterval(noticeRollingOff);

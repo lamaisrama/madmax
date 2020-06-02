@@ -34,8 +34,9 @@
 		font-weight: 700;
 	}
 </style>
-<div class="col-sm-10">
-	<h4><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h4>
+<div class="col-sm-9 mx-auto">
+	<br><br>
+	<h4 style="font-weight:bolder"><i class="fas fa-star" style="color: #ffd700;"></i>&nbsp;즐겨찾기 프로젝트</h4>
 	<hr>                    
 	<div class="ml-4">총 ${total }건의 즐겨찾는 프로젝트가 있습니다.</div>
 	<br><br>

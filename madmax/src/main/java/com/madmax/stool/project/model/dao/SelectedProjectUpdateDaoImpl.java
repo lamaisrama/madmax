@@ -187,6 +187,16 @@ public class SelectedProjectUpdateDaoImpl implements SelectedProjectUpdateDao {
 		return session.update("SelectedProjectUpdate.updateTaskProgressState", tMap);
 	}
 
+	@Override
+	public int insertTaskCommentProgressState(SqlSessionTemplate session, Map<String, Object> tMap) {
+		return session.insert("SelectedProjectUpdate.insertTaskCommentProgressState", tMap);
+	}
+
+	@Override
+	public int insertCommentNotificationProgressState(SqlSessionTemplate session, Map<String, Object> tMap) {
+		return session.insert("SelectedProjectUpdate.insertCommentNotificationProgressState", tMap);
+	}
+
 
 
 
