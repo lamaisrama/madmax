@@ -149,7 +149,9 @@
     }
     .imgbox img {
 		/* width: 100%; height:auto; */
-		max-width: 130px; height: auto;
+		width: auto; height: auto;
+	    max-width: 130px;
+	    max-height: 130px;
 		vertical-align: middle;
 	}  
 	.shadow {
