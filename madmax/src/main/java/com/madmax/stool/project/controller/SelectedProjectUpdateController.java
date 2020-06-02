@@ -691,11 +691,17 @@ public class SelectedProjectUpdateController {
 		String state = map.get("state");
 		int bNo = Integer.parseInt(map.get("bNo"));
 		int taskNo = Integer.parseInt(map.get("taskNo"));
+		String taskId = map.get("taskId");
+		String loginId = map.get("loginId");
+		String loginName = map.get("loginName");
 
 		Map<String, Object> tMap = new HashMap();
 		tMap.put("state", state);
 		tMap.put("bNo", bNo);
 		tMap.put("taskNo", taskNo);
+		tMap.put("taskId", taskId);
+		tMap.put("loginId", loginId);
+		tMap.put("loginName", loginName);
 
 		int result = 0;
 		try {

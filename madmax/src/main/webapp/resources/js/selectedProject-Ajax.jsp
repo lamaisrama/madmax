@@ -269,12 +269,15 @@ function fn_updatePin(check,pjNo,bNo){
 }
 
 //업무 - 진행상태변경
-function fn_progressState_viewUpdate(e, state, bNo, taskNo){
+function fn_progressState_viewUpdate(e, state, bNo, taskNo, taskId, loginId, loginName){
 	$.ajax({
 		url:"${path}/selectedProject/updateTaskProgressState.do",
 		data:{state:state,
 			  taskNo:taskNo,
-			  bNo:bNo},
+			  bNo:bNo,
+			  taskId:taskId,
+			  loginId:loginId,
+			  loginName:loginName},
 		success:function(data){
 			if(data > 0){
         		location.reload(true);
@@ -307,8 +310,6 @@ function fn_insertCommentSubmit(bNo){
         		msg += "\""+$(form[name="comment"]).val()+"\"";
         		sendNotiMessage(receiver, msg);
         		location.reload(true);
-        		
-        		
         	}else{
         		alert("댓글이 정상적으로 등록되지않았습니다. 다시 시도해주세요.");
         	}
