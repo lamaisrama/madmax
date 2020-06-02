@@ -97,8 +97,12 @@
 							</td>
 							<td>
 							<c:set var="string" value="${l.members}"/>
+							<c:if test="${l.memberCount==1 }">
+							${fn:substring(string,0,10)}..외 ${l.memberCount-1 }명 참여중
+							</c:if>
+							<c:if test="${l.memberCount>1 }">
 							${fn:substring(string,0,10)}..외 ${l.memberCount }명 참여중
-							
+							</c:if>
 							</td>
 						</tr>
 						</c:forEach>
