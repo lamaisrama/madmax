@@ -174,7 +174,7 @@
                             <div id="writeCategory-board" class="row w-100 m-0">
                                 <div id="boardContainer" class="w-100 p-3">
                                     <div id="boardTitleBox" class="col-12 d-flex justify-content-center mb-2">
-                                        <input name="writingTitle" id="writingTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                        <input name="writingTitle" id="writingTitle" class="titleInput w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                             placeholder="제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                     </div>
                                     <div id="boardContentBox" class="col-12 d-flex flex-column justify-content-center">
@@ -189,7 +189,7 @@
                         <div id="writeCategory-task" class="row w-100 m-0">
                             <div id="taskBox" class="w-100 p-3">
                                 <div id="taskTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="taskTitle" id="taskTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                    <input name="taskTitle" id="taskTitle" class="titleInput w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                         placeholder="업무명 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;"  required="required">
                                 </div>
                                 <div id="taskTabBox" class="col-12 d-flex align-items-center mb-3">
@@ -245,7 +245,7 @@
                         <div id="writeCategory-schedule" class="row w-100 m-0">
                             <div id="scheduleBox" class="w-100 p-3">
                                 <div id="scheduleTitleBox" class="col-12 d-flex justify-content-center mb-3">
-                                    <input name="scheduleTitle" id="scheduleTitle" class="w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
+                                    <input name="scheduleTitle" id="scheduleTitle" class="titleInput w-100 border-top-0 border-left-0 border-right-0 border-bottom border-secondary" 
                                         placeholder="일정 제목 입력" type="text" value="" maxlength="100" autocomplete="off" style="overflow:visible;" required="required">
                                 </div>
                                 <div id="scheduleStartDateBox" class="col-12 d-flex align-items-center mb-3">
@@ -371,9 +371,9 @@
                 </c:if>
                 
 	            <!-- ☆★☆ 게시글List include -->
-<%-- 	            <div class="mb-3"> <!-- 고정글 -->
+ 	            <div class="mb-3"> <!-- 고정글 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-	            </div> --%>
+	            </div>
 	            <div class="mb-3"> <!-- 게시글 리스트 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
 	            </div>
