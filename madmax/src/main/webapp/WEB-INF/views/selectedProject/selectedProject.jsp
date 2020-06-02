@@ -372,9 +372,10 @@
                 </c:if>
                 
 	            <!-- ☆★☆ 게시글List include -->
-<%-- 	            <div class="mb-3"> <!-- 고정글 -->
+ 	            <div class="mb-3"> <!-- 고정글 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-pinPost.jsp" />
-	            </div> --%>
+	            </div>
+	            
 	            <div class="mb-3"> <!-- 게시글 리스트 -->
 					<jsp:include page="/WEB-INF/views/selectedProject/selectedProject-postView.jsp" />
 	            </div>
