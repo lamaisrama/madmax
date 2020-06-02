@@ -23,10 +23,10 @@
 	<link href="${path}/resources/css/fullcalendar.css" rel="stylesheet">
 <script src="${path}/resources/js/fullcalendar.js" type="text/javascript"></script>
 <!-- 전체일정 -->
-<div class="col col-sm-9">	
+<div class="col col-sm-9 mx-auto">	
 <div id='wrap'>
-	
-	<h4><i class="far fa-calendar-alt"></i>&nbsp;${projectTitle}의 일정</h4>
+	<br><br>
+	<h4 style="font-weight:bolder;"><i class="far fa-calendar-alt"></i>&nbsp;${projectTitle}의 일정</h4>
 	
 	<hr>
 	<br>

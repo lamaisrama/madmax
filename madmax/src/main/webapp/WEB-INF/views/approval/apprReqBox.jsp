@@ -27,7 +27,7 @@
 	}
 </style>
 
-<div class="col col-sm-9 list-container">
+<div class="col col-sm-9 list-container mx-auto">
 	<br><br>
 	<h4 style="font-weight:bolder">&nbsp;<i class="fas fa-clipboard-list"></i> &nbsp;결재 요청함</h4>
 	<br>	

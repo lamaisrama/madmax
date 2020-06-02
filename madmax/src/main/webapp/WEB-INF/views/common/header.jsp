@@ -103,12 +103,14 @@
 	<div id="snackbar" ></div>	
 	
 	<div class="container-fluid content-container">
-		<div class="row">	
+		<div class="row" style="height:100vh;">	
 		
 		
 <script>
 	//소켓 서버와 연결
-	var socket = new WebSocket('ws://localhost:9090/${path}/notification');
+	//var socketUrl = 'wss://rclass.iptime.org';
+	var socketUrl= 'ws://localhost:9090'
+	var socket = new WebSocket(socketUrl+'${path}/notification');
 	
 	socket.onopen=function(){
 		console.log('info : connection opend');

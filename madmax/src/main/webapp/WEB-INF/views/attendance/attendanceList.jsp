@@ -12,10 +12,9 @@
 
 
 
-
-
-	<div class="col col-sm-10">	
-		<h4><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
+	<div class="col col-sm-9 mx-auto">
+		<br><br>	
+		<h4 style="font-weight:bolder"><i class="far fa-address-card"></i>&nbsp;근태현황</h4>	
 		<hr>
 	 	<br>
 	 	<!-- Search -->
