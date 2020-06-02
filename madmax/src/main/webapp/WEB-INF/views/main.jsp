@@ -75,7 +75,7 @@
                                   	longitude = position.coords.longitude;
                                   	console.log(latitude);
                                   	console.log(longitude);
-									apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=eff8dc2d4e17c75db816ed11e4456e57";
+									apiURI = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=eff8dc2d4e17c75db816ed11e4456e57";
                                   	weatherF(apiURI);
                                   });
 

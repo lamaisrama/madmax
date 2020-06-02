@@ -176,7 +176,7 @@
 	.sidebar-container *{
 		position:sticky;
 		background-color:#233C61;
-		color:white;
+		color:white !important;
 	}
 </style>
 
