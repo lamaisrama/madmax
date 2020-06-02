@@ -44,8 +44,8 @@
 </style>
 
 
-<div class="col col-sm-10">
-	<div class="container">
+<div class="col col-sm-10" style="background : #EBDACE;">
+<div class="container">
 
         <div class="d-flex">
 
