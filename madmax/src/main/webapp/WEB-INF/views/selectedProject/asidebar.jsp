@@ -105,7 +105,7 @@
 								<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
-										src="${path}/resources/upload/profile${pm.profile}"
+										src="${path}/resources/upload/profile/${pm.profile}"
 										alt="프로필사진">
 									</div>	
 								<span id="memberName">
