@@ -122,16 +122,17 @@
                 <!-- 업무리포트 -->
                 <div id="reportBox" class="w-100 bg-white border border-grey d-flex flex-column align-items-center mb-3">
                         <button type="button" class="btn w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#demo" id="reportBoxBtn">
-                            <strong class="m-0">
-                                	업무리포트
-                            </strong>
+                            <div class="d-flex align-items-center ml-2">
+	                            <i class="fas fa-chart-pie stoolGrey mr-2" style="font-size:25px;"></i>
+	                            <strong class="m-0">
+	                                	업무리포트
+	                            </strong>
+	                        </div>
                             <img src="${path}/resources/images/expand-arrow.png" alt="더보기" style="width: 25px;" id="rb_slide_icon">
                         </button>
                         <div id="demo" class="collapse p-2 w-100">
-                            <div class="border w-100" style="height:600px;">
-                            <br>
-                            <br>
-                            	<canvas id="reportArea" style=""></canvas>
+                            <div class="border w-100 d-flex align-items-center" style="height:600px;">
+                            	<canvas id="reportArea" class=""></canvas>
                             </div>
                         </div>
                 </div>
