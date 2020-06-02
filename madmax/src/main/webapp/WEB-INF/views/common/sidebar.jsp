@@ -148,7 +148,7 @@
         position: relative;
     }
     .imgbox img {
-		width: 100%; height:auto;
+		width: 130px; height:auto;
 		/* width: auto; height: auto;
 	    max-width: 130px; max-height: 130px; */
 		vertical-align: middle;
@@ -300,6 +300,9 @@
 			</li>
 			
 		</ul>
+		<div class="copyright pb-2" style="position:absolute; bottom:0;">
+			<small>&copy; 2020. <strong>Team MAD-MAX</strong>. <br> All right reserved.</small> 
+		</div>
 	</nav>
 	
 <!-- 새프로젝트 만들기 -->
