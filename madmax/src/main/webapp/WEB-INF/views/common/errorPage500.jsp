@@ -127,8 +127,8 @@
                 <use xlink:href="#s-text" class="text-copy"></use>
             </g>
         </svg>
-        <h4>500Error</h4>
-        <h1 style="color: #FFE3E3;">관리자에게 문의하세요</h1>
+        <h1 style="color: #FFE3E3;">500 Error</h1>
+        <h5 style="color: #FFE3E3;">관리자에게 문의하세요</h5>
         <a href="${path }"><button class="errorBtn">메인으로 돌아가기</button></a>
 	
 	
