@@ -102,7 +102,7 @@
 							data-target="#member${pm.userId}"
 							data-profile="${pm.profile }"
 							data-userName="${pm.userName }">
-									<div class="mr-2 overflow-hidden" style="border-radius: 25px; width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden profileImgDiv" style="border-radius: 25px; width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile/${pm.profile}"
@@ -183,7 +183,7 @@
 									data-profile="${pm.profile }"
 									data-userName="${pm.userName }" 
 									>
-									<div class="mr-2 overflow-hidden" style="border-radius: 25px; width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden profileImgDiv" style="border-radius: 25px; width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile${pm.profile}"
@@ -204,7 +204,7 @@
 									data-profile="${pm.profile }"
 									data-userName="${pm.userName }" 
 									>
-									<div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+									<div class="mr-2 overflow-hidden profileImgDiv" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
 										src="${path}/resources/upload/profile/${pm.profile}"
@@ -550,11 +550,11 @@ img#cardProfileImg {
                         <c:forEach items="${user}" var="u">
                         <div class="pjMemberList d-flex w-100 align-items-center justify-content-between mt-2 mb-2">
                             <div class="d-flex align-items-center">
-                                <div class="addWorker_profile_div mr-2">
-                                    <div class="mr-2 overflow-hidden" style="border-radius: 25px;width: 45px; height: 45px;">
+                                <div class="mr-2">
+                                    <div class="mr-2 overflow-hidden profileImgDiv" style="border-radius: 25px;width: 45px; height: 45px;">
 										<img 
 										id="profileImg"
-										src="${path}/resources/upload/profile${u.PROFILE}"
+										src="${path}/resources/upload/profile/${u.PROFILE}"
 										alt="프로필사진">
 									</div>
 									
