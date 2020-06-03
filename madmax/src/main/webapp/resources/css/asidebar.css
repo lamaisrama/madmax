@@ -56,10 +56,16 @@ ul.detailedList{
 	padding-left: 0px;
 }
 
-img#profileImg{
+.profileImgDiv{
+	display: flex;
+	flex-direction:row;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+div #profileImg{
 	width: 45px; 
-	height: 45px;
-	
+	height: auto;	
 }
 
 span#mName{

@@ -1,4 +1,16 @@
 /*--------- 전체설정 ------*/
+.inputTite{
+	font-size: 25px;
+	padding-left: 10px;
+}
+
+.profileImgDiv{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
 #map img {
 
 	max-width: none;
@@ -8,9 +20,12 @@
 	border: 0
 
 }
-
+.titleInput{
+	font-size: 25px;
+	padding-left: 10px;
+}
 .stoolGrey{
-	color: #E8E8EB;
+	color: #B1B1B1;
 }
 .stoolPink{
 	color: #EBDACE;
