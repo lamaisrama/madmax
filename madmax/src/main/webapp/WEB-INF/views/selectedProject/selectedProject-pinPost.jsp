@@ -11,14 +11,13 @@
        	
 		<c:forEach items="${projectBoardList}" var="pb">
 		<c:if test="${pb.PINPOST eq 'Y'}">
-        	<c:set var="pinCount" value="${count + 1}" />
+        	<c:set var="pinCount" value="${pinCount + 1}" />
 		</c:if>
 		</c:forEach>
 	
     <div class="d-flex align-items-center mb-3">
-        <i class="fas fa-thumbtack stoolDarkBlue-text selectPinIcon" style="font-size: 25px;"></i>
-        <p class="m-0 ml-2 mr-1">상단고정글</p>
-        <span>${pinCount}</span> <!-- 상단고정글 갯수 넣기 -->
+        <i class="fas fa-thumbtack stoolGrey selectPinIcon" style="font-size: 25px;"></i>
+        <strong class="m-0 ml-2 mr-1">상단고정글<strong class="ml-2">${pinCount}</strong></strong>
     </div>
     
 
