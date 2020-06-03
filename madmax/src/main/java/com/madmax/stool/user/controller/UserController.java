@@ -93,12 +93,13 @@ public class UserController {
 		param.put("password", pw);
 		System.out.println("암호화 후 : " + param.get("password"));
 		
-		logger.debug("파일명 : "+upFile.getOriginalFilename());
-		logger.debug("파일크기 : "+upFile.getSize());
+//		logger.debug("파일명 : "+upFile.getOriginalFilename());
+//		logger.debug("파일크기 : "+upFile.getSize());
 		
 		String path=session.getServletContext().getRealPath("/resources/upload/profile");
 		
 		File f = new File(path);
+		
 		if(!f.exists()) {
 			f.mkdirs();
 		}
@@ -136,28 +137,28 @@ public class UserController {
 		User login = service.selectUser(userId);
 //		logger.debug(login.toString());
 		
-		/* 세션 생성 */
-	    session = req.getSession();
-	    session.setAttribute("loginUser", login);
-	    
-		String id=login.getUserId();
-		
-		List<Favorite> list = proService.selectFavorite(id);
-		int total = proService.selectFavoriteCount(id); 
-		
-		//캘린더 추가
-		List<Calendar> cal=cService.selectSchedule(id);
-		logger.debug("조회결과 : " + list);
-//		mv.addObject("list", list);
-//		mv.addObject("total", total);
-		
-		// 공지사항
-		List<Board> blist = bService.selectBoard(1, 10);
-//		logger.debug("board조회결과 : "+blist.size());
-		logger.debug("board조회결과 : "+blist);
-		
 		String page = "";
 		if(login!=null&&encoder.matches(password, login.getPassword())) {	
+			/* 세션 생성 */
+			session = req.getSession();
+			session.setAttribute("loginUser", login);
+			
+			String id=login.getUserId();
+			
+			List<Favorite> list = proService.selectFavorite(id);
+			int total = proService.selectFavoriteCount(id); 
+			
+			//캘린더 추가
+			List<Calendar> cal=cService.selectSchedule(id);
+			logger.debug("조회결과 : " + list);
+//		mv.addObject("list", list);
+//		mv.addObject("total", total);
+			
+			// 공지사항
+			List<Board> blist = bService.selectBoard(1, 10);
+//		logger.debug("board조회결과 : "+blist.size());
+			logger.debug("board조회결과 : "+blist);
+			
 			page = "main";
 			m.addAttribute("list",list);
 			m.addAttribute("total",total);
@@ -360,7 +361,7 @@ public class UserController {
 		return "user/login/updateUser";
 	}
 	@RequestMapping("/user/userUpdate.do")
-	public ModelAndView updateUser(ModelAndView mv, @RequestParam Map param, MultipartFile upFile, HttpServletRequest req, HttpSession session) {
+	public ModelAndView updateUser(ModelAndView mv, @RequestParam Map param, MultipartFile upFile, HttpServletRequest req, HttpSession session, SessionStatus status) {
 		
 		User u = (User)req.getSession().getAttribute("loginUser");
 		String pw = (String)param.get("password");
@@ -398,9 +399,18 @@ public class UserController {
 		u.setProfile(rename);
 		int result = service.updateUser(param);
 		
-		mv.addObject("loginUser", u);
-		mv.setViewName("user/userInfo");
+//		mv.addObject("loginUser", u);
+//		mv.setViewName("user/userInfo");
 		
+		
+		String msg ="";
+		String loc="";
+		msg="사원 정보 수정이 정상적으로 저장되었습니다. 재로그인 후 사용해주세요";
+        if(!status.isComplete()) status.setComplete();
+        mv.addObject("msg", msg);
+        mv.addObject("loc", loc);
+        mv.setViewName("common/msg");
+        
 		return mv;
 	}
 	
