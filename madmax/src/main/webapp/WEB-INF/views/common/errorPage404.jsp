@@ -114,9 +114,9 @@
         }
         </style>
         
-        <svg viewBox="0 0 960 300">
+        <svg viewBox="0 0 1200 300">
             <symbol id="s-text">
-                <text text-anchor="middle" x="50%" y="80%">ErrorPage</text>
+                <text text-anchor="middle" x="50%" y="80%">404ErrorPage</text>
             </symbol>
         
             <g class = "g-ants">
@@ -127,8 +127,7 @@
                 <use xlink:href="#s-text" class="text-copy"></use>
             </g>
         </svg>
-        <h4 style="color: #FFE3E3;">404Error</h4>
-        <h1 style="color: #FFE3E3;">관리자에게 문의하세요</h1>
+        <h4 style="color: #FFE3E3;">관리자에게 문의하세요</h4>
         <a href="${path }"><button class="errorBtn">메인으로 돌아가기</button></a>
 	
 	
