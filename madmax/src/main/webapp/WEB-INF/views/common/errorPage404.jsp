@@ -127,15 +127,12 @@
                 <use xlink:href="#s-text" class="text-copy"></use>
             </g>
         </svg>
-        <h1 style="color: #FFE3E3;"><%=exception.getMessage() %></h1>
+        <h4>404Error</h4>
+        <h1 style="color: #FFE3E3;">관리자에게 문의하세요</h1>
         <a href="${path }"><button class="errorBtn">메인으로 돌아가기</button></a>
 	
 	
 	
 
-<%-- </div>
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/> --%><%-- </div>
 
 
