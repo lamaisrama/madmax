@@ -54,7 +54,7 @@
 	<!-- 에러페이지 처리하기 -->
 	<error-page>
 		<exception-type>com.madmax.stool.common.MyException</exception-type>
-		<location>/WEB-INF/views/common/errorPage.jsp</location>
+		<location>/WEB-INF/views/common/errorPage500.jsp</location>
 	</error-page>
 	
 	<error-page>
