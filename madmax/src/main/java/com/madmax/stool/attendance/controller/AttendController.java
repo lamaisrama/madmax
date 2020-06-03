@@ -150,7 +150,7 @@ public class AttendController {
 				
 				System.out.println("입력된 출근 시간:"+wt.getComeTime().substring(11,13)+"입력된 퇴근 시간"+wt.getGoTime().substring(11,13));
 				
-				if(Integer.parseInt(wt.getComeTime().substring(11,13))<9&&Integer.parseInt(wt.getGoTime().substring(11,13))>18) {
+				if(Integer.parseInt(wt.getComeTime().substring(11,13))<9||Integer.parseInt(wt.getGoTime().substring(11,13))>18) {
 					
 					result=service.insertEmpManage(wt.getManagementNo());
 					
