@@ -25,7 +25,7 @@
   <select id="selectComProjectList" resultType="com.madmax.stool.project.model.vo.Project">
   SELECT P.*,D.DEPTNAME FROM PROJECTTABLE P  
 	JOIN STOOLUSER U ON P.USERID=U.USERID JOIN DEPT D ON U.DEPTCODE=D.DEPTCODE WHERE 
-	P.PROJECTTYPE='Y'
+	P.PROJECTTYPE='Y' ORDER BY CREATIONDATE DESC
   </select>
   <select id="selectComProjectCount" resultType="_int">
   SELECT COUNT(*) FROM PROJECTTABLE P WHERE P.PROJECTTYPE='Y'
